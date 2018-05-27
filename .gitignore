@@ -47,3 +47,6 @@ mobile/captures
 mobile/.externalNativeBuild
 /mobile/.idea/gradle.xml
 /mobile/.idea/runConfigurations.xml
+/srv/.idea/misc.xml
+/srv/.idea/modules.xml
+/srv/.idea/workspace.xml
