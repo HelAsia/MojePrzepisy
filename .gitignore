@@ -2,29 +2,29 @@
 /*/build/
 
 # Crashlytics configuations
-com_crashlytics_export_strings.xml
+mobile/com_crashlytics_export_strings.xml
 
 # Local configuration file (sdk path, etc)
-local.properties
+mobile/local.properties
 
 # Gradle generated files
-.gradle/
+mobile/.gradle/
 
 # Signing files
-.signing/
+mobile/.signing/
 
 # User-specific configurations
-.idea/libraries/
-.idea/workspace.xml
-.idea/tasks.xml
-.idea/.name
-.idea/compiler.xml
-.idea/copyright/profiles_settings.xml
-.idea/encodings.xml
-.idea/misc.xml
-.idea/modules.xml
-.idea/scopes/scope_settings.xml
-.idea/vcs.xml
+mobile/.idea/libraries/
+mobile/.idea/workspace.xml
+mobile/.idea/tasks.xml
+mobile/.idea/.name
+mobile/.idea/compiler.xml
+mobile/.idea/copyright/profiles_settings.xml
+mobile/.idea/encodings.xml
+mobile/.idea/misc.xml
+mobile/.idea/modules.xml
+mobile/.idea/scopes/scope_settings.xml
+mobile/.idea/vcs.xml
 *.iml
 
 # OS-specific files
@@ -35,3 +35,15 @@ local.properties
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+mobile/*.iml
+mobile/.gradle
+mobile/local.properties
+mobile/.idea/workspace.xml
+mobile/.idea/libraries
+mobile/.DS_Store
+mobile/build
+mobile/captures
+mobile/.externalNativeBuild
+/mobile/.idea/gradle.xml
+/mobile/.idea/runConfigurations.xml
