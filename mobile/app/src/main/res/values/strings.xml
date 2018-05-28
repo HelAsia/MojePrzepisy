@@ -1,3 +1,8 @@
 <resources>
   <string name="app_name">MojePrzepisy</string>
+  <string name="welcome_text">Domowe przepisy</string>
+  <string name="author">Joanna Heluszka</string>
+  <string name="register">Zarejestruj</string>
+  <string name="login">Zaloguj</string>
+  <string name="without_login_register">Kontynuuj bez logowania</string>
 </resources>
