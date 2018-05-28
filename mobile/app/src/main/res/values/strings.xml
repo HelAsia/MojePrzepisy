@@ -20,4 +20,6 @@
   <string name="your_email">Email</string>
   <string name="enter_your_email_again">Powtórz swój email:</string>
   <string name="your_email_again">Powtórzony Email</string>
+
+  <string name="remember_password">Zapamiętaj hasło</string>
 </resources>
