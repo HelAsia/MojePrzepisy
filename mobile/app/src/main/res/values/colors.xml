@@ -6,5 +6,9 @@
   <color name="black">#000000</color>
   <color name="white">#FFFFFF</color>
   <color name="aqua">#33ffff</color>
-
+  <item name="orange" type="color">#ff5722</item>
+  <item name="pink" type="color">#e91e63</item>
+  <item name="blue" type="color">#2196f3</item>
+  <color name="aqua_transparent">#8033ffff</color>
+  <color name="white_transparent">#80FFFFFF</color>
 </resources>

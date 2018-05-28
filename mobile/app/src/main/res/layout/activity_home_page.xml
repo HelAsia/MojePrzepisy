@@ -22,7 +22,7 @@
     android:layout_centerHorizontal="true"
     android:id="@+id/register_button"
     android:background="@drawable/home_page_buttons"
-    android:textColor="@color/black"
+    android:textColor="@color/on_click_buttons_color"
     android:shadowColor="@color/aqua"/>
   <Button
     android:text="@string/login"
@@ -34,8 +34,9 @@
     android:background="@drawable/home_page_buttons"
     android:layout_centerVertical="true"
     android:layout_centerHorizontal="true"
-    android:textColor="@color/black"
-    android:id="@+id/login_button"/>
+    android:textColor="@color/on_click_buttons_color"
+    android:id="@+id/login_button"
+    android:shadowColor="@color/aqua"/>
   <Button
     android:text="@string/without_login_register"
     android:textSize="@dimen/buttons_text_size"
@@ -46,6 +47,7 @@
     android:layout_marginTop="@dimen/gap_between_buttons"
     android:layout_centerVertical="true"
     android:layout_centerHorizontal="true"
-    android:textColor="@color/black"
-    android:id="@+id/no_login_button"/>
+    android:textColor="@color/on_click_buttons_color"
+    android:id="@+id/no_login_button"
+    android:shadowColor="@color/aqua"/>
 </RelativeLayout>

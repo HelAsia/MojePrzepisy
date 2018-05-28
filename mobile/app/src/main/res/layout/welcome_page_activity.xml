@@ -25,7 +25,7 @@
   <TextView
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:text="@string/author"
+    android:text="@string/welcome_text_small"
     android:textColor="@color/white"
     android:textSize="@dimen/author_text_size"
     android:layout_below="@id/welcome_text"
