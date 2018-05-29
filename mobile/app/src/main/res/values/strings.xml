@@ -22,4 +22,9 @@
   <string name="your_email_again">Powtórzony Email</string>
 
   <string name="remember_password">Zapamiętaj hasło</string>
+  
+  <string name="alphabetically">Alfabetycznie</string>
+  <string name="last_add">Ostatnio dodane</string>
+  <string name="highest_rated">Najwyżej oceniane</string>
+  <string name="favorites">Ulubione</string>
 </resources>
