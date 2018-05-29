@@ -73,10 +73,8 @@ public class MainRegisteredActivity extends AppCompatActivity {
             }else if (id == R.id.favorites_nav) {
 
             }
-
             return false;
           }
-
         }
     );
   }

@@ -22,6 +22,10 @@
       android:id="@+id/favorites_nav"
       android:icon="@drawable/favorites"
       android:title="@string/favorites"/>
+    <item
+      android:id="@+id/logout_nav"
+      android:icon="@drawable/turnoff"
+      android:title="@string/logout"/>
 
   </group>
 </menu>

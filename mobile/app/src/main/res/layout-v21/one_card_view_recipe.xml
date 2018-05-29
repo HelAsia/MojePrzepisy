@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:card_view="http://schemas.android.com/apk/res-auto"
+  android:id="@+id/my_card_view_layout"
+  android:orientation="vertical"
+  android:layout_width="wrap_content"
+  android:layout_height="wrap_content"
+  android:layout_margin="30dp"
+  android:clickable="true"
+  android:background="@color/white"
+  android:foreground="?android:attr/selectableItemBackground"
+  card_view:cardCornerRadius="30dp"
+  card_view:cardBackgroundColor="@color/white"
+  card_view:cardElevation="50dp">
+
+  <LinearLayout
+    android:layout_width="300dp"
+    android:layout_height="300dp"
+    android:layout_margin="10dp"
+    android:id="@+id/my_linear_layout"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:transitionName="layout_transition"
+    android:weightSum="1">
+
+    <ImageView
+      android:id="@+id/photo_recipe"
+      android:layout_width="300dp"
+      android:layout_height="250dp"
+      android:layout_gravity="center"
+      android:transitionName="initial_transition"
+      android:src="@drawable/no_photo"/>
+
+    <LinearLayout
+      android:layout_width="300dp"
+      android:layout_height="50dp"
+      android:background="@color/white">
+
+      <RelativeLayout
+        android:layout_width="220dp"
+        android:layout_height="50dp">
+
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/recipe_name"
+        android:transitionName="name_recipe_transition"
+        android:textColor="@color/black"
+        android:text="@string/something"
+        android:textSize="25sp"/>
+
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/recipe_author"
+        android:textColor="@color/black"
+        android:text="@string/something"
+        android:layout_below="@id/recipe_name"
+        android:textSize="15sp"/>
+
+      </RelativeLayout>
+
+      <RelativeLayout
+        android:layout_width="30dp"
+        android:layout_height="50dp">
+
+        <ImageView
+          android:id="@+id/star_image_view"
+          android:layout_width="30dp"
+          android:layout_height="30dp"
+          android:src="@drawable/star"/>
+
+        <ImageView
+          android:id="@+id/heart_image_view"
+          android:layout_width="30dp"
+          android:layout_height="30dp"
+          android:layout_below="@id/star_image_view"
+          android:src="@drawable/heart"/>
+
+      </RelativeLayout>
+
+      <RelativeLayout
+        android:layout_marginTop="-5dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp">
+
+        <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:id="@+id/star_count"
+          android:transitionName="name_recipe_transition"
+          android:textColor="@color/black"
+          android:text="10"
+          android:textSize="15sp"/>
+
+        <TextView
+          android:layout_marginTop="5dp"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_below="@id/star_count"
+          android:id="@+id/heart_count"
+          android:textColor="@color/black"
+          android:text="5"
+          android:textSize="15sp"/>
+
+      </RelativeLayout>
+    </LinearLayout>
+  </LinearLayout>
+
+</android.support.v7.widget.CardView>
