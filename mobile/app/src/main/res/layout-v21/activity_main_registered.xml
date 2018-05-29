@@ -62,13 +62,9 @@
       android:elevation="6dp"
       android:src="@android:drawable/ic_input_add"
       android:transitionName="fab_transition"
-      android:tint="@android:color/white"
-      android:layout_alignParentRight="true"
-      android:layout_marginRight="25dp"/>
+      android:tint="@android:color/white"/>
 
   </RelativeLayout>
-
-
 </android.support.v4.widget.DrawerLayout>
 
 

@@ -15,7 +15,7 @@ public class HomePage extends AppCompatActivity {
 
     Button registerButton;
     Button loginButton;
-    Button noLoginButon;
+    Button noRegisteredButton;
 
     registerButton = (Button) findViewById(R.id.register_button);
     registerButton.setOnClickListener(new View.OnClickListener() {
@@ -36,7 +36,14 @@ public class HomePage extends AppCompatActivity {
     });
 
 
-    noLoginButon = (Button) findViewById(R.id.no_login_button);
+    noRegisteredButton = (Button) findViewById(R.id.no_login_button);
+    noRegisteredButton.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        Intent intent = new Intent(HomePage.this, MainNoRegisteredActivity.class);
+        startActivity(intent);
+      }
+    });
 
   }
 }

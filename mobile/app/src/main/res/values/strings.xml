@@ -27,4 +27,9 @@
   <string name="last_add">Ostatnio dodane</string>
   <string name="highest_rated">Najwyżej oceniane</string>
   <string name="favorites">Ulubione</string>
+  
+  <string name="searching">Wyszukaj przepis</string>
+  <string name="adding">Dodaj przepis</string>
+  <string name="calculating">Przelicz składniki</string>
+  <string name="timer">Timer</string>
 </resources>

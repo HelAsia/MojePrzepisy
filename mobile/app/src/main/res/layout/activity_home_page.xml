@@ -16,7 +16,7 @@
   <Button
     android:text="@string/register"
     android:textSize="@dimen/buttons_text_size"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_centerVertical="true"
     android:layout_centerHorizontal="true"
@@ -27,7 +27,7 @@
   <Button
     android:text="@string/login"
     android:textSize="@dimen/buttons_text_size"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_below="@+id/register_button"
     android:layout_marginTop="@dimen/gap_between_buttons"
@@ -40,7 +40,7 @@
   <Button
     android:text="@string/without_login_register"
     android:textSize="@dimen/buttons_text_size"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_below="@+id/login_button"
     android:background="@drawable/home_page_buttons"

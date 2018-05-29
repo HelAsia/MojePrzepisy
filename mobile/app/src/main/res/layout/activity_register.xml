@@ -21,11 +21,11 @@
     android:layout_alignParentTop="true"
     android:layout_centerHorizontal="true"
     android:layout_centerVertical="true"
-    android:layout_marginTop="30dp"
+    android:layout_marginTop="15dp"
     android:id="@+id/name_textView"/>
   <EditText
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/edit_text_login_size"
     android:layout_centerHorizontal="true"
     android:layout_centerVertical="true"
     android:inputType="textPersonName"
@@ -48,8 +48,8 @@
     android:layout_centerVertical="true"
     android:id="@+id/last_name_textView"/>
   <EditText
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/edit_text_login_size"
     android:inputType="textPersonName"
     android:background="@drawable/home_page_buttons"
     android:textColor="@color/black"
@@ -72,8 +72,8 @@
     android:layout_centerVertical="true"
     android:id="@+id/login_textView"/>
   <EditText
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/edit_text_login_size"
     android:inputType="textPersonName"
     android:background="@drawable/home_page_buttons"
     android:textColor="@color/black"
@@ -96,8 +96,8 @@
     android:layout_centerVertical="true"
     android:id="@+id/password_textView"/>
   <EditText
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/edit_text_login_size"
     android:inputType="textPassword"
     android:background="@drawable/home_page_buttons"
     android:textColor="@color/black"
@@ -120,8 +120,8 @@
     android:layout_centerVertical="true"
     android:id="@+id/password_again_textView"/>
   <EditText
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/edit_text_login_size"
     android:inputType="textPassword"
     android:background="@drawable/home_page_buttons"
     android:textColor="@color/black"
@@ -144,8 +144,8 @@
     android:layout_centerVertical="true"
     android:id="@+id/email_textView"/>
   <EditText
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/edit_text_login_size"
     android:inputType="textEmailAddress"
     android:background="@drawable/home_page_buttons"
     android:textColor="@color/black"
@@ -168,8 +168,8 @@
     android:layout_centerVertical="true"
     android:id="@+id/email_again_textView"/>
   <EditText
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/edit_text_login_size"
     android:inputType="textEmailAddress"
     android:background="@drawable/home_page_buttons"
     android:textColor="@color/black"
@@ -180,4 +180,12 @@
     android:layout_centerHorizontal="true"
     android:layout_centerVertical="true"
     android:id="@+id/email_again_editText"/>
+  <Button
+    android:text="@string/register"
+    android:background="@drawable/home_page_buttons"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:layout_centerHorizontal="true"
+    android:id="@+id/register_action_button"/>
 </RelativeLayout>

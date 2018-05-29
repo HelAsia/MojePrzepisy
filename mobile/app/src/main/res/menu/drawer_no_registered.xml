@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+  <group android:checkableBehavior="single">
+
+    <item
+      android:id="@+id/search_nav"
+      android:icon="@drawable/search"
+      android:title="@string/searching"
+      android:visible="true"/>
+    <item
+      android:id="@+id/calculating_nav"
+      android:icon="@drawable/calculator"
+      android:title="@string/calculating"
+      android:visible="true"/>
+    <item
+      android:id="@+id/timer_nav"
+      android:icon="@drawable/timer"
+      android:title="@string/timer"
+      android:visible="true"/>
+
+  </group>
+</menu>

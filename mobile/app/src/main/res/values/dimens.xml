@@ -6,6 +6,8 @@
   <dimen name="author_text_size">15sp</dimen>
   <dimen name="buttons_text_size">12sp</dimen>
   <dimen name="gap_between_buttons">14sp</dimen>
-  <dimen name="gap_between_buttons2">20sp</dimen>
+  <dimen name="gap_between_buttons2">10sp</dimen>
   <dimen name="edit_text_size">20sp</dimen>
+  <dimen name="toolbar_text_size">15sp</dimen>
+  <dimen name="edit_text_login_size">40sp</dimen>
 </resources>
