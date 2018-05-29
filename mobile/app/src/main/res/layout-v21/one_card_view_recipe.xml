@@ -99,7 +99,7 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_below="@id/star_count"
-          android:id="@+id/heart_count"
+          android:id="@+id/favorites_count"
           android:textColor="@color/black"
           android:text="5"
           android:textSize="15sp"/>
