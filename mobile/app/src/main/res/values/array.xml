@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <array name="photo_list">
+    <item>@drawable/pomidorowa</item>
+    <item>@drawable/flaczki</item>
+    <item>@drawable/sernik</item>
+    <item>@drawable/kawa</item>
+    <item>@drawable/schabowy</item>
+    <item>@drawable/murzynek</item>
+    <item>@drawable/kolacz</item>
+    <item>@drawable/barszcz_bialy</item>
+    <item>@drawable/kluski</item>
+    <item>@drawable/pierogi</item>
+  </array>
+
+  <string-array name="name_recipes_array">
+    <item>Zupa pomidorowa</item>
+    <item>Flaczki</item>
+    <item>Sernik</item>
+    <item>Kawa</item>
+    <item>Schabowy</item>
+    <item>Murzynek</item>
+    <item>Kołacz</item>
+    <item>Barszcz biały</item>
+    <item>Kluski</item>
+    <item>Pierogi</item>
+  </string-array>
+
+  <string-array name="author_recipes_array">
+    <item>Zuzia</item>
+    <item>Ala</item>
+    <item>Iza</item>
+    <item>Ola</item>
+    <item>Ula</item>
+    <item>Viktor</item>
+    <item>Marek</item>
+    <item>Kazik</item>
+    <item>Zosia</item>
+    <item>Aga</item>
+  </string-array>
+
+  <string-array name="stars_count_array">
+    <item>5</item>
+    <item>4</item>
+    <item>3</item>
+    <item>2</item>
+    <item>1</item>
+    <item>4</item>
+    <item>5</item>
+    <item>2</item>
+    <item>3</item>
+    <item>2</item>
+  </string-array>
+
+  <string-array name="favorites_count_array">
+    <item>5</item>
+    <item>2</item>
+    <item>4</item>
+    <item>2</item>
+    <item>5</item>
+    <item>3</item>
+    <item>1</item>
+    <item>4</item>
+    <item>2</item>
+    <item>2</item>
+  </string-array>
+
+</resources>

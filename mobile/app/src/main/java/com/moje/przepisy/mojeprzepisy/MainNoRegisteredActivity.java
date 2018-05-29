@@ -1,6 +1,8 @@
 package com.moje.przepisy.mojeprzepisy;
 
 import android.content.Context;
+import android.content.res.TypedArray;
+import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -8,16 +10,29 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
+import java.util.ArrayList;
 
 public class MainNoRegisteredActivity extends AppCompatActivity {
   private DrawerLayout mDrawerLayout;
   Context context;
+  private RecyclerView recyclerView;
+  private MyCardViewAdapter adapter;
+  private ArrayList<OneRecipeCard> cardList = new ArrayList<>();
+  private TypedArray recipePhotos;
+  private String[] recipeName;
+  private String[] recipeAuthor;
+  private String[] starsCount;
+  private String[] favoritesCount;
+
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +90,40 @@ public class MainNoRegisteredActivity extends AppCompatActivity {
 
         }
     );
+
+    recipePhotos = getResources().obtainTypedArray(R.array.photo_list);
+    recipeName = getResources().getStringArray(R.array.name_recipes_array);
+    recipeAuthor = getResources().getStringArray(R.array.author_recipes_array);
+    starsCount = getResources().getStringArray(R.array.stars_count_array);
+    favoritesCount = getResources().getStringArray(R.array.favorites_count_array);
+
+    initCards();
+
+    if(adapter == null) {
+      adapter = new MyCardViewAdapter(this, cardList);
+    }
+    recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
+    recyclerView.setAdapter(adapter);
+    recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+  }
+
+  public void doSmoothScroll(int position) {
+    recyclerView.smoothScrollToPosition(position);
+  }
+
+  public void initCards() {
+    for (int i = 0; i < 9; i++) {
+      OneRecipeCard card = new OneRecipeCard();
+      card.setId((long) i);
+      card.setPhotoRecipe(BitmapFactory.decodeResource(getResources(),recipePhotos.getResourceId(i, -1)));
+      card.setRecipeName(recipeName[i]);
+      card.setAuthorName(recipeAuthor[i]);
+      card.setStarsCount(starsCount[i]);
+      card.setFavoritesCount(favoritesCount[i]);
+      cardList.add(card);
+
+    }
   }
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
