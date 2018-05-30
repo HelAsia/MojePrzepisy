@@ -50,3 +50,4 @@ mobile/.externalNativeBuild
 /srv/.idea/misc.xml
 /srv/.idea/modules.xml
 /srv/.idea/workspace.xml
+/misc/*
