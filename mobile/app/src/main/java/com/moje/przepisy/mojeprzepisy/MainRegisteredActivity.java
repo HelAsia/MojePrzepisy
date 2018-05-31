@@ -5,12 +5,14 @@ import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
+import android.support.design.internal.NavigationMenuView;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -68,6 +70,8 @@ public class MainRegisteredActivity extends AppCompatActivity {
     );
 
     NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+    NavigationMenuView navMenuView = (NavigationMenuView) navigationView.getChildAt(0);
+    navMenuView.addItemDecoration(new DividerItemDecoration(MainRegisteredActivity.this,DividerItemDecoration.VERTICAL));
     navigationView.setNavigationItemSelectedListener(
         new NavigationView.OnNavigationItemSelectedListener() {
           @Override

@@ -19,7 +19,8 @@
       android:layout_gravity="start"
       android:fitsSystemWindows="true"
       app:menu="@menu/drawer_no_registered"
-      app:headerLayout="@layout/drawer_header"/>
+      app:headerLayout="@layout/drawer_header"
+      android:scrollbars="vertical"/>
 
     <FrameLayout
       android:id="@+id/content_frame"

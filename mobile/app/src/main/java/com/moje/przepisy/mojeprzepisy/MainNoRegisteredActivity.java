@@ -111,10 +111,10 @@ public class MainNoRegisteredActivity extends AppCompatActivity {
     recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
   }
-
+/*
   public void doSmoothScroll(int position) {
     recyclerView.smoothScrollToPosition(position);
-  }
+  }*/
 
   public void initCards() {
     for (int i = 0; i < 9; i++) {
