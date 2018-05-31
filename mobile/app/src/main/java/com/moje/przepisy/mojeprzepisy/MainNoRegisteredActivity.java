@@ -1,6 +1,7 @@
 package com.moje.przepisy.mojeprzepisy;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
@@ -83,6 +84,9 @@ public class MainNoRegisteredActivity extends AppCompatActivity {
 
             }else if (id == R.id.timer_nav){
 
+            }else if (id == R.id.licences_nav) {
+              Intent intent = new Intent(MainNoRegisteredActivity.this, LicensesActivity.class);
+              startActivity(intent);
             }
 
             return false;

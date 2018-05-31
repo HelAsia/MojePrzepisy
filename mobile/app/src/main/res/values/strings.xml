@@ -35,4 +35,12 @@
   <string name="logout">Wyloguj</string>
 
   <string name="something">PRÓBA</string>
+  <string name="licences">Licencje</string>
+  <string name="about_app">O aplikacji</string>
+  <string name="description">Opis</string>
+
+  <string name="available_option">Dostępne opcje</string>
+  <string name="my_profile">Mój profil</string>
+
+
 </resources>

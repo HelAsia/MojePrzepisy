@@ -1,22 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-  <group android:checkableBehavior="single">
-
-    <item
-      android:id="@+id/search_nav"
-      android:icon="@drawable/search"
-      android:title="@string/searching"
-      android:visible="true"/>
-    <item
-      android:id="@+id/calculating_nav"
-      android:icon="@drawable/calculator"
-      android:title="@string/calculating"
-      android:visible="true"/>
-    <item
-      android:id="@+id/timer_nav"
-      android:icon="@drawable/timer"
-      android:title="@string/timer"
-      android:visible="true"/>
-
+  <group
+    android:id="@+id/menu_group_one"
+    android:checkableBehavior="single">
+    <item android:title="@string/available_option">
+      <menu>
+        <item
+          android:id="@+id/search_nav"
+          android:icon="@drawable/search"
+          android:title="@string/searching"/>
+        <item
+          android:id="@+id/calculating_nav"
+          android:icon="@drawable/calculator"
+          android:title="@string/calculating"/>
+        <item
+          android:id="@+id/timer_nav"
+          android:icon="@drawable/timer"
+          android:title="@string/timer"/>
+      </menu>
+    </item>
   </group>
+
+  <group android:checkableBehavior="single">
+    <item android:title="@string/about_app">
+      <menu>
+        <item
+          android:id="@+id/about_app_nav"
+          android:title="@string/description"/>
+        <item
+          android:id="@+id/licences_nav"
+          android:title="@string/licences"/>
+      </menu>
+    </item>
+  </group>
+
 </menu>
