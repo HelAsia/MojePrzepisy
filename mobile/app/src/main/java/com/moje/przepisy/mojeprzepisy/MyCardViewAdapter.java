@@ -78,6 +78,13 @@ public class MyCardViewAdapter extends RecyclerView.Adapter<MyCardViewAdapter.Vi
     animation.start();
   }
 
+  @RequiresApi(api = VERSION_CODES.LOLLIPOP)
+  @Override
+  public void onViewAttachedToWindow(MyCardViewAdapter.ViewHolder viewHolder) {
+    super.onViewAttachedToWindow(viewHolder);
+    animateCircularReveal(viewHolder.itemView);
+  }
+
   @Override
   public long getItemId(int position) {
     return cardsList.get(position).getId();
