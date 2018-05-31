@@ -21,7 +21,7 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       app:titleTextColor="@android:color/black"
-      android:background="@color/aqua_transparent"/>
+      android:background="@drawable/toolbar_gradient"/>
   </FrameLayout>
 
   <android.support.design.widget.NavigationView

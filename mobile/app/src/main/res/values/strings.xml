@@ -22,12 +22,12 @@
   <string name="your_email_again">Powtórzony Email</string>
 
   <string name="remember_password">Zapamiętaj hasło</string>
-  
+
   <string name="alphabetically">Alfabetycznie</string>
   <string name="last_add">Ostatnio dodane</string>
   <string name="highest_rated">Najwyżej oceniane</string>
   <string name="favorites">Ulubione</string>
-  
+
   <string name="searching">Wyszukaj przepis</string>
   <string name="adding">Dodaj przepis</string>
   <string name="calculating">Przelicz składniki</string>
@@ -41,6 +41,9 @@
 
   <string name="available_option">Dostępne opcje</string>
   <string name="my_profile">Mój profil</string>
+
+  <!-- TODO: Remove or change this placeholder text -->
+  <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>

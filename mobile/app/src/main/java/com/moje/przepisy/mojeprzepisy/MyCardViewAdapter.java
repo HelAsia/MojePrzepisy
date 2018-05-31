@@ -12,6 +12,8 @@ import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import java.util.ArrayList;
 
 /**
@@ -91,19 +93,15 @@ public class MyCardViewAdapter extends RecyclerView.Adapter<MyCardViewAdapter.Vi
   }
 
   public class ViewHolder extends RecyclerView.ViewHolder {
-    private ImageView recipePhoto;
-    private TextView recipeName;
-    private TextView recipeAuthor;
-    private TextView starsCount;
-    private TextView favoritesCount;
+    @BindView(R.id.photo_recipe) ImageView recipePhoto;
+    @BindView(R.id.recipe_name) TextView recipeName;
+    @BindView(R.id.recipe_author) TextView recipeAuthor;
+    @BindView(R.id.star_count) TextView starsCount;
+    @BindView(R.id.favorites_count) TextView favoritesCount;
 
     public ViewHolder(View v) {
       super(v);
-      recipePhoto = (ImageView) v.findViewById(R.id.photo_recipe);
-      recipeName = (TextView) v.findViewById(R.id.recipe_name);
-      recipeAuthor = (TextView) v.findViewById(R.id.recipe_author);
-      starsCount = (TextView) v.findViewById(R.id.star_count);
-      favoritesCount = (TextView) v.findViewById(R.id.favorites_count);
+      ButterKnife.bind(this, v);
     }
   }
 

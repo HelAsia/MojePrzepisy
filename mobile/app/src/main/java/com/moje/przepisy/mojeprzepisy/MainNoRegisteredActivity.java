@@ -36,7 +36,7 @@ public class MainNoRegisteredActivity extends AppCompatActivity {
 
 
   @Override
-  protected void onCreate(Bundle savedInstanceState) {
+  protected void onCreate(final Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main_no_registered);
 
@@ -79,6 +79,8 @@ public class MainNoRegisteredActivity extends AppCompatActivity {
             int id = menuItem.getItemId();
 
             if (id == R.id.search_nav) {
+              Intent intent = new Intent(MainNoRegisteredActivity.this, SearchSwipeActivity.class);
+              startActivity(intent);
 
             }else if (id == R.id.calculating_nav){
 

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:id="@+id/activity_search_swipe"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:background="@drawable/startowa"
+  android:orientation="vertical"
+  tools:context="com.moje.przepisy.mojeprzepisy.SearchSwipeActivity">
+
+  <FrameLayout
+    android:id="@+id/content_frame"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.Toolbar
+      android:id="@+id/toolbar"
+      android:minHeight="?attr/actionBarSize"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      app:titleTextColor="@android:color/black"
+      android:background="@drawable/toolbar_gradient"/>
+  </FrameLayout>
+
+  <android.support.v4.view.ViewPager
+    android:id="@+id/vpPager"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <android.support.v4.view.PagerTitleStrip
+      android:id="@+id/pager_header_title"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"/>
+
+    <android.support.v4.view.PagerTabStrip
+      android:id="@+id/pager_header"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_gravity="top"
+      android:paddingBottom="4dp"
+      android:paddingTop="4dp" />
+
+
+  </android.support.v4.view.ViewPager>
+
+</LinearLayout>

@@ -70,8 +70,6 @@ public class MainRegisteredActivity extends AppCompatActivity {
     );
 
     NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-    NavigationMenuView navMenuView = (NavigationMenuView) navigationView.getChildAt(0);
-    navMenuView.addItemDecoration(new DividerItemDecoration(MainRegisteredActivity.this,DividerItemDecoration.VERTICAL));
     navigationView.setNavigationItemSelectedListener(
         new NavigationView.OnNavigationItemSelectedListener() {
           @Override
@@ -81,6 +79,8 @@ public class MainRegisteredActivity extends AppCompatActivity {
             int id = menuItem.getItemId();
 
             if (id == R.id.search_nav) {
+              Intent intent = new Intent(MainRegisteredActivity.this, SearchSwipeActivity.class);
+              startActivity(intent);
 
             }else if (id == R.id.add_nav) {
 
