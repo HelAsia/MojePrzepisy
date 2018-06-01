@@ -6,7 +6,7 @@
   android:id="@+id/activity_search_swipe"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  android:background="@drawable/strawberry_background"
+  android:background="@color/primary_light"
   android:orientation="vertical"
   tools:context="com.moje.przepisy.mojeprzepisy.SearchSwipeActivity">
 

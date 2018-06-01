@@ -37,11 +37,9 @@ public class MainRegisteredActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main_registered);
-
     context = getApplicationContext();
+
     setToolbar();
-
-
 
     drawerLayout = (DrawerLayout) findViewById(R.id.activity_main_registered);
 
@@ -112,15 +110,27 @@ public class MainRegisteredActivity extends AppCompatActivity {
 
   }
 
+  @Override
+  protected void onPause(){
+    super.onPause();
+  }
+
+  @Override
+  protected void onStop(){
+    super.onStop();
+  }
+
+  @Override
+  protected void onResume(){
+    super.onResume();
+  }
+
   public void setToolbar() {
     Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
     setSupportActionBar(toolbar);
     ActionBar actionbar = getSupportActionBar();
     actionbar.setDisplayHomeAsUpEnabled(true);
     actionbar.setHomeAsUpIndicator(R.drawable.ic_menu);
-  }
-  public void doSmoothScroll(int position) {
-    recyclerView.smoothScrollToPosition(position);
   }
 
   public void initCards() {
@@ -134,7 +144,6 @@ public class MainRegisteredActivity extends AppCompatActivity {
       card.setStarsCount(starsCount[i]);
       card.setFavoritesCount(favoritesCount[i]);
       cardList.add(card);
-
     }
   }
 

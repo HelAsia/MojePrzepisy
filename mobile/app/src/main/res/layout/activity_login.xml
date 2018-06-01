@@ -70,7 +70,7 @@
     android:id="@+id/remember_password_checkBox"/>
   <Button
     android:text="@string/login"
-    android:background="@color/primary"
+    android:background="@drawable/buttons"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_below="@+id/remember_password_checkBox"
