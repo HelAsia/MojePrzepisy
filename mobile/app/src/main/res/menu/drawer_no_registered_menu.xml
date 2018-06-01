@@ -7,15 +7,15 @@
       <menu>
         <item
           android:id="@+id/search_nav"
-          android:icon="@drawable/search"
+          android:icon="@mipmap/ic_search"
           android:title="@string/searching"/>
         <item
           android:id="@+id/calculating_nav"
-          android:icon="@drawable/calculator"
+          android:icon="@mipmap/ic_assessment_black_18dp"
           android:title="@string/calculating"/>
         <item
           android:id="@+id/timer_nav"
-          android:icon="@drawable/timer"
+          android:icon="@mipmap/ic_access_alarm"
           android:title="@string/timer"/>
       </menu>
     </item>
@@ -26,10 +26,12 @@
       <menu>
         <item
           android:id="@+id/about_app_nav"
-          android:title="@string/description"/>
+          android:title="@string/description"
+          android:icon="@mipmap/ic_info"/>
         <item
           android:id="@+id/licences_nav"
-          android:title="@string/licences"/>
+          android:title="@string/licences"
+          android:icon="@mipmap/ic_assignment"/>
       </menu>
     </item>
   </group>

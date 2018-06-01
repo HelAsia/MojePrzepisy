@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
   android:id="@+id/activity_home_page"
   android:layout_width="match_parent"
@@ -10,44 +11,62 @@
   android:paddingLeft="@dimen/activity_horizontal_margin"
   android:paddingRight="@dimen/activity_horizontal_margin"
   tools:context="com.moje.przepisy.mojeprzepisy.HomePage"
-  android:background="@drawable/startowa">
+  android:background="@color/primary_light">
+
+  <LinearLayout
+    android:id="@+id/logo_layout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:weightSum="2">
+
+    <ImageView
+      android:layout_width="wrap_content"
+      android:layout_height="299dp"
+      app:srcCompat="@drawable/logo"
+      android:id="@+id/logo_home_page_image_view"/>
+
+  </LinearLayout>
+
+  <LinearLayout
+    android:layout_below="@+id/logo_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:weightSum="6">
+
+    <Button
+      android:text="@string/register"
+      android:textSize="@dimen/buttons_text_size"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:id="@+id/register_button"
+      android:background="@drawable/buttons"
+      android:textColor="@color/on_click_buttons_color"
+      android:shadowColor="@color/primary"/>
+    <Button
+      android:text="@string/login"
+      android:textSize="@dimen/buttons_text_size"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="@dimen/gap_between_buttons"
+      android:background="@drawable/buttons"
+      android:textColor="@color/on_click_buttons_color"
+      android:id="@+id/login_button"
+      android:shadowColor="@color/primary"/>
+    <Button
+      android:text="@string/without_login_register"
+      android:textSize="@dimen/buttons_text_size"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@drawable/buttons"
+      android:layout_marginTop="@dimen/gap_between_buttons"
+      android:textColor="@color/on_click_buttons_color"
+      android:id="@+id/no_login_button"
+      android:shadowColor="@color/primary"/>
+
+  </LinearLayout>
 
 
-  <Button
-    android:text="@string/register"
-    android:textSize="@dimen/buttons_text_size"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_centerVertical="true"
-    android:layout_centerHorizontal="true"
-    android:id="@+id/register_button"
-    android:background="@drawable/home_page_buttons"
-    android:textColor="@color/on_click_buttons_color"
-    android:shadowColor="@color/aqua"/>
-  <Button
-    android:text="@string/login"
-    android:textSize="@dimen/buttons_text_size"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_below="@+id/register_button"
-    android:layout_marginTop="@dimen/gap_between_buttons"
-    android:background="@drawable/home_page_buttons"
-    android:layout_centerVertical="true"
-    android:layout_centerHorizontal="true"
-    android:textColor="@color/on_click_buttons_color"
-    android:id="@+id/login_button"
-    android:shadowColor="@color/aqua"/>
-  <Button
-    android:text="@string/without_login_register"
-    android:textSize="@dimen/buttons_text_size"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_below="@+id/login_button"
-    android:background="@drawable/home_page_buttons"
-    android:layout_marginTop="@dimen/gap_between_buttons"
-    android:layout_centerVertical="true"
-    android:layout_centerHorizontal="true"
-    android:textColor="@color/on_click_buttons_color"
-    android:id="@+id/no_login_button"
-    android:shadowColor="@color/aqua"/>
+
 </RelativeLayout>

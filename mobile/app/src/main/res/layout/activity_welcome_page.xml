@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
   android:id="@+id/activity_main"
   android:layout_width="match_parent"
@@ -10,25 +11,11 @@
   android:paddingLeft="@dimen/activity_horizontal_margin"
   android:paddingRight="@dimen/activity_horizontal_margin"
   tools:context="com.moje.przepisy.mojeprzepisy.WelcomePage"
-  android:background="@drawable/startowa">
+  android:background="@color/primary_light">
 
-  <TextView
-    android:id="@+id/welcome_text"
+  <ImageView
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:text="@string/welcome_text"
-    android:textColor="@color/white"
-    android:textSize="@dimen/welcome_text_size"
-    android:layout_centerVertical="true"
-    android:layout_centerHorizontal="true"/>
-
-  <TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="@string/welcome_text_small"
-    android:textColor="@color/white"
-    android:textSize="@dimen/author_text_size"
-    android:layout_below="@id/welcome_text"
-    android:layout_centerVertical="true"
-    android:layout_centerHorizontal="true"/>
+    app:srcCompat="@drawable/logo"
+    android:id="@+id/imageView"/>
 </RelativeLayout>

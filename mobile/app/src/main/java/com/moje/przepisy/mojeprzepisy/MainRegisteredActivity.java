@@ -5,14 +5,12 @@ import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
-import android.support.design.internal.NavigationMenuView;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -24,7 +22,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 public class MainRegisteredActivity extends AppCompatActivity {
-  private DrawerLayout mDrawerLayout;
+  private DrawerLayout drawerLayout;
   Context context;
   private RecyclerView recyclerView;
   private MyCardViewAdapter adapter;
@@ -41,15 +39,13 @@ public class MainRegisteredActivity extends AppCompatActivity {
     setContentView(R.layout.activity_main_registered);
 
     context = getApplicationContext();
+    setToolbar();
 
-    Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-    setSupportActionBar(toolbar);
-    ActionBar actionbar = getSupportActionBar();
-    actionbar.setDisplayHomeAsUpEnabled(true);
-    actionbar.setHomeAsUpIndicator(R.drawable.ic_menu);
-    mDrawerLayout = (DrawerLayout) findViewById(R.id.activity_main_registered);
 
-    mDrawerLayout.addDrawerListener(
+
+    drawerLayout = (DrawerLayout) findViewById(R.id.activity_main_registered);
+
+    drawerLayout.addDrawerListener(
         new DrawerLayout.DrawerListener() {
           @Override
           public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
@@ -75,7 +71,7 @@ public class MainRegisteredActivity extends AppCompatActivity {
           @Override
           public boolean onNavigationItemSelected(MenuItem menuItem) {
             menuItem.setChecked(true);
-            mDrawerLayout.closeDrawers();
+            drawerLayout.closeDrawers();
             int id = menuItem.getItemId();
 
             if (id == R.id.search_nav) {
@@ -116,6 +112,13 @@ public class MainRegisteredActivity extends AppCompatActivity {
 
   }
 
+  public void setToolbar() {
+    Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+    setSupportActionBar(toolbar);
+    ActionBar actionbar = getSupportActionBar();
+    actionbar.setDisplayHomeAsUpEnabled(true);
+    actionbar.setHomeAsUpIndicator(R.drawable.ic_menu);
+  }
   public void doSmoothScroll(int position) {
     recyclerView.smoothScrollToPosition(position);
   }
@@ -138,7 +141,7 @@ public class MainRegisteredActivity extends AppCompatActivity {
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     MenuInflater inflater = getMenuInflater();
-    inflater.inflate(R.menu.sorting_menu_registered, menu);
+    inflater.inflate(R.menu.sorting_registered_menu, menu);
     return true;
   }
 
@@ -157,7 +160,7 @@ public class MainRegisteredActivity extends AppCompatActivity {
         Toast.makeText(this, "Kliknięto 'Ulubione'", Toast.LENGTH_SHORT).show();
         return true;
       case android.R.id.home:
-        mDrawerLayout.openDrawer(GravityCompat.START);
+        drawerLayout.openDrawer(GravityCompat.START);
         return true;
       default:
         return super.onOptionsItemSelected(item);

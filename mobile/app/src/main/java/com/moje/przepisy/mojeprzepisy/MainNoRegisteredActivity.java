@@ -18,7 +18,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Toast;
 import java.util.ArrayList;
 
@@ -134,7 +133,7 @@ public class MainNoRegisteredActivity extends AppCompatActivity {
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     MenuInflater inflater = getMenuInflater();
-    inflater.inflate(R.menu.sorting_menu_no_rogistered, menu);
+    inflater.inflate(R.menu.sorting_no_rogistered_menu, menu);
     return true;
   }
 

@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <style name="MyAppTheme" parent="Theme.AppCompat.NoActionBar">
-    <item name="colorAccent">@color/blue</item>
-    <item name="android:itemBackground">@color/aqua</item>
-    <item name="android:textColor">@color/black</item>
-    <item name="android:textColorSecondary">@color/colorPrimaryDark</item>
-    <item name="android:divider">@color/colorPrimaryDark</item>
-    <item name="android:listDivider">@color/colorPrimaryDark</item>
+    <item name="android:textColorPrimary">@color/primary_text</item>
+    <item name="android:textColorSecondary">@color/secondary_text</item>
+    <item name="android:icon">@color/icons</item>
+    <item name="android:divider">@color/divider</item>
   </style>
-
-
 </resources>

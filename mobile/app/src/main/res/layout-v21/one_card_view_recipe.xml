@@ -71,14 +71,14 @@
           android:id="@+id/star_image_view"
           android:layout_width="30dp"
           android:layout_height="30dp"
-          android:src="@drawable/star"/>
+          android:src="@mipmap/ic_star"/>
 
         <ImageView
           android:id="@+id/heart_image_view"
           android:layout_width="30dp"
           android:layout_height="30dp"
           android:layout_below="@id/star_image_view"
-          android:src="@drawable/heart"/>
+          android:src="@mipmap/ic_favorite"/>
 
       </RelativeLayout>
 

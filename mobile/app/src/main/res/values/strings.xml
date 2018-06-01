@@ -1,6 +1,6 @@
 <resources>
-  <string name="app_name">Domowe Przepisy</string>
-  <string name="welcome_text">Domowe przepisy</string>
+  <string name="app_name">Przepisy domowe</string>
+  <string name="welcome_text">Przepisy domowe</string>
   <string name="welcome_text_small">Twoja własna baza przepisów</string>
   <string name="register">Zarejestruj</string>
   <string name="login">Zaloguj</string>

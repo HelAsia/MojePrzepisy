@@ -10,7 +10,7 @@
   android:paddingLeft="@dimen/activity_horizontal_margin"
   android:paddingRight="@dimen/activity_horizontal_margin"
   tools:context="com.moje.przepisy.mojeprzepisy.RegisterActivity"
-  android:background="@drawable/startowa">
+  android:background="@color/primary_light">
 
   <TextView
     android:text="@string/enter_your_name"
@@ -29,7 +29,7 @@
     android:layout_centerHorizontal="true"
     android:layout_centerVertical="true"
     android:inputType="textPersonName"
-    android:background="@drawable/home_page_buttons"
+    android:background="@color/primary"
     android:textColor="@color/black"
     android:textColorHint="@color/black"
     android:hint="@string/your_name"
@@ -51,7 +51,7 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/edit_text_login_size"
     android:inputType="textPersonName"
-    android:background="@drawable/home_page_buttons"
+    android:background="@color/primary"
     android:textColor="@color/black"
     android:textColorHint="@color/black"
     android:text="@string/your_last_name"
@@ -75,7 +75,7 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/edit_text_login_size"
     android:inputType="textPersonName"
-    android:background="@drawable/home_page_buttons"
+    android:background="@color/primary"
     android:textColor="@color/black"
     android:textColorHint="@color/black"
     android:text="@string/your_login"
@@ -99,7 +99,7 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/edit_text_login_size"
     android:inputType="textPassword"
-    android:background="@drawable/home_page_buttons"
+    android:background="@color/primary"
     android:textColor="@color/black"
     android:textColorHint="@color/black"
     android:text="@string/your_password"
@@ -123,7 +123,7 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/edit_text_login_size"
     android:inputType="textPassword"
-    android:background="@drawable/home_page_buttons"
+    android:background="@color/primary"
     android:textColor="@color/black"
     android:textColorHint="@color/black"
     android:text="@string/your_password_again"
@@ -147,7 +147,7 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/edit_text_login_size"
     android:inputType="textEmailAddress"
-    android:background="@drawable/home_page_buttons"
+    android:background="@color/primary"
     android:textColor="@color/black"
     android:textColorHint="@color/black"
     android:text="@string/your_email"
@@ -171,7 +171,7 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/edit_text_login_size"
     android:inputType="textEmailAddress"
-    android:background="@drawable/home_page_buttons"
+    android:background="@color/primary"
     android:textColor="@color/black"
     android:textColorHint="@color/black"
     android:text="@string/your_email_again"
@@ -182,10 +182,11 @@
     android:id="@+id/email_again_editText"/>
   <Button
     android:text="@string/register"
-    android:background="@drawable/home_page_buttons"
-    android:layout_width="wrap_content"
+    android:background="@color/primary"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_alignParentBottom="true"
     android:layout_centerHorizontal="true"
-    android:id="@+id/register_action_button"/>
+    android:id="@+id/register_action_button"
+    android:shadowColor="@color/primary_dark"/>
 </RelativeLayout>

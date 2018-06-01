@@ -2,12 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
-  tools:context="com.moje.przepisy.mojeprzepisy.MainRegisteredActivity">
+  android:background="@color/primary"
+  tools:context="com.moje.przepisy.mojeprzepisy.MainNoRegisteredActivity">
 
   <item
     android:id="@+id/sort_alphabetic"
     android:title="@string/alphabetically"
-    android:icon="@android:drawable/ic_menu_sort_alphabetically"
     app:showAsAction="never"/>
 
   <item
@@ -18,12 +18,6 @@
   <item
     android:id="@+id/sort_highest_rated"
     android:title="@string/highest_rated"
-    app:showAsAction="never"/>
-
-  <item
-    android:id="@+id/favorites"
-    android:title="@string/favorites"
-    android:icon="@drawable/favorites"
     app:showAsAction="never"/>
 
 </menu>

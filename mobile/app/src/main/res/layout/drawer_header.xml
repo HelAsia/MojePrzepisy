@@ -1,24 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
   android:orientation="vertical"
   android:layout_width="match_parent"
   android:layout_height="150dp"
-  android:background="@drawable/drawer_header"
+  android:background="@color/primary"
   android:gravity="bottom"
   android:weightSum="1">
 
-  <TextView
-    android:id="@+id/welcome_text"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="@string/welcome_text"
-    android:textColor="@color/white"
-    android:textSize="@dimen/welcome_text_size"/>
 
-  <TextView
-    android:layout_width="wrap_content"
+  <ImageView
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:text="@string/welcome_text_small"
-    android:textColor="@color/white"
-    android:textSize="@dimen/author_text_size"/>
+    app:srcCompat="@drawable/logo"
+    android:id="@+id/imageView2"/>
 </LinearLayout>

@@ -10,7 +10,7 @@
   android:paddingLeft="@dimen/activity_horizontal_margin"
   android:paddingRight="@dimen/activity_horizontal_margin"
   tools:context="com.moje.przepisy.mojeprzepisy.LoginActivity"
-  android:background="@drawable/startowa">
+  android:background="@color/primary_light">
 
   <TextView
     android:layout_marginTop="100dp"
@@ -26,7 +26,7 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/edit_text_login_size"
     android:inputType="textPersonName"
-    android:background="@drawable/home_page_buttons"
+    android:background="@color/primary"
     android:textColor="@color/black"
     android:textColorHint="@color/black"
     android:text="@string/your_login"
@@ -50,7 +50,7 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/edit_text_login_size"
     android:inputType="textPassword"
-    android:background="@drawable/home_page_buttons"
+    android:background="@color/primary"
     android:textColor="@color/black"
     android:textColorHint="@color/black"
     android:text="@string/your_password"
@@ -70,7 +70,7 @@
     android:id="@+id/remember_password_checkBox"/>
   <Button
     android:text="@string/login"
-    android:background="@drawable/home_page_buttons"
+    android:background="@color/primary"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_below="@+id/remember_password_checkBox"
