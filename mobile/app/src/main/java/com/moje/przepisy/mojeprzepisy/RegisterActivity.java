@@ -31,8 +31,16 @@ public class RegisterActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_register);
+
     ButterKnife.bind(this);
 
+    setRegisterButton();
+
+    getStringsFromEditText();
+
+  }
+
+  public void setRegisterButton() {
     registerButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
@@ -41,7 +49,9 @@ public class RegisterActivity extends AppCompatActivity {
         RegisterActivity.this.finish();
       }
     });
+  }
 
+  public void getStringsFromEditText(){
     nameString = nameEditText.getText().toString();
     lastNameString = lastNameEditText.getText().toString();
     loginString = loginEditText.getText().toString();
@@ -50,8 +60,5 @@ public class RegisterActivity extends AppCompatActivity {
     emailString = emailEditText.getText().toString();
     repeatedEmailString = repeatedEmailEditText.getText().toString();
 
-
-
   }
-
 }

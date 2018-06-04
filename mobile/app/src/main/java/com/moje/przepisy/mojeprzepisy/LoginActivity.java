@@ -20,8 +20,15 @@ public class LoginActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_login);
+
     ButterKnife.bind(this);
 
+    setLoginButton();
+
+    getStringsFromEditText();
+  }
+
+  public void setLoginButton() {
     loginButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
@@ -30,10 +37,11 @@ public class LoginActivity extends AppCompatActivity {
         LoginActivity.this.finish();
       }
     });
+  }
 
+  public void getStringsFromEditText(){
     loginString = loginEditText.getText().toString();
     passwordString = passwordEditText.getText().toString();
-
-
   }
+
 }
