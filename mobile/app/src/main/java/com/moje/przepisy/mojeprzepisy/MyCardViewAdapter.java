@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 /**
@@ -39,7 +40,7 @@ public class MyCardViewAdapter extends RecyclerView.Adapter<MyCardViewAdapter.Vi
 
   @Override
   public void onBindViewHolder(ViewHolder viewHolder, int position) {
-    Bitmap recipePhoto = cardsList.get(position).getPhotoRecipe();
+    String recipePhoto = cardsList.get(position).getPhotoRecipe();
     String recipeName = cardsList.get(position).getRecipeName();
     String recipeAuthor = cardsList.get(position).getAuthorName();
     String starsCount = cardsList.get(position).getStarsCount();
@@ -51,7 +52,7 @@ public class MyCardViewAdapter extends RecyclerView.Adapter<MyCardViewAdapter.Vi
     TextView starsCountTextView = viewHolder.starsCount;
     TextView favoritesCountTextView = viewHolder.favoritesCount;
 
-    recipeImageView.setImageBitmap(recipePhoto);
+    Picasso.get().load(recipePhoto).into(recipeImageView);
     recipeNameTextView.setText(recipeName);
     recipeAuthorTextView.setText(recipeAuthor);
     starsCountTextView.setText(starsCount);

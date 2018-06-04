@@ -44,6 +44,12 @@
 
   <!-- TODO: Remove or change this placeholder text -->
   <string name="hello_blank_fragment">Hello blank fragment</string>
-
+  
+  <string name="tomato_soup_URL">https://pl.rc-cdn.community.thermomix.com/recipeimage/0lbqtpiq-450f8-950374-cfcd2-lganjjy8/ee21574e-7996-4c67-8836-3aad8c807043/main/zupa-pomidorowa-jak-u-mamy.jpg</string>
+  <string name="chitterlings_URL">https://www.przyslijprzepis.pl/media/cache/gallery_view/uploads/media/recipe/0001/23/3fe59f355f8f1a3bf199d5a9d991746a33cb0c18.jpeg</string>
+  <string name="cheesecake_URL">https://akademiasmaku.pl/upload/vademecums/197/big/idealny-sernik-197.jpg</string>
+  <string name="coffee_URL">http://bonavita.pl/data/2015/10/kawa-870x400.jpg</string>
+  <string name="pork_chop_URL">http://karczmazabidwor.pl/files/page/zdjecia/potrawy/kotlet-%20schabowy.jpg</string>
+  <string name="ebony_cake_URL">https://static.smaker.pl/photos/d/1/d/d1dcfbf9ba4aef5303a5c707445a9813_359664_53c796b99161d_wm.jpg</string>
 
 </resources>

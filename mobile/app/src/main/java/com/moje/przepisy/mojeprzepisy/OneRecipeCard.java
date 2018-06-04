@@ -12,7 +12,7 @@ public class OneRecipeCard {
   private String favoritesCount;
   private String recipeName;
   private String authorName;
-  private Bitmap photoRecipe;
+  private String photoRecipe;
 
 
   public long getId() {
@@ -35,7 +35,7 @@ public class OneRecipeCard {
     return authorName;
   }
 
-  public Bitmap getPhotoRecipe() {
+  public String getPhotoRecipe() {
     return photoRecipe;
   }
 
@@ -59,7 +59,7 @@ public class OneRecipeCard {
     this.authorName = authorName;
   }
 
-  public void setPhotoRecipe(Bitmap photoRecipe) {
+  public void setPhotoRecipe(String photoRecipe) {
     this.photoRecipe = photoRecipe;
   }
 

@@ -27,7 +27,7 @@ public class MainRegisteredActivity extends AppCompatActivity {
   private RecyclerView recyclerView;
   private MyCardViewAdapter adapter;
   private ArrayList<OneRecipeCard> cardList = new ArrayList<>();
-  private TypedArray recipePhotos;
+  private String[] recipePhotos;
   private String[] recipeName;
   private String[] recipeAuthor;
   private String[] starsCount;
@@ -122,7 +122,7 @@ public class MainRegisteredActivity extends AppCompatActivity {
   }
 
   public void matchArraysWithResources() {
-    recipePhotos = getResources().obtainTypedArray(R.array.photo_list);
+    recipePhotos = getResources().getStringArray(R.array.photo_list);
     recipeName = getResources().getStringArray(R.array.name_recipes_array);
     recipeAuthor = getResources().getStringArray(R.array.author_recipes_array);
     starsCount = getResources().getStringArray(R.array.stars_count_array);
@@ -130,11 +130,10 @@ public class MainRegisteredActivity extends AppCompatActivity {
   }
 
   public void initCards() {
-    for (int i = 0; i < 9; i++) {
+    for (int i = 0; i < 6; i++) {
       OneRecipeCard card = new OneRecipeCard();
       card.setId((long) i);
-      card.setPhotoRecipe(
-          BitmapFactory.decodeResource(getResources(),recipePhotos.getResourceId(i, -1)));
+      card.setPhotoRecipe(recipePhotos[i]);
       card.setRecipeName(recipeName[i]);
       card.setAuthorName(recipeAuthor[i]);
       card.setStarsCount(starsCount[i]);
