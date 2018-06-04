@@ -41,8 +41,33 @@ public class MainRegisteredActivity extends AppCompatActivity {
 
     setToolbar();
 
-    drawerLayout = (DrawerLayout) findViewById(R.id.activity_main_registered);
+    setDrawerLayoutListener();
 
+    setNavigationViewListener();
+
+    matchArraysWithResources();
+
+    initCards();
+
+    if(adapter == null) {
+      adapter = new MyCardViewAdapter(this, cardList);
+    }
+    recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
+    recyclerView.setAdapter(adapter);
+    recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+  }
+
+  public void setToolbar() {
+    Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+    setSupportActionBar(toolbar);
+    ActionBar actionbar = getSupportActionBar();
+    actionbar.setDisplayHomeAsUpEnabled(true);
+    actionbar.setHomeAsUpIndicator(R.drawable.ic_menu);
+  }
+
+  public void setDrawerLayoutListener() {
+    drawerLayout = (DrawerLayout) findViewById(R.id.activity_main_registered);
     drawerLayout.addDrawerListener(
         new DrawerLayout.DrawerListener() {
           @Override
@@ -62,7 +87,9 @@ public class MainRegisteredActivity extends AppCompatActivity {
           }
         }
     );
+  }
 
+  public void setNavigationViewListener(){
     NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
     navigationView.setNavigationItemSelectedListener(
         new NavigationView.OnNavigationItemSelectedListener() {
@@ -92,45 +119,14 @@ public class MainRegisteredActivity extends AppCompatActivity {
           }
         }
     );
+  }
 
+  public void matchArraysWithResources() {
     recipePhotos = getResources().obtainTypedArray(R.array.photo_list);
     recipeName = getResources().getStringArray(R.array.name_recipes_array);
     recipeAuthor = getResources().getStringArray(R.array.author_recipes_array);
     starsCount = getResources().getStringArray(R.array.stars_count_array);
     favoritesCount = getResources().getStringArray(R.array.favorites_count_array);
-
-    initCards();
-
-    if(adapter == null) {
-      adapter = new MyCardViewAdapter(this, cardList);
-    }
-    recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
-    recyclerView.setAdapter(adapter);
-    recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-  }
-
-  @Override
-  protected void onPause(){
-    super.onPause();
-  }
-
-  @Override
-  protected void onStop(){
-    super.onStop();
-  }
-
-  @Override
-  protected void onResume(){
-    super.onResume();
-  }
-
-  public void setToolbar() {
-    Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-    setSupportActionBar(toolbar);
-    ActionBar actionbar = getSupportActionBar();
-    actionbar.setDisplayHomeAsUpEnabled(true);
-    actionbar.setHomeAsUpIndicator(R.drawable.ic_menu);
   }
 
   public void initCards() {

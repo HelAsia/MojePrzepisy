@@ -22,7 +22,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 public class MainNoRegisteredActivity extends AppCompatActivity {
-  private DrawerLayout mDrawerLayout;
+  private DrawerLayout drawerLayout;
   Context context;
   private RecyclerView recyclerView;
   private MyCardViewAdapter adapter;
@@ -38,17 +38,38 @@ public class MainNoRegisteredActivity extends AppCompatActivity {
   protected void onCreate(final Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main_no_registered);
-
     context = getApplicationContext();
 
+    setToolbar();
+
+    setDrawerLayoutListener();
+
+    setNavigationViewListener();
+
+    matchArraysWithResources();
+
+    initCards();
+
+    if(adapter == null) {
+      adapter = new MyCardViewAdapter(this, cardList);
+    }
+    recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
+    recyclerView.setAdapter(adapter);
+    recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+  }
+
+  public void setToolbar() {
     Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
     setSupportActionBar(toolbar);
     ActionBar actionbar = getSupportActionBar();
     actionbar.setDisplayHomeAsUpEnabled(true);
     actionbar.setHomeAsUpIndicator(R.drawable.ic_menu);
-    mDrawerLayout = (DrawerLayout) findViewById(R.id.activity_main_no_registered);
+  }
 
-    mDrawerLayout.addDrawerListener(
+  public void setDrawerLayoutListener() {
+    drawerLayout = (DrawerLayout) findViewById(R.id.activity_main_no_registered);
+    drawerLayout.addDrawerListener(
         new DrawerLayout.DrawerListener() {
           @Override
           public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
@@ -67,25 +88,27 @@ public class MainNoRegisteredActivity extends AppCompatActivity {
           }
         }
     );
+  }
 
+  public void setNavigationViewListener() {
     NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
     navigationView.setNavigationItemSelectedListener(
         new NavigationView.OnNavigationItemSelectedListener() {
           @Override
           public boolean onNavigationItemSelected(MenuItem menuItem) {
             menuItem.setChecked(true);
-            mDrawerLayout.closeDrawers();
+            drawerLayout.closeDrawers();
             int id = menuItem.getItemId();
 
             if (id == R.id.search_nav) {
               Intent intent = new Intent(MainNoRegisteredActivity.this, SearchSwipeActivity.class);
               startActivity(intent);
 
-            }else if (id == R.id.calculating_nav){
+            } else if (id == R.id.calculating_nav) {
 
-            }else if (id == R.id.timer_nav){
+            } else if (id == R.id.timer_nav) {
 
-            }else if (id == R.id.licences_nav) {
+            } else if (id == R.id.licences_nav) {
               Intent intent = new Intent(MainNoRegisteredActivity.this, LicensesActivity.class);
               startActivity(intent);
             }
@@ -95,37 +118,14 @@ public class MainNoRegisteredActivity extends AppCompatActivity {
 
         }
     );
+  }
 
+  public void matchArraysWithResources() {
     recipePhotos = getResources().obtainTypedArray(R.array.photo_list);
     recipeName = getResources().getStringArray(R.array.name_recipes_array);
     recipeAuthor = getResources().getStringArray(R.array.author_recipes_array);
     starsCount = getResources().getStringArray(R.array.stars_count_array);
     favoritesCount = getResources().getStringArray(R.array.favorites_count_array);
-
-    initCards();
-
-    if(adapter == null) {
-      adapter = new MyCardViewAdapter(this, cardList);
-    }
-    recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
-    recyclerView.setAdapter(adapter);
-    recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-  }
-
-  @Override
-  protected void onPause(){
-    super.onPause();
-  }
-
-  @Override
-  protected void onStop(){
-    super.onStop();
-  }
-
-  @Override
-  protected void onResume(){
-    super.onResume();
   }
 
   public void initCards() {
@@ -160,7 +160,7 @@ public class MainNoRegisteredActivity extends AppCompatActivity {
         Toast.makeText(this, "Kliknięto 'Najwyżej oceniane'", Toast.LENGTH_SHORT).show();
         return true;
       case android.R.id.home:
-        mDrawerLayout.openDrawer(GravityCompat.START);
+        drawerLayout.openDrawer(GravityCompat.START);
         return true;
       default:
         return super.onOptionsItemSelected(item);
