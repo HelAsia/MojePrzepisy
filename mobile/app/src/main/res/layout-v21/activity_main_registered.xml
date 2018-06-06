@@ -47,11 +47,12 @@
         android:layout_marginBottom="25dp"
         android:layout_marginEnd="25dp"
         android:clickable="true"
+        android:focusable="true"
         android:elevation="6dp"
         android:src="@android:drawable/ic_input_add"
         android:transitionName="fab_transition"
         android:tint="@android:color/white"
-        android:backgroundTint="@color/accent"/>
+        app:backgroundTint="@color/accent"/>
 
     </RelativeLayout>
   </FrameLayout>
