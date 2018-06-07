@@ -2,7 +2,6 @@ package com.moje.przepisy.mojeprzepisy;
 
 import android.animation.Animator;
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.os.Build.VERSION_CODES;
 import android.support.annotation.RequiresApi;
 import android.support.v7.widget.RecyclerView;

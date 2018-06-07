@@ -1,4 +1,4 @@
-package com.moje.przepisy.mojeprzepisy;
+package com.moje.przepisy.mojeprzepisy.register;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +8,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import com.moje.przepisy.mojeprzepisy.MainRegisteredActivity;
+import com.moje.przepisy.mojeprzepisy.R;
 
 public class RegisterActivity extends AppCompatActivity {
   @BindView(R.id.register_action_button) Button registerButton;

@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.Button;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import com.moje.przepisy.mojeprzepisy.login.LoginActivityView;
+import com.moje.przepisy.mojeprzepisy.register.RegisterActivity;
 
 public class HomePage extends AppCompatActivity {
   @BindView(R.id.register_button) Button registerButton;
@@ -32,7 +34,7 @@ public class HomePage extends AppCompatActivity {
     loginButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        Intent intent = new Intent(HomePage.this, LoginActivity.class);
+        Intent intent = new Intent(HomePage.this, LoginActivityView.class);
         startActivity(intent);
         HomePage.this.finish();
       }
