@@ -52,4 +52,8 @@
   <string name="pork_chop_URL">http://karczmazabidwor.pl/files/page/zdjecia/potrawy/kotlet-%20schabowy.jpg</string>
   <string name="ebony_cake_URL">https://static.smaker.pl/photos/d/1/d/d1dcfbf9ba4aef5303a5c707445a9813_359664_53c796b99161d_wm.jpg</string>
 
+  <string name="login_error_message">Podany login jest błędny!</string>
+  <string name="password_error_message">Podane hasło jest błędne</string>
+  <string name="login_password_error_message">Podany login oraz hasło są błędne</string>
+
 </resources>

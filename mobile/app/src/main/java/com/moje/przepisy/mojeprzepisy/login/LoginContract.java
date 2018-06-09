@@ -1,21 +1,35 @@
 package com.moje.przepisy.mojeprzepisy.login;
 
-import android.widget.CheckBox;
 import com.moje.przepisy.mojeprzepisy.BasePresenter;
 import com.moje.przepisy.mojeprzepisy.BaseView;
 
 public interface LoginContract {
 
   interface View extends BaseView<Presenter> {
-    void setLoginButton();
+
+    void navigateToMainRegisteredActivity();
+
     String getLogin();
+
     String getPassword();
-    boolean getCheckboxValue(CheckBox rememberedPassword);
+
+    boolean getCheckboxValue();
+
+    void showLoginError();
+
+    void showPasswordError();
+
+    void showLoginAndPasswordError();
+
+    void showProgress();
+
+    void hideProgress();
   }
 
   interface Presenter extends BasePresenter {
 
-    void setLoginData(String login, String password, boolean checkbox);
+    void validateCredentials(String login, String password);
 
+    void onDestroy();
   }
 }

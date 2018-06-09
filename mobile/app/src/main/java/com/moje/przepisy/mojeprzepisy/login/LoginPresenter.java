@@ -1,29 +1,59 @@
 package com.moje.przepisy.mojeprzepisy.login;
 
-public class LoginPresenter implements LoginContract.Presenter {
+import com.moje.przepisy.mojeprzepisy.data.UsersRepository;
 
-  private final LoginRepository loginRepository;
+public class LoginPresenter implements LoginContract.Presenter, UsersRepository.OnLoginFinishedListener {
 
-  private final LoginContract.View loginView;
+  private UsersRepository loginRepository;
+  private LoginContract.View loginView;
 
-  String login;
-
-  String password;
-
-  boolean checkbox;
-
-
-  @Override
-  public void start() {
-
+  public LoginPresenter(LoginContract.View loginView, UsersRepository loginRepository) {
+    this.loginView = loginView;
+    this.loginRepository = loginRepository;
   }
 
   @Override
-  public void setLoginData(String login, String password, boolean checkbox) {
+  public void validateCredentials(String login, String password) {
 
-    login.this = login;
-    password.this = password;
-    checkbox.this = checkbox;
+    if(loginView != null) {
+      loginView.showProgress();
+    }
+    loginRepository.login(login,password,this );
+  }
 
+  @Override
+  public void onDestroy() {
+    loginView = null;
+  }
+
+  @Override
+  public void onLoginError() {
+    if (loginView != null) {
+      loginView.showLoginError();
+      loginView.hideProgress();
+    }
+  }
+
+  @Override
+  public void onPasswordError() {
+    if (loginView != null) {
+      loginView.showPasswordError();
+      loginView.hideProgress();
+    }
+  }
+
+  @Override
+  public void onLoginAndPasswordError() {
+    if(loginView != null) {
+      loginView.showLoginAndPasswordError();
+      loginView.hideProgress();
+    }
+  }
+
+  @Override
+  public void onSuccess() {
+    if(loginView != null) {
+      loginView.navigateToMainRegisteredActivity();
+    }
   }
 }
