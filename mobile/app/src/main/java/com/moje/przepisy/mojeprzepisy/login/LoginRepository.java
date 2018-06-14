@@ -1,6 +1,6 @@
 package com.moje.przepisy.mojeprzepisy.login;
 
-import android.text.TextUtils;
+import android.util.Log;
 import com.moje.przepisy.mojeprzepisy.data.model.Message;
 import com.moje.przepisy.mojeprzepisy.data.model.User;
 import com.moje.przepisy.mojeprzepisy.data.network.UserAPI;
@@ -13,70 +13,33 @@ import retrofit2.Retrofit;
 public class LoginRepository implements LoginRepositoryInterface {
 
   private Retrofit retrofit;
-  private UserAPI userService;
+  private UserAPI userAPI;
 
   public LoginRepository(){
     this.retrofit = UserService.getRetrofitInstance();
-    this.userService = retrofit.create(UserAPI.class);
+    this.userAPI = retrofit.create(UserAPI.class);
   }
 
   @Override
   public void login(final String login, final String password, final OnLoginFinishedListener listener) {
-        if (TextUtils.isEmpty(login) && !TextUtils.isEmpty(password)) {
-          listener.onLoginError();
-        }
-
-        if (!TextUtils.isEmpty(login) && TextUtils.isEmpty(password)) {
-          listener.onPasswordError();
-        }
-
-        if(TextUtils.isEmpty(login) && TextUtils.isEmpty(password)) {
-          listener.onLoginAndPasswordError();
-        }
-
-        else {
-          if(checkIfLoginExist(login)){
-            if(checkIfPasswordIsCorrect(login, password)){
-
-              loginWorker(login,password);
-
-              listener.onSuccess();
-            }
-            listener.onPasswordError();
-          }
-          listener.onLoginAndPasswordError();
-        }
-  }
-
-  public void loginWorker(String login, String password){
 
     User user = new User(login, password);
-
-    Call<Message> resp = userService.login(user);
+    Call<Message> resp = userAPI.login(user);
 
     resp.enqueue(new Callback<Message>() {
-
       @Override
       public void onResponse(Call<Message> call, Response<Message> response) {
-
         Message msg = response.body();
-
+        listener.onSuccess();
+        Log.i("SERWER", "Serwer zwrocil kod: " + Integer.toString(msg.status));
+        Log.i("SERWER", "Wiadomosc: " + msg.message);
       }
 
       @Override
       public void onFailure(Call<Message> call, Throwable t) {
-
+        Log.i("SERWER", t.getMessage());
+        listener.onLoginAndPasswordError();
       }
     });
-
-  }
-  @Override
-  public boolean checkIfLoginExist(String login) {
-    return true;
-  }
-
-  @Override
-  public boolean checkIfPasswordIsCorrect(String login, String password) {
-    return true;
   }
 }

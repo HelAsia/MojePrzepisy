@@ -18,12 +18,10 @@ public class LoginActivityView extends AppCompatActivity implements LoginContrac
 
   private LoginContract.Presenter presenter;
   @BindView(R.id.errorMessageTextView)TextView errorMessageTextView;
-  @BindView(R.id.Login_progressBar) ProgressBar progressBar;
   @BindView(R.id.login_action_button) Button loginButton;
   @BindView(R.id.login_editText) EditText loginEditText;
   @BindView(R.id.password_editText) EditText passwordEditText;
   @BindView(R.id.remember_password_checkBox) CheckBox rememberPasswordCheckbox;
-
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -40,27 +38,6 @@ public class LoginActivityView extends AppCompatActivity implements LoginContrac
   @Override protected  void onDestroy() {
     presenter.onDestroy();
     super.onDestroy();
-  }
-
-  @Override
-  public void showProgress() {
-    progressBar.setVisibility(View.VISIBLE);
-  }
-
-  @Override
-  public void hideProgress() {
-    progressBar.setVisibility(View.GONE);
-  }
-
-  @Override
-  public void showLoginError() {
-    errorMessageTextView.setText(getString(R.string.login_error_message));
-
-  }
-
-  @Override
-  public void showPasswordError() {
-    errorMessageTextView.setText(getString(R.string.password_error_message));
   }
 
   @Override

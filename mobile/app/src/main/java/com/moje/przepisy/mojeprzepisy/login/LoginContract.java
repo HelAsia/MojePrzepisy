@@ -10,15 +10,7 @@ public interface LoginContract {
 
     String getPassword();
 
-    void showLoginError();
-
-    void showPasswordError();
-
     void showLoginAndPasswordError();
-
-    void showProgress();
-
-    void hideProgress();
   }
 
   interface Presenter {

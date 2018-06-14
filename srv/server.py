@@ -39,13 +39,14 @@ def show_post(post_id):
 def get_tasks():
     return jsonify({'tasks' : tasks})
 
-@app.route('/login', methods = ['POST'])
-def login():
-    username = request.args.get('login', '')
-    password = request.args.get('password', '')
+@app.route('/login', methods=['POST'])
+def login_method():
+    login = request.args.get('login','')
+    password = request.args.get('password','')
     return jsonify({
         'status': 200,
-        'message': 'Przekazano login={}, haslo={}'.format(username, password)
+        'login': login,
+        'message': 'Przekazano login={}, password={}'.format(login, password)
     })
 
 if __name__ == '__main__':
