@@ -1,6 +1,6 @@
-package com.moje.przepisy.mojeprzepisy.data;
+package com.moje.przepisy.mojeprzepisy.login;
 
-public interface UsersRepositoryInterface {
+public interface LoginRepositoryInterface {
 
   interface OnLoginFinishedListener {
     void onLoginError();
@@ -10,10 +10,6 @@ public interface UsersRepositoryInterface {
     void onLoginAndPasswordError();
 
     void onSuccess();
-  }
-
-  interface OnRegisterFinishedListener {
-
   }
 
   void login(String login, String password, OnLoginFinishedListener listener);

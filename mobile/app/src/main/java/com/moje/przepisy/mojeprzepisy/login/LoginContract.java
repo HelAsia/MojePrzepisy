@@ -1,19 +1,14 @@
 package com.moje.przepisy.mojeprzepisy.login;
 
-import com.moje.przepisy.mojeprzepisy.BasePresenter;
-import com.moje.przepisy.mojeprzepisy.BaseView;
-
 public interface LoginContract {
 
-  interface View extends BaseView<Presenter> {
+  interface View {
 
     void navigateToMainRegisteredActivity();
 
     String getLogin();
 
     String getPassword();
-
-    boolean getCheckboxValue();
 
     void showLoginError();
 
@@ -26,7 +21,7 @@ public interface LoginContract {
     void hideProgress();
   }
 
-  interface Presenter extends BasePresenter {
+  interface Presenter {
 
     void validateCredentials(String login, String password);
 

@@ -1,10 +1,7 @@
 package com.moje.przepisy.mojeprzepisy.login;
 
 import android.content.Intent;
-import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -16,7 +13,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.moje.przepisy.mojeprzepisy.MainRegisteredActivity;
 import com.moje.przepisy.mojeprzepisy.R;
-import com.moje.przepisy.mojeprzepisy.data.UsersRepository;
 
 public class LoginActivityView extends AppCompatActivity implements LoginContract.View, View.OnClickListener{
 
@@ -38,7 +34,7 @@ public class LoginActivityView extends AppCompatActivity implements LoginContrac
 
     loginButton.setOnClickListener(this);
 
-    presenter = new LoginPresenter(this, new UsersRepository());
+    presenter = new LoginPresenter(this, new LoginRepository());
   }
 
   @Override protected  void onDestroy() {
@@ -53,7 +49,6 @@ public class LoginActivityView extends AppCompatActivity implements LoginContrac
 
   @Override
   public void hideProgress() {
-
     progressBar.setVisibility(View.GONE);
   }
 
@@ -87,29 +82,16 @@ public class LoginActivityView extends AppCompatActivity implements LoginContrac
 
   @Override
   public String getLogin() {
-    String loginString = loginEditText.getText().toString();
-    return loginString;
+    return loginEditText.getText().toString();
   }
 
   @Override
   public String getPassword() {
-    String passwordString = passwordEditText.getText().toString();
-    return passwordString;
-  }
-
-  @Override
-  public boolean getCheckboxValue() {
-    return rememberPasswordCheckbox.isChecked();
+    return passwordEditText.getText().toString();
   }
 
   @Override
   public void onResume() {
     super.onResume();
-  }
-
-
-  @Override
-  public void setPresenter(@NonNull LoginContract.Presenter presenter) {
-    this.presenter = presenter;
   }
 }

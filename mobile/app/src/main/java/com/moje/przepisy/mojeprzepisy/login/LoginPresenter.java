@@ -1,24 +1,21 @@
 package com.moje.przepisy.mojeprzepisy.login;
 
-import com.moje.przepisy.mojeprzepisy.data.UsersRepository;
+public class LoginPresenter implements LoginContract.Presenter, LoginRepository.OnLoginFinishedListener {
 
-public class LoginPresenter implements LoginContract.Presenter, UsersRepository.OnLoginFinishedListener {
-
-  private UsersRepository loginRepository;
+  private LoginRepository loginRepository;
   private LoginContract.View loginView;
 
-  public LoginPresenter(LoginContract.View loginView, UsersRepository loginRepository) {
+  public LoginPresenter(LoginContract.View loginView, LoginRepository loginRepository) {
     this.loginView = loginView;
     this.loginRepository = loginRepository;
   }
 
   @Override
   public void validateCredentials(String login, String password) {
-
     if(loginView != null) {
-      loginView.showProgress();
     }
     loginRepository.login(login,password,this );
+    loginView.showProgress();
   }
 
   @Override
