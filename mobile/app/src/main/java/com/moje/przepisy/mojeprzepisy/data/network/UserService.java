@@ -10,6 +10,7 @@ public class UserService {
 
   public static Retrofit getRetrofitInstance(){
     if(retrofit == null){
+
       retrofit = new retrofit2.Retrofit.Builder()
           .baseUrl(Constant.BASE_URL)
           .addConverterFactory(GsonConverterFactory.create())

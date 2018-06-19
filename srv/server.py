@@ -1,53 +1,49 @@
 #!flask/bin/python
 from flask import Flask, jsonify, request
+import sys
 
+# My libraries
+from Constans import *
+from Database import *
+from Users import *
+
+
+# Global definitions
 app = Flask(__name__)
+database = None
 
-tasks = [
-    {
-        'id': 1,
-        'title': u'Buy groceries',
-        'description': u'Milk, Cheese, Pizza, Fruit, Tylenol',
-        'done': False
-    },
-    {
-        'id': 2,
-        'title': u'Learn Python',
-        'description': u'Need to find a good Python tutorial on the web',
-        'done': False
-    }
-]
 
+# Code
 @app.route('/')
 def index():
     return 'This is the home page.'
 
-@app.route('/something')
-def something():
-    return 'You showed something'
 
-@app.route('/profile/<username>')
-def profile(username):
-    return 'Hey there %s' % username
-
-@app.route('/post/<int:post_id>')
-def show_post(post_id):
-    return 'Post ID is %s' %post_id
-
-
-@app.route('/todo/api/v1.0/tasks', methods=['GET'])
-def get_tasks():
-    return jsonify({'tasks' : tasks})
-
-@app.route('/login', methods=['POST'])
+@app.route('/user/login', methods=['POST'])
 def login_method():
-    login = request.args.get('login','')
-    password = request.args.get('password','')
+    user = Users()
+    params = request.get_json()
+
+    login = params.get('login')
+    password = params.get('password')
+
+    status, message = user.login(login,password)
+
     return jsonify({
-        'status': 200,
-        'login': login,
-        'message': 'Przekazano login={}, password={}'.format(login, password)
+        'status': status,
+        'message': message
     })
 
-if __name__ == '__main__':
+
+def main():
+    global database
+    database = Database()
+    if not database.connection(host=HOST, user=USER, password=PASSWORD, db=DATABASE):
+        Logger.err("Database connection failed")
+        return
+
+    # This launches server
     app.run(debug=True)
+
+if __name__ == '__main__':
+    main()
