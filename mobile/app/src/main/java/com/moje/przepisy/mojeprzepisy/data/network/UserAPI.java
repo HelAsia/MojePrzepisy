@@ -8,7 +8,7 @@ import retrofit2.http.POST;
 
 public interface UserAPI {
 
-  @POST("/login")
+  @POST("/user/login")
   Call<Message> login(@Body User user);
 
   @POST("/register")

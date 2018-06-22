@@ -21,7 +21,7 @@ def index():
 
 @app.route('/user/login', methods=['POST'])
 def login_method():
-    user = Users()
+    user = Users(database)
     params = request.get_json()
 
     login = params.get('login')
@@ -38,12 +38,13 @@ def login_method():
 def main():
     global database
     database = Database()
-    if not database.connection(host=HOST, user=USER, password=PASSWORD, db=DATABASE):
+    if not database.connection(host=HOST, user=USER, db=DATABASE):
         Logger.err("Database connection failed")
         return
 
     # This launches server
     app.run(debug=True)
+
 
 if __name__ == '__main__':
     main()

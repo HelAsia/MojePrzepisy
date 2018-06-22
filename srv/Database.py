@@ -10,11 +10,10 @@ class Database:
     def __init__(self):
         pass
 
-    def connection(self, host, user, password, db):
+    def connection(self, host, user, db):
         try:
             self.databaseConnection = MySQLdb.connect(host=host,
-                                                      user = user,
-                                                      password=password,
+                                                      user=user,
                                                       db=db)
 
             self.databaseConnection.set_character_set('utf8')

@@ -1,4 +1,4 @@
-from Database import *
+from Logger import *
 
 
 class Users:
@@ -18,7 +18,10 @@ class Users:
                 u"FROM users " \
                 u"WHERE user_login = '{}' AND user_password = '{}'".format(login, password)
 
-        self.database.query(query)
-
-        return 200, u'Przekazano login={}, password={}'.format(login, password)
+        query_result = self.database.query(query)
+        if query_result:
+            Logger.dbg(str(tuple(query_result)))
+            return 200, u'Forwarded login={} and password={}'.format(login, password)
+        else:
+            return 404, u'Forwarded login or password do not exist'
 
