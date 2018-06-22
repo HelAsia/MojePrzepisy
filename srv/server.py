@@ -19,7 +19,7 @@ def index():
     return 'This is the home page.'
 
 
-@app.route('/user/login', methods=['POST'])
+@app.route('/user/login', methods=['POST',])
 def login_method():
     user = Users(database)
     params = request.get_json()
@@ -27,7 +27,7 @@ def login_method():
     login = params.get('login')
     password = params.get('password')
 
-    status, message = user.login(login,password)
+    status, message = user.loginUser(login,password)
 
     return jsonify({
         'status': status,
@@ -35,6 +35,44 @@ def login_method():
     })
 
 
+@app.route('/user/profile', methods=['PUT', 'GET', 'DELETE', 'POST'])
+def profile_method():
+    user = Users(database)
+    params = request.get_json()
+
+    login = params.get('login')
+    password = params.get('password')
+
+    if request.method == 'PUT':
+        firstName = params.get('firstName')
+        lastName = params.get('lastName')
+        email = params.get('email')
+
+        status, message = user.registerUser(login, password, firstName, lastName, email)
+
+        return jsonify({
+            'status': status,
+            'message': message
+        })
+    elif request.method == 'GET':
+        status, message = user.getUser(login, password)
+        return jsonify({
+            'status': status,
+            'message': message
+        })
+    elif request.method == 'DELETE':
+        status, message = user.deleteUser(login, password)
+        return jsonify({
+            'status': status,
+            'message': message
+        })
+    elif request.method == 'POST':
+        return jsonify({
+            'status': status,
+            'message': message
+        })
+
+    
 def main():
     global database
     database = Database()
