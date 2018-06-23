@@ -4,11 +4,11 @@ import sys
 class Logger:
     @staticmethod
     def _out(x):
-        sys.stderr.write(x + '\n')
+        sys.stderr.write(str(x) + '\n')
 
     @staticmethod
     def dbg(x):
-        sys.stderr.write('[dbg] ' + x + '\n')
+        sys.stderr.write('[dbg] ' + str(x) + '\n')
 
     @staticmethod
     def out(x):

@@ -12,9 +12,12 @@ class Database:
 
     def connection(self, host, user, db):
         try:
-            self.databaseConnection = MySQLdb.connect(host=host,
-                                                      user=user,
-                                                      db=db)
+            self.databaseConnection = MySQLdb.connect(
+                host=host,
+                user=user,
+                db=db,
+                cursorclass = MySQLdb.cursors.DictCursor
+            )
 
             self.databaseConnection.set_character_set('utf8')
 

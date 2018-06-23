@@ -1,5 +1,6 @@
 #!flask/bin/python
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, session
+import os
 import sys
 
 # My libraries
@@ -14,12 +15,30 @@ database = None
 
 
 # Code
+
+# Home
 @app.route('/')
-def index():
-    return 'This is the home page.'
+def home():
+    if not session.get('logged_in'):
+        status = 200
+        message = 'You are logged in'
+
+        return jsonify({
+            'status': status,
+            'message': message
+        })
+    else:
+        status = 404
+        message = 'You are not logged in'
+
+        return jsonify({
+            'status': status,
+            'message': message
+        })
 
 
-@app.route('/user/login', methods=['POST',])
+# Login session
+@app.route('/user/login', methods=['POST'])
 def login_method():
     user = Users(database)
     params = request.get_json()
@@ -27,7 +46,10 @@ def login_method():
     login = params.get('login')
     password = params.get('password')
 
-    status, message = user.loginUser(login,password)
+    status, message, userID = user.loginUser(login,password)
+    if status == 200:
+        session['logged_in'] = True
+        session['user_id'] = userID
 
     return jsonify({
         'status': status,
@@ -35,15 +57,24 @@ def login_method():
     })
 
 
+# Logout session
+@app.route('/user/logout', methods=['GET'])
+def logout_method():
+    session['logged_in'] = False
+    return home()
+
+
+# Operations performed on the profile
 @app.route('/user/profile', methods=['PUT', 'GET', 'DELETE', 'POST'])
 def profile_method():
     user = Users(database)
-    params = request.get_json()
+    userID = session['user_id']
 
-    login = params.get('login')
-    password = params.get('password')
-
+    # Register
     if request.method == 'PUT':
+        params = request.get_json()
+        login = params.get('login')
+        password = params.get('password')
         firstName = params.get('firstName')
         lastName = params.get('lastName')
         email = params.get('email')
@@ -54,25 +85,39 @@ def profile_method():
             'status': status,
             'message': message
         })
+    # Show user data
     elif request.method == 'GET':
-        status, message = user.getUser(login, password)
+        status, message = user.getUser(userID)
+
+        if status == 200:
+            session['logged_in'] = True
+
         return jsonify({
             'status': status,
             'message': message
         })
+    # Delete user
     elif request.method == 'DELETE':
         status, message = user.deleteUser(login, password)
+
+        if status == 200:
+            session['logged_in'] = True
+
         return jsonify({
             'status': status,
             'message': message
         })
+    # Edit user
     elif request.method == 'POST':
+
+        if status == 200:
+            session['logged_in'] = True
         return jsonify({
             'status': status,
             'message': message
         })
 
-    
+
 def main():
     global database
     database = Database()
@@ -81,6 +126,7 @@ def main():
         return
 
     # This launches server
+    app.secret_key = os.urandom(12)
     app.run(debug=True)
 
 
