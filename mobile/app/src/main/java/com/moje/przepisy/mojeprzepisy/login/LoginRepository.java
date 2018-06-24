@@ -38,9 +38,6 @@ public class LoginRepository implements LoginRepositoryInterface {
         }else if (msg.status == 404){
           listener.onLoginAndPasswordError();
         }
-
-
-
       }
 
       @Override

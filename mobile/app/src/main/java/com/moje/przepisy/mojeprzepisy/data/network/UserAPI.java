@@ -11,8 +11,8 @@ public interface UserAPI {
   @POST("/user/login")
   Call<Message> login(@Body User user);
 
-  @POST("/register")
-  Call<Message> register(@Body User user);
+  @POST("/user/logout")
+  Call<Message> logout(@Body User user);
 
 
 }

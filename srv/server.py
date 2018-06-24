@@ -8,34 +8,12 @@ from Constans import *
 from Database import *
 from Users import *
 
-
 # Global definitions
 app = Flask(__name__)
 database = None
 
 
 # Code
-
-# Home
-@app.route('/')
-def home():
-    if not session.get('logged_in'):
-        status = 200
-        message = 'You are logged in'
-
-        return jsonify({
-            'status': status,
-            'message': message
-        })
-    else:
-        status = 404
-        message = 'You are not logged in'
-
-        return jsonify({
-            'status': status,
-            'message': message
-        })
-
 
 # Login session
 @app.route('/user/login', methods=['POST'])
@@ -46,7 +24,8 @@ def login_method():
     login = params.get('login')
     password = params.get('password')
 
-    status, message, userID = user.loginUser(login,password)
+    status, message, userID = user.loginUser(login, password)
+
     if status == 200:
         session['logged_in'] = True
         session['user_id'] = userID
@@ -60,8 +39,14 @@ def login_method():
 # Logout session
 @app.route('/user/logout', methods=['GET'])
 def logout_method():
-    session['logged_in'] = False
-    return home()
+    session.pop('user_id', None)
+    session.pop('logged_in', None)
+    session.clear()
+
+    return jsonify({
+        'status': 200,
+        'message': 'You are logged out'
+    })
 
 
 # Operations performed on the profile
@@ -72,6 +57,7 @@ def profile_method():
     # Register
     if request.method == 'PUT':
         params = request.get_json()
+
         login = params.get('login')
         password = params.get('password')
         firstName = params.get('firstName')
