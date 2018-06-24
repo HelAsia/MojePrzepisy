@@ -30,8 +30,8 @@ public class LoginRepository implements LoginRepositoryInterface {
       @Override
       public void onResponse(Call<Message> call, Response<Message> response) {
         Message msg = response.body();
-        Log.i("SERWER", "Serwer zwrocil kod: " + Integer.toString(msg.status));
-        Log.i("SERWER", "Wiadomosc: " + msg.message);
+        Log.i("SERVER", "Server return code: " + Integer.toString(msg.status));
+        Log.i("SERVER", "Message: " + msg.message);
 
         if (msg.status == 200){
           listener.onSuccess();

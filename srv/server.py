@@ -68,7 +68,6 @@ def logout_method():
 @app.route('/user/profile', methods=['PUT', 'GET', 'DELETE', 'POST'])
 def profile_method():
     user = Users(database)
-    userID = session['user_id']
 
     # Register
     if request.method == 'PUT':
@@ -87,21 +86,10 @@ def profile_method():
         })
     # Show user data
     elif request.method == 'GET':
-        status, message = user.getUser(userID)
-
-        if status == 200:
-            session['logged_in'] = True
-
-        return jsonify({
-            'status': status,
-            'message': message
-        })
+        return jsonify(user.getUser(session['user_id']))
     # Delete user
     elif request.method == 'DELETE':
         status, message = user.deleteUser(login, password)
-
-        if status == 200:
-            session['logged_in'] = True
 
         return jsonify({
             'status': status,
@@ -110,8 +98,6 @@ def profile_method():
     # Edit user
     elif request.method == 'POST':
 
-        if status == 200:
-            session['logged_in'] = True
         return jsonify({
             'status': status,
             'message': message

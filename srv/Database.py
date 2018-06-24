@@ -1,4 +1,5 @@
 import MySQLdb
+import MySQLdb.cursors
 
 from Logger import *
 
@@ -16,7 +17,7 @@ class Database:
                 host=host,
                 user=user,
                 db=db,
-                cursorclass = MySQLdb.cursors.DictCursor
+                cursorclass=MySQLdb.cursors.DictCursor
             )
 
             self.databaseConnection.set_character_set('utf8')
@@ -40,8 +41,10 @@ class Database:
             self.databaseCursor.execute(query)
             result = self.databaseCursor.fetchall()
 
+            num = 0
             for row in result:
-                Logger.dbg(row[0])
+                num += 1
+                Logger.dbg('Row {}.:'.format(num) + str(row))
 
             return result
 
