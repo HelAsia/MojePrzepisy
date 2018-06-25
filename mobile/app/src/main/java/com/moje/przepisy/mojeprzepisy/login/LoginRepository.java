@@ -1,10 +1,11 @@
 package com.moje.przepisy.mojeprzepisy.login;
 
+import android.content.Context;
 import android.util.Log;
 import com.moje.przepisy.mojeprzepisy.data.model.Message;
 import com.moje.przepisy.mojeprzepisy.data.model.User;
 import com.moje.przepisy.mojeprzepisy.data.network.UserAPI;
-import com.moje.przepisy.mojeprzepisy.data.network.UserService;
+import com.moje.przepisy.mojeprzepisy.data.network.RetrofitSingleton;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -15,8 +16,8 @@ public class LoginRepository implements LoginRepositoryInterface {
   private Retrofit retrofit;
   private UserAPI userAPI;
 
-  public LoginRepository(){
-    this.retrofit = UserService.getRetrofitInstance();
+  public LoginRepository(Context context){
+    this.retrofit = RetrofitSingleton.getRetrofitInstance(context);
     this.userAPI = retrofit.create(UserAPI.class);
   }
 

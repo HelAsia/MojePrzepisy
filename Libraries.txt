@@ -1,0 +1,23 @@
+Used licenses or libraies:
+
+- tsuharesu/AddCookiesInterceptor.java
+https://gist.github.com/tsuharesu/cbfd8f02d46498b01f1b
+
+- com.android.support:design:27.1.1
+    
+- com.android.support:cardview-v7:27.1.1
+    
+- com.android.support:recyclerview-v7:27.1.1
+
+- Butter Knife Library by Jake Wharton
+com.jakewharton:butterknife:8.8.1
+
+- Picasso Library
+com.squareup.picasso:picasso:2.71828
+
+- Retrofit Library
+com.squareup.retrofit2:retrofit:2.3.0
+com.squareup.retrofit2:converter-gson:2.3.0
+
+- OkHttp Library
+com.squareup.okhttp3:okhttp:3.10.0

@@ -8,4 +8,6 @@ public class Constant {
   //Burp version
  public static final String BASE_URL = "http://serwer_testowy:5000/";
 
+ public static final String PREF_COOKIES = "PREF_COOKIES";
+
 }

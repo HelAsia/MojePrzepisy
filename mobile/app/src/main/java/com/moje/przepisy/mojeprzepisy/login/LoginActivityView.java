@@ -32,7 +32,7 @@ public class LoginActivityView extends AppCompatActivity implements LoginContrac
 
     loginButton.setOnClickListener(this);
 
-    presenter = new LoginPresenter(this, new LoginRepository());
+    presenter = new LoginPresenter(this, new LoginRepository(getApplicationContext()));
   }
 
   @Override protected  void onDestroy() {
