@@ -51,3 +51,5 @@ mobile/.externalNativeBuild
 /srv/.idea/modules.xml
 /srv/.idea/workspace.xml
 /misc/*
+
+srv/*.pyc
