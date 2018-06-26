@@ -1,5 +1,8 @@
 #!flask/bin/python
+
+from functools import wraps
 from flask import Flask, jsonify, request, session
+
 import os
 import sys
 
@@ -7,13 +10,55 @@ import sys
 from Constans import *
 from Database import *
 from Users import *
+from Session import *
 
 # Global definitions
 app = Flask(__name__)
 database = None
 
 
-# Code
+# -----------------------------
+# Utilities
+
+def authorized(f):
+    '''
+        This is a helpful decorator to be used when user's authentication
+    should be enforced upon entering endpoint's route. It does it's job by
+    creating Session's object and validating that session.
+
+    returns:
+        If session is valid - the decorated function becomes called and it's
+        value is returned.
+
+        Otherwise, the Unauthorized JSON is returned:
+            {
+                "status": 401,
+                "message": "Unauthorized. Please login first."
+            }
+    '''
+
+    @wraps(f)
+    def validator(*args, **kwargs):
+        sess = Session(session, database)
+        if not sess.validate_session():
+            Logger.fail('@authorized: User not authenticated.')
+            return jsonify({
+                'status': 401,
+                'message': 'Unauthorized. Please login first.'
+            })
+        else:
+            Logger.ok('@authorized: User authenticated.')
+            return f(*args, **kwargs)
+
+    return validator
+
+def get_user_id():
+    sess = Session(session, database)
+    return sess.get_user_id()
+
+
+# -----------------------------
+# Server code
 
 # Login session
 @app.route('/user/login', methods=['POST'])
@@ -27,8 +72,8 @@ def login_method():
     status, message, userID = user.loginUser(login, password)
 
     if status == 200:
-        session['logged_in'] = True
-        session['user_id'] = userID
+        sess = Session(session, database)
+        sess.create_session(userID)
 
         Logger.dbg('login(): userID = {}'.format(str(userID)))
         Logger.ok('User "{}" has been logged.'.format(login))
@@ -44,9 +89,8 @@ def login_method():
 # Logout session
 @app.route('/user/logout', methods=['GET'])
 def logout_method():
-    session.pop('user_id', None)
-    session.pop('logged_in', None)
-    session.clear()
+    sess = Session(session, database)
+    sess.destroy_session()
 
     return jsonify({
         'status': 200,
@@ -56,6 +100,7 @@ def logout_method():
 
 # Operations performed on the profile
 @app.route('/user/profile', methods=['PUT', 'GET', 'DELETE', 'POST'])
+@authorized
 def profile_method():
     user = Users(database)
 
@@ -75,10 +120,11 @@ def profile_method():
             'status': status,
             'message': message
         })
+
     # Show user data
     elif request.method == 'GET':
-        #return jsonify(user.getUser(session['user_id']))
-        return jsonify({})
+        return jsonify(user.getUser(get_user_id()))
+
     # Delete user
     elif request.method == 'DELETE':
         status, message = user.deleteUser(login, password)
