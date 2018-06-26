@@ -44,8 +44,9 @@ class Database:
             Logger.err("Database connection failed: " + str(e))
             return False
 
-    def query(self,query):
-        Logger.dbg(query)
+    def query(self, query):
+        Logger.dbg('SQL query: "{}"'.format(query))
+
         try:
             self.databaseCursor.execute(query)
             result = self.databaseCursor.fetchall()
@@ -53,7 +54,7 @@ class Database:
             num = 0
             for row in result:
                 num += 1
-                Logger.dbg('Row {}.:'.format(num) + str(row))
+                Logger.dbg('Row {}.: '.format(num) + str(row))
 
             return result
 
@@ -61,3 +62,23 @@ class Database:
             Logger.err(e)
 
             return False
+
+    def insert(self, query):
+        Logger.dbg('SQL query: "{}"'.format(query))
+
+        try:
+            res = self.databaseCursor.execute(query)
+
+            # Commit new records to the database
+            result = self.databaseConnection.commit()
+            return res
+
+        except (MySQLdb.Error, MySQLdb.Error) as e:
+            Logger.err(e)
+
+            # Rollback introduced changes
+            self.databaseConnection.rollback()
+            return 0
+
+    def delete(self, query):
+        return self.insert(query)
