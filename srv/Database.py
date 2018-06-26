@@ -11,14 +11,23 @@ class Database:
     def __init__(self):
         pass
 
-    def connection(self, host, user, db):
+    def connection(self, host, user, password, db):
         try:
-            self.databaseConnection = MySQLdb.connect(
-                host=host,
-                user=user,
-                db=db,
-                cursorclass=MySQLdb.cursors.DictCursor
-            )
+            if password:
+                self.databaseConnection = MySQLdb.connect(
+                    host=host,
+                    user=user,
+                    passwd=password,
+                    db=db,
+                    cursorclass=MySQLdb.cursors.DictCursor
+                )
+            else:
+                self.databaseConnection = MySQLdb.connect(
+                    host=host,
+                    user=user,
+                    db=db,
+                    cursorclass=MySQLdb.cursors.DictCursor
+                )
 
             self.databaseConnection.set_character_set('utf8')
 
@@ -32,7 +41,7 @@ class Database:
             return True
 
         except (MySQLdb.Error, MySQLdb.Error) as e:
-            Logger.err(e)
+            Logger.err("Database connection failed: " + str(e))
             return False
 
     def query(self,query):
