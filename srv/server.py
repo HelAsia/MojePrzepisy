@@ -30,6 +30,11 @@ def login_method():
         session['logged_in'] = True
         session['user_id'] = userID
 
+        Logger.dbg('login(): userID = {}'.format(str(userID)))
+        Logger.ok('User "{}" has been logged.'.format(login))
+    else:
+        Logger.fail('Could not authenticate user: "{}"'.format(login))
+
     return jsonify({
         'status': status,
         'message': message
@@ -45,7 +50,7 @@ def logout_method():
 
     return jsonify({
         'status': 200,
-        'message': 'You are logged out'
+        'message': 'You have been logged out.'
     })
 
 
@@ -82,9 +87,9 @@ def profile_method():
             'status': status,
             'message': message
         })
+
     # Edit user
     elif request.method == 'POST':
-
         return jsonify({
             'status': status,
             'message': message
@@ -94,14 +99,13 @@ def profile_method():
 def main():
     global database
     database = Database()
-    if not database.connection(host=HOST, user=USER, db=DATABASE):
+    if not database.connection(host=HOST, user=USER, password=PASSWORD, db=DATABASE):
         Logger.err("Database connection failed")
         return
 
     # This launches server
-    app.secret_key = os.urandom(12)
+    app.secret_key = os.urandom(32)
     app.run(debug=True)
-
 
 if __name__ == '__main__':
     main()
