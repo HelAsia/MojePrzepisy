@@ -22,7 +22,6 @@ class Users:
         query_result = self.database.query(query)
 
         if query_result:
-            Logger.dbg(query_result)
             return 200, u'You are logged in', query_result[0]['user_id']
         else:
             return 404, u'Login or password do not exist', None
