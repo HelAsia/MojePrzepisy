@@ -72,8 +72,8 @@ def profile_method():
         })
     # Show user data
     elif request.method == 'GET':
-        #return jsonify(user.getUser(session['user_id']))
-        return jsonify({})
+        return jsonify(user.getUser(session['user_id']))
+        #return jsonify({})
     # Delete user
     elif request.method == 'DELETE':
         status, message = user.deleteUser(login, password)

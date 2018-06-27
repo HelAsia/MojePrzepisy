@@ -7,10 +7,19 @@ public class User {
   private String login;
   private String password;
   private String email;
+  private String userID;
 
   public User(String login, String password){
     this.login = login;
     this.password = password;
+  }
+
+  public User(){
+
+  }
+
+  public User(String userID){
+    this.userID = userID;
   }
 
   public User(String name, String lastName, String login, String password,
@@ -60,5 +69,13 @@ public class User {
 
   public void setEmail(String email){
     this.email = email;
+  }
+
+  public String getUserID(){
+    return userID;
+  }
+
+  public void setUserID(String userID){
+    this.userID = userID;
   }
 }
