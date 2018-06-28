@@ -45,7 +45,7 @@ class Database:
             return False
 
     def query(self, query):
-        Logger.dbg('SQL query: "{}"'.format(query))
+        Logger.dbg(u'SQL query: "{}"'.format(query))
 
         try:
             self.databaseCursor.execute(query)
@@ -54,6 +54,7 @@ class Database:
             num = 0
             for row in result:
                 num += 1
+                if num > 5: break
                 Logger.dbg('Row {}.: '.format(num) + str(row))
 
             return result

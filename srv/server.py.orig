@@ -52,7 +52,6 @@ def authorized(f):
 
     return validator
 
-
 def get_user_id():
     sess = Session(session, database)
     return sess.get_user_id()
@@ -124,8 +123,13 @@ def profile_method():
 
     # Show user data
     elif request.method == 'GET':
+<<<<<<< HEAD
+        return jsonify(user.getUser(session['user_id']))
+        #return jsonify({})
+=======
         return jsonify(user.getUser(get_user_id()))
 
+>>>>>>> d07381c7a940b79a3bb5e7a0d72049545ae5dc14
     # Delete user
     elif request.method == 'DELETE':
         status, message = user.deleteUser(login, password)
@@ -153,7 +157,6 @@ def main():
     # This launches server
     app.secret_key = os.urandom(32)
     app.run(debug=True)
-
 
 if __name__ == '__main__':
     main()

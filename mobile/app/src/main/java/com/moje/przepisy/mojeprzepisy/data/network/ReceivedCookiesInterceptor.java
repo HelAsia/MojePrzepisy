@@ -3,6 +3,7 @@ package com.moje.przepisy.mojeprzepisy.data.network;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import com.moje.przepisy.mojeprzepisy.utils.Constant;
 import java.io.IOException;
 import java.util.HashSet;
@@ -24,8 +25,10 @@ public class ReceivedCookiesInterceptor implements Interceptor{
       HashSet<String> cookies = (HashSet<String>) PreferenceManager.getDefaultSharedPreferences(context)
           .getStringSet(Constant.PREF_COOKIES,new HashSet<String>());
 
-      for (String header : orginalResponse.headers("Set-Cookies")){
+
+      for (String header : orginalResponse.headers("Set-Cookie")){
         cookies.add(header);
+        Log.i("DEB","Received cookie: " + cookies);
       }
 
       SharedPreferences.Editor memes = PreferenceManager.getDefaultSharedPreferences(context).edit();

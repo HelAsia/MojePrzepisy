@@ -17,7 +17,7 @@ public interface UserAPI {
   Call<Message> logout(@Body User user);
 
   @GET("/user/profile")
-  Call<Message> getUser(@Body User user);
+  Call<Message> getUser();
 
 
 

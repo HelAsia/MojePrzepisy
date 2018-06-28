@@ -1,8 +1,8 @@
 package com.moje.przepisy.mojeprzepisy.welcome;
 
 import android.content.Context;
+import android.util.Log;
 import com.moje.przepisy.mojeprzepisy.data.model.Message;
-import com.moje.przepisy.mojeprzepisy.data.model.User;
 import com.moje.przepisy.mojeprzepisy.data.network.RetrofitSingleton;
 import com.moje.przepisy.mojeprzepisy.data.network.UserAPI;
 import retrofit2.Call;
@@ -21,20 +21,26 @@ public class WelcomeRepository implements WelcomeRepositoryInterface {
   }
 
   @Override
-  public void checkUser() {
+  public void checkUser(final OnLoggedListener loggedListener) {
 
-    User user = new User();
-    Call<Message> resp = userAPI.getUser(user);
+    Call<Message> resp = userAPI.getUser();
 
     resp.enqueue(new Callback<Message>() {
       @Override
       public void onResponse(Call<Message> call, Response<Message> response) {
         Message msg = response.body();
-        response.headers().get("S")
+        Log.i("SERVER", "Message: " + msg.message);
+
+        if(msg.status == 401){
+          loggedListener.onNotLogged();
+        }else{
+          loggedListener.onLogged();
+        }
       }
 
       @Override
       public void onFailure(Call<Message> call, Throwable t) {
+        Log.i("SERWER", t.getMessage());
 
       }
     });

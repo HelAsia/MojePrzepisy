@@ -11,7 +11,7 @@ public interface WelcomeContract {
 
   interface Presenter {
 
-    boolean validateCredentialsBeforeMainMenu(String userID);
+    void validateCredentialsBeforeMainMenu();
 
     void onDestroy();
   }

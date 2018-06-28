@@ -14,7 +14,7 @@ public class RetrofitSingleton {
   public static Retrofit getRetrofitInstance(Context context){
     if(retrofit == null){
 
-      OkHttpClient client = new OkHttpClient();
+      OkHttpClient client;
       OkHttpClient.Builder builder = new OkHttpClient.Builder();
 
       builder.addInterceptor(new AddCookiesInterceptor(context));

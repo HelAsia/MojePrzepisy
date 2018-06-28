@@ -13,8 +13,8 @@ public class LoginPresenter implements LoginContract.Presenter, LoginRepository.
   @Override
   public void validateCredentials(final String login, String password) {
     if(loginView != null) {
+      loginRepository.login(login, password, this);
     }
-    loginRepository.login(login,password,this );
   }
 
   @Override

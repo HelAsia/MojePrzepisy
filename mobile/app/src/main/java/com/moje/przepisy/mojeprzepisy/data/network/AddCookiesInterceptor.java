@@ -2,6 +2,7 @@ package com.moje.przepisy.mojeprzepisy.data.network;
 
 import android.content.Context;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import com.moje.przepisy.mojeprzepisy.utils.Constant;
 import java.io.IOException;
 import java.util.HashSet;
@@ -25,6 +26,7 @@ public class AddCookiesInterceptor implements Interceptor {
 
     for(String cookie : preferences) {
       builder.addHeader("Cookie", cookie);
+      Log.i("DEB","Using cookie in request: " + cookie);
     }
 
     return chain.proceed(builder.build());
