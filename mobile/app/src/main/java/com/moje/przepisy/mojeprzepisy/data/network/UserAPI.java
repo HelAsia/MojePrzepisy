@@ -19,6 +19,9 @@ public interface UserAPI {
   @GET("/user/profile")
   Call<Message> getUser();
 
+  @PUT("/user/profile")
+  Call<Message> register(@Body User user);
+
 
 
 

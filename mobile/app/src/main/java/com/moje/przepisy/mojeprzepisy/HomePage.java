@@ -8,7 +8,7 @@ import android.widget.Button;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.moje.przepisy.mojeprzepisy.login.LoginActivityView;
-import com.moje.przepisy.mojeprzepisy.register.RegisterActivity;
+import com.moje.przepisy.mojeprzepisy.register.RegisterActivityView;
 
 public class HomePage extends AppCompatActivity {
   @BindView(R.id.register_button) Button registerButton;
@@ -25,7 +25,7 @@ public class HomePage extends AppCompatActivity {
     registerButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        Intent intent = new Intent(HomePage.this, RegisterActivity.class);
+        Intent intent = new Intent(HomePage.this, RegisterActivityView.class);
         startActivity(intent);
         HomePage.this.finish();
       }

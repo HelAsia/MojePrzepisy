@@ -59,21 +59,12 @@
     android:layout_centerHorizontal="true"
     android:layout_centerVertical="true"
     android:id="@+id/password_editText"/>
-  <CheckBox
-    android:text="@string/remember_password"
-    android:background="@color/white_transparent"
-    android:textColor="@color/black"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_centerVertical="true"
-    android:layout_centerHorizontal="true"
-    android:id="@+id/remember_password_checkBox"/>
   <Button
     android:text="@string/login"
     android:background="@drawable/buttons"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_below="@+id/remember_password_checkBox"
+    android:layout_below="@+id/password_editText"
     android:layout_centerHorizontal="true"
     android:layout_marginTop="94dp"
     android:id="@+id/login_action_button"/>

@@ -6,7 +6,7 @@ DROP TABLE IF EXISTS sessions;
 
 CREATE TABLE users (
   user_id int(11) NOT NULL AUTO_INCREMENT,
-  user_login varchar(80) DEFAULT NULL,
+  user_login varchar(80) unique DEFAULT NULL,
   user_password varchar(80) DEFAULT NULL,
   first_name varchar(50) DEFAULT NULL,
   last_name varchar(50) DEFAULT NULL,

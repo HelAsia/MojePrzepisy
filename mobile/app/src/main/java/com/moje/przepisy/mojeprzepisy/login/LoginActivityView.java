@@ -21,7 +21,6 @@ public class LoginActivityView extends AppCompatActivity implements LoginContrac
   @BindView(R.id.login_action_button) Button loginButton;
   @BindView(R.id.login_editText) EditText loginEditText;
   @BindView(R.id.password_editText) EditText passwordEditText;
-  @BindView(R.id.remember_password_checkBox) CheckBox rememberPasswordCheckbox;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -41,13 +40,13 @@ public class LoginActivityView extends AppCompatActivity implements LoginContrac
   }
 
   @Override
-  public void showLoginAndPasswordError() {
-    errorMessageTextView.setText(getString(R.string.login_password_error_message));
+  public void onClick(View view) {
+    presenter.validateCredentials(getLogin(),getPassword());
   }
 
   @Override
-  public void onClick(View view) {
-    presenter.validateCredentials(getLogin(),getPassword());
+  public void showLoginAndPasswordError() {
+    errorMessageTextView.setText(getString(R.string.login_password_error_message));
   }
 
   @Override

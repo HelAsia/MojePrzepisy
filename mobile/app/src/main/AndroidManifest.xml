@@ -29,7 +29,7 @@
     </activity>
     <activity android:name=".HomePage">
     </activity>
-    <activity android:name=".register.RegisterActivity">
+    <activity android:name=".register.RegisterActivityView">
     </activity>
     <activity android:name=".login.LoginActivityView">
     </activity>
