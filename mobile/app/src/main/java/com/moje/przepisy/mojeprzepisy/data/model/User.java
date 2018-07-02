@@ -2,7 +2,7 @@ package com.moje.przepisy.mojeprzepisy.data.model;
 
 public class User {
 
-  private String name;
+  private String firstName;
   private String lastName;
   private String login;
   private String password;
@@ -22,9 +22,9 @@ public class User {
     this.userID = userID;
   }
 
-  public User(String name, String lastName, String login, String password,
+  public User(String firstName, String lastName, String login, String password,
       String email){
-    this.name = name;
+    this.firstName = firstName;
     this.lastName = lastName;
     this.login = login;
     this.password = password;
@@ -32,11 +32,11 @@ public class User {
   }
 
   public String getName(){
-    return name;
+    return firstName;
   }
 
   public void setName(String name){
-    this.name = name;
+    this.firstName = name;
   }
 
   public String getLastName(){

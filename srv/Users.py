@@ -28,13 +28,12 @@ class Users:
 
     def registerUser(self,login, password, firstName, lastName, email):
         query = u"INSERT INTO users " \
-                u"(login, password, first_name, last_name, email) " \
-                u"values '{}', '{}', '{}', '{}', '{}',".format(login, password, firstName, lastName, email)
+                u"(user_login, user_password, first_name, last_name, email) " \
+                u"values ('{}', '{}', '{}', '{}', '{}')".format(login, password, firstName, lastName, email)
 
-        query_result = self.database.query(query)
+        query_result = self.database.insert(query)
 
         if query_result:
-            Logger.dbg(str(tuple(query_result)))
             return 200, u'Registered login={},  password={}, first name={}, last name={}, email={}'.format(
                 login, password, firstName, lastName, email
             )

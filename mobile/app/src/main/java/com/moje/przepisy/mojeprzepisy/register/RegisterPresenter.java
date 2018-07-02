@@ -13,7 +13,9 @@ public class RegisterPresenter implements RegisterContract.Presenter, RegisterRe
   @Override
   public void validateCredentials(String name, String lastName, String login, String password,
       String email) {
-
+    if(registerView != null) {
+      registerRepository.register(name, lastName, login, password, email,this);
+    }
   }
 
   @Override
@@ -21,19 +23,28 @@ public class RegisterPresenter implements RegisterContract.Presenter, RegisterRe
     registerView = null;
   }
 
-
   @Override
   public void onLoginError() {
-
+    if(registerView != null) {
+      registerView.showLoginError();
+    }
   }
 
   @Override
   public void onPasswordOrEmailError() {
-
+    if(registerView != null) {
+      if(!registerView.getPassword().equals(registerView.getRepeatedPassword())){
+        registerView.showPasswordError();
+      }else if(!registerView.getEmail().equals(registerView.getRepeatedEmail())){
+        registerView.showEmailError();
+      }
+    }
   }
 
   @Override
   public void onSuccess() {
-
+    if(registerView != null) {
+      registerView.navigateToMainRegisteredActivity();
+    }
   }
 }

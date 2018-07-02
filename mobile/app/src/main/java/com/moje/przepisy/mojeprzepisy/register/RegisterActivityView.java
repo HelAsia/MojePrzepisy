@@ -58,7 +58,7 @@ public class RegisterActivityView extends AppCompatActivity implements RegisterC
 
   @Override
   public String getName() {
-    return nameEditText.getText().toString();;
+    return nameEditText.getText().toString();
   }
 
   @Override
@@ -98,8 +98,13 @@ public class RegisterActivityView extends AppCompatActivity implements RegisterC
   }
 
   @Override
-  public void showPasswordOrEmailError() {
-    errorMessageTextView.setText("Podany hasło lub mail nie są identyczn");
+  public void showPasswordError() {
+    errorMessageTextView.setText("Podane hasła nie są identyczne");
+  }
+
+  @Override
+  public void showEmailError() {
+    errorMessageTextView.setText("Podane emaile nie są identyczne");
   }
 
   @Override

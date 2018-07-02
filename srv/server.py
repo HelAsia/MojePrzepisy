@@ -99,31 +99,33 @@ def logout_method():
     })
 
 
+@app.route('/user/profile', methods=['PUT'])
+def registration():
+    user = Users(database)
+    params = request.get_json()
+
+    login = params.get('login')
+    password = params.get('password')
+    firstName = params.get('firstName')
+    lastName = params.get('lastName')
+    email = params.get('email')
+
+    status, message = user.registerUser(login, password, firstName, lastName, email)
+
+    return jsonify({
+        'status': status,
+        'message': message
+    })
+
+
 # Operations performed on the profile
-@app.route('/user/profile', methods=['PUT', 'GET', 'DELETE', 'POST'])
+@app.route('/user/profile', methods=['GET', 'DELETE', 'POST'])
 @authorized
 def profile_method():
     user = Users(database)
 
-    # Register
-    if request.method == 'PUT':
-        params = request.get_json()
-
-        login = params.get('login')
-        password = params.get('password')
-        firstName = params.get('firstName')
-        lastName = params.get('lastName')
-        email = params.get('email')
-
-        status, message = user.registerUser(login, password, firstName, lastName, email)
-
-        return jsonify({
-            'status': status,
-            'message': message
-        })
-
     # Show user data
-    elif request.method == 'GET':
+    if request.method == 'GET':
         return jsonify(user.getUser(get_user_id()))
 
     # Delete user

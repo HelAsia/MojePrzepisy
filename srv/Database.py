@@ -65,7 +65,7 @@ class Database:
             return False
 
     def insert(self, query):
-        Logger.dbg('SQL query: "{}"'.format(query))
+        Logger.dbg(u'SQL query: "{}"'.format(query))
 
         try:
             res = self.databaseCursor.execute(query)

@@ -22,7 +22,9 @@ public interface RegisterContract {
 
     void showLoginError();
 
-    void showPasswordOrEmailError();
+    void showEmailError();
+
+    void showPasswordError();
   }
 
   interface Presenter {
