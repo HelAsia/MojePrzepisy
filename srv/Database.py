@@ -65,6 +65,21 @@ class Database:
             return False
 
     def insert(self, query):
+        '''
+            Executes SQL query that is an INSERT statement.
+
+        params:
+            query 	SQL INSERT query
+
+        returns:
+                (boolean Status, int AffectedRows, string Message)
+
+            Where:
+                Status          - false on Error, true otherwise
+                AffectedRows    - number of affected rows or error code on failure
+                Message         - error message on failure, None otherwise
+        '''
+
         Logger.dbg(u'SQL query: "{}"'.format(query))
 
         try:
@@ -72,14 +87,14 @@ class Database:
 
             # Commit new records to the database
             result = self.databaseConnection.commit()
-            return res
+            return True, res, None
 
         except (MySQLdb.Error, MySQLdb.Error) as e:
             Logger.err(e)
 
             # Rollback introduced changes
             self.databaseConnection.rollback()
-            return 0
+            return False, e.args[0], e.args[1]
 
     def delete(self, query):
         return self.insert(query)

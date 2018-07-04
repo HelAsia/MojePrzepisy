@@ -103,6 +103,21 @@ public class RegisterActivityView extends AppCompatActivity implements RegisterC
   }
 
   @Override
+  public void showValidatePasswordError() {
+    errorMessageTextView.setText("Hasło musi zawierać małą literę, dużą literę i znak specjalny oraz musi mieć przynajmniej 8 znaków!");
+  }
+
+  @Override
+  public void showValidateEmailError() {
+    errorMessageTextView.setText("Podany email nie jest poprawny");
+  }
+
+  @Override
+  public void showOtherError(String message) {
+    errorMessageTextView.setText(message);
+  }
+
+  @Override
   public void showEmailError() {
     errorMessageTextView.setText("Podane emaile nie są identyczne");
   }

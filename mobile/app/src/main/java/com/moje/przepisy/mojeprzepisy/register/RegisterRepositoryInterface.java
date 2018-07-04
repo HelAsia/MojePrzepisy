@@ -6,9 +6,15 @@ public interface RegisterRepositoryInterface {
 
     void onLoginError();
 
-    void onPasswordOrEmailError();
+    boolean onPasswordOrEmailError();
+
+    boolean onValidatePasswordError(String password);
+
+    boolean onValidateEmailError(String email);
 
     void onSuccess();
+
+    void onOtherError(String message);
   }
 
   void register(String name, String lastName, String login, String password, String email, OnRegisterFinishedListener listener);

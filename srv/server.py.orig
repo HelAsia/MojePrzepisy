@@ -90,7 +90,7 @@ def login_method():
 @app.route('/user/logout', methods=['GET'])
 def logout_method():
     sess = Session(session, database)
-    sess.destroy_session()
+    sess.destroySession()
 
     return jsonify({
         'status': 200,

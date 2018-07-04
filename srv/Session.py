@@ -37,15 +37,14 @@ class Session:
     # Database connection handle.
     database = None
 
-    token_value = ''
-
+    tokenValue = ''
 
     def __init__(self, session, database):
         self.session = session
         self.database = database
 
         if Session.SESSION_TOKEN_NAME in session:
-            self.token_value = Session.sanitize_token(
+            self.tokenValue = Session.sanitize_token(
                 session[Session.SESSION_TOKEN_NAME]
             )
 
@@ -66,12 +65,12 @@ class Session:
             Token's value with every non-letter and non-digit character cut out.
         '''
 
-        new_token = ''
+        newToken = ''
         for c in token:
             if c in string.ascii_letters + string.digits:
-                new_token += c
+                newToken += c
 
-        return new_token
+        return newToken
 
     @staticmethod
     def _generate_token_value():
@@ -89,7 +88,7 @@ class Session:
         return now.strftime('%Y-%m-%d %H:%M:%S')
 
 
-    def create_session(self, user_id):
+    def create_session(self, userId):
         '''
             Creates new session's token by generating a new unique value for it,
         then clearing and setting Flask's session object and ultimately creating
@@ -102,29 +101,29 @@ class Session:
             True when succeeded, False otherwise.
         '''
 
-        user_id = abs(int(user_id))
+        userId = abs(int(userId))
 
         # Generate new, unique session token's value.
-        self.token_value = Session._generate_token_value()
+        self.tokenValue = Session._generate_token_value()
         created = Session._get_datetime()
 
         Logger.dbg('({}) Creating new session token for user {}: "{}"'.format(
-            created, user_id, self.token_value
+            created, userId, self.tokenValue
         ))
 
         # Clear any previous Flask's session contents.
         self.session.clear()
-        self.session[Session.SESSION_TOKEN_NAME] = self.token_value
+        self.session[Session.SESSION_TOKEN_NAME] = self.tokenValue
 
         query = u'INSERT INTO sessions (session_id, user_id, token, created) ' \
                 u"VALUES('{}', '{}', '{}', '{}')".format(
-                    0, user_id, self.token_value, created
+                    0, userId, self.tokenValue, created
                 )
 
         return self.database.insert(query) == 1
 
 
-    def destroy_session(self):
+    def destroySession(self):
         '''
             Destroys valid session by removing it from a database and clearing
         Flask's session object.
@@ -132,15 +131,15 @@ class Session:
 
         self.session.clear()
 
-        if not self.token_value:
+        if not self.tokenValue:
             return
 
         query = u"DELETE FROM sessions WHERE token='{}'".format(
-            self.token_value
+            self.tokenValue
         )
 
         Logger.dbg('Invalidating session with token: "{}"'.format(
-            self.token_value
+            self.tokenValue
         ))
 
         self.database.delete(query)
@@ -223,11 +222,11 @@ class Session:
             Returns True if session is still valid, False otherwise.
         '''
 
-        if not self.token_value:
+        if not self.tokenValue:
             return False
 
         query = u"SELECT * FROM sessions WHERE token='{}'".format(
-            self.token_value
+            self.tokenValue
         )
 
         res = self.database.query(query)
@@ -242,10 +241,10 @@ class Session:
 
             if Session._check_if_expired(created):
                 Logger.fail('The session has expired.: token = "{}"'.format(
-                    self.token_value
+                    self.tokenValue
                 ))
 
-                self.destroy_session()
+                self.destroySession()
                 return False
 
             return True
@@ -258,12 +257,12 @@ class Session:
         value. If there is no session token, or in case of other failure -
         returns -1.
         '''
-        if not self.token_value:
+        if not self.tokenValue:
             Logger.err("Could not get user's ID since there is no token!")
             return -1
 
         query = u"SELECT * FROM sessions WHERE token='{}'".format(
-            self.token_value
+            self.tokenValue
         )
 
         res = self.database.query(query)

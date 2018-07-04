@@ -25,31 +25,39 @@ public class RegisterRepository implements RegisterRepositoryInterface {
   public void register(final String firstName, final String lastName, final String login, final String password, final String email,
       final OnRegisterFinishedListener listener) {
 
-    User user = new User(firstName, lastName, login, password, email);
-    Call<Message> resp = userAPI.register(user);
+    if(listener.onValidatePasswordError(password)){
+      if(listener.onValidateEmailError(email)){
+        if(listener.onPasswordOrEmailError()){
 
-    resp.enqueue(new Callback<Message>() {
-      @Override
-      public void onResponse(Call<Message> call, Response<Message> response) {
-        Message msg = response.body();
+          User user = new User(firstName, lastName, login, password, email);
+          Call<Message> resp = userAPI.register(user);
 
-        Log.i("SERVER", "Server return code: " + Integer.toString(msg.status));
-        Log.i("SERVER", "Message: " + msg.message);
+          resp.enqueue(new Callback<Message>() {
+            @Override
+            public void onResponse(Call<Message> call, Response<Message> response) {
+              Message msg = response.body();
 
-        if (msg.status == 200){
-          listener.onPasswordOrEmailError();
-          listener.onSuccess();
-        }else if (msg.status == 404){
-          listener.onLoginError();
+              Log.i("SERVER", "Server return code: " + Integer.toString(msg.status));
+              Log.i("SERVER", "Message: " + msg.message);
+
+              if (msg.status == 200){
+                listener.onSuccess();
+              }else if (msg.status == 404){
+                listener.onLoginError();
+              }else if (msg.status == 500){
+                listener.onOtherError(msg.message);
+              }
+            }
+
+            @Override
+            public void onFailure(Call<Message> call, Throwable t) {
+              Log.i("SERWER", t.getMessage());
+              listener.onLoginError();
+            }
+          });
         }
       }
-
-      @Override
-      public void onFailure(Call<Message> call, Throwable t) {
-        Log.i("SERWER", t.getMessage());
-        listener.onLoginError();
-      }
-    });
+    }
   }
 }
 

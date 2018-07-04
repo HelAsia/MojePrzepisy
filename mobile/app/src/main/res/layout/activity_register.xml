@@ -194,7 +194,8 @@
     android:id="@+id/errorMessageTextView"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_below="@+id/repeated_email_editText"
+    android:layout_marginBottom="75dp"
+    android:layout_alignParentBottom="true"
     android:layout_centerHorizontal="true"
     android:text=""/>
 </RelativeLayout>

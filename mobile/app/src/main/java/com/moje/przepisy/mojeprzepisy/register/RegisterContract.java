@@ -25,6 +25,12 @@ public interface RegisterContract {
     void showEmailError();
 
     void showPasswordError();
+
+    void showValidatePasswordError();
+
+    void showValidateEmailError();
+
+    void showOtherError(String message);
   }
 
   interface Presenter {
