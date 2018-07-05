@@ -3,7 +3,7 @@
   xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
   android:background="@color/primary"
-  tools:context="com.moje.przepisy.mojeprzepisy.MainNoRegisteredActivity">
+  tools:context="com.moje.przepisy.mojeprzepisy.without_registration.MainNoRegisteredActivity">
 
   <item
     android:id="@+id/sort_alphabetic"

@@ -1,4 +1,4 @@
-package com.moje.przepisy.mojeprzepisy.login;
+package com.moje.przepisy.mojeprzepisy.log_in;
 
 import android.content.Context;
 import android.util.Log;

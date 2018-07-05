@@ -9,9 +9,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import com.moje.przepisy.mojeprzepisy.MainRegisteredActivity;
+import com.moje.przepisy.mojeprzepisy.with_registration.MainRegisteredActivity;
 import com.moje.przepisy.mojeprzepisy.R;
-import com.moje.przepisy.mojeprzepisy.login.LoginContract;
 
 public class RegisterActivityView extends AppCompatActivity implements RegisterContract.View, View.OnClickListener {
 

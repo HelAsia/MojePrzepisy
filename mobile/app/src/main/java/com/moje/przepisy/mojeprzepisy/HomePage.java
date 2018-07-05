@@ -7,8 +7,9 @@ import android.view.View;
 import android.widget.Button;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import com.moje.przepisy.mojeprzepisy.login.LoginActivityView;
+import com.moje.przepisy.mojeprzepisy.log_in.LoginActivityView;
 import com.moje.przepisy.mojeprzepisy.register.RegisterActivityView;
+import com.moje.przepisy.mojeprzepisy.without_registration.MainNoRegisteredActivity;
 
 public class HomePage extends AppCompatActivity {
   @BindView(R.id.register_button) Button registerButton;

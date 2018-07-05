@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
-  tools:context="com.moje.przepisy.mojeprzepisy.MainRegisteredActivity">
+  tools:context="com.moje.przepisy.mojeprzepisy.with_registration.MainRegisteredActivity">
 
   <item
     android:id="@+id/sort_alphabetic"

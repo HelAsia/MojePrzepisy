@@ -1,4 +1,4 @@
-package com.moje.przepisy.mojeprzepisy.login;
+package com.moje.przepisy.mojeprzepisy.log_in;
 
 public class LoginPresenter implements LoginContract.Presenter, LoginRepository.OnLoginFinishedListener {
 

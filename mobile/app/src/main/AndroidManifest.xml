@@ -31,11 +31,11 @@
     </activity>
     <activity android:name=".register.RegisterActivityView">
     </activity>
-    <activity android:name=".login.LoginActivityView">
+    <activity android:name=".log_in.LoginActivityView">
     </activity>
-    <activity android:name=".MainRegisteredActivity">
+    <activity android:name=".with_registration.MainRegisteredActivity">
     </activity>
-    <activity android:name=".MainNoRegisteredActivity">
+    <activity android:name=".without_registration.MainNoRegisteredActivity">
     </activity>
     <activity android:name=".SearchSwipeActivity">
     </activity>

@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import com.moje.przepisy.mojeprzepisy.HomePage;
-import com.moje.przepisy.mojeprzepisy.MainRegisteredActivity;
+import com.moje.przepisy.mojeprzepisy.with_registration.MainRegisteredActivity;
 import com.moje.przepisy.mojeprzepisy.R;
 
 public class WelcomeView extends AppCompatActivity implements WelcomeContract.View {

@@ -1,4 +1,4 @@
-package com.moje.przepisy.mojeprzepisy;
+package com.moje.przepisy.mojeprzepisy.utils;
 
 import android.animation.Animator;
 import android.content.Context;
@@ -13,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import com.moje.przepisy.mojeprzepisy.R;
+import com.moje.przepisy.mojeprzepisy.data.model.OneRecipeCard;
 import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
@@ -56,7 +58,6 @@ public class MyCardViewAdapter extends RecyclerView.Adapter<MyCardViewAdapter.Vi
     recipeAuthorTextView.setText(recipeAuthor);
     starsCountTextView.setText(starsCount);
     favoritesCountTextView.setText(favoritesCount);
-
   }
 
   @Override
@@ -104,5 +105,4 @@ public class MyCardViewAdapter extends RecyclerView.Adapter<MyCardViewAdapter.Vi
       ButterKnife.bind(this, v);
     }
   }
-
 }

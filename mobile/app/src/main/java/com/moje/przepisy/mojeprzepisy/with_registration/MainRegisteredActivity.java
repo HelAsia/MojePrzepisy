@@ -1,16 +1,14 @@
-package com.moje.przepisy.mojeprzepisy;
+package com.moje.przepisy.mojeprzepisy.with_registration;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.TypedArray;
-import android.graphics.BitmapFactory;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -19,9 +17,15 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
+import com.moje.przepisy.mojeprzepisy.HomePage;
+import com.moje.przepisy.mojeprzepisy.LicensesActivity;
+import com.moje.przepisy.mojeprzepisy.R;
+import com.moje.przepisy.mojeprzepisy.SearchSwipeActivity;
+import com.moje.przepisy.mojeprzepisy.data.model.OneRecipeCard;
+import com.moje.przepisy.mojeprzepisy.utils.MyCardViewAdapter;
 import java.util.ArrayList;
 
-public class MainNoRegisteredActivity extends AppCompatActivity {
+public class MainRegisteredActivity extends AppCompatActivity {
   private DrawerLayout drawerLayout;
   Context context;
   private RecyclerView recyclerView;
@@ -33,11 +37,10 @@ public class MainNoRegisteredActivity extends AppCompatActivity {
   private String[] starsCount;
   private String[] favoritesCount;
 
-
   @Override
-  protected void onCreate(final Bundle savedInstanceState) {
+  protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_main_no_registered);
+    setContentView(R.layout.activity_main_registered);
     context = getApplicationContext();
 
     setToolbar();
@@ -68,7 +71,7 @@ public class MainNoRegisteredActivity extends AppCompatActivity {
   }
 
   public void setDrawerLayoutListener() {
-    drawerLayout = (DrawerLayout) findViewById(R.id.activity_main_no_registered);
+    drawerLayout = (DrawerLayout) findViewById(R.id.activity_main_registered);
     drawerLayout.addDrawerListener(
         new DrawerLayout.DrawerListener() {
           @Override
@@ -90,7 +93,7 @@ public class MainNoRegisteredActivity extends AppCompatActivity {
     );
   }
 
-  public void setNavigationViewListener() {
+  public void setNavigationViewListener(){
     NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
     navigationView.setNavigationItemSelectedListener(
         new NavigationView.OnNavigationItemSelectedListener() {
@@ -101,21 +104,26 @@ public class MainNoRegisteredActivity extends AppCompatActivity {
             int id = menuItem.getItemId();
 
             if (id == R.id.search_nav) {
-              Intent intent = new Intent(MainNoRegisteredActivity.this, SearchSwipeActivity.class);
+              Intent intent = new Intent(MainRegisteredActivity.this, SearchSwipeActivity.class);
               startActivity(intent);
 
-            } else if (id == R.id.calculating_nav) {
+            }else if (id == R.id.add_nav) {
 
-            } else if (id == R.id.timer_nav) {
+            }else if (id == R.id.calculating_nav){
 
-            } else if (id == R.id.licences_nav) {
-              Intent intent = new Intent(MainNoRegisteredActivity.this, LicensesActivity.class);
+            }else if (id == R.id.timer_nav){
+
+            }else if (id == R.id.favorites_nav) {
+
+            }else if (id == R.id.licences_nav) {
+              Intent intent = new Intent(MainRegisteredActivity.this, LicensesActivity.class);
+              startActivity(intent);
+            }else if (id == R.id.logout_nav) {
+              Intent intent = new Intent(MainRegisteredActivity.this, HomePage.class);
               startActivity(intent);
             }
-
             return false;
           }
-
         }
     );
   }
@@ -138,13 +146,13 @@ public class MainNoRegisteredActivity extends AppCompatActivity {
       card.setStarsCount(starsCount[i]);
       card.setFavoritesCount(favoritesCount[i]);
       cardList.add(card);
-
     }
   }
+
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     MenuInflater inflater = getMenuInflater();
-    inflater.inflate(R.menu.sorting_no_rogistered_menu, menu);
+    inflater.inflate(R.menu.sorting_registered_menu, menu);
     return true;
   }
 
@@ -158,6 +166,9 @@ public class MainNoRegisteredActivity extends AppCompatActivity {
         return true;
       case R.id.sort_highest_rated:
         Toast.makeText(this, "Kliknięto 'Najwyżej oceniane'", Toast.LENGTH_SHORT).show();
+        return true;
+      case R.id.favorites:
+        Toast.makeText(this, "Kliknięto 'Ulubione'", Toast.LENGTH_SHORT).show();
         return true;
       case android.R.id.home:
         drawerLayout.openDrawer(GravityCompat.START);

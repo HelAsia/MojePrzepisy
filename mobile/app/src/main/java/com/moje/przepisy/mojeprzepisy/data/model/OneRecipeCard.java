@@ -1,6 +1,5 @@
-package com.moje.przepisy.mojeprzepisy;
+package com.moje.przepisy.mojeprzepisy.data.model;
 
-import android.graphics.Bitmap;
 
 /**
  * Created by Asia on 2018-05-30.
