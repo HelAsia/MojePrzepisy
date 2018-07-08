@@ -39,6 +39,8 @@
     </activity>
     <activity android:name=".SearchSwipeActivity">
     </activity>
+    <activity android:name=".ui.MainCardsActivityView">
+    </activity>
   </application>
 
 </manifest>

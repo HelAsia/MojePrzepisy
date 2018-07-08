@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-  <string-array name="photo_list">
+  <string-array name="photo_list_array">
     <item>@string/tomato_soup_URL</item>
     <item>@string/chitterlings_URL</item>
     <item>@string/cheesecake_URL</item>

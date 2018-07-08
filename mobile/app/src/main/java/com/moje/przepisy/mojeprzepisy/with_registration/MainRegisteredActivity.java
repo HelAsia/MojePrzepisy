@@ -129,15 +129,19 @@ public class MainRegisteredActivity extends AppCompatActivity {
   }
 
   public void matchArraysWithResources() {
-    recipePhotos = getResources().getStringArray(R.array.photo_list);
+    recipePhotos = getResources().getStringArray(R.array.photo_list_array);
     recipeName = getResources().getStringArray(R.array.name_recipes_array);
     recipeAuthor = getResources().getStringArray(R.array.author_recipes_array);
     starsCount = getResources().getStringArray(R.array.stars_count_array);
     favoritesCount = getResources().getStringArray(R.array.favorites_count_array);
   }
 
+  public int CardCount(){
+    return recipeName.length;
+  }
+
   public void initCards() {
-    for (int i = 0; i < 6; i++) {
+    for (int i = 0; i < CardCount(); i++) {
       OneRecipeCard card = new OneRecipeCard();
       card.setId((long) i);
       card.setPhotoRecipe(recipePhotos[i]);

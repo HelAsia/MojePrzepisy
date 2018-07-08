@@ -127,7 +127,7 @@ public class MainNoRegisteredActivity extends AppCompatActivity {
   }
 
   public void matchArraysWithResources() {
-    recipePhotos = getResources().getStringArray(R.array.photo_list);
+    recipePhotos = getResources().getStringArray(R.array.photo_list_array);
     recipeName = getResources().getStringArray(R.array.name_recipes_array);
     recipeAuthor = getResources().getStringArray(R.array.author_recipes_array);
     starsCount = getResources().getStringArray(R.array.stars_count_array);

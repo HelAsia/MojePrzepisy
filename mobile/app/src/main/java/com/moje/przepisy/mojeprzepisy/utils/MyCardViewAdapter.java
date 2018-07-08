@@ -83,6 +83,8 @@ public class MyCardViewAdapter extends RecyclerView.Adapter<MyCardViewAdapter.Vi
     @BindView(R.id.text_view_star_count) TextView starsCountTextView;
     @BindView(R.id.text_view_favorites_count) TextView favoritesCountTextView;
 
+    Context context;
+
     public ViewHolder(View v) {
       super(v);
       ButterKnife.bind(this, v);
