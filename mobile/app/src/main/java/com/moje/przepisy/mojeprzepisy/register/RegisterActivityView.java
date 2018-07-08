@@ -10,8 +10,9 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.UserRepository;
-import com.moje.przepisy.mojeprzepisy.with_registration.MainRegisteredActivity;
 import com.moje.przepisy.mojeprzepisy.R;
+import com.moje.przepisy.mojeprzepisy.log_in.LoginActivityView;
+import com.moje.przepisy.mojeprzepisy.ui.MainCardsActivityView;
 
 public class RegisterActivityView extends AppCompatActivity implements RegisterContract.View, View.OnClickListener {
 
@@ -50,7 +51,8 @@ public class RegisterActivityView extends AppCompatActivity implements RegisterC
 
   @Override
   public void navigateToMainRegisteredActivity() {
-    Intent intent = new Intent(RegisterActivityView.this, MainRegisteredActivity.class);
+    Intent intent = new Intent(RegisterActivityView.this, MainCardsActivityView.class);
+    intent.putExtra("LOGGED",true);
     startActivity(intent);
     RegisterActivityView.this.finish();
 

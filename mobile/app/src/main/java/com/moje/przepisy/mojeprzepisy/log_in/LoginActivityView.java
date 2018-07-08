@@ -10,8 +10,9 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.UserRepository;
-import com.moje.przepisy.mojeprzepisy.with_registration.MainRegisteredActivity;
 import com.moje.przepisy.mojeprzepisy.R;
+import com.moje.przepisy.mojeprzepisy.ui.MainCardsActivityView;
+import com.moje.przepisy.mojeprzepisy.welcome.WelcomeView;
 
 public class LoginActivityView extends AppCompatActivity implements LoginContract.View, View.OnClickListener{
 
@@ -50,7 +51,8 @@ public class LoginActivityView extends AppCompatActivity implements LoginContrac
 
   @Override
   public void navigateToMainRegisteredActivity() {
-    Intent intent = new Intent(LoginActivityView.this, MainRegisteredActivity.class);
+    Intent intent = new Intent(LoginActivityView.this, MainCardsActivityView.class);
+    intent.putExtra("LOGGED",true);
     startActivity(intent);
     LoginActivityView.this.finish();
   }

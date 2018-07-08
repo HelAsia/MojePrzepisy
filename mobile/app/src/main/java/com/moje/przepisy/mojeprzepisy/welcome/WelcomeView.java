@@ -5,8 +5,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import com.moje.przepisy.mojeprzepisy.HomePage;
-import com.moje.przepisy.mojeprzepisy.with_registration.MainRegisteredActivity;
 import com.moje.przepisy.mojeprzepisy.R;
+import com.moje.przepisy.mojeprzepisy.ui.MainCardsActivityView;
 
 public class WelcomeView extends AppCompatActivity implements WelcomeContract.View {
   private final int SPLASH_DISPLAY_LENGTH = 1500;
@@ -35,8 +35,10 @@ public class WelcomeView extends AppCompatActivity implements WelcomeContract.Vi
 
   @Override
   public void navigateToMainRegisteredActivity() {
-    Intent intent = new Intent(WelcomeView.this, MainRegisteredActivity.class);
+    Intent intent = new Intent(WelcomeView.this, MainCardsActivityView.class);
+    intent.putExtra("LOGGED",true);
     startActivity(intent);
+
     WelcomeView.this.finish();
   }
 

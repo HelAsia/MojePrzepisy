@@ -9,7 +9,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.moje.przepisy.mojeprzepisy.log_in.LoginActivityView;
 import com.moje.przepisy.mojeprzepisy.register.RegisterActivityView;
-import com.moje.przepisy.mojeprzepisy.without_registration.MainNoRegisteredActivity;
+import com.moje.przepisy.mojeprzepisy.ui.MainCardsActivityView;
 
 public class HomePage extends AppCompatActivity {
   @BindView(R.id.register_button) Button registerButton;
@@ -44,7 +44,8 @@ public class HomePage extends AppCompatActivity {
     noRegisteredButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        Intent intent = new Intent(HomePage.this, MainNoRegisteredActivity.class);
+        Intent intent = new Intent(HomePage.this, MainCardsActivityView.class);
+        intent.putExtra("LOGGED",false);
         startActivity(intent);
         HomePage.this.finish();
       }
