@@ -1,19 +1,21 @@
 package com.moje.przepisy.mojeprzepisy.log_in;
 
-public class LoginPresenter implements LoginContract.Presenter, LoginRepository.OnLoginFinishedListener {
+import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.UserRepository;
 
-  private LoginRepository loginRepository;
+public class LoginPresenter implements LoginContract.Presenter, UserRepository.OnLoginFinishedListener {
+
+  private UserRepository userRepository;
   private LoginContract.View loginView;
 
-  public LoginPresenter(LoginContract.View loginView, LoginRepository loginRepository) {
+  public LoginPresenter(LoginContract.View loginView, UserRepository userRepository) {
     this.loginView = loginView;
-    this.loginRepository = loginRepository;
+    this.userRepository = userRepository;
   }
 
   @Override
   public void validateCredentials(final String login, String password) {
     if(loginView != null) {
-      loginRepository.login(login, password, this);
+      userRepository.login(login, password, this);
     }
   }
 

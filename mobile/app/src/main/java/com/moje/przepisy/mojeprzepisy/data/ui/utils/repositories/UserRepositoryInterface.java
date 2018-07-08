@@ -1,6 +1,15 @@
-package com.moje.przepisy.mojeprzepisy.register;
+package com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories;
 
-public interface RegisterRepositoryInterface {
+public interface UserRepositoryInterface {
+
+  interface OnLoginFinishedListener {
+
+    void onLoginAndPasswordError();
+
+    void onSuccess();
+  }
+
+  void login(String login, String password, OnLoginFinishedListener listener);
 
   interface OnRegisterFinishedListener {
 
@@ -18,4 +27,5 @@ public interface RegisterRepositoryInterface {
   }
 
   void register(String name, String lastName, String login, String password, String email, OnRegisterFinishedListener listener);
+
 }

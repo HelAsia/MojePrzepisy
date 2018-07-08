@@ -145,6 +145,9 @@ def profile_method():
         })
 
 
+@app.route('/cards/allCards', methods=['GET'])
+
+
 def main():
     global database
     database = Database()

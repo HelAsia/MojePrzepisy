@@ -26,7 +26,7 @@
     android:weightSum="1">
 
     <ImageView
-      android:id="@+id/photo_recipe"
+      android:id="@+id/image_view_photo_recipe"
       android:layout_width="330dp"
       android:layout_height="280dp"
       android:layout_gravity="center"
@@ -46,7 +46,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:id="@+id/recipe_name"
+        android:id="@+id/text_view_recipe_name"
         android:transitionName="name_recipe_transition"
         android:textColor="@color/black"
         android:text="@string/something"
@@ -56,10 +56,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:id="@+id/recipe_author"
+        android:id="@+id/text_view_recipe_author"
         android:textColor="@color/black"
         android:text="@string/something"
-        android:layout_below="@id/recipe_name"
+        android:layout_below="@id/text_view_recipe_name"
         android:textSize="15sp"/>
 
       </RelativeLayout>
@@ -91,7 +91,7 @@
         <TextView
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:id="@+id/star_count"
+          android:id="@+id/text_view_star_count"
           android:transitionName="name_recipe_transition"
           android:textColor="@color/black"
           android:text="10"
@@ -101,8 +101,8 @@
           android:layout_marginTop="5dp"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:layout_below="@id/star_count"
-          android:id="@+id/favorites_count"
+          android:layout_below="@id/text_view_star_count"
+          android:id="@+id/text_view_favorites_count"
           android:textColor="@color/black"
           android:text="5"
           android:textSize="15sp"/>

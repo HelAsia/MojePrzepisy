@@ -30,6 +30,7 @@ public class MyCardViewAdapter extends RecyclerView.Adapter<MyCardViewAdapter.Vi
   public MyCardViewAdapter(Context context, ArrayList<OneRecipeCard> cardsList) {
     this.context = context;
     this.cardsList = cardsList;
+    setHasStableIds(true);
   }
 
   @Override
@@ -41,32 +42,14 @@ public class MyCardViewAdapter extends RecyclerView.Adapter<MyCardViewAdapter.Vi
 
   @Override
   public void onBindViewHolder(ViewHolder viewHolder, int position) {
-    String recipePhoto = cardsList.get(position).getPhotoRecipe();
-    String recipeName = cardsList.get(position).getRecipeName();
-    String recipeAuthor = cardsList.get(position).getAuthorName();
-    String starsCount = cardsList.get(position).getStarsCount();
-    String favoritesCount = cardsList.get(position).getFavoritesCount();
 
-    ImageView recipeImageView = viewHolder.recipePhoto;
-    TextView recipeNameTextView = viewHolder.recipeName;
-    TextView recipeAuthorTextView = viewHolder.recipeAuthor;
-    TextView starsCountTextView = viewHolder.starsCount;
-    TextView favoritesCountTextView = viewHolder.favoritesCount;
+    viewHolder.bind(cardsList.get(position));
 
-    Picasso.get().load(recipePhoto).into(recipeImageView);
-    recipeNameTextView.setText(recipeName);
-    recipeAuthorTextView.setText(recipeAuthor);
-    starsCountTextView.setText(starsCount);
-    favoritesCountTextView.setText(favoritesCount);
   }
 
   @Override
   public int getItemCount() {
-    if (cardsList.isEmpty()) {
-      return 0;
-    } else {
       return cardsList.size();
-    }
   }
 
   @RequiresApi(api = VERSION_CODES.LOLLIPOP)
@@ -94,15 +77,29 @@ public class MyCardViewAdapter extends RecyclerView.Adapter<MyCardViewAdapter.Vi
   }
 
   public class ViewHolder extends RecyclerView.ViewHolder {
-    @BindView(R.id.photo_recipe) ImageView recipePhoto;
-    @BindView(R.id.recipe_name) TextView recipeName;
-    @BindView(R.id.recipe_author) TextView recipeAuthor;
-    @BindView(R.id.star_count) TextView starsCount;
-    @BindView(R.id.favorites_count) TextView favoritesCount;
+    @BindView(R.id.image_view_photo_recipe) ImageView recipeImageView;
+    @BindView(R.id.text_view_recipe_name) TextView recipeNameTextView;
+    @BindView(R.id.text_view_recipe_author) TextView recipeAuthorTextView;
+    @BindView(R.id.text_view_star_count) TextView starsCountTextView;
+    @BindView(R.id.text_view_favorites_count) TextView favoritesCountTextView;
 
     public ViewHolder(View v) {
       super(v);
       ButterKnife.bind(this, v);
+    }
+
+    void bind(OneRecipeCard card) {
+      String recipePhoto = card.getPhotoRecipe();
+      String recipeName = card.getRecipeName();
+      String recipeAuthor = card.getAuthorName();
+      String starsCount = card.getStarsCount();
+      String favoritesCount = card.getFavoritesCount();
+
+      Picasso.get().load(recipePhoto).into(recipeImageView);
+      recipeNameTextView.setText(recipeName);
+      recipeAuthorTextView.setText(recipeAuthor);
+      starsCountTextView.setText(starsCount);
+      favoritesCountTextView.setText(favoritesCount);
     }
   }
 }

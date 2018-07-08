@@ -1,23 +1,24 @@
 package com.moje.przepisy.mojeprzepisy.register;
 
+import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.UserRepository;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class RegisterPresenter implements RegisterContract.Presenter, RegisterRepository.OnRegisterFinishedListener {
+public class RegisterPresenter implements RegisterContract.Presenter, UserRepository.OnRegisterFinishedListener {
 
-  private RegisterRepository registerRepository;
+  private UserRepository userRepository;
   private RegisterContract.View registerView;
 
-  public RegisterPresenter(RegisterContract.View registerView, RegisterRepository registerRepository) {
+  public RegisterPresenter(RegisterContract.View registerView, UserRepository userRepository) {
     this.registerView = registerView;
-    this.registerRepository = registerRepository;
+    this.userRepository = userRepository;
   }
 
   @Override
   public void validateCredentials(String name, String lastName, String login, String password,
       String email) {
     if(registerView != null) {
-      registerRepository.register(name, lastName, login, password, email,this);
+      userRepository.register(name, lastName, login, password, email,this);
     }
   }
 

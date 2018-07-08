@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.UserRepository;
 import com.moje.przepisy.mojeprzepisy.with_registration.MainRegisteredActivity;
 import com.moje.przepisy.mojeprzepisy.R;
 
@@ -29,7 +30,7 @@ public class LoginActivityView extends AppCompatActivity implements LoginContrac
 
     loginButton.setOnClickListener(this);
 
-    presenter = new LoginPresenter(this, new LoginRepository(getApplicationContext()));
+    presenter = new LoginPresenter(this, new UserRepository(getApplicationContext()));
   }
 
   @Override protected  void onDestroy() {

@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.UserRepository;
 import com.moje.przepisy.mojeprzepisy.with_registration.MainRegisteredActivity;
 import com.moje.przepisy.mojeprzepisy.R;
 
@@ -34,7 +35,7 @@ public class RegisterActivityView extends AppCompatActivity implements RegisterC
 
     registerButton.setOnClickListener(this);
 
-    presenter = new RegisterPresenter(this, new RegisterRepository(getApplicationContext()));
+    presenter = new RegisterPresenter(this, new UserRepository(getApplicationContext()));
   }
 
   @Override protected  void onDestroy() {
