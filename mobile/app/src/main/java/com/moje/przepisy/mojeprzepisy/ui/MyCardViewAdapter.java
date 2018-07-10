@@ -1,4 +1,4 @@
-package com.moje.przepisy.mojeprzepisy.utils;
+package com.moje.przepisy.mojeprzepisy.ui;
 
 import android.animation.Animator;
 import android.content.Context;

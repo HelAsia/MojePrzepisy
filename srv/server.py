@@ -146,6 +146,9 @@ def profile_method():
 
 
 @app.route('/cards/allCards', methods=['GET'])
+def showAllCards():
+    pass
+
 
 
 def main():

@@ -17,12 +17,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
-import com.moje.przepisy.mojeprzepisy.HomePage;
+import com.moje.przepisy.mojeprzepisy.home_page.HomePageView;
 import com.moje.przepisy.mojeprzepisy.LicensesActivity;
 import com.moje.przepisy.mojeprzepisy.R;
 import com.moje.przepisy.mojeprzepisy.SearchSwipeActivity;
 import com.moje.przepisy.mojeprzepisy.data.model.OneRecipeCard;
-import com.moje.przepisy.mojeprzepisy.utils.MyCardViewAdapter;
 import java.util.ArrayList;
 
 public class MainCardsActivityView extends AppCompatActivity {
@@ -101,71 +100,76 @@ public class MainCardsActivityView extends AppCompatActivity {
     NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
     ifLogged = getIntent().getExtras().getBoolean("LOGGED");
     if(ifLogged) {
-      navigationView.getMenu().clear();
-      navigationView.inflateMenu(R.menu.drawer_registered_menu);
-      navigationView.setNavigationItemSelectedListener(
-          new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(MenuItem menuItem) {
-              menuItem.setChecked(true);
-              drawerLayout.closeDrawers();
-              int id = menuItem.getItemId();
-
-              if (id == R.id.search_nav) {
-                Intent intent = new Intent(MainCardsActivityView.this, SearchSwipeActivity.class);
-                startActivity(intent);
-
-              }else if (id == R.id.add_nav) {
-
-              }else if (id == R.id.calculating_nav){
-
-              }else if (id == R.id.timer_nav){
-
-              }else if (id == R.id.favorites_nav) {
-
-              }else if (id == R.id.licences_nav) {
-                Intent intent = new Intent(MainCardsActivityView.this, LicensesActivity.class);
-                startActivity(intent);
-              }else if (id == R.id.logout_nav) {
-                Intent intent = new Intent(MainCardsActivityView.this, HomePage.class);
-                startActivity(intent);
-              }
-              return false;
-            }
-          }
-      );
+      setNavigationViewListenerWithRegistriation(navigationView);
     }else {
-      navigationView.getMenu().clear();
-      navigationView.inflateMenu(R.menu.drawer_no_registered_menu);
-      navigationView.setNavigationItemSelectedListener(
-          new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(MenuItem menuItem) {
-              menuItem.setChecked(true);
-              drawerLayout.closeDrawers();
-              int id = menuItem.getItemId();
-
-              if (id == R.id.search_nav) {
-                Intent intent = new Intent(MainCardsActivityView.this, SearchSwipeActivity.class);
-                startActivity(intent);
-
-              } else if (id == R.id.calculating_nav) {
-
-              } else if (id == R.id.timer_nav) {
-
-              } else if (id == R.id.licences_nav) {
-                Intent intent = new Intent(MainCardsActivityView.this, LicensesActivity.class);
-                startActivity(intent);
-              }
-
-              return false;
-            }
-
-          }
-      );
+      setNavigationViewListenerWithoutRegistriation(navigationView);
     }
   }
 
+  public void setNavigationViewListenerWithRegistriation(NavigationView navigationView) {
+    navigationView.getMenu().clear();
+    navigationView.inflateMenu(R.menu.drawer_registered_menu);
+    navigationView.setNavigationItemSelectedListener(
+        new NavigationView.OnNavigationItemSelectedListener() {
+          @Override
+          public boolean onNavigationItemSelected(MenuItem menuItem) {
+            menuItem.setChecked(true);
+            drawerLayout.closeDrawers();
+            int id = menuItem.getItemId();
+
+            if (id == R.id.search_nav) {
+              Intent intent = new Intent(MainCardsActivityView.this, SearchSwipeActivity.class);
+              startActivity(intent);
+
+            }else if (id == R.id.add_nav) {
+
+            }else if (id == R.id.calculating_nav){
+
+            }else if (id == R.id.timer_nav){
+
+            }else if (id == R.id.favorites_nav) {
+
+            }else if (id == R.id.licences_nav) {
+              Intent intent = new Intent(MainCardsActivityView.this, LicensesActivity.class);
+              startActivity(intent);
+            }else if (id == R.id.logout_nav) {
+              Intent intent = new Intent(MainCardsActivityView.this, HomePageView.class);
+              startActivity(intent);
+            }
+            return false;
+          }
+        }
+    );
+  }
+
+  public void setNavigationViewListenerWithoutRegistriation(NavigationView navigationView) {
+    navigationView.getMenu().clear();
+    navigationView.inflateMenu(R.menu.drawer_no_registered_menu);
+    navigationView.setNavigationItemSelectedListener(
+        new NavigationView.OnNavigationItemSelectedListener() {
+          @Override
+          public boolean onNavigationItemSelected(MenuItem menuItem) {
+            menuItem.setChecked(true);
+            drawerLayout.closeDrawers();
+            int id = menuItem.getItemId();
+
+            if (id == R.id.search_nav) {
+              Intent intent = new Intent(MainCardsActivityView.this, SearchSwipeActivity.class);
+              startActivity(intent);
+
+            } else if (id == R.id.calculating_nav) {
+
+            } else if (id == R.id.timer_nav) {
+
+            } else if (id == R.id.licences_nav) {
+              Intent intent = new Intent(MainCardsActivityView.this, LicensesActivity.class);
+              startActivity(intent);
+            }
+            return false;
+          }
+        }
+    );
+  }
   public void matchArraysWithResources() {
     recipePhotos = getResources().getStringArray(R.array.photo_list_array);
     recipeName = getResources().getStringArray(R.array.name_recipes_array);

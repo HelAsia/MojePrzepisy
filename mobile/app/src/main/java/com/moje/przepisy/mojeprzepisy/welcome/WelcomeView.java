@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import com.moje.przepisy.mojeprzepisy.HomePage;
+import com.moje.przepisy.mojeprzepisy.home_page.HomePageView;
 import com.moje.przepisy.mojeprzepisy.R;
 import com.moje.przepisy.mojeprzepisy.ui.MainCardsActivityView;
 
@@ -44,7 +44,7 @@ public class WelcomeView extends AppCompatActivity implements WelcomeContract.Vi
 
   @Override
   public void navigateToHomePage() {
-    Intent intent = new Intent(WelcomeView.this, HomePage.class);
+    Intent intent = new Intent(WelcomeView.this, HomePageView.class);
     WelcomeView.this.startActivity(intent);
     WelcomeView.this.finish();
   }

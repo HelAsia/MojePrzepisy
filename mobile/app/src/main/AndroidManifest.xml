@@ -27,7 +27,7 @@
         <category android:name="android.intent.category.LAUNCHER"/>
       </intent-filter>
     </activity>
-    <activity android:name=".HomePage">
+    <activity android:name=".home_page.HomePageView">
     </activity>
     <activity android:name=".register.RegisterActivityView">
     </activity>

@@ -1,4 +1,4 @@
-package com.moje.przepisy.mojeprzepisy;
+package com.moje.przepisy.mojeprzepisy.home_page;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -7,11 +7,12 @@ import android.view.View;
 import android.widget.Button;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import com.moje.przepisy.mojeprzepisy.R;
 import com.moje.przepisy.mojeprzepisy.log_in.LoginActivityView;
 import com.moje.przepisy.mojeprzepisy.register.RegisterActivityView;
 import com.moje.przepisy.mojeprzepisy.ui.MainCardsActivityView;
 
-public class HomePage extends AppCompatActivity {
+public class HomePageView extends AppCompatActivity {
   @BindView(R.id.register_button) Button registerButton;
   @BindView(R.id.login_button) Button loginButton;
   @BindView(R.id.no_login_button) Button noRegisteredButton;
@@ -26,28 +27,28 @@ public class HomePage extends AppCompatActivity {
     registerButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        Intent intent = new Intent(HomePage.this, RegisterActivityView.class);
+        Intent intent = new Intent(HomePageView.this, RegisterActivityView.class);
         startActivity(intent);
-        HomePage.this.finish();
+        HomePageView.this.finish();
       }
     });
 
     loginButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        Intent intent = new Intent(HomePage.this, LoginActivityView.class);
+        Intent intent = new Intent(HomePageView.this, LoginActivityView.class);
         startActivity(intent);
-        HomePage.this.finish();
+        HomePageView.this.finish();
       }
     });
 
     noRegisteredButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        Intent intent = new Intent(HomePage.this, MainCardsActivityView.class);
+        Intent intent = new Intent(HomePageView.this, MainCardsActivityView.class);
         intent.putExtra("LOGGED",false);
         startActivity(intent);
-        HomePage.this.finish();
+        HomePageView.this.finish();
       }
     });
 

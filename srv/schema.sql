@@ -33,14 +33,16 @@ CREATE TABLE recipes (
     recipe_bake_time time DEFAULT NULL,
     recipe_link varchar(800) DEFAULT NULL,
     recipe_category varchar(80) NOT NULL,
-    PRIMARY KEY (recipe_id)
+    user_id int(11),
+    PRIMARY KEY (recipe_id),
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
-CREATE TABLE users_recipes (
+CREATE TABLE users_recipes_stars (
 	user_id int(11) NOT NULL,
     recipe_id int(11) NOT NULL,
     favorite boolean,
     stars int(1),
     FOREIGN KEY (user_id) REFERENCES users(user_id),
     FOREIGN KEY (recipe_id) REFERENCES recipes(recipe_id)
-);
+)ENGINE=MyISAM AUTO DEFAULT CHARSET=utf8;
