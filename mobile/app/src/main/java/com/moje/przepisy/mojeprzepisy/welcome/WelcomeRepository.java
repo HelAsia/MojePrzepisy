@@ -41,7 +41,6 @@ public class WelcomeRepository implements WelcomeRepositoryInterface {
       @Override
       public void onFailure(Call<Message> call, Throwable t) {
         Log.i("SERWER", t.getMessage());
-
       }
     });
 

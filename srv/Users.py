@@ -1,5 +1,6 @@
 from Logger import *
 import json
+from decimal import Decimal as D
 import re
 
 
@@ -80,3 +81,28 @@ class Users:
         else:
             return 404, u'Forwarded data to check are not correct'
 
+    def getAllCards(self):
+        query = u"SELECT R.recipe_name AS Recipe, U.user_login AS User, " \
+                u"count(URS.favorite) AS Favorite, ROUND(avg(URS.stars),0) AS Stars, " \
+                u"R.recipe_main_picture as Picture "\
+                u"FROM recipes AS R "\
+                u"INNER JOIN users AS U "\
+                u"ON R.user_id = U.user_id "\
+                u"INNER JOIN users_recipes_stars AS URS "\
+                u"ON R.recipe_id = URS.recipe_id "\
+                u"GROUP BY R.recipe_id; "
+
+        class DecimalEncoder(json.JSONEncoder):
+            def default(self, obj):
+                if isinstance(obj, D):
+                    return float(obj)
+                return json.JSONEncoder.default(self, obj)
+
+        queryResult = self.database.query(query)
+
+
+        if queryResult:
+            return DecimalEncoder().encode(queryResult)
+            # return queryResult
+        else:
+            return {}

@@ -55,7 +55,7 @@ class Database:
             for row in result:
                 num += 1
                 if num > 5: break
-                Logger.dbg('Row {}.: '.format(num) + str(row))
+                Logger.dbg(u'Row {}.: '.format(num) + str(row))
 
             return result
 

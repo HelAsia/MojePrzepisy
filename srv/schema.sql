@@ -32,6 +32,7 @@ CREATE TABLE recipes (
     recipe_cook_time time DEFAULT NULL,
     recipe_bake_time time DEFAULT NULL,
     recipe_link varchar(800) DEFAULT NULL,
+    recipe_main_picture varchar(5000) DEFAULT NULL,
     recipe_category varchar(80) NOT NULL,
     user_id int(11),
     PRIMARY KEY (recipe_id),
@@ -47,8 +48,7 @@ CREATE TABLE users_recipes_stars (
     FOREIGN KEY (recipe_id) REFERENCES recipes(recipe_id)
 )ENGINE=MyISAM AUTO DEFAULT CHARSET=utf8;
 
-
-SELECT R.recipe_name AS Recipe, U.user_login AS User, count(URS.favorite) AS Favorite, ROUND(avg(URS.stars),0) AS Stars
+SELECT R.recipe_name AS Recipe, U.user_login AS User, count(URS.favorite) AS Favorite, ROUND(avg(URS.stars),0) AS Stars, R.recipe_main_picture as Picture
     FROM recipes AS R
     INNER JOIN users AS U
     ON R.user_id = U.user_id

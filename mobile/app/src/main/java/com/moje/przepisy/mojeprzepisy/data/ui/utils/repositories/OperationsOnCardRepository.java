@@ -1,6 +1,7 @@
 package com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories;
 
 import android.content.Context;
+import android.util.Log;
 import com.moje.przepisy.mojeprzepisy.data.model.OneRecipeCard;
 import com.moje.przepisy.mojeprzepisy.data.network.RetrofitSingleton;
 import com.moje.przepisy.mojeprzepisy.data.network.UserAPI;
@@ -28,12 +29,13 @@ public class OperationsOnCardRepository implements OperationsOnCardRepositoryInt
       @Override
       public void onResponse(Call<OneRecipeCard> call, Response<OneRecipeCard> response) {
         OneRecipeCard oneRecipeCard = response.body();
+        Log.i("SERVER", "Message: " + oneRecipeCard.message);
 
       }
 
       @Override
       public void onFailure(Call<OneRecipeCard> call, Throwable t) {
-
+        Log.i("SERWER", t.getMessage());
       }
     });
   }

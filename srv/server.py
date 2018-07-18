@@ -146,9 +146,11 @@ def profile_method():
 
 
 @app.route('/cards/allCards', methods=['GET'])
-def showAllCards():
-    pass
+def getAllCards():
+    user = Users(database)
 
+    cards = user.getAllCards()
+    return jsonify(cards[0])
 
 
 def main():
