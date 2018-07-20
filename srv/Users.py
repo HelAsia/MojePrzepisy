@@ -82,9 +82,9 @@ class Users:
             return 404, u'Forwarded data to check are not correct'
 
     def getAllCards(self):
-        query = u"SELECT R.recipe_name AS Recipe, U.user_login AS User, " \
-                u"count(URS.favorite) AS Favorite, ROUND(avg(URS.stars),0) AS Stars, " \
-                u"R.recipe_main_picture as Picture "\
+        query = u"SELECT R.recipe_id AS id, R.recipe_name AS recipeName, U.user_login AS authorName, " \
+                u"count(URS.favorite) AS favoritesCount, ROUND(avg(URS.stars),0) AS starsCount, " \
+                u"R.recipe_main_picture as photoRecipe "\
                 u"FROM recipes AS R "\
                 u"INNER JOIN users AS U "\
                 u"ON R.user_id = U.user_id "\
@@ -102,7 +102,8 @@ class Users:
 
 
         if queryResult:
-            return DecimalEncoder().encode(queryResult)
-            # return queryResult
+            #return DecimalEncoder().encode(queryResult)
+            Logger.dbg(queryResult)
+            return queryResult
         else:
             return {}

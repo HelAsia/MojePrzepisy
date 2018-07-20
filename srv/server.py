@@ -150,7 +150,7 @@ def getAllCards():
     user = Users(database)
 
     cards = user.getAllCards()
-    return jsonify(cards[0])
+    return jsonify(cards)
 
 
 def main():

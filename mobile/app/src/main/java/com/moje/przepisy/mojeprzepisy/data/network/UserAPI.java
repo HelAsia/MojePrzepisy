@@ -3,6 +3,7 @@ package com.moje.przepisy.mojeprzepisy.data.network;
 import com.moje.przepisy.mojeprzepisy.data.model.Message;
 import com.moje.przepisy.mojeprzepisy.data.model.OneRecipeCard;
 import com.moje.przepisy.mojeprzepisy.data.model.User;
+import java.util.List;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -25,10 +26,10 @@ public interface UserAPI {
   Call<Message> register(@Body User user);
 
   @GET("/cards/allCards")
-  Call<OneRecipeCard> getCards();
+  Call<List<OneRecipeCard>> getCards();
 
   @GET("/cards/userCards")
-  Call<OneRecipeCard> getUserCards();
+  Call<List<OneRecipeCard>> getUserCards();
 
   @POST("/cards/userCards")
   Call<Message> changeUserCards(@Body OneRecipeCard oneRecipeCard);

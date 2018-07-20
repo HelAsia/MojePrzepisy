@@ -1,5 +1,6 @@
 import MySQLdb
 import MySQLdb.cursors
+import MySQLdb.converters
 
 from Logger import *
 
@@ -13,20 +14,26 @@ class Database:
 
     def connection(self, host, user, password, db):
         try:
+            conv = MySQLdb.converters.conversions.copy()
+            conv[246] = float
+            conv[0] = float
+
             if password:
                 self.databaseConnection = MySQLdb.connect(
                     host=host,
                     user=user,
                     passwd=password,
                     db=db,
-                    cursorclass=MySQLdb.cursors.DictCursor
+                    cursorclass=MySQLdb.cursors.DictCursor,
+                    conv = conv
                 )
             else:
                 self.databaseConnection = MySQLdb.connect(
                     host=host,
                     user=user,
                     db=db,
-                    cursorclass=MySQLdb.cursors.DictCursor
+                    cursorclass=MySQLdb.cursors.DictCursor,
+                    conv=conv
                 )
 
             self.databaseConnection.set_character_set('utf8')

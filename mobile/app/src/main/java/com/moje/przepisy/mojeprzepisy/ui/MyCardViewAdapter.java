@@ -16,7 +16,7 @@ import butterknife.ButterKnife;
 import com.moje.przepisy.mojeprzepisy.R;
 import com.moje.przepisy.mojeprzepisy.data.model.OneRecipeCard;
 import com.squareup.picasso.Picasso;
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Asia on 2018-05-30.
@@ -24,10 +24,9 @@ import java.util.ArrayList;
 
 public class MyCardViewAdapter extends RecyclerView.Adapter<MyCardViewAdapter.ViewHolder> {
   public Context context;
-  public ArrayList<OneRecipeCard> cardsList;
+  public List<OneRecipeCard> cardsList;
 
-
-  public MyCardViewAdapter(Context context, ArrayList<OneRecipeCard> cardsList) {
+  public MyCardViewAdapter(Context context, List<OneRecipeCard> cardsList) {
     this.context = context;
     this.cardsList = cardsList;
     setHasStableIds(true);
@@ -42,9 +41,7 @@ public class MyCardViewAdapter extends RecyclerView.Adapter<MyCardViewAdapter.Vi
 
   @Override
   public void onBindViewHolder(ViewHolder viewHolder, int position) {
-
     viewHolder.bind(cardsList.get(position));
-
   }
 
   @Override
@@ -83,8 +80,6 @@ public class MyCardViewAdapter extends RecyclerView.Adapter<MyCardViewAdapter.Vi
     @BindView(R.id.text_view_star_count) TextView starsCountTextView;
     @BindView(R.id.text_view_favorites_count) TextView favoritesCountTextView;
 
-    Context context;
-
     public ViewHolder(View v) {
       super(v);
       ButterKnife.bind(this, v);
@@ -94,14 +89,16 @@ public class MyCardViewAdapter extends RecyclerView.Adapter<MyCardViewAdapter.Vi
       String recipePhoto = card.getPhotoRecipe();
       String recipeName = card.getRecipeName();
       String recipeAuthor = card.getAuthorName();
-      String starsCount = card.getStarsCount();
-      String favoritesCount = card.getFavoritesCount();
+      int starsCount = card.getStarsCount();
+      int favoritesCount = card.getFavoritesCount();
+      String starsCountString = String.valueOf(starsCount);
+      String favoritesCountString = String.valueOf(favoritesCount);
 
       Picasso.get().load(recipePhoto).into(recipeImageView);
       recipeNameTextView.setText(recipeName);
       recipeAuthorTextView.setText(recipeAuthor);
-      starsCountTextView.setText(starsCount);
-      favoritesCountTextView.setText(favoritesCount);
+      starsCountTextView.setText(starsCountString);
+      favoritesCountTextView.setText(favoritesCountString);
     }
   }
 }

@@ -6,23 +6,38 @@ package com.moje.przepisy.mojeprzepisy.data.model;
  */
 
 public class OneRecipeCard {
-  private long id;
-  private String starsCount;
-  private String favoritesCount;
-  private String recipeName;
-  private String authorName;
-  private String photoRecipe;
+  public int id;
+  public int starsCount;
+  public int favoritesCount;
+  public String recipeName;
+  public String authorName;
+  public String photoRecipe;
 
+
+  public String toString() {
+      String out;
+
+      out = String.format(
+          "Recipe(%d, %d, %d, '%s', '%s', '%s'",
+          this.id,
+          this.starsCount,
+          this.favoritesCount,
+          this.recipeName,
+          this.authorName,
+          this.photoRecipe
+          );
+      return out;
+  }
 
   public long getId() {
     return id;
   }
 
-  public String getStarsCount() {
+  public int getStarsCount() {
     return starsCount;
   }
 
-  public String getFavoritesCount() {
+  public int getFavoritesCount() {
     return favoritesCount;
   }
 
@@ -38,15 +53,15 @@ public class OneRecipeCard {
     return photoRecipe;
   }
 
-  public void setId(long id) {
+  public void setId(int id) {
     this.id = id;
   }
 
-  public void setStarsCount(String starsCount) {
+  public void setStarsCount(int starsCount) {
     this.starsCount = starsCount;
   }
 
-  public void setFavoritesCount(String favoritesCount) {
+  public void setFavoritesCount(int favoritesCount) {
     this.favoritesCount = favoritesCount;
   }
 

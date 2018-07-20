@@ -17,24 +17,20 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
-import com.moje.przepisy.mojeprzepisy.home_page.HomePageView;
 import com.moje.przepisy.mojeprzepisy.LicensesActivity;
 import com.moje.przepisy.mojeprzepisy.R;
 import com.moje.przepisy.mojeprzepisy.SearchSwipeActivity;
 import com.moje.przepisy.mojeprzepisy.data.model.OneRecipeCard;
-import java.util.ArrayList;
+import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.OperationsOnCardRepository;
+import com.moje.przepisy.mojeprzepisy.home_page.HomePageView;
+import java.util.List;
 
-public class MainCardsActivityView extends AppCompatActivity {
+public class MainCardsActivityView extends AppCompatActivity implements MainCardsContract.View {
+  private MainCardsContract.Presenter presenter;
   private DrawerLayout drawerLayout;
   Context context;
   private RecyclerView recyclerView;
   private MyCardViewAdapter adapter;
-  private ArrayList<OneRecipeCard> cardList = new ArrayList<>();
-  private String[] recipePhotos;
-  private String[] recipeName;
-  private String[] recipeAuthor;
-  private String[] starsCount;
-  private String[] favoritesCount;
   private boolean ifLogged = false;
 
   @Override
@@ -43,20 +39,18 @@ public class MainCardsActivityView extends AppCompatActivity {
     setContentView(R.layout.activity_main_cards);
     context = getApplicationContext();
 
+    presenter = new MainCardsPresenter(this,new OperationsOnCardRepository(getApplicationContext()));
+
+    presenter.getAllCardsFromServer();
+
     setToolbar();
 
     setDrawerLayoutListener();
 
     setNavigationViewListener();
-
-    matchArraysWithResources();
-
-    initCards();
-
-    setRecyclerView();
   }
 
-  public void setRecyclerView(){
+  public void setRecyclerView(List<OneRecipeCard> cardList){
     if(adapter == null) {
       adapter = new MyCardViewAdapter(this, cardList);
     }
@@ -169,30 +163,6 @@ public class MainCardsActivityView extends AppCompatActivity {
           }
         }
     );
-  }
-  public void matchArraysWithResources() {
-    recipePhotos = getResources().getStringArray(R.array.photo_list_array);
-    recipeName = getResources().getStringArray(R.array.name_recipes_array);
-    recipeAuthor = getResources().getStringArray(R.array.author_recipes_array);
-    starsCount = getResources().getStringArray(R.array.stars_count_array);
-    favoritesCount = getResources().getStringArray(R.array.favorites_count_array);
-  }
-
-  public int CardCount(){
-    return recipeName.length;
-  }
-
-  public void initCards() {
-    for (int i = 0; i < CardCount(); i++) {
-      OneRecipeCard card = new OneRecipeCard();
-      card.setId((long) i);
-      card.setPhotoRecipe(recipePhotos[i]);
-      card.setRecipeName(recipeName[i]);
-      card.setAuthorName(recipeAuthor[i]);
-      card.setStarsCount(starsCount[i]);
-      card.setFavoritesCount(favoritesCount[i]);
-      cardList.add(card);
-    }
   }
 
   @Override
