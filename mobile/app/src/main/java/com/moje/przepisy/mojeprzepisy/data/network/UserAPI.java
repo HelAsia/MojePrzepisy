@@ -28,6 +28,9 @@ public interface UserAPI {
   @GET("/cards/allCards")
   Call<List<OneRecipeCard>> getCards();
 
+  @GET("/cards/allCardsSortedAlphabetically")
+  Call<List<OneRecipeCard>> getCardsSortedAlphabetically();
+
   @GET("/cards/userCards")
   Call<List<OneRecipeCard>> getUserCards();
 

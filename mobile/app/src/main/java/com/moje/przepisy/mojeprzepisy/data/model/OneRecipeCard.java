@@ -1,6 +1,8 @@
 package com.moje.przepisy.mojeprzepisy.data.model;
 
 
+import java.sql.Timestamp;
+
 /**
  * Created by Asia on 2018-05-30.
  */
@@ -12,6 +14,8 @@ public class OneRecipeCard {
   public String recipeName;
   public String authorName;
   public String photoRecipe;
+  public Timestamp date;
+  public String dateString;
 
 
   public String toString() {
@@ -51,6 +55,10 @@ public class OneRecipeCard {
 
   public String getPhotoRecipe() {
     return photoRecipe;
+  }
+
+  public Timestamp getDate() {
+    return date;
   }
 
   public void setId(int id) {

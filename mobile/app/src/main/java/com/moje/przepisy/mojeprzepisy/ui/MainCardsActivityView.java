@@ -47,9 +47,10 @@ public class MainCardsActivityView extends AppCompatActivity implements MainCard
 
     setDrawerLayoutListener();
 
-    setNavigationViewListener();
+    presenter.setNavigationViewListener(getNavigationView(), getIfLoggedStatus());
   }
 
+  @Override
   public void setRecyclerView(List<OneRecipeCard> cardList){
     if(adapter == null) {
       adapter = new MyCardViewAdapter(this, cardList);
@@ -59,6 +60,7 @@ public class MainCardsActivityView extends AppCompatActivity implements MainCard
     recyclerView.setLayoutManager(new LinearLayoutManager(this));
   }
 
+  @Override
   public void setToolbar() {
     Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
     setSupportActionBar(toolbar);
@@ -67,6 +69,7 @@ public class MainCardsActivityView extends AppCompatActivity implements MainCard
     actionbar.setHomeAsUpIndicator(R.drawable.ic_menu);
   }
 
+  @Override
   public void setDrawerLayoutListener() {
     drawerLayout = (DrawerLayout) findViewById(R.id.activity_main_cards);
     drawerLayout.addDrawerListener(
@@ -90,16 +93,17 @@ public class MainCardsActivityView extends AppCompatActivity implements MainCard
     );
   }
 
-  public void setNavigationViewListener() {
-    NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+  public boolean getIfLoggedStatus(){
     ifLogged = getIntent().getExtras().getBoolean("LOGGED");
-    if(ifLogged) {
-      setNavigationViewListenerWithRegistriation(navigationView);
-    }else {
-      setNavigationViewListenerWithoutRegistriation(navigationView);
-    }
+    return ifLogged;
   }
 
+  public NavigationView getNavigationView(){
+    NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+    return navigationView;
+  }
+
+  @Override
   public void setNavigationViewListenerWithRegistriation(NavigationView navigationView) {
     navigationView.getMenu().clear();
     navigationView.inflateMenu(R.menu.drawer_registered_menu);
@@ -136,6 +140,7 @@ public class MainCardsActivityView extends AppCompatActivity implements MainCard
     );
   }
 
+  @Override
   public void setNavigationViewListenerWithoutRegistriation(NavigationView navigationView) {
     navigationView.getMenu().clear();
     navigationView.inflateMenu(R.menu.drawer_no_registered_menu);
@@ -175,6 +180,7 @@ public class MainCardsActivityView extends AppCompatActivity implements MainCard
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
       case R.id.sort_alphabetic:
+        presenter.getAllCardsSortedAlphabeticallyFromServer();
         Toast.makeText(this, "Kliknięto 'Alfabetycznie'", Toast.LENGTH_SHORT).show();
         return true;
       case R.id.sort_last_add:

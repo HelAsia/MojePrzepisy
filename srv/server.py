@@ -153,6 +153,14 @@ def getAllCards():
     return jsonify(cards)
 
 
+@app.route('/cards/allCardsSortedAlphabetically', methods=['GET'])
+def getAllCardsSortedAlphabetically():
+    user = Users(database)
+
+    cards = user.getAllCardsSortedAlphabetically()
+    return jsonify(cards)
+
+
 def main():
     global database
     database = Database()

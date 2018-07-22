@@ -23,13 +23,18 @@ public class OperationsOnCardRepository implements OperationsOnCardRepositoryInt
 
   @Override
   public void getCards(final OnCardsListener cardsListener) {
-
     Call<List<OneRecipeCard>> resp = userAPI.getCards();
 
     resp.enqueue(new Callback<List<OneRecipeCard>>() {
       @Override
       public void onResponse(Call<List<OneRecipeCard>> call, Response<List<OneRecipeCard>> response) {
         List<OneRecipeCard> recipes = response.body();
+        int oldId = 0;
+        for (OneRecipeCard recipeId : recipes) {
+          int newId = oldId + 1;
+            recipeId.id = newId;
+            oldId = newId;
+        }
         cardsListener.setRecipesList(recipes);
 
         for (OneRecipeCard recipe : recipes) {
@@ -39,7 +44,39 @@ public class OperationsOnCardRepository implements OperationsOnCardRepositoryInt
           Log.i("SERWER", "Photo: " + recipe.photoRecipe);
           Log.i("SERWER", "Recipe: " + recipe.recipeName);
           Log.i("SERWER", "Stars: " + recipe.starsCount);
-         // Log.i("SERWER", "Recipe: " + recipe.toString());
+        }
+      }
+
+      @Override
+      public void onFailure(Call<List<OneRecipeCard>> call, Throwable t) {
+        Log.i("SERWER", t.getMessage());
+      }
+    });
+  }
+
+  @Override
+  public void getCardsSortedAlphabetically(final OnCardsListener cardsListener) {
+    Call<List<OneRecipeCard>> resp = userAPI.getCardsSortedAlphabetically();
+
+    resp.enqueue(new Callback<List<OneRecipeCard>>() {
+      @Override
+      public void onResponse(Call<List<OneRecipeCard>> call, Response<List<OneRecipeCard>> response) {
+        List<OneRecipeCard> recipes = response.body();
+        int oldId = 0;
+        for (OneRecipeCard recipeId : recipes) {
+          int newId = oldId + 1;
+          recipeId.id = newId;
+          oldId = newId;
+        }
+        cardsListener.setRecipesList(recipes);
+
+        for (OneRecipeCard recipe : recipes) {
+          Log.i("SERWER", "Id: " + recipe.id);
+          Log.i("SERWER", "Author: " + recipe.authorName);
+          Log.i("SERWER", "Favorite: " + recipe.favoritesCount);
+          Log.i("SERWER", "Photo: " + recipe.photoRecipe);
+          Log.i("SERWER", "Recipe: " + recipe.recipeName);
+          Log.i("SERWER", "Stars: " + recipe.starsCount);
         }
       }
 

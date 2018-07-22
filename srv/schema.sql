@@ -48,7 +48,7 @@ CREATE TABLE users_recipes_stars (
     FOREIGN KEY (recipe_id) REFERENCES recipes(recipe_id)
 )ENGINE=MyISAM AUTO DEFAULT CHARSET=utf8;
 
-SELECT R.recipe_name AS Recipe, U.user_login AS User, count(URS.favorite) AS Favorite, ROUND(avg(URS.stars),0) AS Stars, R.recipe_main_picture as Picture
+SELECT R.recipe_id AS id, R.recipe_name AS Recipe, U.user_login AS User, count(URS.favorite) AS Favorite, ROUND(avg(URS.stars),0) AS Stars, R.recipe_main_picture as Picture, R.date_time as Date
     FROM recipes AS R
     INNER JOIN users AS U
     ON R.user_id = U.user_id

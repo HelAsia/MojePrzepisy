@@ -82,9 +82,9 @@ class Users:
             return 404, u'Forwarded data to check are not correct'
 
     def getAllCards(self):
-        query = u"SELECT R.recipe_id AS id, R.recipe_name AS recipeName, U.user_login AS authorName, " \
+        query = u"SELECT R.recipe_name AS recipeName, U.user_login AS authorName, " \
                 u"count(URS.favorite) AS favoritesCount, ROUND(avg(URS.stars),0) AS starsCount, " \
-                u"R.recipe_main_picture as photoRecipe "\
+                u"R.recipe_main_picture as photoRecipe, R.date_time as Date "\
                 u"FROM recipes AS R "\
                 u"INNER JOIN users AS U "\
                 u"ON R.user_id = U.user_id "\
@@ -92,17 +92,29 @@ class Users:
                 u"ON R.recipe_id = URS.recipe_id "\
                 u"GROUP BY R.recipe_id; "
 
-        class DecimalEncoder(json.JSONEncoder):
-            def default(self, obj):
-                if isinstance(obj, D):
-                    return float(obj)
-                return json.JSONEncoder.default(self, obj)
+        queryResult = self.database.query(query)
+
+        if queryResult:
+            Logger.dbg(queryResult)
+            return queryResult
+        else:
+            return {}
+
+    def getAllCardsSortedAlphabetically(self):
+        query = u"SELECT R.recipe_name AS recipeName, U.user_login AS authorName, " \
+                u"count(URS.favorite) AS favoritesCount, ROUND(avg(URS.stars),0) AS starsCount, " \
+                u"R.recipe_main_picture as photoRecipe, R.date_time as Date "\
+                u"FROM recipes AS R "\
+                u"INNER JOIN users AS U "\
+                u"ON R.user_id = U.user_id "\
+                u"INNER JOIN users_recipes_stars AS URS "\
+                u"ON R.recipe_id = URS.recipe_id "\
+                u"GROUP BY R.recipe_id " \
+                u"ORDER BY R.recipe_name; "
 
         queryResult = self.database.query(query)
 
-
         if queryResult:
-            #return DecimalEncoder().encode(queryResult)
             Logger.dbg(queryResult)
             return queryResult
         else:
