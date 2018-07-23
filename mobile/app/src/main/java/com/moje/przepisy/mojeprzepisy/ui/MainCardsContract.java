@@ -1,5 +1,6 @@
 package com.moje.przepisy.mojeprzepisy.ui;
 
+import android.content.Context;
 import android.support.design.widget.NavigationView;
 import com.moje.przepisy.mojeprzepisy.data.model.OneRecipeCard;
 import java.util.List;
@@ -23,6 +24,14 @@ public interface MainCardsContract {
     void getAllCardsFromServer();
 
     void getAllCardsSortedAlphabeticallyFromServer();
+
+    void getAllCardsSortedByLastAddedFromServer();
+
+    void getAllCardsSortedByHighestRatedFromServer();
+
+    void setSortedMethod(Context context, String sortedMethod);
+
+    void getSortedMethod(Context context);
 
     void setRecipesList(List<OneRecipeCard> cardList);
 

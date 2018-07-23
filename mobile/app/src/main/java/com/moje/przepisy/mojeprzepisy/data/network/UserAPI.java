@@ -16,7 +16,7 @@ public interface UserAPI {
   @POST("/user/login")
   Call<Message> login(@Body User user);
 
-  @PUT("/user/logout")
+  @GET("/user/logout")
   Call<Message> logout(@Body User user);
 
   @GET("/user/profile")
@@ -30,6 +30,12 @@ public interface UserAPI {
 
   @GET("/cards/allCardsSortedAlphabetically")
   Call<List<OneRecipeCard>> getCardsSortedAlphabetically();
+
+  @GET("/cards/allCardsSortedByLastAdded")
+  Call<List<OneRecipeCard>> getCardsSortedByLastAdded();
+
+  @GET("/cards/allCardsSortedByHighestRated")
+  Call<List<OneRecipeCard>> getCardsSortedByHighestRated();
 
   @GET("/cards/userCards")
   Call<List<OneRecipeCard>> getUserCards();

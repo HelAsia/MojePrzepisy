@@ -15,4 +15,8 @@ public interface OperationsOnCardRepositoryInterface {
 
   void getCardsSortedAlphabetically(OnCardsListener cardsListener);
 
+  void getCardsSortedByLastAdded(OnCardsListener cardsListener);
+
+  void getCardsSortedByHighestRated(OnCardsListener cardsListener);
+
 }

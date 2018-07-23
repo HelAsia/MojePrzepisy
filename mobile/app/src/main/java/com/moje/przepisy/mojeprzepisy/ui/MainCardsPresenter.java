@@ -19,6 +19,19 @@ public class MainCardsPresenter implements MainCardsContract.Presenter,
     this.operationsOnCardRepository = operationsOnCardRepository;
   }
 
+  public void getSortedMethod(Context context){
+    String sortedMethodPref = PreferenceManager.getDefaultSharedPreferences(context)
+        .getString(Constant.PREF_SORTED_METHOD,"default");
+    if(sortedMethodPref.equals("default")){
+      getAllCardsFromServer();
+    }else if(sortedMethodPref.equals("alphabetically")){
+      getAllCardsSortedAlphabeticallyFromServer();
+    }else if(sortedMethodPref.equals("lastAdded")){
+      getAllCardsSortedByLastAddedFromServer();
+    }else if(sortedMethodPref.equals("highestRated")){
+      getAllCardsSortedByHighestRatedFromServer();
+    }
+  }
   @Override
   public void getAllCardsFromServer() {
     if(cardsView != null) {
@@ -30,6 +43,20 @@ public class MainCardsPresenter implements MainCardsContract.Presenter,
   public void getAllCardsSortedAlphabeticallyFromServer() {
     if(cardsView != null) {
       operationsOnCardRepository.getCardsSortedAlphabetically(this);
+    }
+  }
+
+  @Override
+  public void getAllCardsSortedByLastAddedFromServer() {
+    if(cardsView != null) {
+      operationsOnCardRepository.getCardsSortedByLastAdded(this);
+    }
+  }
+
+  @Override
+  public void getAllCardsSortedByHighestRatedFromServer() {
+    if(cardsView != null) {
+      operationsOnCardRepository.getCardsSortedByHighestRated(this);
     }
   }
 
@@ -54,9 +81,10 @@ public class MainCardsPresenter implements MainCardsContract.Presenter,
     }
   }
 
-  public void setSortedType(Context context, String sortedtype){
+  @Override
+  public void setSortedMethod(Context context, String sortedMethod){
     SharedPreferences.Editor sortingSetting = PreferenceManager.getDefaultSharedPreferences(context).edit();
-    sortingSetting.putString(Constant.PREF_SORTED_TYPE, sortedtype).apply();
+    sortingSetting.putString(Constant.PREF_SORTED_METHOD, sortedMethod).apply();
     sortingSetting.commit();
   }
 }

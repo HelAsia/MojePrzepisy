@@ -41,7 +41,9 @@ public class MainCardsActivityView extends AppCompatActivity implements MainCard
 
     presenter = new MainCardsPresenter(this,new OperationsOnCardRepository(getApplicationContext()));
 
-    presenter.getAllCardsFromServer();
+    //presenter.getAllCardsFromServer();
+
+    presenter.getSortedMethod(context);
 
     setToolbar();
 
@@ -52,9 +54,7 @@ public class MainCardsActivityView extends AppCompatActivity implements MainCard
 
   @Override
   public void setRecyclerView(List<OneRecipeCard> cardList){
-    if(adapter == null) {
-      adapter = new MyCardViewAdapter(this, cardList);
-    }
+    adapter = new MyCardViewAdapter(this, cardList);
     recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
     recyclerView.setAdapter(adapter);
     recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -173,24 +173,26 @@ public class MainCardsActivityView extends AppCompatActivity implements MainCard
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     MenuInflater inflater = getMenuInflater();
-    inflater.inflate(R.menu.sorting_registered_menu, menu);
+    inflater.inflate(R.menu.sorting_menu, menu);
     return true;
   }
 
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
       case R.id.sort_alphabetic:
+        presenter.setSortedMethod(context,"alphabetically");
         presenter.getAllCardsSortedAlphabeticallyFromServer();
-        Toast.makeText(this, "Kliknięto 'Alfabetycznie'", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Sortowanie 'Alfabetycznie'", Toast.LENGTH_SHORT).show();
         return true;
       case R.id.sort_last_add:
-        Toast.makeText(this, "Kliknięto 'Ostatnio dodane'", Toast.LENGTH_SHORT).show();
+        presenter.setSortedMethod(context,"lastAdded");
+        presenter.getAllCardsSortedByLastAddedFromServer();
+        Toast.makeText(this, "Sortowanie 'Ostatnio dodane'", Toast.LENGTH_SHORT).show();
         return true;
       case R.id.sort_highest_rated:
-        Toast.makeText(this, "Kliknięto 'Najwyżej oceniane'", Toast.LENGTH_SHORT).show();
-        return true;
-      case R.id.favorites:
-        Toast.makeText(this, "Kliknięto 'Ulubione'", Toast.LENGTH_SHORT).show();
+        presenter.setSortedMethod(context,"highestRated");
+        presenter.getAllCardsSortedByHighestRatedFromServer();
+        Toast.makeText(this, "Sortowanie 'Najwyżej oceniane'", Toast.LENGTH_SHORT).show();
         return true;
       case android.R.id.home:
         drawerLayout.openDrawer(GravityCompat.START);

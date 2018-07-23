@@ -161,6 +161,22 @@ def getAllCardsSortedAlphabetically():
     return jsonify(cards)
 
 
+@app.route('/cards/allCardsSortedByLastAdded', methods=['GET'])
+def getAllCardsSortedByLastAdded():
+    user = Users(database)
+
+    cards = user.getAllCardsSortedByLastAdded()
+    return jsonify(cards)
+
+
+@app.route('/cards/allCardsSortedByHighestRated', methods=['GET'])
+def getAllCardsSortedByHighestRated():
+    user = Users(database)
+
+    cards = user.getAllCardsSortedByHighestRated()
+    return jsonify(cards)
+
+
 def main():
     global database
     database = Database()

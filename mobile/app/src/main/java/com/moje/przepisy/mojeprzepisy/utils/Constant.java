@@ -10,6 +10,7 @@ public class Constant {
 
  public static final String PREF_COOKIES = "PREF_COOKIES";
 
- public static final String PREF_SORTED_TYPE = "PREF_SORTED_TYPE";
+ public static final String PREF_SORTED_METHOD = "PREF_SORTED_METHOD";
 
 }
+
