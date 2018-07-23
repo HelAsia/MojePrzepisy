@@ -53,3 +53,4 @@ mobile/.externalNativeBuild
 /misc/*
 
 srv/*.pyc
+/srv/*.pyc
