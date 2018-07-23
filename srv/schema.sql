@@ -7,6 +7,7 @@ DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS sessions;
 DROP TABLE IF EXISTS recipes;
 DROP TABLE IF EXISTS users_recipes;
+DROP TABLE IF EXISTS users_recipes_stars;
 
 CREATE TABLE users (
     user_id int(11) NOT NULL AUTO_INCREMENT,
