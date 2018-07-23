@@ -2,17 +2,21 @@ package com.moje.przepisy.mojeprzepisy.ui;
 
 import android.content.Context;
 import android.support.design.widget.NavigationView;
+import android.support.v4.widget.DrawerLayout;
 import com.moje.przepisy.mojeprzepisy.data.model.OneRecipeCard;
 import java.util.List;
 
 public interface MainCardsContract {
 
   interface View {
+
+    NavigationView getNavigationView();
+
+    DrawerLayout getDrawerLayout();
+
     void setRecyclerView(List<OneRecipeCard> cardList);
 
     void setToolbar();
-
-    void setDrawerLayoutListener();
 
     void setNavigationViewListenerWithRegistriation(NavigationView navigationView);
 
@@ -29,9 +33,11 @@ public interface MainCardsContract {
 
     void getAllCardsSortedByHighestRatedFromServer();
 
+    void getSortedMethod(Context context);
+
     void setSortedMethod(Context context, String sortedMethod);
 
-    void getSortedMethod(Context context);
+    void setDrawerLayoutListener(DrawerLayout drawerLayout);
 
     void setRecipesList(List<OneRecipeCard> cardList);
 

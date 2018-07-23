@@ -3,7 +3,10 @@ package com.moje.przepisy.mojeprzepisy.ui;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.widget.DrawerLayout;
+import android.view.View;
 import com.moje.przepisy.mojeprzepisy.data.model.OneRecipeCard;
 import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.OperationsOnCardRepository;
 import com.moje.przepisy.mojeprzepisy.utils.Constant;
@@ -19,19 +22,24 @@ public class MainCardsPresenter implements MainCardsContract.Presenter,
     this.operationsOnCardRepository = operationsOnCardRepository;
   }
 
+  @Override
   public void getSortedMethod(Context context){
     String sortedMethodPref = PreferenceManager.getDefaultSharedPreferences(context)
         .getString(Constant.PREF_SORTED_METHOD,"default");
     if(sortedMethodPref.equals("default")){
       getAllCardsFromServer();
+
     }else if(sortedMethodPref.equals("alphabetically")){
       getAllCardsSortedAlphabeticallyFromServer();
+
     }else if(sortedMethodPref.equals("lastAdded")){
       getAllCardsSortedByLastAddedFromServer();
+
     }else if(sortedMethodPref.equals("highestRated")){
       getAllCardsSortedByHighestRatedFromServer();
     }
   }
+
   @Override
   public void getAllCardsFromServer() {
     if(cardsView != null) {
@@ -61,11 +69,6 @@ public class MainCardsPresenter implements MainCardsContract.Presenter,
   }
 
   @Override
-  public void onDestroy() {
-    cardsView = null;
-  }
-
-  @Override
   public void setRecipesList(List<OneRecipeCard> recipesList) {
     if(cardsView != null){
       cardsView.setRecyclerView(recipesList);
@@ -86,5 +89,30 @@ public class MainCardsPresenter implements MainCardsContract.Presenter,
     SharedPreferences.Editor sortingSetting = PreferenceManager.getDefaultSharedPreferences(context).edit();
     sortingSetting.putString(Constant.PREF_SORTED_METHOD, sortedMethod).apply();
     sortingSetting.commit();
+  }
+
+  @Override
+  public void setDrawerLayoutListener(DrawerLayout drawerLayout) {
+    drawerLayout.addDrawerListener(
+        new DrawerLayout.DrawerListener() {
+          @Override
+          public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
+          }
+          @Override
+          public void onDrawerOpened(@NonNull View drawerView) {
+          }
+          @Override
+          public void onDrawerClosed(@NonNull View drawerView) {
+          }
+          @Override
+          public void onDrawerStateChanged(int newState) {
+          }
+        }
+    );
+  }
+
+  @Override
+  public void onDestroy() {
+    cardsView = null;
   }
 }

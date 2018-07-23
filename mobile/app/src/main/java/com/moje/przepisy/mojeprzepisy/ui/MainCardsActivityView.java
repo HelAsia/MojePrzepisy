@@ -3,7 +3,6 @@ package com.moje.przepisy.mojeprzepisy.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -15,7 +14,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 import com.moje.przepisy.mojeprzepisy.LicensesActivity;
 import com.moje.przepisy.mojeprzepisy.R;
@@ -23,6 +21,7 @@ import com.moje.przepisy.mojeprzepisy.SearchSwipeActivity;
 import com.moje.przepisy.mojeprzepisy.data.model.OneRecipeCard;
 import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.OperationsOnCardRepository;
 import com.moje.przepisy.mojeprzepisy.home_page.HomePageView;
+import com.moje.przepisy.mojeprzepisy.log_in.LoginActivityView;
 import java.util.List;
 
 public class MainCardsActivityView extends AppCompatActivity implements MainCardsContract.View {
@@ -40,15 +39,9 @@ public class MainCardsActivityView extends AppCompatActivity implements MainCard
     context = getApplicationContext();
 
     presenter = new MainCardsPresenter(this,new OperationsOnCardRepository(getApplicationContext()));
-
-    //presenter.getAllCardsFromServer();
-
     presenter.getSortedMethod(context);
-
     setToolbar();
-
-    setDrawerLayoutListener();
-
+    presenter.setDrawerLayoutListener(getDrawerLayout());
     presenter.setNavigationViewListener(getNavigationView(), getIfLoggedStatus());
   }
 
@@ -70,37 +63,19 @@ public class MainCardsActivityView extends AppCompatActivity implements MainCard
   }
 
   @Override
-  public void setDrawerLayoutListener() {
+  public DrawerLayout getDrawerLayout() {
     drawerLayout = (DrawerLayout) findViewById(R.id.activity_main_cards);
-    drawerLayout.addDrawerListener(
-        new DrawerLayout.DrawerListener() {
-          @Override
-          public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
-          }
-
-          @Override
-          public void onDrawerOpened(@NonNull View drawerView) {
-          }
-
-          @Override
-          public void onDrawerClosed(@NonNull View drawerView) {
-          }
-
-          @Override
-          public void onDrawerStateChanged(int newState) {
-          }
-        }
-    );
-  }
-
-  public boolean getIfLoggedStatus(){
-    ifLogged = getIntent().getExtras().getBoolean("LOGGED");
-    return ifLogged;
+    return drawerLayout;
   }
 
   public NavigationView getNavigationView(){
     NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
     return navigationView;
+  }
+
+  public boolean getIfLoggedStatus(){
+    ifLogged = getIntent().getExtras().getBoolean("LOGGED");
+    return ifLogged;
   }
 
   @Override
@@ -152,15 +127,19 @@ public class MainCardsActivityView extends AppCompatActivity implements MainCard
             drawerLayout.closeDrawers();
             int id = menuItem.getItemId();
 
-            if (id == R.id.search_nav) {
+            if( id == R.id.login_nav){
+              Intent intent = new Intent(MainCardsActivityView.this, LoginActivityView.class);
+              startActivity(intent);
+
+            }else if (id == R.id.search_nav) {
               Intent intent = new Intent(MainCardsActivityView.this, SearchSwipeActivity.class);
               startActivity(intent);
 
-            } else if (id == R.id.calculating_nav) {
+            }else if (id == R.id.calculating_nav) {
 
-            } else if (id == R.id.timer_nav) {
+            }else if (id == R.id.timer_nav) {
 
-            } else if (id == R.id.licences_nav) {
+            }else if (id == R.id.licences_nav) {
               Intent intent = new Intent(MainCardsActivityView.this, LicensesActivity.class);
               startActivity(intent);
             }
@@ -184,19 +163,23 @@ public class MainCardsActivityView extends AppCompatActivity implements MainCard
         presenter.getAllCardsSortedAlphabeticallyFromServer();
         Toast.makeText(this, "Sortowanie 'Alfabetycznie'", Toast.LENGTH_SHORT).show();
         return true;
+
       case R.id.sort_last_add:
         presenter.setSortedMethod(context,"lastAdded");
         presenter.getAllCardsSortedByLastAddedFromServer();
         Toast.makeText(this, "Sortowanie 'Ostatnio dodane'", Toast.LENGTH_SHORT).show();
         return true;
+
       case R.id.sort_highest_rated:
         presenter.setSortedMethod(context,"highestRated");
         presenter.getAllCardsSortedByHighestRatedFromServer();
         Toast.makeText(this, "Sortowanie 'Najwyżej oceniane'", Toast.LENGTH_SHORT).show();
         return true;
+
       case android.R.id.home:
         drawerLayout.openDrawer(GravityCompat.START);
         return true;
+
       default:
         return super.onOptionsItemSelected(item);
     }

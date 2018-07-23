@@ -25,16 +25,16 @@ public interface UserAPI {
   @PUT("/user/profile")
   Call<Message> register(@Body User user);
 
-  @GET("/cards/allCards")
+  @GET("/cards/default")
   Call<List<OneRecipeCard>> getCards();
 
-  @GET("/cards/allCardsSortedAlphabetically")
+  @GET("/cards/alphabetically")
   Call<List<OneRecipeCard>> getCardsSortedAlphabetically();
 
-  @GET("/cards/allCardsSortedByLastAdded")
+  @GET("/cards/lastAdded")
   Call<List<OneRecipeCard>> getCardsSortedByLastAdded();
 
-  @GET("/cards/allCardsSortedByHighestRated")
+  @GET("/cards/highestRated")
   Call<List<OneRecipeCard>> getCardsSortedByHighestRated();
 
   @GET("/cards/userCards")

@@ -145,35 +145,17 @@ def profile_method():
         })
 
 
-@app.route('/cards/allCards', methods=['GET'])
-def getAllCards():
+@app.route('/cards/<string:sorted_method>', methods=['GET'])
+def getSortedCards(sorted_method):
     user = Users(database)
-
-    cards = user.getAllCards()
-    return jsonify(cards)
-
-
-@app.route('/cards/allCardsSortedAlphabetically', methods=['GET'])
-def getAllCardsSortedAlphabetically():
-    user = Users(database)
-
-    cards = user.getAllCardsSortedAlphabetically()
-    return jsonify(cards)
-
-
-@app.route('/cards/allCardsSortedByLastAdded', methods=['GET'])
-def getAllCardsSortedByLastAdded():
-    user = Users(database)
-
-    cards = user.getAllCardsSortedByLastAdded()
-    return jsonify(cards)
-
-
-@app.route('/cards/allCardsSortedByHighestRated', methods=['GET'])
-def getAllCardsSortedByHighestRated():
-    user = Users(database)
-
-    cards = user.getAllCardsSortedByHighestRated()
+    if sorted_method == 'default':
+        cards = user.getAllCards()
+    elif sorted_method == 'alphabetically':
+        cards = user.getAllCardsSortedAlphabetically()
+    elif sorted_method == 'lastAdded':
+        cards = user.getAllCardsSortedByLastAdded()
+    elif sorted_method == 'highestRated':
+        cards = user.getAllCardsSortedByHighestRated()
     return jsonify(cards)
 
 

@@ -37,16 +37,15 @@ public class OperationsOnCardRepository implements OperationsOnCardRepositoryInt
         }
         cardsListener.setRecipesList(recipes);
 
-        for (OneRecipeCard recipe : recipes) {
+/*        for (OneRecipeCard recipe : recipes) {
           Log.i("SERWER", "Id: " + recipe.id);
           Log.i("SERWER", "Author: " + recipe.authorName);
           Log.i("SERWER", "Favorite: " + recipe.favoritesCount);
           Log.i("SERWER", "Photo: " + recipe.photoRecipe);
           Log.i("SERWER", "Recipe: " + recipe.recipeName);
           Log.i("SERWER", "Stars: " + recipe.starsCount);
-        }
+        }*/
       }
-
       @Override
       public void onFailure(Call<List<OneRecipeCard>> call, Throwable t) {
         Log.i("SERWER", t.getMessage());
@@ -69,17 +68,7 @@ public class OperationsOnCardRepository implements OperationsOnCardRepositoryInt
           oldId = newId;
         }
         cardsListener.setRecipesList(recipes);
-
-        /*for (OneRecipeCard recipe : recipes) {
-          Log.i("SERWER", "Id: " + recipe.id);
-          Log.i("SERWER", "Author: " + recipe.authorName);
-          Log.i("SERWER", "Favorite: " + recipe.favoritesCount);
-          Log.i("SERWER", "Photo: " + recipe.photoRecipe);
-          Log.i("SERWER", "Recipe: " + recipe.recipeName);
-          Log.i("SERWER", "Stars: " + recipe.starsCount);
-        }*/
       }
-
       @Override
       public void onFailure(Call<List<OneRecipeCard>> call, Throwable t) {
         Log.i("SERWER", t.getMessage());
@@ -102,17 +91,7 @@ public class OperationsOnCardRepository implements OperationsOnCardRepositoryInt
           oldId = newId;
         }
         cardsListener.setRecipesList(recipes);
-
-        /*for (OneRecipeCard recipe : recipes) {
-          Log.i("SERWER", "Id: " + recipe.id);
-          Log.i("SERWER", "Author: " + recipe.authorName);
-          Log.i("SERWER", "Favorite: " + recipe.favoritesCount);
-          Log.i("SERWER", "Photo: " + recipe.photoRecipe);
-          Log.i("SERWER", "Recipe: " + recipe.recipeName);
-          Log.i("SERWER", "Stars: " + recipe.starsCount);
-        }*/
       }
-
       @Override
       public void onFailure(Call<List<OneRecipeCard>> call, Throwable t) {
         Log.i("SERWER", t.getMessage());
@@ -135,17 +114,7 @@ public class OperationsOnCardRepository implements OperationsOnCardRepositoryInt
           oldId = newId;
         }
         cardsListener.setRecipesList(recipes);
-
-        /*for (OneRecipeCard recipe : recipes) {
-          Log.i("SERWER", "Id: " + recipe.id);
-          Log.i("SERWER", "Author: " + recipe.authorName);
-          Log.i("SERWER", "Favorite: " + recipe.favoritesCount);
-          Log.i("SERWER", "Photo: " + recipe.photoRecipe);
-          Log.i("SERWER", "Recipe: " + recipe.recipeName);
-          Log.i("SERWER", "Stars: " + recipe.starsCount);
-        }*/
       }
-
       @Override
       public void onFailure(Call<List<OneRecipeCard>> call, Throwable t) {
         Log.i("SERWER", t.getMessage());

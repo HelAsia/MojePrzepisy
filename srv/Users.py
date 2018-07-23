@@ -82,7 +82,9 @@ class Users:
         else:
             return 404, u'Forwarded data to check are not correct'
 
+        query = """
 
+        """
     def getAllCards(self):
         query = u"SELECT R.recipe_name AS recipeName, U.user_login AS authorName, " \
                 u"count(URS.favorite) AS favoritesCount, ROUND(avg(URS.stars),0) AS starsCount, " \
