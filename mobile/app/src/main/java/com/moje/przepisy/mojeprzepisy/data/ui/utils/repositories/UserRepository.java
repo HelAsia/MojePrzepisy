@@ -50,6 +50,32 @@ public class UserRepository implements UserRepositoryInterface{
   }
 
   @Override
+  public void logout(final OnLogoutFinishedListener listener) {
+    Call<Message> resp = userAPI.logout();
+
+    resp.enqueue(new Callback<Message>() {
+      @Override
+      public void onResponse(Call<Message> call, Response<Message> response) {
+        Message msg = response.body();
+        Log.i("SERVER", "Server return code: " + Integer.toString(msg.status));
+        Log.i("SERVER", "Message: " + msg.message);
+
+        if (msg.status == 200){
+          listener.onSuccess();
+        }else {
+          listener.onLogoutError(msg.message);
+        }
+      }
+
+      @Override
+      public void onFailure(Call<Message> call, Throwable t) {
+        Log.i("SERWER", t.getMessage());
+        listener.onLogoutError(t.getMessage());
+      }
+    });
+  }
+
+  @Override
   public void register(final String firstName, final String lastName, final String login, final String password, final String email,
       final                                                                                                                                                                                                                                  OnRegisterFinishedListener listener) {
 

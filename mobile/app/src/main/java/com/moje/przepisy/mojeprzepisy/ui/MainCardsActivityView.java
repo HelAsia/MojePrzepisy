@@ -20,8 +20,8 @@ import com.moje.przepisy.mojeprzepisy.R;
 import com.moje.przepisy.mojeprzepisy.SearchSwipeActivity;
 import com.moje.przepisy.mojeprzepisy.data.model.OneRecipeCard;
 import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.OperationsOnCardRepository;
-import com.moje.przepisy.mojeprzepisy.home_page.HomePageView;
 import com.moje.przepisy.mojeprzepisy.log_in.LoginActivityView;
+import com.moje.przepisy.mojeprzepisy.log_out.LogoutActivityView;
 import java.util.List;
 
 public class MainCardsActivityView extends AppCompatActivity implements MainCardsContract.View {
@@ -106,7 +106,7 @@ public class MainCardsActivityView extends AppCompatActivity implements MainCard
               Intent intent = new Intent(MainCardsActivityView.this, LicensesActivity.class);
               startActivity(intent);
             }else if (id == R.id.logout_nav) {
-              Intent intent = new Intent(MainCardsActivityView.this, HomePageView.class);
+              Intent intent = new Intent(MainCardsActivityView.this, LogoutActivityView.class);
               startActivity(intent);
             }
             return false;

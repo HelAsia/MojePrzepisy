@@ -41,6 +41,8 @@
     </activity>
     <activity android:name=".ui.MainCardsActivityView">
     </activity>
+    <activity android:name=".log_out.LogoutActivityView">
+    </activity>
   </application>
 
 </manifest>

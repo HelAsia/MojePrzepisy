@@ -8,8 +8,15 @@ public interface UserRepositoryInterface {
 
     void onSuccess();
   }
-
   void login(String login, String password, OnLoginFinishedListener listener);
+
+  interface OnLogoutFinishedListener {
+
+    void onLogoutError(String message);
+
+    void onSuccess();
+  }
+  void logout(OnLogoutFinishedListener listener);
 
   interface OnRegisterFinishedListener {
 

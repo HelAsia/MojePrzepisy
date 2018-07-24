@@ -89,6 +89,7 @@ def login_method():
 
 # Logout session
 @app.route('/user/logout', methods=['GET'])
+@authorized
 def logout_method():
     sess = Session(session, database)
     sess.destroySession()
@@ -128,21 +129,21 @@ def profile_method():
     if request.method == 'GET':
         return jsonify(user.getUser(get_user_id()))
 
-    # Delete user
-    elif request.method == 'DELETE':
-        status, message = user.deleteUser(login, password)
-
-        return jsonify({
-            'status': status,
-            'message': message
-        })
-
-    # Edit user
-    elif request.method == 'POST':
-        return jsonify({
-            'status': status,
-            'message': message
-        })
+    # # Delete user
+    # elif request.method == 'DELETE':
+    #     status, message = user.deleteUser(login, password)
+    #
+    #     return jsonify({
+    #         'status': status,
+    #         'message': message
+    #     })
+    #
+    # # Edit user
+    # elif request.method == 'POST':
+    #     return jsonify({
+    #         'status': status,
+    #         'message': message
+    #     })
 
 
 @app.route('/cards/<string:sorted_method>', methods=['GET'])

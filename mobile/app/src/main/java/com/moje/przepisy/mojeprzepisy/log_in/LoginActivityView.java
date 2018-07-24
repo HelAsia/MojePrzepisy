@@ -12,7 +12,6 @@ import butterknife.ButterKnife;
 import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.UserRepository;
 import com.moje.przepisy.mojeprzepisy.R;
 import com.moje.przepisy.mojeprzepisy.ui.MainCardsActivityView;
-import com.moje.przepisy.mojeprzepisy.welcome.WelcomeView;
 
 public class LoginActivityView extends AppCompatActivity implements LoginContract.View, View.OnClickListener{
 
@@ -34,7 +33,8 @@ public class LoginActivityView extends AppCompatActivity implements LoginContrac
     presenter = new LoginPresenter(this, new UserRepository(getApplicationContext()));
   }
 
-  @Override protected  void onDestroy() {
+  @Override
+  protected  void onDestroy() {
     presenter.onDestroy();
     super.onDestroy();
   }

@@ -54,5 +54,10 @@
   <string name="ebony_cake_URL">https://static.smaker.pl/photos/d/1/d/d1dcfbf9ba4aef5303a5c707445a9813_359664_53c796b99161d_wm.jpg</string>
 
   <string name="login_password_error_message">Podany login lub hasło są błędne</string>
+  <string name="logout_error_message">Błąd wylogowania</string>
+
+  <string name="logout_question">Czy chcesz się wylogować?</string>
+  <string name="yes">TAK</string>
+  <string name="no">NIE</string>
 
 </resources>
