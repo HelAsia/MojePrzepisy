@@ -158,21 +158,30 @@ public class MainCardsActivityView extends AppCompatActivity implements MainCard
 
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
+      case R.id.sort_default:
+        presenter.setSortedMethod(context,"default");
+        presenter.getAllCardsFromServer();
+        item.setChecked(true);
+        return true;
+
       case R.id.sort_alphabetic:
         presenter.setSortedMethod(context,"alphabetically");
         presenter.getAllCardsSortedAlphabeticallyFromServer();
+        item.setChecked(true);
         Toast.makeText(this, "Sortowanie 'Alfabetycznie'", Toast.LENGTH_SHORT).show();
         return true;
 
       case R.id.sort_last_add:
         presenter.setSortedMethod(context,"lastAdded");
         presenter.getAllCardsSortedByLastAddedFromServer();
+        item.setChecked(true);
         Toast.makeText(this, "Sortowanie 'Ostatnio dodane'", Toast.LENGTH_SHORT).show();
         return true;
 
       case R.id.sort_highest_rated:
         presenter.setSortedMethod(context,"highestRated");
         presenter.getAllCardsSortedByHighestRatedFromServer();
+        item.setChecked(true);
         Toast.makeText(this, "Sortowanie 'Najwyżej oceniane'", Toast.LENGTH_SHORT).show();
         return true;
 

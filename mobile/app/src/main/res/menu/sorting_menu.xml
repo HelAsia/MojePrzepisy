@@ -4,20 +4,30 @@
   xmlns:tools="http://schemas.android.com/tools"
   tools:context="com.moje.przepisy.mojeprzepisy.with_registration.MainRegisteredActivity">
 
-  <item
-    android:id="@+id/sort_alphabetic"
-    android:title="@string/alphabetically"
-    android:icon="@android:drawable/ic_menu_sort_alphabetically"
-    app:showAsAction="never"/>
+  <group android:checkableBehavior="single">
+    <item
+      android:id="@+id/sort_default"
+      android:title="@string/default_sorting"
+      android:visible="true"
+      app:showAsAction="never"/>
 
-  <item
-    android:id="@+id/sort_last_add"
-    android:title="@string/last_add"
-    app:showAsAction="never"/>
+    <item
+      android:id="@+id/sort_alphabetic"
+      android:title="@string/alphabetically"
+      android:visible="true"
+      app:showAsAction="never"/>
 
-  <item
-    android:id="@+id/sort_highest_rated"
-    android:title="@string/highest_rated"
-    app:showAsAction="never"/>
+    <item
+      android:id="@+id/sort_last_add"
+      android:title="@string/last_add"
+      android:visible="true"
+      app:showAsAction="never"/>
+
+    <item
+      android:id="@+id/sort_highest_rated"
+      android:title="@string/highest_rated"
+      android:visible="true"
+      app:showAsAction="never"/>
+  </group>
 
 </menu>
