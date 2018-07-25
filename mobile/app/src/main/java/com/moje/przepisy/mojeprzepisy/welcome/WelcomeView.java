@@ -38,7 +38,6 @@ public class WelcomeView extends AppCompatActivity implements WelcomeContract.Vi
     Intent intent = new Intent(WelcomeView.this, MainCardsActivityView.class);
     intent.putExtra("LOGGED",true);
     startActivity(intent);
-
     WelcomeView.this.finish();
   }
 

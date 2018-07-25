@@ -4,7 +4,9 @@ public interface LogoutContract {
 
   interface View {
 
-    void navigateToMainCardsActivity();
+    void navigateToMainLoggedCardsActivity();
+
+    void navigateToUnloggedMainCardsActivity();
 
     void showLogoutError(String message);
   }

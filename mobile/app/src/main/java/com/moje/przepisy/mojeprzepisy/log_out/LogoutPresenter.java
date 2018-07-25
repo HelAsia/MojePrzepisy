@@ -34,7 +34,7 @@ public class LogoutPresenter implements LogoutContract.Presenter, UserRepository
   @Override
   public void onSuccess() {
     if(logoutView != null) {
-      logoutView.navigateToMainCardsActivity();
+      logoutView.navigateToUnloggedMainCardsActivity();
     }
   }
 }
