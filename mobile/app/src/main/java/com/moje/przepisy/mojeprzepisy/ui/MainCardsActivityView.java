@@ -22,6 +22,7 @@ import com.moje.przepisy.mojeprzepisy.data.model.OneRecipeCard;
 import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.OperationsOnCardRepository;
 import com.moje.przepisy.mojeprzepisy.log_in.LoginActivityView;
 import com.moje.przepisy.mojeprzepisy.log_out.LogoutActivityView;
+import com.moje.przepisy.mojeprzepisy.register.RegisterActivityView;
 import java.util.List;
 
 public class MainCardsActivityView extends AppCompatActivity implements MainCardsContract.View {
@@ -127,7 +128,11 @@ public class MainCardsActivityView extends AppCompatActivity implements MainCard
             drawerLayout.closeDrawers();
             int id = menuItem.getItemId();
 
-            if( id == R.id.login_nav){
+            if( id == R.id.register_nav){
+              Intent intent = new Intent(MainCardsActivityView.this, RegisterActivityView.class);
+              startActivity(intent);
+
+            }else if( id == R.id.login_nav){
               Intent intent = new Intent(MainCardsActivityView.this, LoginActivityView.class);
               startActivity(intent);
 

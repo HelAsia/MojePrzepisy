@@ -6,6 +6,10 @@
     <item android:title="@string/available_option">
       <menu>
         <item
+          android:id="@+id/register_nav"
+          android:icon="@mipmap/ic_account_circle"
+          android:title="@string/register"/>
+        <item
           android:id="@+id/login_nav"
           android:icon="@mipmap/ic_account_circle"
           android:title="@string/login"/>
