@@ -38,6 +38,7 @@ CREATE TABLE recipes (
     recipe_main_picture varchar(5000) DEFAULT NULL,
     recipe_category varchar(80) NOT NULL,
     user_id int(11),
+    date_time datetime,
     PRIMARY KEY (recipe_id),
     FOREIGN KEY (user_id) REFERENCES users(user_id)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;

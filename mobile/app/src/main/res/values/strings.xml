@@ -59,5 +59,12 @@
   <string name="logout_question">Czy chcesz się wylogować?</string>
   <string name="yes">TAK</string>
   <string name="no">NIE</string>
+  
+  <string name="add_ingredients">Dodaj składniki</string>
+  <string name="add_steps">Dodaj kroki</string>
+  <string name="add_description">Dodaj jednolity opis</string>
+  <string name="add_main_photo">Dodaj zdjęcie główne</string>
+  <string name="add_photo">Dodaj zdjęcie</string>
+  <string name="add_group">Dodaj nazwę grupy składników</string>
 
 </resources>

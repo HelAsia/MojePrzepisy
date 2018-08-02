@@ -167,6 +167,10 @@ def getSortedCards(sorted_method):
         cards = user.getAllCardsSortedByLastAdded()
     elif sorted_method == 'highestRated':
         cards = user.getAllCardsSortedByHighestRated()
+
+    if not cards:
+        Logger.fail("There were no cards returned!")
+
     return jsonify(cards)
 
 
