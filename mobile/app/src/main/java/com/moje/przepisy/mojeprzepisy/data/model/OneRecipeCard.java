@@ -17,6 +17,13 @@ public class OneRecipeCard {
   public Timestamp date;
   public String dateString;
 
+  public OneRecipeCard(){
+
+  }
+
+  public OneRecipeCard(String recipeName){
+    this.recipeName = recipeName;
+  }
 
   public String toString() {
       String out;

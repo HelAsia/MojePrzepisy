@@ -82,9 +82,6 @@ class Users:
         else:
             return 404, u'Forwarded data to check are not correct'
 
-        query = """
-
-        """
     def getAllCards(self):
         query = u"SELECT R.recipe_name AS recipeName, U.user_login AS authorName, " \
                 u"count(URS.favorite) AS favoritesCount, ROUND(avg(URS.stars),0) AS starsCount, " \
@@ -166,3 +163,24 @@ class Users:
             return queryResult
         else:
             return {}
+
+    def getSearchedCardsSortedByDefault(self, searchedQuery):
+        query = u"SELECT R.recipe_name AS recipeName, U.user_login AS authorName, " \
+                u"count(URS.favorite) AS favoritesCount, ROUND(avg(URS.stars),0) AS starsCount, " \
+                u"R.recipe_main_picture as photoRecipe, R.date_time as Date " \
+                u"FROM recipes AS R " \
+                u"INNER JOIN users AS U " \
+                u"ON R.user_id = U.user_id " \
+                u"INNER JOIN users_recipes_stars AS URS " \
+                u"ON R.recipe_id = URS.recipe_id " \
+                u"WHERE R.recipe_name LIKE '%{}%'"\
+                u"GROUP BY R.recipe_id; ".format(searchedQuery)
+
+        queryResult = self.database.query(query)
+
+        if queryResult:
+            Logger.dbg(queryResult)
+            return queryResult
+        else:
+            return {}
+

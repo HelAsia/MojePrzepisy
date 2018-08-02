@@ -146,6 +146,16 @@ def profile_method():
     #     })
 
 
+@app.route('/cards/searchedCards', methods=['POST'])
+def getSearchedCards():
+    user = Users(database)
+    params = request.get_json()
+    searchedQuery = params.get('recipeName')
+
+    cards = user.getSearchedCardsSortedByDefault(searchedQuery)
+    return jsonify(cards)
+
+
 @app.route('/cards/<string:sorted_method>', methods=['GET'])
 def getSortedCards(sorted_method):
     user = Users(database)

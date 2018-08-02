@@ -39,6 +39,8 @@ public interface MainCardsContract {
 
     void setDrawerLayoutListener(DrawerLayout drawerLayout);
 
+    void getSearchedCardsFromServer(String recipeName);
+
     void setRecipesList(List<OneRecipeCard> cardList);
 
     void setNavigationViewListener(NavigationView navigationView, boolean ifLogged);

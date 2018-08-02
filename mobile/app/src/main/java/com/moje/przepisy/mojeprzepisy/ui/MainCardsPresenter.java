@@ -69,6 +69,13 @@ public class MainCardsPresenter implements MainCardsContract.Presenter,
   }
 
   @Override
+  public void getSearchedCardsFromServer(String recipeName) {
+    if(cardsView != null) {
+      operationsOnCardRepository.getCardsSortedBySearchedQuery(this, recipeName);
+    }
+  }
+
+  @Override
   public void setRecipesList(List<OneRecipeCard> recipesList) {
     if(cardsView != null){
       cardsView.setRecyclerView(recipesList);

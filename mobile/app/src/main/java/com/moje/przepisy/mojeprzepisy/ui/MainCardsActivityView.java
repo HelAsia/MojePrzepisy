@@ -5,11 +5,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -158,7 +160,24 @@ public class MainCardsActivityView extends AppCompatActivity implements MainCard
   public boolean onCreateOptionsMenu(Menu menu) {
     MenuInflater inflater = getMenuInflater();
     inflater.inflate(R.menu.sorting_menu, menu);
-    return true;
+
+    MenuItem searchViewItem = menu.findItem(R.id.action_search);
+    final SearchView searchViewAndroidActionBar = (SearchView) MenuItemCompat.getActionView(searchViewItem);
+    searchViewAndroidActionBar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+      @Override
+      public boolean onQueryTextSubmit(String query) {
+        presenter.getSearchedCardsFromServer(query);
+        Toast.makeText(context, query, Toast.LENGTH_SHORT).show();
+        //searchViewAndroidActionBar.clearFocus();
+        return true;
+      }
+
+      @Override
+      public boolean onQueryTextChange(String newText) {
+        return false;
+      }
+    });
+    return super.onCreateOptionsMenu(menu);
   }
 
   public boolean onOptionsItemSelected(MenuItem item) {

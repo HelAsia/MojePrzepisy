@@ -46,6 +46,7 @@ public interface UserAPI {
   @DELETE("/cards/userCards")
   Call<Message> deleteUserCards(@Body OneRecipeCard oneRecipeCard);
 
-
+  @POST("cards/searchedCards")
+  Call<List<OneRecipeCard>> getCardsSortedBySearchedQuery(@Body OneRecipeCard oneRecipeCard);
 
 }

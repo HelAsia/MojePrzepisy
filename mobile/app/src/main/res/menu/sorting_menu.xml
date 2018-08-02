@@ -6,6 +6,12 @@
 
   <group android:checkableBehavior="single">
     <item
+      android:id="@+id/action_search"
+      app:actionViewClass="android.support.v7.widget.SearchView"
+      app:showAsAction="ifRoom|collapseActionView"
+      android:icon="@android:drawable/ic_menu_search"
+      android:title="Search"/>
+    <item
       android:id="@+id/sort_default"
       android:title="@string/default_sorting"
       android:visible="true"

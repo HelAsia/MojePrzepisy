@@ -19,4 +19,6 @@ public interface OperationsOnCardRepositoryInterface {
 
   void getCardsSortedByHighestRated(OnCardsListener cardsListener);
 
+  void getCardsSortedBySearchedQuery(OnCardsListener cardsListener, String recipeName);
+
 }
