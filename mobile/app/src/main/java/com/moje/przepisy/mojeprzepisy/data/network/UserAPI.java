@@ -13,10 +13,10 @@ import retrofit2.http.PUT;
 
 public interface UserAPI {
 
-  @POST("/user/login")
+  @POST("/login")
   Call<Message> login(@Body User user);
 
-  @GET("/user/logout")
+  @GET("/logout")
   Call<Message> logout();
 
   @GET("/user/profile")

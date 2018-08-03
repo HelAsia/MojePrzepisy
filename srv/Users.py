@@ -57,9 +57,7 @@ class Users:
         else:
             return 500, u'Wrong type of password'
 
-
-
-    def getUser(self,userID):
+    def getUser(self, userID):
         query = u"SELECT user_login, first_name, last_name, email " \
                 u"FROM users " \
                 u"WHERE user_id = '{}'".format(userID)
@@ -70,117 +68,25 @@ class Users:
         else:
             return {}
 
-
-    def deleteUser(self,login, password):
+    def deleteUser(self, userID):
         query = u"DELETE FROM users " \
-                u"WHERE user_login = '{}' AND user_password = '{}'".format(login, password)
+                u"WHERE user_id = '{}'".format(userID)
         queryResult = self.database.query(query)
 
         if queryResult:
             Logger.dbg(str(tuple(queryResult)))
-            return 200, u'Your deleted login={},  password={}, first name={}, last name={}, email='.format(login, password, firstName, lastName, email)
+            return 200, u'Your deleted luser_id ={}'.format(userID)
         else:
             return 404, u'Forwarded data to check are not correct'
 
-    def getAllCards(self):
-        query = u"SELECT R.recipe_name AS recipeName, U.user_login AS authorName, " \
-                u"count(URS.favorite) AS favoritesCount, ROUND(avg(URS.stars),0) AS starsCount, " \
-                u"R.recipe_main_picture as photoRecipe, R.date_time as Date "\
-                u"FROM recipes AS R "\
-                u"INNER JOIN users AS U "\
-                u"ON R.user_id = U.user_id "\
-                u"INNER JOIN users_recipes_stars AS URS "\
-                u"ON R.recipe_id = URS.recipe_id "\
-                u"GROUP BY R.recipe_id; "
-
+    def editUser(self, columnName, columnValue, userID):
+        query = u"UPDATE users " \
+                u"SET {} = '{}'" \
+                u"WHERE user_id = '{}'".format(columnName, columnValue, userID)
         queryResult = self.database.query(query)
 
         if queryResult:
-            Logger.dbg(queryResult)
-            return queryResult
+            Logger.dbg(str(tuple(queryResult)))
+            return 200, u'Your changed {}={}'.format(columnName, columnValue)
         else:
-            return {}
-
-
-    def getAllCardsSortedAlphabetically(self):
-        query = u"SELECT R.recipe_name AS recipeName, U.user_login AS authorName, " \
-                u"count(URS.favorite) AS favoritesCount, ROUND(avg(URS.stars),0) AS starsCount, " \
-                u"R.recipe_main_picture as photoRecipe, R.date_time as Date "\
-                u"FROM recipes AS R "\
-                u"INNER JOIN users AS U "\
-                u"ON R.user_id = U.user_id "\
-                u"INNER JOIN users_recipes_stars AS URS "\
-                u"ON R.recipe_id = URS.recipe_id "\
-                u"GROUP BY R.recipe_id " \
-                u"ORDER BY R.recipe_name; "
-
-        queryResult = self.database.query(query)
-
-        if queryResult:
-            Logger.dbg(queryResult)
-            return queryResult
-        else:
-            return {}
-
-
-    def getAllCardsSortedByLastAdded(self):
-        query = u"SELECT R.recipe_name AS recipeName, U.user_login AS authorName, " \
-                u"count(URS.favorite) AS favoritesCount, ROUND(avg(URS.stars),0) AS starsCount, " \
-                u"R.recipe_main_picture as photoRecipe, R.date_time as Date "\
-                u"FROM recipes AS R "\
-                u"INNER JOIN users AS U "\
-                u"ON R.user_id = U.user_id "\
-                u"INNER JOIN users_recipes_stars AS URS "\
-                u"ON R.recipe_id = URS.recipe_id "\
-                u"GROUP BY R.recipe_id " \
-                u"ORDER BY R.date_time; "
-
-        queryResult = self.database.query(query)
-
-        if queryResult:
-            Logger.dbg(queryResult)
-            return queryResult
-        else:
-            return {}
-
-
-    def getAllCardsSortedByHighestRated(self):
-        query = u"SELECT R.recipe_name AS recipeName, U.user_login AS authorName, " \
-                u"count(URS.favorite) AS favoritesCount, ROUND(avg(URS.stars),0) AS starsCount, " \
-                u"R.recipe_main_picture as photoRecipe, R.date_time as Date "\
-                u"FROM recipes AS R "\
-                u"INNER JOIN users AS U "\
-                u"ON R.user_id = U.user_id "\
-                u"INNER JOIN users_recipes_stars AS URS "\
-                u"ON R.recipe_id = URS.recipe_id "\
-                u"GROUP BY R.recipe_id " \
-                u"ORDER BY ROUND(avg(URS.stars),0) DESC; "
-
-        queryResult = self.database.query(query)
-
-        if queryResult:
-            Logger.dbg(queryResult)
-            return queryResult
-        else:
-            return {}
-
-    def getSearchedCardsSortedByDefault(self, searchedQuery):
-        query = u"SELECT R.recipe_name AS recipeName, U.user_login AS authorName, " \
-                u"count(URS.favorite) AS favoritesCount, ROUND(avg(URS.stars),0) AS starsCount, " \
-                u"R.recipe_main_picture as photoRecipe, R.date_time as Date " \
-                u"FROM recipes AS R " \
-                u"INNER JOIN users AS U " \
-                u"ON R.user_id = U.user_id " \
-                u"INNER JOIN users_recipes_stars AS URS " \
-                u"ON R.recipe_id = URS.recipe_id " \
-                u"WHERE R.recipe_name LIKE '%{}%'"\
-                u"GROUP BY R.recipe_id; ".format(searchedQuery)
-
-        queryResult = self.database.query(query)
-
-        if queryResult:
-            Logger.dbg(queryResult)
-            return queryResult
-        else:
-            return {}
-
+            return 404, u'Forwarded data to check are not correct'

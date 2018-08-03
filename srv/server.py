@@ -10,6 +10,7 @@ import sys
 from Constans import *
 from Database import *
 from Users import *
+from Cards import *
 from Session import *
 
 # Global definitions
@@ -62,7 +63,7 @@ def get_user_id():
 # Server code
 
 # Login session
-@app.route('/user/login', methods=['POST'])
+@app.route('login', methods=['POST'])
 def login_method():
     user = Users(database)
     params = request.get_json()
@@ -88,7 +89,7 @@ def login_method():
 
 
 # Logout session
-@app.route('/user/logout', methods=['GET'])
+@app.route('logout', methods=['GET'])
 @authorized
 def logout_method():
     sess = Session(session, database)
@@ -124,49 +125,74 @@ def registration():
 @authorized
 def profile_method():
     user = Users(database)
+    params = request.get_json()
+
+    login = params.get('login')
+    password = params.get('password')
+    firstName = params.get('firstName')
+    lastName = params.get('lastName')
+    email = params.get('email')
 
     # Show user data
     if request.method == 'GET':
         return jsonify(user.getUser(get_user_id()))
 
-    # # Delete user
-    # elif request.method == 'DELETE':
-    #     status, message = user.deleteUser(login, password)
-    #
-    #     return jsonify({
-    #         'status': status,
-    #         'message': message
-    #     })
-    #
-    # # Edit user
-    # elif request.method == 'POST':
-    #     return jsonify({
-    #         'status': status,
-    #         'message': message
-    #     })
+    # Delete user
+    elif request.method == 'DELETE':
+        status, message = user.deleteUser(get_user_id())
+
+        return jsonify({
+            'status': status,
+            'message': message
+        })
+
+    # Edit user
+    elif request.method == 'POST':
+        if login:
+            columnName = 'user_login'
+            columnValue = login
+        elif password:
+            columnName = 'user_password'
+            columnValue = password
+        elif firstName:
+            columnName = 'first_name'
+            columnValue = firstName
+        elif lastName:
+            columnName = 'last_name'
+            columnValue = lastName
+        elif email:
+            columnName = 'email'
+            columnValue = email
+
+        status, message = user.editUser(columnName, columnValue, get_user_id())
+
+        return jsonify({
+            'status': status,
+            'message': message
+        })
 
 
 @app.route('/cards/searchedCards', methods=['POST'])
 def getSearchedCards():
-    user = Users(database)
+    card = Cards(database)
     params = request.get_json()
     searchedQuery = params.get('recipeName')
 
-    cards = user.getSearchedCardsSortedByDefault(searchedQuery)
+    cards = card.getSearchedCardsSortedByDefault(searchedQuery)
     return jsonify(cards)
 
 
 @app.route('/cards/<string:sorted_method>', methods=['GET'])
 def getSortedCards(sorted_method):
-    user = Users(database)
+    card = Cards(database)
     if sorted_method == 'default':
-        cards = user.getAllCards()
+        cards = card.getAllCards()
     elif sorted_method == 'alphabetically':
-        cards = user.getAllCardsSortedAlphabetically()
+        cards = card.getAllCardsSortedAlphabetically()
     elif sorted_method == 'lastAdded':
-        cards = user.getAllCardsSortedByLastAdded()
+        cards = card.getAllCardsSortedByLastAdded()
     elif sorted_method == 'highestRated':
-        cards = user.getAllCardsSortedByHighestRated()
+        cards = card.getAllCardsSortedByHighestRated()
 
     if not cards:
         Logger.fail("There were no cards returned!")

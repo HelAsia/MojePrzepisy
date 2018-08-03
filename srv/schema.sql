@@ -6,8 +6,19 @@ CREATE DATABASE IF NOT EXISTS przepisy;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS sessions;
 DROP TABLE IF EXISTS recipes;
-DROP TABLE IF EXISTS users_recipes;
+DROP TABLE IF EXISTS photos;
+DROP TABLE IF EXISTS steps;
+DROP TABLE IF EXISTS ingredients;
+DROP TABLE IF EXISTS comments;
 DROP TABLE IF EXISTS users_recipes_stars;
+
+CREATE TABLE sessions (
+    session_id int(11) NOT NULL AUTO_INCREMENT,
+    user_id int(11) NOT NULL,
+    token varchar(80) DEFAULT NULL,
+    created datetime NOT NULL,
+    PRIMARY KEY (session_id)
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 CREATE TABLE users (
     user_id int(11) NOT NULL AUTO_INCREMENT,
@@ -19,27 +30,57 @@ CREATE TABLE users (
     PRIMARY KEY (user_id)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
-CREATE TABLE sessions (
-    session_id int(11) NOT NULL AUTO_INCREMENT,
-    user_id int(11) NOT NULL,
-    token varchar(80) DEFAULT NULL,
-    created datetime NOT NULL,
-    PRIMARY KEY (session_id)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
-
 CREATE TABLE recipes (
     recipe_id int(11) NOT NULL AUTO_INCREMENT,
+    user_id int(11),
     recipe_name varchar(80) NOT NULL,
     recipe_description varchar(5000) NOT NULL,
     recipe_prepare_time time DEFAULT NULL,
     recipe_cook_time time DEFAULT NULL,
     recipe_bake_time time DEFAULT NULL,
-    recipe_link varchar(800) DEFAULT NULL,
-    recipe_main_picture varchar(5000) DEFAULT NULL,
+    recipe_main_picture_id int(11) DEFAULT NULL,
     recipe_category varchar(80) NOT NULL,
-    user_id int(11),
-    date_time datetime,
+    recipe_created_date_time datetime,
     PRIMARY KEY (recipe_id),
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+CREATE TABLE photos (
+    photo_id int(11) NOT NULL AUTO_INCREMENT
+    photo_url varchar(1000),
+    photo_image varchar(1000),
+    PRIMARY KEY (photo_id),
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+CREATE TABLE steps (
+    step_id int(11) NOT NULL AUTO_INCREMENT
+    recipe_id int(11),
+    photo_id int(11),
+    step_number int(11) NOT NULL,
+    step_description varchar(5000),
+    PRIMARY KEY (step_id),
+    FOREIGN KEY (recipe_id) REFERENCES recipes(recipe_id)
+    FOREIGN KEY (photo_id) REFERENCES photos(photo_id)
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+CREATE TABLE ingredients (
+    ingredient_id int(11) NOT NULL AUTO_INCREMENT
+    recipe_id int(11),
+    ingredient_quantity int(11),
+    ingredient_unit varchar(100),
+    ingredient_name varchar(100),
+    PRIMARY KEY (ingredient_id),
+    FOREIGN KEY (recipe_id) REFERENCES recipes(recipe_id)
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+CREATE TABLE comments (
+    comment_id int(11) NOT NULL AUTO_INCREMENT
+    recipe_id int(11) NOT NULL,
+    user_id int(11) NOT NULL,
+    comment varchar(5000) NOT NULL,
+    created_date datetime,
+    PRIMARY KEY (comment_id),
+    FOREIGN KEY (recipe_id) REFERENCES recipes(recipe_id)
     FOREIGN KEY (user_id) REFERENCES users(user_id)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
