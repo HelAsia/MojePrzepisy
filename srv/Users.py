@@ -13,8 +13,10 @@ class Users:
     def __init__(self, database):
         self.database = database
 
+
     def setDatabase(self,database):
         self.database = database
+
 
     def loginUser(self,login, password):
         query = u"SELECT user_id " \
@@ -27,6 +29,7 @@ class Users:
             return 200, u'You are logged in', queryResult[0]['user_id']
         else:
             return 404, u'Login or password do not exist', None
+
 
     def registerUser(self,login, password, firstName, lastName, email):
         regexPassword = r"^(?=.*\d)(?=.*[a-z])(?=.*[\!\@\#\$\%\^\&\*\(\)\_\+\-\=])(?=.*[A-Z])(?!.*\s).{8,}$"
@@ -57,6 +60,7 @@ class Users:
         else:
             return 500, u'Wrong type of password'
 
+
     def getUser(self, userID):
         query = u"SELECT user_login, first_name, last_name, email " \
                 u"FROM users " \
@@ -68,21 +72,23 @@ class Users:
         else:
             return {}
 
+
     def deleteUser(self, userID):
         query = u"DELETE FROM users " \
-                u"WHERE user_id = '{}'".format(userID)
+                u"WHERE user_id = {}".format(userID)
         queryResult = self.database.query(query)
 
         if queryResult:
             Logger.dbg(str(tuple(queryResult)))
-            return 200, u'Your deleted luser_id ={}'.format(userID)
+            return 200, u'Your deleted user_id = {}'.format(userID)
         else:
             return 404, u'Forwarded data to check are not correct'
+
 
     def editUser(self, columnName, columnValue, userID):
         query = u"UPDATE users " \
                 u"SET {} = '{}'" \
-                u"WHERE user_id = '{}'".format(columnName, columnValue, userID)
+                u"WHERE user_id = {}".format(columnName, columnValue, userID)
         queryResult = self.database.query(query)
 
         if queryResult:

@@ -4,14 +4,13 @@ from functools import wraps
 from flask import Flask, jsonify, request, session
 
 import os
-import sys
 
 # My libraries
 from Constans import *
 from Database import *
 from Users import *
-from Cards import *
-from Recipes import *
+from recipe_elements.Cards import *
+from recipe_elements.Recipes import *
 from Session import *
 
 # Global definitions
@@ -182,7 +181,6 @@ def getSearchedCards():
     cards = card.getSearchedCardsSortedByDefault(searchedQuery)
 
     if not cards:
-        return {}
         Logger.fail("There were no cards returned!")
     return jsonify(cards)
 
@@ -228,6 +226,7 @@ def recipe_method():
 
     params = request.get_json()
 
+    recipeId = params.get('recipeId')
     recipeName = params.get('recipeName')
     recipeDescription = params.get('recipeDescription')
     recipePrepareTime = params.get('recipePrepareTime')
@@ -237,8 +236,7 @@ def recipe_method():
     recipeCategory = params.get('recipeCategory')
 
     if request.method == 'PUT':
-
-        status, message = recipe.addRecipe(recipeName, recipeDescription,
+        status, message = recipe.addRecipe(userID, recipeName, recipeDescription,
                                             recipePrepareTime, recipeCookTime, recipeBakeTime,
                                             recipeMainPictureId, recipeCategory)
 
@@ -246,9 +244,42 @@ def recipe_method():
             'status': status,
             'message': message
         })
+    elif request.method == 'POST':
+        if recipeName:
+            columnName = 'user_login'
+            columnValue = recipeName
+        elif recipeDescription:
+            columnName = 'user_password'
+            columnValue = recipeDescription
+        elif recipePrepareTime:
+            columnName = 'first_name'
+            columnValue = recipePrepareTime
+        elif recipeCookTime:
+            columnName = 'last_name'
+            columnValue = recipeCookTime
+        elif recipeBakeTime:
+            columnName = 'email'
+            columnValue = recipeBakeTime
+        elif recipeMainPictureId:
+            columnName = 'last_name'
+            columnValue = recipeMainPictureId
+        elif recipeCategory:
+            columnName = 'email'
+            columnValue = recipeCategory
 
+        status, message = recipe.editRecipe(columnName, columnValue, recipeId)
 
+        return jsonify({
+            'status': status,
+            'message': message
+        })
+    elif request.method == 'DELETE':
+        status, message = recipe.deleteRecipe(recipeId)
 
+        return jsonify({
+            'status': status,
+            'message': message
+        })
 
 def main():
     global database
