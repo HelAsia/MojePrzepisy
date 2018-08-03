@@ -43,28 +43,28 @@ public class MainCardsPresenter implements MainCardsContract.Presenter,
   @Override
   public void getAllCardsFromServer() {
     if(cardsView != null) {
-      operationsOnCardRepository.getCards(this);
+      operationsOnCardRepository.getCardsSortedByChoseMethod(this, "default");
     }
   }
 
   @Override
   public void getAllCardsSortedAlphabeticallyFromServer() {
     if(cardsView != null) {
-      operationsOnCardRepository.getCardsSortedAlphabetically(this);
+      operationsOnCardRepository.getCardsSortedByChoseMethod(this, "alphabetically");
     }
   }
 
   @Override
   public void getAllCardsSortedByLastAddedFromServer() {
     if(cardsView != null) {
-      operationsOnCardRepository.getCardsSortedByLastAdded(this);
+      operationsOnCardRepository.getCardsSortedByChoseMethod(this, "lastAdded");
     }
   }
 
   @Override
   public void getAllCardsSortedByHighestRatedFromServer() {
     if(cardsView != null) {
-      operationsOnCardRepository.getCardsSortedByHighestRated(this);
+      operationsOnCardRepository.getCardsSortedByChoseMethod(this, "highestRated");
     }
   }
 

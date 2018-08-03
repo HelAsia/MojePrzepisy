@@ -22,98 +22,31 @@ public class OperationsOnCardRepository implements OperationsOnCardRepositoryInt
   }
 
   @Override
-  public void getCards(final OnCardsListener cardsListener) {
+  public void getCardsSortedByChoseMethod(final OnCardsListener cardsListener, String method) {
     Call<List<OneRecipeCard>> resp = userAPI.getCards();
-
+    if (method.equals("default")){
+      resp = userAPI.getCards();
+    }else if (method.equals("alphabetically")){
+      resp = userAPI.getCardsSortedAlphabetically();
+    }else if (method.equals("lastAdded")){
+      resp = userAPI.getCardsSortedByLastAdded();
+    }else if (method.equals("highestRated")){
+      resp = userAPI.getCardsSortedByHighestRated();
+    }
     resp.enqueue(new Callback<List<OneRecipeCard>>() {
       @Override
       public void onResponse(Call<List<OneRecipeCard>> call, Response<List<OneRecipeCard>> response) {
         List<OneRecipeCard> recipes = response.body();
-        int oldId = 0;
-        for (OneRecipeCard recipeId : recipes) {
-          int newId = oldId + 1;
-            recipeId.id = newId;
-            oldId = newId;
-        }
         cardsListener.setRecipesList(recipes);
 
-/*        for (OneRecipeCard recipe : recipes) {
+       for (OneRecipeCard recipe : recipes) {
           Log.i("SERWER", "Id: " + recipe.id);
           Log.i("SERWER", "Author: " + recipe.authorName);
           Log.i("SERWER", "Favorite: " + recipe.favoritesCount);
           Log.i("SERWER", "Photo: " + recipe.photoRecipe);
           Log.i("SERWER", "Recipe: " + recipe.recipeName);
           Log.i("SERWER", "Stars: " + recipe.starsCount);
-        }*/
-      }
-      @Override
-      public void onFailure(Call<List<OneRecipeCard>> call, Throwable t) {
-        Log.i("SERWER", t.getMessage());
-      }
-    });
-  }
-
-  @Override
-  public void getCardsSortedAlphabetically(final OnCardsListener cardsListener) {
-    Call<List<OneRecipeCard>> resp = userAPI.getCardsSortedAlphabetically();
-
-    resp.enqueue(new Callback<List<OneRecipeCard>>() {
-      @Override
-      public void onResponse(Call<List<OneRecipeCard>> call, Response<List<OneRecipeCard>> response) {
-        List<OneRecipeCard> recipes = response.body();
-        int oldId = 0;
-        for (OneRecipeCard recipeId : recipes) {
-          int newId = oldId + 1;
-          recipeId.id = newId;
-          oldId = newId;
         }
-        cardsListener.setRecipesList(recipes);
-      }
-      @Override
-      public void onFailure(Call<List<OneRecipeCard>> call, Throwable t) {
-        Log.i("SERWER", t.getMessage());
-      }
-    });
-  }
-
-  @Override
-  public void getCardsSortedByLastAdded(final OnCardsListener cardsListener) {
-    Call<List<OneRecipeCard>> resp = userAPI.getCardsSortedByLastAdded();
-
-    resp.enqueue(new Callback<List<OneRecipeCard>>() {
-      @Override
-      public void onResponse(Call<List<OneRecipeCard>> call, Response<List<OneRecipeCard>> response) {
-        List<OneRecipeCard> recipes = response.body();
-        int oldId = 0;
-        for (OneRecipeCard recipeId : recipes) {
-          int newId = oldId + 1;
-          recipeId.id = newId;
-          oldId = newId;
-        }
-        cardsListener.setRecipesList(recipes);
-      }
-      @Override
-      public void onFailure(Call<List<OneRecipeCard>> call, Throwable t) {
-        Log.i("SERWER", t.getMessage());
-      }
-    });
-  }
-
-  @Override
-  public void getCardsSortedByHighestRated(final OnCardsListener cardsListener) {
-    Call<List<OneRecipeCard>> resp = userAPI.getCardsSortedByHighestRated();
-
-    resp.enqueue(new Callback<List<OneRecipeCard>>() {
-      @Override
-      public void onResponse(Call<List<OneRecipeCard>> call, Response<List<OneRecipeCard>> response) {
-        List<OneRecipeCard> recipes = response.body();
-        int oldId = 0;
-        for (OneRecipeCard recipeId : recipes) {
-          int newId = oldId + 1;
-          recipeId.id = newId;
-          oldId = newId;
-        }
-        cardsListener.setRecipesList(recipes);
       }
       @Override
       public void onFailure(Call<List<OneRecipeCard>> call, Throwable t) {
@@ -131,12 +64,6 @@ public class OperationsOnCardRepository implements OperationsOnCardRepositoryInt
       @Override
       public void onResponse(Call<List<OneRecipeCard>> call, Response<List<OneRecipeCard>> response) {
         List<OneRecipeCard> recipes = response.body();
-        int oldId = 0;
-        for (OneRecipeCard recipeId : recipes) {
-          int newId = oldId + 1;
-          recipeId.id = newId;
-          oldId = newId;
-        }
         cardsListener.setRecipesList(recipes);
       }
       @Override

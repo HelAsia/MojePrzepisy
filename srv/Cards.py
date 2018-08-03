@@ -17,7 +17,7 @@ class Cards:
         self.database = database
 
     def getAllCards(self):
-        query = u"SELECT R.recipe_name AS recipeName, U.user_login AS authorName, " \
+        query = u"SELECT R.recipe_id AS id, R.recipe_name AS recipeName, U.user_login AS authorName, " \
                 u"count(URS.favorite) AS favoritesCount, ROUND(avg(URS.stars),0) AS starsCount, " \
                 u"R.recipe_main_picture as photoRecipe, R.date_time as Date "\
                 u"FROM recipes AS R "\
@@ -37,7 +37,7 @@ class Cards:
 
 
     def getAllCardsSortedAlphabetically(self):
-        query = u"SELECT R.recipe_name AS recipeName, U.user_login AS authorName, " \
+        query = u"SELECT R.recipe_id AS id, R.recipe_name AS recipeName, U.user_login AS authorName, " \
                 u"count(URS.favorite) AS favoritesCount, ROUND(avg(URS.stars),0) AS starsCount, " \
                 u"R.recipe_main_picture as photoRecipe, R.date_time as Date "\
                 u"FROM recipes AS R "\
@@ -56,9 +56,8 @@ class Cards:
         else:
             return {}
 
-
     def getAllCardsSortedByLastAdded(self):
-        query = u"SELECT R.recipe_name AS recipeName, U.user_login AS authorName, " \
+        query = u"SELECT R.recipe_id AS id, R.recipe_name AS recipeName, U.user_login AS authorName, " \
                 u"count(URS.favorite) AS favoritesCount, ROUND(avg(URS.stars),0) AS starsCount, " \
                 u"R.recipe_main_picture as photoRecipe, R.date_time as Date "\
                 u"FROM recipes AS R "\
@@ -77,9 +76,8 @@ class Cards:
         else:
             return {}
 
-
     def getAllCardsSortedByHighestRated(self):
-        query = u"SELECT R.recipe_name AS recipeName, U.user_login AS authorName, " \
+        query = u"SELECT R.recipe_id AS id,, R.recipe_name AS recipeName, U.user_login AS authorName, " \
                 u"count(URS.favorite) AS favoritesCount, ROUND(avg(URS.stars),0) AS starsCount, " \
                 u"R.recipe_main_picture as photoRecipe, R.date_time as Date "\
                 u"FROM recipes AS R "\
@@ -99,7 +97,7 @@ class Cards:
             return {}
 
     def getSearchedCardsSortedByDefault(self, searchedQuery):
-        query = u"SELECT R.recipe_name AS recipeName, U.user_login AS authorName, " \
+        query = u"SELECT R.recipe_id AS id, R.recipe_name AS recipeName, U.user_login AS authorName, " \
                 u"count(URS.favorite) AS favoritesCount, ROUND(avg(URS.stars),0) AS starsCount, " \
                 u"R.recipe_main_picture as photoRecipe, R.date_time as Date " \
                 u"FROM recipes AS R " \

@@ -11,13 +11,7 @@ public interface OperationsOnCardRepositoryInterface {
 
   }
 
-  void getCards(OnCardsListener cardsListener);
-
-  void getCardsSortedAlphabetically(OnCardsListener cardsListener);
-
-  void getCardsSortedByLastAdded(OnCardsListener cardsListener);
-
-  void getCardsSortedByHighestRated(OnCardsListener cardsListener);
+  void getCardsSortedByChoseMethod(OnCardsListener cordsListener, String method);
 
   void getCardsSortedBySearchedQuery(OnCardsListener cardsListener, String recipeName);
 

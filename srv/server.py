@@ -11,6 +11,7 @@ from Constans import *
 from Database import *
 from Users import *
 from Cards import *
+from Recipes import *
 from Session import *
 
 # Global definitions
@@ -63,7 +64,7 @@ def get_user_id():
 # Server code
 
 # Login session
-@app.route('login', methods=['POST'])
+@app.route('/login', methods=['POST'])
 def login_method():
     user = Users(database)
     params = request.get_json()
@@ -89,7 +90,7 @@ def login_method():
 
 
 # Logout session
-@app.route('logout', methods=['GET'])
+@app.route('/logout', methods=['GET'])
 @authorized
 def logout_method():
     sess = Session(session, database)
@@ -179,6 +180,10 @@ def getSearchedCards():
     searchedQuery = params.get('recipeName')
 
     cards = card.getSearchedCardsSortedByDefault(searchedQuery)
+
+    if not cards:
+        return {}
+        Logger.fail("There were no cards returned!")
     return jsonify(cards)
 
 
@@ -196,8 +201,53 @@ def getSortedCards(sorted_method):
 
     if not cards:
         Logger.fail("There were no cards returned!")
-
     return jsonify(cards)
+
+
+@app.route('/recipe', methods=['GET'])
+def getRecipe():
+    recipe = Recipes(database)
+    params = request.get_json()
+
+    recipeID = params.get('recipeID')
+
+    recipes = recipe.getRecipe(recipeID)
+
+    if not recipes:
+        Logger.fail("There was no recipe returned!")
+    return jsonify(recipes)
+
+
+@app.route('/recipe', methods=['PUT','POST','DELETE'])
+@authorized
+def recipe_method():
+    recipe = Recipes(database)
+    user = Users(database)
+
+    userID = user.getUser(get_user_id())
+
+    params = request.get_json()
+
+    recipeName = params.get('recipeName')
+    recipeDescription = params.get('recipeDescription')
+    recipePrepareTime = params.get('recipePrepareTime')
+    recipeCookTime = params.get('recipeCookTime')
+    recipeBakeTime = params.get('recipeBakeTime')
+    recipeMainPictureId = params.get('recipeMainPictureId')
+    recipeCategory = params.get('recipeCategory')
+
+    if request.method == 'PUT':
+
+        status, message = recipe.addRecipe(recipeName, recipeDescription,
+                                            recipePrepareTime, recipeCookTime, recipeBakeTime,
+                                            recipeMainPictureId, recipeCategory)
+
+        return jsonify({
+            'status': status,
+            'message': message
+        })
+
+
 
 
 def main():
