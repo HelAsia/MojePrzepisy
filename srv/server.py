@@ -425,6 +425,60 @@ def editComment(commentId, columnName, columnValue):
     })
 
 
+@app.route('/recipe/photo/<int:photoId>', methods=['GET'])
+def getPhoto(photoId):
+    photo = Photos(database)
+
+    photos = photo.getPhoto(photoId)
+
+    if not photos:
+        Logger.fail("There was no photos returned!")
+    return jsonify(photos)
+
+
+@app.route('/recipe/photo/<int:photoId>', methods=['DELETE'])
+@authorized
+def deletePhoto(photoId):
+    photo = Photos(database)
+
+    status, message = photo.deletePhoto(photoId)
+
+    return jsonify({
+        'status': status,
+        'message': message
+    })
+
+
+@app.route('/recipe/photo', methods=['PUT'])
+@authorized
+def addPhoto():
+    photo = Photos(database)
+
+    params = request.get_json()
+
+    photoURL = params.get('photoURL')
+    photoImage = params.get('photoImage')
+
+    status, message = photo.addPhoto(photoURL, photoImage)
+
+    return jsonify({
+        'status': status,
+        'message': message
+    })
+
+
+@app.route('/recipe/photo/<int:photoId>/<string:columnName>/<string:columnValue>/', methods=['POST'])
+@authorized
+def editPhoto(photoId, columnName, columnValue):
+    photo = Photos(database)
+
+    status, message = photo.editPhoto(columnName, columnValue, photoId)
+
+    return jsonify({
+        'status': status,
+        'message': message
+    })
+
 
 def main():
     global database
