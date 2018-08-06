@@ -101,7 +101,7 @@ def logout_method():
     })
 
 
-@app.route('/user/profile', methods=['PUT'])
+@app.route('/user', methods=['PUT'])
 def registration():
     user = Users(database)
     params = request.get_json()
@@ -121,17 +121,10 @@ def registration():
 
 
 # Operations performed on the profile
-@app.route('/user/profile', methods=['GET', 'DELETE', 'POST'])
+@app.route('/user', methods=['GET', 'DELETE'])
 @authorized
 def profile_method():
     user = Users(database)
-    params = request.get_json()
-
-    login = params.get('login')
-    password = params.get('password')
-    firstName = params.get('firstName')
-    lastName = params.get('lastName')
-    email = params.get('email')
 
     # Show user data
     if request.method == 'GET':
@@ -146,30 +139,18 @@ def profile_method():
             'message': message
         })
 
-    # Edit user
-    elif request.method == 'POST':
-        if login:
-            columnName = 'user_login'
-            columnValue = login
-        elif password:
-            columnName = 'user_password'
-            columnValue = password
-        elif firstName:
-            columnName = 'first_name'
-            columnValue = firstName
-        elif lastName:
-            columnName = 'last_name'
-            columnValue = lastName
-        elif email:
-            columnName = 'email'
-            columnValue = email
 
-        status, message = user.editUser(columnName, columnValue, get_user_id())
+@app.route('/user/<string:columnName>/<string:columnValue>', methods=['POST'])
+@authorized
+def editUser(columnName, columnValue):
+    user = Users(database)
 
-        return jsonify({
-            'status': status,
-            'message': message
-        })
+    status, message = user.editUser(columnName, columnValue, get_user_id())
+
+    return jsonify({
+        'status': status,
+        'message': message
+    })
 
 
 @app.route('/cards/searchedCards', methods=['POST'])
@@ -202,23 +183,33 @@ def getSortedCards(sorted_method):
     return jsonify(cards)
 
 
-@app.route('/recipe', methods=['GET'])
-def getRecipe():
+@app.route('/recipe/<int:recipeId>', methods=['GET'])
+def getRecipe(recipeId):
     recipe = Recipes(database)
-    params = request.get_json()
 
-    recipeID = params.get('recipeID')
-
-    recipes = recipe.getRecipe(recipeID)
+    recipes = recipe.getRecipe(recipeId)
 
     if not recipes:
         Logger.fail("There was no recipe returned!")
     return jsonify(recipes)
 
 
-@app.route('/recipe', methods=['PUT','POST','DELETE'])
+@app.route('/recipe/<int:recipeId>', methods=['DELETE'])
 @authorized
-def recipe_method():
+def deleteRecipe(recipeId):
+    recipe = Recipes(database)
+
+    status, message = recipe.deleteRecipe(recipeId)
+
+    return jsonify({
+        'status': status,
+        'message': message
+    })
+
+
+@app.route('/recipe', methods=['PUT'])
+@authorized
+def addRecipe():
     recipe = Recipes(database)
     user = Users(database)
 
@@ -226,7 +217,6 @@ def recipe_method():
 
     params = request.get_json()
 
-    recipeId = params.get('recipeId')
     recipeName = params.get('recipeName')
     recipeDescription = params.get('recipeDescription')
     recipePrepareTime = params.get('recipePrepareTime')
@@ -235,51 +225,29 @@ def recipe_method():
     recipeMainPictureId = params.get('recipeMainPictureId')
     recipeCategory = params.get('recipeCategory')
 
-    if request.method == 'PUT':
-        status, message = recipe.addRecipe(userID, recipeName, recipeDescription,
-                                            recipePrepareTime, recipeCookTime, recipeBakeTime,
-                                            recipeMainPictureId, recipeCategory)
 
-        return jsonify({
-            'status': status,
-            'message': message
-        })
-    elif request.method == 'POST':
-        if recipeName:
-            columnName = 'user_login'
-            columnValue = recipeName
-        elif recipeDescription:
-            columnName = 'user_password'
-            columnValue = recipeDescription
-        elif recipePrepareTime:
-            columnName = 'first_name'
-            columnValue = recipePrepareTime
-        elif recipeCookTime:
-            columnName = 'last_name'
-            columnValue = recipeCookTime
-        elif recipeBakeTime:
-            columnName = 'email'
-            columnValue = recipeBakeTime
-        elif recipeMainPictureId:
-            columnName = 'last_name'
-            columnValue = recipeMainPictureId
-        elif recipeCategory:
-            columnName = 'email'
-            columnValue = recipeCategory
+    status, message = recipe.addRecipe(userID, recipeName, recipeDescription,
+                                        recipePrepareTime, recipeCookTime, recipeBakeTime,
+                                        recipeMainPictureId, recipeCategory)
 
-        status, message = recipe.editRecipe(columnName, columnValue, recipeId)
+    return jsonify({
+        'status': status,
+        'message': message
+    })
 
-        return jsonify({
-            'status': status,
-            'message': message
-        })
-    elif request.method == 'DELETE':
-        status, message = recipe.deleteRecipe(recipeId)
 
-        return jsonify({
-            'status': status,
-            'message': message
-        })
+@app.route('/recipe/<int:recipeId>/<string:columnName>/<string:columnValue>/', methods=['POST'])
+@authorized
+def recipe_method(recipeId, columnName, columnValue):
+    recipe = Recipes(database)
+
+    status, message = recipe.editRecipe(columnName, columnValue, recipeId)
+
+    return jsonify({
+        'status': status,
+        'message': message
+    })
+
 
 def main():
     global database
