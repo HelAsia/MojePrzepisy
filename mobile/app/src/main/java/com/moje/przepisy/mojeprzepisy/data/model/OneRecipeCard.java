@@ -15,7 +15,6 @@ public class OneRecipeCard {
   public String authorName;
   public String photoRecipe;
   public Timestamp date;
-  public String dateString;
 
   public OneRecipeCard(){
 
