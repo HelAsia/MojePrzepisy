@@ -43,6 +43,7 @@ CREATE TABLE recipes (
     recipe_created_date_time datetime,
     PRIMARY KEY (recipe_id),
     FOREIGN KEY (user_id) REFERENCES users(user_id)
+    FOREIGN KEY (recipe_main_picture_id) REFERENCES photos(photo_id)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 CREATE TABLE photos (

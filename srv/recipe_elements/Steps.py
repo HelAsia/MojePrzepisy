@@ -14,14 +14,12 @@ class Steps:
         self.database = database
 
     def getStep(self, recipeID):
-        query = u"SELECT R.recipe_id AS recipeID, U.user_login AS authorName, " \
-                u"R.recipe_name AS recipeName, R.recipe_description AS recipeDescription, " \
-                u"R.recipe_prepare_time AS prepareTime, R.recipe_cook_time AS cookTime, " \
-                u"R.recipe_bake_time AS bakeTime, R.recipe_main_picture_id AS mainPictureId, " \
-                u"R.recipe_category AS category, R.recipe_created_date_time AS createdTime" \
-                u"FROM recipes AS R " \
-                u"INNER JOIN users AS U " \
-                u"ON R.user_id = U.user_id " \
+        query = u"SELECT S.recipe_id AS id, S.step_id AS stepId " \
+                u"P.photo_url AS photoURL, P.photo_image AS photoImage, S.step_number AS stepNumber, " \
+                u"S.step_description AS stepDescription " \
+                u"FROM steps AS S " \
+                u"INNER JOIN photos AS P " \
+                u"ON S.photo_id = P.photo_id " \
                 u"WHERE R.recipe_id LIKE '{}'".format(recipeID)
 
         queryResult = self.database.query(query)
@@ -32,39 +30,31 @@ class Steps:
         else:
             return {}
 
-    def addRecipe(self, userId, recipeName, recipeDescription,
-                  recipePrepareTime, recipeCookTime, recipeBakeTime,
-                  recipeMainPictureId, recipeCategory):
-        query = u"INSERT INTO recipes " \
-                u"(user_id, recipe_name, recipe_description, recipe_prepare_time, recipe_cook_time, " \
-                u"recipe_bake_time, recipe_main_picture_id, recipe_category, recipe_created_date_time) " \
-                u"values ({}, '{}', '{}', {}, {}, {}, '{}', " \
-                u"{}, NOW())".format(userId, recipeName, recipeDescription, recipePrepareTime, recipeCookTime,
-                                     recipeBakeTime, recipeMainPictureId, recipeCategory)
+    def addStep(self, recipeId, photoId, stepNumner,
+                  stepDescription,):
+        query = u"INSERT INTO steps " \
+                u"(recipe_id, photo_id, step_number, step_description) " \
+                u"values ({}, '{}', '{}', {} ".format(recipeId, photoId, stepNumner, stepDescription)
 
         queryResult = self.database.query(query)
 
-        queryRecipeId = u"SELECT recipe_id " \
-                        u"FROM recipes " \
+        queryStepId = u"SELECT step_id " \
+                        u"FROM steps " \
                         u"WHERE " \
-                        u"user_id = {} AND recipe_name = '{}' AND recipe_description = '{}' AND " \
-                        u"recipe_prepare_time = {} AND recipe_cook_time = {} AND recipe_bake_time = {} " \
-                        u"AND recipe_main_picture_id = {} " \
-                        u"AND recipe_category = '{}' AND ".format(userId, recipeName, recipeDescription,
-                                                                  recipePrepareTime, recipeCookTime,
-                                                                  recipeBakeTime, recipeMainPictureId, recipeCategory)
+                        u"recipe_id = {} AND photo_id = {} AND step_number = {} AND " \
+                        u"step_description = '{}' ".format(recipeId, photoId, stepNumner, stepDescription)
 
-        queryRecipeIdResult = self.database.query(queryRecipeId)
+        queryStepIdResult = self.database.query(queryStepId)
         if queryResult:
             Logger.dbg(queryResult)
-            return queryRecipeIdResult
+            return queryStepIdResult
         else:
             return {}
 
-    def editRecipe(self, columnName, columnValue, recipeId):
-        query = u"UPDATE recipes " \
+    def editStep(self, columnName, columnValue, stepId):
+        query = u"UPDATE steps " \
                 u"SET {} = '{}'" \
-                u"WHERE recipe_id = {}".format(columnName, columnValue, recipeId)
+                u"WHERE step_id = {}".format(columnName, columnValue, stepId)
         queryResult = self.database.query(query)
 
         if queryResult:
@@ -73,13 +63,13 @@ class Steps:
         else:
             return 404, u'Forwarded data to check are not correct'
 
-    def deleteRecipe(self, recipeId):
-        query = u"DELETE FROM recipes " \
-                u"WHERE recipe_id = {}".format(recipeId)
+    def deleteStep(self, stepId):
+        query = u"DELETE FROM steps " \
+                u"WHERE step_id = {}".format(stepId)
         queryResult = self.database.query(query)
 
         if queryResult:
             Logger.dbg(str(tuple(queryResult)))
-            return 200, u'Your deleted recipe_id = {}'.format(recipeId)
+            return 200, u'Your deleted step_id = {}'.format(stepId)
         else:
             return 404, u'Forwarded data to check are not correct'

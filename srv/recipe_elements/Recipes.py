@@ -14,7 +14,7 @@ class Recipes:
         self.database = database
 
     def getRecipe(self, recipeID):
-        query = u"SELECT R.recipe_id AS recipeID, U.user_login AS authorName, " \
+        query = u"SELECT R.recipe_id AS recipeID, U.user_login AS authorName, P.photo_id AS photoRecipe" \
                 u"R.recipe_name AS recipeName, R.recipe_description AS recipeDescription, " \
                 u"R.recipe_prepare_time AS prepareTime, R.recipe_cook_time AS cookTime, " \
                 u"R.recipe_bake_time AS bakeTime, R.recipe_main_picture_id AS mainPictureId, " \
@@ -22,6 +22,8 @@ class Recipes:
                 u"FROM recipes AS R " \
                 u"INNER JOIN users AS U " \
                 u"ON R.user_id = U.user_id " \
+                u"INNER JOIN photos AS P " \
+                u"ON R.recipe_main_picture_id = P.photo_id " \
                 u"WHERE R.recipe_id LIKE '{}'".format(recipeID)
 
         queryResult = self.database.query(query)
@@ -50,7 +52,7 @@ class Recipes:
                         u"user_id = {} AND recipe_name = '{}' AND recipe_description = '{}' AND "\
                         u"recipe_prepare_time = {} AND recipe_cook_time = {} AND recipe_bake_time = {} "\
                         u"AND recipe_main_picture_id = {} " \
-                        u"AND recipe_category = '{}' AND ".format(userId, recipeName, recipeDescription,
+                        u"AND recipe_category = '{}' ".format(userId, recipeName, recipeDescription,
                                                                   recipePrepareTime, recipeCookTime,
                                                                   recipeBakeTime, recipeMainPictureId, recipeCategory)
 
