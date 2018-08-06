@@ -30,11 +30,11 @@ class Steps:
         else:
             return {}
 
-    def addStep(self, recipeId, photoId, stepNumner,
-                  stepDescription,):
+    def addStep(self, recipeId, photoId, stepNumber,
+                stepDescription):
         query = u"INSERT INTO steps " \
                 u"(recipe_id, photo_id, step_number, step_description) " \
-                u"values ({}, '{}', '{}', {} ".format(recipeId, photoId, stepNumner, stepDescription)
+                u"values ({}, '{}', '{}', {} ".format(recipeId, photoId, stepNumber, stepDescription)
 
         queryResult = self.database.query(query)
 
@@ -42,7 +42,7 @@ class Steps:
                         u"FROM steps " \
                         u"WHERE " \
                         u"recipe_id = {} AND photo_id = {} AND step_number = {} AND " \
-                        u"step_description = '{}' ".format(recipeId, photoId, stepNumner, stepDescription)
+                        u"step_description = '{}' ".format(recipeId, photoId, stepNumber, stepDescription)
 
         queryStepIdResult = self.database.query(queryStepId)
         if queryResult:

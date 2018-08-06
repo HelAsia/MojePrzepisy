@@ -8,10 +8,15 @@ import os
 # My libraries
 from Constans import *
 from Database import *
+from Session import *
 from Users import *
 from recipe_elements.Cards import *
 from recipe_elements.Recipes import *
-from Session import *
+from recipe_elements.Steps import *
+from recipe_elements.Ingredients import *
+from recipe_elements.Comments import *
+from recipe_elements.Photos import *
+
 
 # Global definitions
 app = Flask(__name__)
@@ -238,10 +243,68 @@ def addRecipe():
 
 @app.route('/recipe/<int:recipeId>/<string:columnName>/<string:columnValue>/', methods=['POST'])
 @authorized
-def recipe_method(recipeId, columnName, columnValue):
+def editRecipe(recipeId, columnName, columnValue):
     recipe = Recipes(database)
 
     status, message = recipe.editRecipe(columnName, columnValue, recipeId)
+
+    return jsonify({
+        'status': status,
+        'message': message
+    })
+
+
+@app.route('/recipe/step/<int:stepId>', methods=['GET'])
+def getStep(stepId):
+    step = Steps(database)
+
+    steps = step.getStep(stepId)
+
+    if not steps:
+        Logger.fail("There was no recipe returned!")
+    return jsonify(steps)
+
+
+@app.route('/recipe/step/<int:stepId>', methods=['DELETE'])
+@authorized
+def deleteStep(stepId):
+    step = Steps(database)
+
+    status, message = step.deleteStep(stepId)
+
+    return jsonify({
+        'status': status,
+        'message': message
+    })
+
+
+@app.route('/recipe/step', methods=['PUT'])
+@authorized
+def addStep():
+    step = Steps(database)
+
+    params = request.get_json()
+
+    recipeId = params.get('recipeId')
+    photoId = params.get('photoId')
+    stepNumber = params.get('stepNumber')
+    stepDescription = params.get('stepDescription')
+
+    status, message = step.addStep(recipeId, photoId, stepNumber,
+                  stepDescription)
+
+    return jsonify({
+        'status': status,
+        'message': message
+    })
+
+
+@app.route('/recipe/step/<int:stepId>/<string:columnName>/<string:columnValue>/', methods=['POST'])
+@authorized
+def editStep(stepId, columnName, columnValue):
+    step = Steps(database)
+
+    status, message = step.editStep(columnName, columnValue, stepId)
 
     return jsonify({
         'status': status,
