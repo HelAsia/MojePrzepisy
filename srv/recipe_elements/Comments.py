@@ -29,19 +29,18 @@ class Comments:
         else:
             return {}
 
-    def addComment(self, recipeId, userId, comment,
-                   createdDate):
+    def addComment(self, recipeId, userId, comment):
         query = u"INSERT INTO comments " \
                 u"(recipe_id, user_id, comment, created_date) " \
-                u"values ({}, {}, '{}', now() ".format(recipeId, userId, comment, createdDate)
+                u"values ({}, {}, '{}', now() ".format(recipeId, userId, comment)
 
         queryResult = self.database.query(query)
 
         queryCommentId = u"SELECT comment_id " \
-                            u"FROM comments " \
-                            u"WHERE " \
-                            u"recipe_id = {} AND user_id = {} AND comment = '{}' AND " \
-                            u"created_date = {} ".format(recipeId, userId, comment, createdDate)
+                         u"FROM comments " \
+                         u"WHERE " \
+                         u"recipe_id = {} AND user_id = {} AND " \
+                         u"comment = '{}' ".format(recipeId, userId, comment)
 
         queryCommentIdResult = self.database.query(queryCommentId)
         if queryResult:

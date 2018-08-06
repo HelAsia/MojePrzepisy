@@ -254,11 +254,11 @@ def editRecipe(recipeId, columnName, columnValue):
     })
 
 
-@app.route('/recipe/step/<int:stepId>', methods=['GET'])
-def getStep(stepId):
+@app.route('/recipe/step/<int:recipeId>', methods=['GET'])
+def getStep(recipeId):
     step = Steps(database)
 
-    steps = step.getStep(stepId)
+    steps = step.getStep(recipeId)
 
     if not steps:
         Logger.fail("There was no recipe returned!")
@@ -310,6 +310,120 @@ def editStep(stepId, columnName, columnValue):
         'status': status,
         'message': message
     })
+
+
+@app.route('/recipe/ingredient/<int:recipeId>', methods=['GET'])
+def getIngredient(recipeId):
+    ingredient = Ingredients(database)
+
+    ingredients = ingredient.getIngredient(recipeId)
+
+    if not ingredients:
+        Logger.fail("There was no ingredients returned!")
+    return jsonify(ingredients)
+
+
+@app.route('/recipe/ingredient/<int:ingredientId>', methods=['DELETE'])
+@authorized
+def deleteIngredient(ingredientId):
+    ingredient = Ingredients(database)
+
+    status, message = ingredient.deleteIngredient(ingredientId)
+
+    return jsonify({
+        'status': status,
+        'message': message
+    })
+
+
+@app.route('/recipe/ingredient', methods=['PUT'])
+@authorized
+def addIngredient():
+    ingredient = Ingredients(database)
+
+    params = request.get_json()
+
+    recipeId = params.get('recipeId')
+    ingredientQuantity = params.get('ingredientQuantity')
+    ingredientUnit = params.get('ingredientUnit')
+    ingredientName = params.get('ingredientName')
+
+    status, message = ingredient.addIngredient(recipeId, ingredientQuantity, ingredientUnit,
+                      ingredientName)
+
+    return jsonify({
+        'status': status,
+        'message': message
+    })
+
+
+@app.route('/recipe/ingredient/<int:ingredientId>/<string:columnName>/<string:columnValue>/', methods=['POST'])
+@authorized
+def editIngredient(ingredientId, columnName, columnValue):
+    ingredient = Ingredients(database)
+
+    status, message = ingredient.editIngredient(columnName, columnValue, ingredientId)
+
+    return jsonify({
+        'status': status,
+        'message': message
+    })
+
+
+@app.route('/recipe/comment/<int:recipeId>', methods=['GET'])
+def getComment(recipeId):
+    comment = Comments(database)
+
+    comments = comment.getComment(recipeId)
+
+    if not comments:
+        Logger.fail("There was no comments returned!")
+    return jsonify(comments)
+
+
+@app.route('/recipe/comment/<int:commentId>', methods=['DELETE'])
+@authorized
+def deleteComment(commentId):
+    comment = Comments(database)
+
+    status, message = comment.deleteComment(commentId)
+
+    return jsonify({
+        'status': status,
+        'message': message
+    })
+
+
+@app.route('/recipe/comment', methods=['PUT'])
+@authorized
+def addCommentt():
+    comment = Comments(database)
+
+    params = request.get_json()
+
+    recipeId = params.get('recipeId')
+    comment = params.get('comment')
+
+    status, message = comment.addComment(recipeId, get_user_id(), comment)
+
+    return jsonify({
+        'status': status,
+        'message': message
+    })
+
+
+@app.route('/recipe/comment/<int:commentId>/<string:columnName>/<string:columnValue>/', methods=['POST'])
+@authorized
+def editComment(commentId, columnName, columnValue):
+    comment = Comments(database)
+
+    status, message = comment.editComment(columnName, columnValue, commentId)
+
+    return jsonify({
+        'status': status,
+        'message': message
+    })
+
 
 
 def main():
