@@ -67,4 +67,16 @@
   <string name="add_photo">Dodaj zdjęcie</string>
   <string name="add_group">Dodaj nazwę grupy składników</string>
 
+  <string name="recipe_name">Nazwa przepisu</string>
+  <string name="recipe_category">Kategoria przepisu</string>
+  <string name="choose_category_text_view">Wybierz kategorię przepisu</string>
+  
+  <string name="snacks">Przekąski</string>
+  <string name="soups">Zupy</string>
+  <string name="starters">Przystawki</string>
+  <string name="desserts">Deser</string>
+  <string name="cakes">Ciasta</string>
+
+
+
 </resources>

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
   android:id="@+id/activity_login"
   android:layout_width="match_parent"
@@ -12,11 +13,128 @@
   tools:context=".add_recipe.AddRecipeActivityView"
   android:background="@color/primary_light">
 
-  <Button
-    android:id="@+id/button"
-    android:layout_width="wrap_content"
+  <EditText
+    android:id="@+id/recipeNameEditText"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="35dp"
+    android:layout_alignParentTop="true"
     android:layout_centerHorizontal="true"
-    android:text="Button"/>
+    android:ems="10"
+    android:hint="@string/recipe_name"
+    android:inputType="textPersonName"/>
+
+  <LinearLayout
+    android:id="@+id/loadPhotoLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@+id/recipeNameEditText"
+    android:orientation="vertical">
+    <ImageView
+      android:id="@+id/mainPhotoImageView"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      app:srcCompat="@drawable/no_photo"/>
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal">
+      <Button
+        android:id="@+id/imageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@drawable/buttons"
+        android:text="Image"/>
+      <Button
+        android:id="@+id/URLbutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@drawable/buttons"
+        android:text="URL"/>
+    </LinearLayout>
+  </LinearLayout>
+
+  <LinearLayout
+    android:id="@+id/chooseCategoryLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@+id/loadPhotoLayout"
+    android:orientation="vertical">
+    <TextView
+      android:id="@+id/categoryChooseTextView"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="Wybierz kategorię przepisu"/>
+    <Spinner
+      android:id="@+id/spinner"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:entries="@array/recipe_category_array"
+      android:prompt="Wybierz kategorię"/>
+  </LinearLayout>
+
+  <LinearLayout
+    android:id="@+id/timeLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@+id/chooseCategoryLayout"
+    android:orientation="vertical">
+    <TextView
+      android:id="@+id/preparedTimeTextView"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="Wprowadź czas przygotowania"/>
+    <EditText
+      android:id="@+id/preparedTimeEditText"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:ems="10"
+      android:inputType="time"/>
+    <TextView
+      android:id="@+id/cookTimeTextView"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="Wprowadź czas gotowania"/>
+    <EditText
+      android:id="@+id/cookTimeEditText"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:ems="10"
+      android:inputType="time"/>
+    <TextView
+      android:id="@+id/bakeTimeTextView"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="Wprowadź czas pieczenia"/>
+    <EditText
+      android:id="@+id/bakeTimeEditText"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:ems="10"
+      android:inputType="time"/>
+  </LinearLayout>
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@+id/timeLayout"
+    android:orientation="horizontal">
+    <Button
+      android:id="@+id/PreviousButton"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_weight="0.5"
+      android:background="@drawable/buttons"
+      android:text="WSTECZ"/>
+    <Button
+      android:id="@+id/nextButton"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_weight="0.5"
+      android:background="@drawable/buttons"
+      android:text="DALEJ"/>
+  </LinearLayout>
+
+
 </RelativeLayout>

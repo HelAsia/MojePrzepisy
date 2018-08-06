@@ -6,12 +6,12 @@
   android:orientation="vertical"
   android:layout_width="wrap_content"
   android:layout_height="wrap_content"
-  android:layout_margin="10dp"
+  android:layout_margin="0dp"
   android:clickable="true"
   android:focusable="true"
   android:background="@color/white"
   android:foreground="?android:attr/selectableItemBackground"
-  card_view:cardCornerRadius="30dp"
+  card_view:cardCornerRadius="0dp"
   card_view:cardBackgroundColor="@color/white"
   card_view:cardElevation="50dp">
 

@@ -1,49 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-  <string-array name="photo_list_array">
-    <item>@string/tomato_soup_URL</item>
-    <item>@string/chitterlings_URL</item>
-    <item>@string/cheesecake_URL</item>
-    <item>@string/coffee_URL</item>
-    <item>@string/pork_chop_URL</item>
-    <item>@string/ebony_cake_URL</item>
-  </string-array>
-
-  <string-array name="name_recipes_array">
-    <item>Zupa pomidorowa</item>
-    <item>Flaczki</item>
-    <item>Sernik</item>
-    <item>Kawa</item>
-    <item>Kotlet Schabowy</item>
-    <item>Murzynek</item>
-  </string-array>
-
-  <string-array name="author_recipes_array">
-    <item>Zuzia</item>
-    <item>Ala</item>
-    <item>Iza</item>
-    <item>Ola</item>
-    <item>Ula</item>
-    <item>Viktor</item>
-  </string-array>
-
-  <string-array name="stars_count_array">
-    <item>5</item>
-    <item>4</item>
-    <item>3</item>
-    <item>2</item>
-    <item>1</item>
-    <item>4</item>
-  </string-array>
-
-  <string-array name="favorites_count_array">
-    <item>5</item>
-    <item>2</item>
-    <item>4</item>
-    <item>2</item>
-    <item>5</item>
-    <item>3</item>
+  <string-array name="recipe_category_array">
+    <item>@string/snacks</item>
+    <item>@string/soups</item>
+    <item>@string/starters</item>
+    <item>@string/desserts</item>
+    <item>@string/cakes</item>
   </string-array>
 
 </resources>
