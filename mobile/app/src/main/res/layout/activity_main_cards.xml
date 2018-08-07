@@ -50,7 +50,6 @@
         android:clickable="true"
         android:elevation="6dp"
         app:srcCompat="@android:drawable/ic_input_add"
-        android:transitionName="fab_transition"
         android:tint="@android:color/white"
         app:backgroundTint="@color/accent"/>
 

@@ -6,6 +6,7 @@ public class Ingredient {
   public int ingredientQuantity;
   public String ingredientUnit;
   public String ingredientName;
+  public String ingredientGroup;
 
   public Ingredient(){
 
@@ -31,6 +32,10 @@ public class Ingredient {
     return ingredientName;
   }
 
+  public String getIngredientGroup() {
+    return ingredientGroup;
+  }
+
   public void setIngredientId(int ingredientId) {
     this.ingredientId = ingredientId;
   }
@@ -49,5 +54,9 @@ public class Ingredient {
 
   public void setIngredientName(String ingredientName) {
     this.ingredientName = ingredientName;
+  }
+
+  public void setIngredientGroup(String ingredientGroup) {
+    this.ingredientGroup = ingredientGroup;
   }
 }

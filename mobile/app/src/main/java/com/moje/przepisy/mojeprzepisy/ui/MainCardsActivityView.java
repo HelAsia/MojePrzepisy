@@ -17,10 +17,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
+import butterknife.BindView;
 import com.moje.przepisy.mojeprzepisy.LicensesActivity;
 import com.moje.przepisy.mojeprzepisy.R;
 import com.moje.przepisy.mojeprzepisy.SearchSwipeActivity;
+import com.moje.przepisy.mojeprzepisy.add_recipe.add_recipe.add_main_recipe_page.AddRecipeActivityView;
 import com.moje.przepisy.mojeprzepisy.data.model.OneRecipeCard;
 import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.OperationsOnCardRepository;
 import com.moje.przepisy.mojeprzepisy.log_in.LoginActivityView;
@@ -28,13 +31,15 @@ import com.moje.przepisy.mojeprzepisy.log_out.LogoutActivityView;
 import com.moje.przepisy.mojeprzepisy.register.RegisterActivityView;
 import java.util.List;
 
-public class MainCardsActivityView extends AppCompatActivity implements MainCardsContract.View {
+public class MainCardsActivityView extends AppCompatActivity implements MainCardsContract.View,
+    View.OnClickListener {
   private MainCardsContract.Presenter presenter;
   private DrawerLayout drawerLayout;
   Context context;
   private RecyclerView recyclerView;
   private MyCardViewAdapter adapter;
   private boolean ifLogged = false;
+  @BindView(R.id.my_fab) FloatingActionButton floatingActionButton;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +53,9 @@ public class MainCardsActivityView extends AppCompatActivity implements MainCard
     presenter.setDrawerLayoutListener(getDrawerLayout());
     presenter.setNavigationViewListener(getNavigationView(), getIfLoggedStatus());
     presenter.setFloatingActionButton(getFloatingActionButton(), getIfLoggedStatus());
+
+    floatingActionButton.setOnClickListener(this);
+
   }
 
   @Override
@@ -60,8 +68,8 @@ public class MainCardsActivityView extends AppCompatActivity implements MainCard
 
   @Override
   public FloatingActionButton getFloatingActionButton(){
-    FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.my_fab);
-    return fab;
+    floatingActionButton = (FloatingActionButton) findViewById(R.id.my_fab);
+    return floatingActionButton;
   }
 
   @Override
@@ -156,7 +164,7 @@ public class MainCardsActivityView extends AppCompatActivity implements MainCard
 
             }else if (id == R.id.licences_nav) {
               Intent intent = new Intent(MainCardsActivityView.this, LicensesActivity.class);
-              startActivity(intent);
+
             }
             return false;
           }
@@ -223,6 +231,12 @@ public class MainCardsActivityView extends AppCompatActivity implements MainCard
       default:
         return super.onOptionsItemSelected(item);
     }
+  }
+
+  @Override
+  public void onClick(View view) {
+    Intent intent = new Intent(MainCardsActivityView.this, AddRecipeActivityView.class);
+    startActivity(intent);
   }
 }
 

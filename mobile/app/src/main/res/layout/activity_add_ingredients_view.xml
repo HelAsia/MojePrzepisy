@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:background="@color/primary_light"
+  tools:context=".add_recipe.add_recipe.add_ingredients.AddIngredientsActivityView">
+
+  <LinearLayout
+    android:id="@+id/titleLayout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+      android:id="@+id/titleTextView"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      android:gravity="center"
+      android:text="Dodawanie składników"
+      android:textColor="@color/primary_text"
+      android:textSize="30sp"/>
+  </LinearLayout>
+
+
+  <Button
+    android:id="@+id/addIngredientButton"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:layout_centerHorizontal="true"
+    android:background="@drawable/buttons"
+    android:text="Dodaj kolejny składnik"/>
+</RelativeLayout>

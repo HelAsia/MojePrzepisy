@@ -59,7 +59,7 @@
   <string name="logout_question">Czy chcesz się wylogować?</string>
   <string name="yes">TAK</string>
   <string name="no">NIE</string>
-  
+
   <string name="add_ingredients">Dodaj składniki</string>
   <string name="add_steps">Dodaj kroki</string>
   <string name="add_description">Dodaj jednolity opis</string>
@@ -70,13 +70,13 @@
   <string name="recipe_name">Nazwa przepisu</string>
   <string name="recipe_category">Kategoria przepisu</string>
   <string name="choose_category_text_view">Wybierz kategorię przepisu</string>
-  
+  <string name="ingredients_title">Dodawanie składników</string>
+
   <string name="snacks">Przekąski</string>
   <string name="soups">Zupy</string>
   <string name="starters">Przystawki</string>
   <string name="desserts">Deser</string>
   <string name="cakes">Ciasta</string>
-
 
 
 </resources>

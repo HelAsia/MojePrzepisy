@@ -347,9 +347,10 @@ def addIngredient():
     ingredientQuantity = params.get('ingredientQuantity')
     ingredientUnit = params.get('ingredientUnit')
     ingredientName = params.get('ingredientName')
+    ingredientGroup = params.get('ingredientGroup')
 
     status, message = ingredient.addIngredient(recipeId, ingredientQuantity, ingredientUnit,
-                      ingredientName)
+                      ingredientName, ingredientGroup)
 
     return jsonify({
         'status': status,

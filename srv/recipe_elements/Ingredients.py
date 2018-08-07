@@ -29,10 +29,10 @@ class Ingredients:
             return {}
 
     def addIngredient(self, recipeId, ingredientQuantity, ingredientUnit,
-                      ingredientName):
+                      ingredientName, ingredientGroup):
         query = u"INSERT INTO ingredients " \
-                u"(recipe_id, ingredient_quantity, ingredient_unit, ingredient_name) " \
-                u"values ({}, '{}', '{}', {} ".format(recipeId, ingredientQuantity, ingredientUnit, ingredientName)
+                u"(recipe_id, ingredient_quantity, ingredient_unit, ingredient_name, group_ingredient_name) " \
+                u"values ({}, '{}', '{}', {} ".format(recipeId, ingredientQuantity, ingredientUnit, ingredientName, ingredientGroup)
 
         queryResult = self.database.query(query)
 
@@ -40,7 +40,7 @@ class Ingredients:
                         u"FROM ingredients " \
                         u"WHERE " \
                         u"recipe_id = {} AND ingredient_quantity = {} AND ingredient_unit = '{}' AND " \
-                        u"ingredient_name = '{}' ".format(recipeId, ingredientQuantity, ingredientUnit, ingredientName)
+                        u"ingredient_name = '{}' AND group_ingredient_name = '{}' ".format(recipeId, ingredientQuantity, ingredientUnit, ingredientName, ingredientGroup)
 
         queryIngredientIdResult = self.database.query(queryIngredientId)
         if queryResult:

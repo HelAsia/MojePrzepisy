@@ -70,6 +70,7 @@ CREATE TABLE ingredients (
     ingredient_quantity int(11),
     ingredient_unit varchar(100),
     ingredient_name varchar(100),
+    group_ingredient_name varchar(100),
     PRIMARY KEY (ingredient_id),
     FOREIGN KEY (recipe_id) REFERENCES recipes(recipe_id)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
