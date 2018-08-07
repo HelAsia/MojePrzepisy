@@ -3,6 +3,7 @@ package com.moje.przepisy.mojeprzepisy.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
@@ -46,6 +47,7 @@ public class MainCardsActivityView extends AppCompatActivity implements MainCard
     setToolbar();
     presenter.setDrawerLayoutListener(getDrawerLayout());
     presenter.setNavigationViewListener(getNavigationView(), getIfLoggedStatus());
+    presenter.setFloatingActionButton(getFloatingActionButton(), getIfLoggedStatus());
   }
 
   @Override
@@ -54,6 +56,12 @@ public class MainCardsActivityView extends AppCompatActivity implements MainCard
     recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
     recyclerView.setAdapter(adapter);
     recyclerView.setLayoutManager(new LinearLayoutManager(this));
+  }
+
+  @Override
+  public FloatingActionButton getFloatingActionButton(){
+    FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.my_fab);
+    return fab;
   }
 
   @Override
@@ -168,7 +176,6 @@ public class MainCardsActivityView extends AppCompatActivity implements MainCard
       public boolean onQueryTextSubmit(String query) {
         presenter.getSearchedCardsFromServer(query);
         Toast.makeText(context, query, Toast.LENGTH_SHORT).show();
-        //searchViewAndroidActionBar.clearFocus();
         return true;
       }
 

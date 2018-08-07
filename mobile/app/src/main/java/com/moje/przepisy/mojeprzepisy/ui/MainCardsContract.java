@@ -1,6 +1,7 @@
 package com.moje.przepisy.mojeprzepisy.ui;
 
 import android.content.Context;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import com.moje.przepisy.mojeprzepisy.data.model.OneRecipeCard;
@@ -13,6 +14,8 @@ public interface MainCardsContract {
     NavigationView getNavigationView();
 
     DrawerLayout getDrawerLayout();
+
+    FloatingActionButton getFloatingActionButton();
 
     void setRecyclerView(List<OneRecipeCard> cardList);
 
@@ -39,11 +42,14 @@ public interface MainCardsContract {
 
     void setDrawerLayoutListener(DrawerLayout drawerLayout);
 
+    void setFloatingActionButton(FloatingActionButton floatingActionButton, boolean ifLogged);
+
     void getSearchedCardsFromServer(String recipeName);
 
     void setRecipesList(List<OneRecipeCard> cardList);
 
     void setNavigationViewListener(NavigationView navigationView, boolean ifLogged);
+
 
     void onDestroy();
 

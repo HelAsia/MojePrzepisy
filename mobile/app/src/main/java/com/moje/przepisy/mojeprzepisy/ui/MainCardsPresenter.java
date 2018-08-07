@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.view.View;
@@ -88,6 +89,13 @@ public class MainCardsPresenter implements MainCardsContract.Presenter,
       cardsView.setNavigationViewListenerWithRegistriation(navigationView);
     }else {
       cardsView.setNavigationViewListenerWithoutRegistriation(navigationView);
+    }
+  }
+
+  @Override
+  public void setFloatingActionButton(FloatingActionButton floatingActionButton, boolean ifLogged) {
+    if(ifLogged) {
+      cardsView.getFloatingActionButton().setVisibility(View.VISIBLE);
     }
   }
 
