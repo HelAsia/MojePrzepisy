@@ -43,6 +43,8 @@
     </activity>
     <activity android:name=".add_recipe.add_recipe.add_ingredients.AddIngredientsActivityView">
     </activity>
+    <activity android:name=".add_recipe.add_recipe.add_steps.AddStepsActivityView">
+    </activity>
   </application>
 
 </manifest>
