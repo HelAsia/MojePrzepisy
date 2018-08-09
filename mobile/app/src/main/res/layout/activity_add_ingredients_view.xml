@@ -2,6 +2,7 @@
 <RelativeLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:tools="http://schemas.android.com/tools"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
   android:id="@+id/activity_add_ingredients_view"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
@@ -25,27 +26,32 @@
       android:textSize="30sp"/>
   </LinearLayout>
   <ScrollView
-    android:layout_width="wrap_content"
+    android:id="@+id/scrollViewAddIngredientLayout"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_below="@id/titleLayout">
 
     <LinearLayout
       android:id="@+id/addIngredientsLayout"
       android:layout_width="match_parent"
-      android:layout_height="match_parent"
+      android:layout_height="wrap_content"
       android:layout_weight="1"
       android:orientation="vertical">
+
     </LinearLayout>
   </ScrollView>
-
-
-  <Button
-    android:id="@+id/addIngredientButton"
+  <android.support.design.widget.FloatingActionButton
+    android:id="@+id/addIngredientFab"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_alignParentBottom="true"
-    android:layout_centerHorizontal="true"
-    android:background="@drawable/buttons"
-    android:layout_below="@+id/addIngredientsLayout"
-    android:text="Dodaj kolejny składnik"/>
+    android:layout_alignParentEnd="true"
+    android:layout_marginBottom="25dp"
+    android:layout_marginEnd="25dp"
+    android:visibility="visible"
+    android:clickable="true"
+    android:elevation="6dp"
+    app:srcCompat="@android:drawable/ic_input_add"
+    android:tint="@android:color/white"
+    app:backgroundTint="@color/accent"/>
 </RelativeLayout>

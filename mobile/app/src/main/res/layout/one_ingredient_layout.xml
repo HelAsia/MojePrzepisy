@@ -1,63 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
+<LinearLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:card_view="http://schemas.android.com/apk/res-auto"
   android:id="@+id/one_ingredient_layout"
   android:layout_width="match_parent"
+  android:background="@color/white_transparent"
   android:layout_height="wrap_content"
-  android:layout_margin="0dp"
-  android:background="@color/primary_light"
   android:clickable="true"
   android:focusable="true"
-  android:foreground="?android:attr/selectableItemBackground"
-  android:orientation="vertical"
-  card_view:cardBackgroundColor="@color/white"
-  card_view:cardCornerRadius="0dp"
-  card_view:cardElevation="50dp">
-
+  android:layout_centerHorizontal="true"
+  android:layout_centerVertical="true"
+  android:orientation="vertical">
   <LinearLayout
+    android:id="@+id/oneIngredientLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
-    <LinearLayout
-      android:id="@+id/oneIngredientLayout"
-      android:layout_width="match_parent"
+    android:orientation="horizontal">
+    <ImageView
+      android:id="@+id/menuImageView"
+      android:layout_width="wrap_content"
       android:layout_height="match_parent"
-      android:orientation="horizontal">
-      <ImageView
-        android:id="@+id/menuImageView"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_weight="0.1"
-        android:src="@drawable/ic_menu"/>
-      <EditText
-        android:id="@+id/ingredientQuantityEditText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:ems="10"
-        android:hint="Ilość"
-        android:inputType="number"/>
-      <Spinner
-        android:id="@+id/ingredientUnitSpinner"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:entries="@array/ingredients_unit_array"/>
-      <ImageView
-        android:id="@+id/deleteImageView"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:src="@android:drawable/ic_delete"/>
-    </LinearLayout>
-    <EditText
-      android:id="@+id/ingredientNameEditText"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
       android:layout_weight="0.1"
+      android:clickable="false"
+      android:src="@drawable/ic_menu"/>
+    <EditText
+      android:id="@+id/ingredientQuantityEditText"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
       android:ems="10"
-      android:hint="Nazwa składnika"
-      android:inputType="textPersonName"/>
+      android:hint="Ilość"
+      android:inputType="number"/>
+    <Spinner
+      android:id="@+id/ingredientUnitSpinner"
+      android:layout_width="wrap_content"
+      android:layout_height="match_parent"
+      android:layout_weight="1"
+      android:entries="@array/ingredients_unit_array"/>
+    <ImageView
+      android:id="@+id/deleteImageView"
+      android:layout_width="wrap_content"
+      android:layout_height="match_parent"
+      android:layout_weight="1"
+      android:clickable="true"
+      android:src="@android:drawable/ic_delete"/>
   </LinearLayout>
-</android.support.v7.widget.CardView>
+  <EditText
+    android:id="@+id/ingredientNameEditText"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_weight="0.1"
+    android:ems="10"
+    android:hint="Nazwa składnika"
+    android:inputType="textPersonName"/>
+</LinearLayout>

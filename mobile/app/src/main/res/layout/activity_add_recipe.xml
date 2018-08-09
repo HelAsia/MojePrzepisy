@@ -3,147 +3,146 @@
   xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
-  android:layout_width="match_parent" android:layout_height="match_parent">
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
+
   <RelativeLayout
-
-    android:id="@+id/activity_login"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:background="@color/primary_light"
-    tools:context=".add_recipe.add_recipe.add_main_recipe_page.AddRecipeActivityView">
-
-    <EditText
-      android:id="@+id/recipeNameEditText"
+      android:id="@+id/activity_login"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_alignParentTop="true"
-      android:layout_centerHorizontal="true"
-      android:ems="10"
-      android:hint="@string/recipe_name"
-      android:inputType="textPersonName"/>
+      android:layout_height="match_parent"
+      android:paddingTop="@dimen/activity_vertical_margin"
+      android:paddingBottom="@dimen/activity_vertical_margin"
+      android:paddingLeft="@dimen/activity_horizontal_margin"
+      android:paddingRight="@dimen/activity_horizontal_margin"
+      android:background="@color/primary_light"
+      tools:context=".add_recipe.add_recipe.add_main_recipe_page.AddRecipeActivityView">
 
-    <LinearLayout
-      android:id="@+id/loadPhotoLayout"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_below="@+id/recipeNameEditText"
-      android:orientation="vertical">
-      <ImageView
-        android:id="@+id/mainPhotoImageView"
-        android:layout_width="match_parent"
-        android:layout_height="240dp"
-        app:srcCompat="@drawable/no_photo"/>
-      <TextView
-        android:id="@+id/loadPictureTextView"
+      <EditText
+        android:id="@+id/recipeNameEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Załaduj zdjęcie"/>
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:ems="10"
+        android:hint="@string/recipe_name"
+        android:inputType="textPersonName"/>
+
+      <LinearLayout
+        android:id="@+id/loadPhotoLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/recipeNameEditText"
+        android:orientation="vertical">
+        <ImageView
+          android:id="@+id/mainPhotoImageView"
+          android:layout_width="match_parent"
+          android:layout_height="240dp"
+          app:srcCompat="@drawable/no_photo"/>
+        <TextView
+          android:id="@+id/loadPictureTextView"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="Załaduj zdjęcie"/>
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal">
+          <Button
+            android:id="@+id/imageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:background="@drawable/buttons"
+            android:text="Image"/>
+          <Button
+            android:id="@+id/URLbutton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:background="@drawable/buttons"
+            android:text="URL"/>
+        </LinearLayout>
+      </LinearLayout>
+
+      <LinearLayout
+        android:id="@+id/chooseCategoryLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/loadPhotoLayout"
+        android:orientation="vertical">
+        <TextView
+          android:id="@+id/categoryChooseTextView"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="Wybierz kategorię przepisu"/>
+        <Spinner
+          android:id="@+id/spinner"
+          android:layout_width="match_parent"
+          android:layout_height="50dp"
+          android:entries="@array/recipe_category_array"/>
+      </LinearLayout>
+
+      <LinearLayout
+        android:id="@+id/timeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/chooseCategoryLayout"
+        android:orientation="vertical"
+        android:scrollbars="vertical">
+        <TextView
+          android:id="@+id/preparedTimeTextView"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="Wprowadź czas przygotowania"/>
+        <EditText
+          android:id="@+id/preparedTimeEditText"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:ems="10"
+          android:inputType="time"/>
+        <TextView
+          android:id="@+id/cookTimeTextView"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="Wprowadź czas gotowania"/>
+        <EditText
+          android:id="@+id/cookTimeEditText"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:ems="10"
+          android:inputType="time"/>
+        <TextView
+          android:id="@+id/bakeTimeTextView"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="Wprowadź czas pieczenia"/>
+        <EditText
+          android:id="@+id/bakeTimeEditText"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:ems="10"
+          android:inputType="time"/>
+      </LinearLayout>
+
       <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/timeLayout"
         android:orientation="horizontal">
         <Button
-          android:id="@+id/imageButton"
+          android:id="@+id/PreviousButton"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_weight="0.5"
           android:background="@drawable/buttons"
-          android:text="Image"/>
+          android:text="WSTECZ"/>
         <Button
-          android:id="@+id/URLbutton"
+          android:id="@+id/nextButton"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_weight="0.5"
           android:background="@drawable/buttons"
-          android:text="URL"/>
+          android:text="DALEJ"/>
       </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-      android:id="@+id/chooseCategoryLayout"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_below="@+id/loadPhotoLayout"
-      android:orientation="vertical">
-      <TextView
-        android:id="@+id/categoryChooseTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Wybierz kategorię przepisu"/>
-      <Spinner
-        android:id="@+id/spinner"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:entries="@array/recipe_category_array"/>
-    </LinearLayout>
-
-    <LinearLayout
-      android:id="@+id/timeLayout"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_below="@+id/chooseCategoryLayout"
-      android:orientation="vertical"
-      android:scrollbars="vertical">
-      <TextView
-        android:id="@+id/preparedTimeTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Wprowadź czas przygotowania"/>
-      <EditText
-        android:id="@+id/preparedTimeEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="time"/>
-      <TextView
-        android:id="@+id/cookTimeTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Wprowadź czas gotowania"/>
-      <EditText
-        android:id="@+id/cookTimeEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="time"/>
-      <TextView
-        android:id="@+id/bakeTimeTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Wprowadź czas pieczenia"/>
-      <EditText
-        android:id="@+id/bakeTimeEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="time"/>
-    </LinearLayout>
-
-    <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_below="@+id/timeLayout"
-      android:orientation="horizontal">
-      <Button
-        android:id="@+id/PreviousButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.5"
-        android:background="@drawable/buttons"
-        android:text="WSTECZ"/>
-      <Button
-        android:id="@+id/nextButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.5"
-        android:background="@drawable/buttons"
-        android:text="DALEJ"/>
-    </LinearLayout>
-
-
-  </RelativeLayout>
+    </RelativeLayout>
 </ScrollView>
