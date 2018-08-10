@@ -64,19 +64,30 @@ public class AddIngredientsActivityView extends AppCompatActivity implements Vie
       setDeleteImageViewListener();
 
     }else {
-      Toast.makeText(this, "Id: " + view.getId(), Toast.LENGTH_SHORT).show();
       View myViewToRemove = findViewById(view.getId());
 
-      ViewGroup parentViewToRemove = (ViewGroup) myViewToRemove.getParent();
-      ViewGroup parentParentViewToRemove = (ViewGroup) parentViewToRemove.getParent();
-      parentParentViewToRemove.removeAllViews();
+      int position = checkPositionOfLayoutToRemove(view.getId(), ingredientElementsIdList);
 
-/*      ingredientElementsIdList.remove(new IngredientElementsId(parentParentViewToRemove.getId(), parentViewToRemove.getId(),
-          parentViewToRemove.getChildAt(0).getId(), parentViewToRemove.getChildAt(1).getId(),
-          parentViewToRemove.getChildAt(2).getId(), parentViewToRemove.getChildAt(3).getId(), parentParentViewToRemove.getChildAt(1).getId()));*/
-        ingredientElementsIdList.remove(2);
-      setIngredientBackgroundAfterDelete(ingredientElementsIdList);
+      ViewGroup firstLineLayoutParentViewToRemove = (ViewGroup) myViewToRemove.getParent();
+      ViewGroup firstAndSecondLineLayoutParentParentViewToRemove = (ViewGroup) firstLineLayoutParentViewToRemove.getParent();
+      firstAndSecondLineLayoutParentParentViewToRemove.removeAllViews();
+
+      ingredientElementsIdList.remove(position);
+
+      Toast.makeText(this, "Array size: " + ingredientElementsIdList.size(), Toast.LENGTH_SHORT).show();
+
+   //   setIngredientBackgroundAfterDelete(ingredientElementsIdList); // <-----------------
+
     }
+  }
+
+  public int checkPositionOfLayoutToRemove(int elementId, List<IngredientElementsId> ingredientElementsIdList){
+    for (int i = 0; i < ingredientElementsIdList.size(); i++){
+      if (ingredientElementsIdList.get(i).getDeleteImageViewId() == elementId){
+        return i;
+      }
+    }
+    return -1;
   }
 
   public void setBackground(View child){
@@ -89,9 +100,8 @@ public class AddIngredientsActivityView extends AppCompatActivity implements Vie
   }
 
   public void setIngredientBackgroundAfterDelete(List<IngredientElementsId> ingredientElementsIdList){
-
     for (IngredientElementsId oneIngredient : ingredientElementsIdList){
-      View oneIngredientView = findViewById(oneIngredient.getLayoutId());
+      View oneIngredientView = (View) findViewById(oneIngredient.getLayoutId());
       if(backgroundColorString.equals("#ffffff")){
         this.backgroundColorString = "#8033ffff";
       }else if(backgroundColorString.equals("#8033ffff")){
