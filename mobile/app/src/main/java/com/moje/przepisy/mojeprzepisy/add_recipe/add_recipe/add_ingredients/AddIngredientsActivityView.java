@@ -70,14 +70,14 @@ public class AddIngredientsActivityView extends AppCompatActivity implements Vie
 
       ViewGroup firstLineLayoutParentViewToRemove = (ViewGroup) myViewToRemove.getParent();
       ViewGroup firstAndSecondLineLayoutParentParentViewToRemove = (ViewGroup) firstLineLayoutParentViewToRemove.getParent();
-      firstAndSecondLineLayoutParentParentViewToRemove.removeAllViews();
+
+      linearLayoutOneIngredient.removeView(firstAndSecondLineLayoutParentParentViewToRemove);
 
       ingredientElementsIdList.remove(position);
 
       Toast.makeText(this, "Array size: " + ingredientElementsIdList.size(), Toast.LENGTH_SHORT).show();
 
-   //   setIngredientBackgroundAfterDelete(ingredientElementsIdList); // <-----------------
-
+      setIngredientBackgroundAfterDelete();
     }
   }
 
@@ -99,15 +99,15 @@ public class AddIngredientsActivityView extends AppCompatActivity implements Vie
     child.setBackgroundColor(Color.parseColor(backgroundColorString));
   }
 
-  public void setIngredientBackgroundAfterDelete(List<IngredientElementsId> ingredientElementsIdList){
-    for (IngredientElementsId oneIngredient : ingredientElementsIdList){
-      View oneIngredientView = (View) findViewById(oneIngredient.getLayoutId());
-      if(backgroundColorString.equals("#ffffff")){
+  public void setIngredientBackgroundAfterDelete(){
+    for(int i = 0; i < linearLayoutOneIngredient.getChildCount(); i++){
+      View linearLayoutOneIngredientView = linearLayoutOneIngredient.getChildAt(i);
+      if(i % 2 == 0) {
         this.backgroundColorString = "#8033ffff";
-      }else if(backgroundColorString.equals("#8033ffff")){
+      }else if(i % 2 == 1){
         this.backgroundColorString = "#ffffff";
       }
-      oneIngredientView.setBackgroundColor(Color.parseColor(backgroundColorString));
+      linearLayoutOneIngredientView.setBackgroundColor(Color.parseColor( backgroundColorString));
     }
   }
 
