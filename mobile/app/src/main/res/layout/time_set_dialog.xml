@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/main_time_set_dialog_layout"
+  android:layout_width="wrap_content"
+  android:layout_height="wrap_content"
+  android:layout_centerInParent="true"
+  android:background="@color/aqua"
+  android:orientation="horizontal">
+
+  <LinearLayout
+    android:id="@+id/first_space_layout"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/space_layout_size"
+    android:orientation="vertical">
+  </LinearLayout>
+
+  <LinearLayout
+    android:id="@+id/time_set_dialog_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@+id/first_space_layout"
+    android:background="@color/lime_transparent"
+    android:orientation="horizontal">
+
+    <Spinner
+      android:id="@+id/hourSpinner"
+      android:layout_width="wrap_content"
+      android:layout_height="100dp"
+      android:layout_weight="1"
+      android:layout_gravity="center"
+      android:background="@color/white"
+      android:entries="@array/hours"
+      android:scrollbars="vertical"
+      android:textAlignment="center"
+      tools:scrollbarStyle="insideOverlay"/>
+    <Spinner
+      android:id="@+id/minuteSpinner"
+      android:layout_width="wrap_content"
+      android:layout_height="100dp"
+      android:layout_weight="1"
+      android:layout_gravity="center"
+      android:background="@color/white"
+      android:entries="@array/minutes"
+      android:scrollbars="horizontal"
+      android:textAlignment="center"/>
+  </LinearLayout>
+
+  <LinearLayout
+    android:id="@+id/second_space_layout"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/space_layout_size"
+    android:layout_below="@+id/time_set_dialog_layout"
+    android:orientation="vertical">
+  </LinearLayout>
+
+  <Button
+    android:id="@+id/set_time_button"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_below="@+id/second_space_layout"
+    android:layout_centerHorizontal="true"
+    android:background="@drawable/dark_buttons"
+    android:text="@string/set_time"/>
+
+  <LinearLayout
+    android:id="@+id/third_space_layout"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/space_layout_size"
+    android:layout_below="@+id/set_time_button"
+    android:orientation="vertical">
+  </LinearLayout>
+</RelativeLayout>

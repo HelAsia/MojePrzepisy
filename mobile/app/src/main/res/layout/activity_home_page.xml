@@ -41,7 +41,7 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:id="@+id/register_button"
-      android:background="@drawable/buttons"
+      android:background="@drawable/blue_buttons"
       android:textColor="@color/on_click_buttons_color"
       android:shadowColor="@color/primary"/>
     <Button
@@ -50,7 +50,7 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_marginTop="@dimen/gap_between_buttons"
-      android:background="@drawable/buttons"
+      android:background="@drawable/blue_buttons"
       android:textColor="@color/on_click_buttons_color"
       android:id="@+id/login_button"
       android:shadowColor="@color/primary"/>
@@ -59,7 +59,7 @@
       android:textSize="@dimen/buttons_text_size"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:background="@drawable/buttons"
+      android:background="@drawable/blue_buttons"
       android:layout_marginTop="@dimen/gap_between_buttons"
       android:textColor="@color/on_click_buttons_color"
       android:id="@+id/no_login_button"

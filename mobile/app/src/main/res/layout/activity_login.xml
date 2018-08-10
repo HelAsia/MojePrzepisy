@@ -61,7 +61,7 @@
     android:id="@+id/password_editText"/>
   <Button
     android:text="@string/login"
-    android:background="@drawable/buttons"
+    android:background="@drawable/blue_buttons"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_below="@+id/password_editText"

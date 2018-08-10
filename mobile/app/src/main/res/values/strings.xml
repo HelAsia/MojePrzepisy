@@ -77,6 +77,20 @@
   <string name="starters">Przystawki</string>
   <string name="desserts">Deser</string>
   <string name="cakes">Ciasta</string>
+  
+  <string name="add_recipe_title_step_one">Dodanie przepisu - krok 1 [główne informacje]</string>
+  <string name="add_recipe_title_step_two">Dodanie przepisu - krok 2 [składniki]</string>
+
+  <string name="load_photo">Załaduj zdjęcie</string>
+  <string name="choose_category">Wybierz kategorię przepisu</string>
+  <string name="input_prepare_time">Wprowadź czas przygotowania</string>
+  <string name="input_cook_time">Wprowadź czas gotowania</string>
+  <string name="input_bake_time">Wprowadź czas pieczenia</string>
+
+  <string name="set_time_title">Ustaw czas (HH:MM)</string>
+  <string name="set_time">Ustaw</string>
+
+  <string name="add_time">Dodaj czas</string>
 
 
 </resources>

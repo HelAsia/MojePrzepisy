@@ -74,7 +74,7 @@ public class MainCardsActivityView extends AppCompatActivity implements MainCard
 
   @Override
   public void setToolbar() {
-    Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+    Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_add_recipe);
     setSupportActionBar(toolbar);
     ActionBar actionbar = getSupportActionBar();
     actionbar.setDisplayHomeAsUpEnabled(true);

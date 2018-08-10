@@ -1,21 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<RelativeLayout
+  android:id="@+id/add_recipe_layout"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
   xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:tools="http://schemas.android.com/tools"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent">
+  xmlns:tools="http://schemas.android.com/tools">
 
-  <RelativeLayout
-      android:id="@+id/activity_login"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:paddingTop="@dimen/activity_vertical_margin"
-      android:paddingBottom="@dimen/activity_vertical_margin"
-      android:paddingLeft="@dimen/activity_horizontal_margin"
-      android:paddingRight="@dimen/activity_horizontal_margin"
-      android:background="@color/primary_light"
-      tools:context=".add_recipe.add_recipe.add_main_recipe_page.AddRecipeActivityView">
+  <android.support.v7.widget.Toolbar
+    android:id="@+id/toolbar_add_recipe"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/primary"
+    android:minHeight="?attr/actionBarSize"
+    app:titleTextColor="@android:color/black">
+  </android.support.v7.widget.Toolbar>
+
+  <ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@+id/toolbar_add_recipe">
+
+    <RelativeLayout
+        android:id="@+id/add_recipe_elements_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:background="@color/primary_light"
+        tools:context=".add_recipe.add_recipe.add_main_recipe_page.AddRecipeActivityView">
 
       <EditText
         android:id="@+id/recipeNameEditText"
@@ -25,124 +40,180 @@
         android:layout_centerHorizontal="true"
         android:ems="10"
         android:hint="@string/recipe_name"
-        android:inputType="textPersonName"/>
+        android:inputType="textPersonName"
+        android:textColor="@color/primary_text"
+        android:textSize="@dimen/edit_text_size"/>
 
-      <LinearLayout
-        android:id="@+id/loadPhotoLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/recipeNameEditText"
-        android:orientation="vertical">
-        <ImageView
-          android:id="@+id/mainPhotoImageView"
-          android:layout_width="match_parent"
-          android:layout_height="240dp"
-          app:srcCompat="@drawable/no_photo"/>
-        <TextView
-          android:id="@+id/loadPictureTextView"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:text="Załaduj zdjęcie"/>
         <LinearLayout
+          android:id="@+id/loadPhotoLayout"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:orientation="horizontal">
-          <Button
-            android:id="@+id/imageButton"
-            android:layout_width="wrap_content"
+          android:layout_below="@+id/recipeNameEditText"
+          android:orientation="vertical">
+          <ImageView
+            android:id="@+id/mainPhotoImageView"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center"
+            app:srcCompat="@android:drawable/ic_menu_gallery"/>
+          <TextView
+            android:id="@+id/loadPictureTextView"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            android:background="@drawable/buttons"
-            android:text="Image"/>
-          <Button
-            android:id="@+id/URLbutton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            android:background="@drawable/buttons"
-            android:text="URL"/>
+            android:gravity="center"
+            android:text="@string/load_photo"
+            android:background="@color/blue_transparent"
+            android:textColor="@color/primary_text"
+            android:textSize="@dimen/edit_text_size"/>
+          <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:orientation="horizontal">
+
+            <ImageView
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:layout_weight="1"
+              android:src="@mipmap/ic_image"/>
+
+            <ImageView
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:layout_weight="1"
+              android:src="@mipmap/ic_camera_alt"/>
+
+            <ImageView
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:layout_weight="1"
+              android:src="@mipmap/ic_find_in_page"/>
+          </LinearLayout>
         </LinearLayout>
-      </LinearLayout>
 
-      <LinearLayout
-        android:id="@+id/chooseCategoryLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/loadPhotoLayout"
-        android:orientation="vertical">
-        <TextView
-          android:id="@+id/categoryChooseTextView"
+        <LinearLayout
+          android:id="@+id/first_space_layout"
           android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:text="Wybierz kategorię przepisu"/>
-        <Spinner
-          android:id="@+id/spinner"
-          android:layout_width="match_parent"
-          android:layout_height="50dp"
-          android:entries="@array/recipe_category_array"/>
-      </LinearLayout>
+          android:layout_height="@dimen/space_layout_size"
+          android:layout_below="@+id/loadPhotoLayout"
+          android:orientation="vertical">
+        </LinearLayout>
 
-      <LinearLayout
-        android:id="@+id/timeLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/chooseCategoryLayout"
-        android:orientation="vertical"
-        android:scrollbars="vertical">
-        <TextView
-          android:id="@+id/preparedTimeTextView"
+        <LinearLayout
+          android:id="@+id/chooseCategoryLayout"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:text="Wprowadź czas przygotowania"/>
-        <EditText
-          android:id="@+id/preparedTimeEditText"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:ems="10"
-          android:inputType="time"/>
-        <TextView
-          android:id="@+id/cookTimeTextView"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:text="Wprowadź czas gotowania"/>
-        <EditText
-          android:id="@+id/cookTimeEditText"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:ems="10"
-          android:inputType="time"/>
-        <TextView
-          android:id="@+id/bakeTimeTextView"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:text="Wprowadź czas pieczenia"/>
-        <EditText
-          android:id="@+id/bakeTimeEditText"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:ems="10"
-          android:inputType="time"/>
-      </LinearLayout>
+          android:layout_below="@+id/first_space_layout"
+          android:orientation="vertical">
+          <TextView
+            android:id="@+id/categoryChooseTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/choose_category"
+            android:background="@color/blue_transparent"
+            android:textColor="@color/primary_text"
+            android:textSize="@dimen/edit_text_size"/>
+          <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:entries="@array/recipe_category_array"/>
+        </LinearLayout>
 
-      <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/timeLayout"
-        android:orientation="horizontal">
-        <Button
-          android:id="@+id/PreviousButton"
-          android:layout_width="wrap_content"
+        <LinearLayout
+          android:id="@+id/second_space_layout"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/space_layout_size"
+          android:layout_below="@+id/chooseCategoryLayout"
+          android:orientation="vertical">
+        </LinearLayout>
+
+        <LinearLayout
+          android:id="@+id/timeLayout"
+          android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_weight="0.5"
-          android:background="@drawable/buttons"
-          android:text="WSTECZ"/>
-        <Button
-          android:id="@+id/nextButton"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_weight="0.5"
-          android:background="@drawable/buttons"
-          android:text="DALEJ"/>
-      </LinearLayout>
-    </RelativeLayout>
-</ScrollView>
+          android:layout_below="@+id/second_space_layout"
+          android:orientation="vertical"
+          android:scrollbars="vertical">
+          <TextView
+            android:id="@+id/preparedTimeTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/input_prepare_time"
+            android:background="@color/blue_transparent"
+            android:textColor="@color/primary_text"
+            android:textSize="@dimen/edit_text_size"/>
+          <TextView
+            android:id="@+id/preparedTimeEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/add_time"
+            android:focusable="true"
+            android:textSize="@dimen/edit_text_size"/>
+          <TextView
+            android:id="@+id/cookTimeTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/input_cook_time"
+            android:background="@color/blue_transparent"
+            android:textColor="@color/primary_text"
+            android:textSize="@dimen/edit_text_size"/>
+          <TextView
+            android:id="@+id/cookTimeEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/add_time"
+            android:focusable="true"
+            android:textSize="@dimen/edit_text_size"/>
+          <TextView
+            android:id="@+id/bakeTimeTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/input_bake_time"
+            android:background="@color/blue_transparent"
+            android:textColor="@color/primary_text"
+            android:textSize="@dimen/edit_text_size"/>
+          <TextView
+            android:id="@+id/bakeTimeEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/add_time"
+            android:focusable="true"
+            android:textSize="@dimen/edit_text_size"/>
+        </LinearLayout>
+      </RelativeLayout>
+  </ScrollView>
+
+  <android.support.design.widget.FloatingActionButton
+    android:id="@+id/previousActionFab"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:layout_alignParentLeft="true"
+    android:clickable="true"
+    android:elevation="6dp"
+    android:tint="@android:color/white"
+    android:visibility="visible"
+    app:backgroundTint="@color/navigation_fab"
+    app:srcCompat="@mipmap/ic_skip_previous"/>
+
+  <android.support.design.widget.FloatingActionButton
+    android:id="@+id/nextActionFab"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:layout_alignParentRight="true"
+    android:clickable="true"
+    android:elevation="6dp"
+    android:tint="@android:color/white"
+    android:visibility="visible"
+    app:backgroundTint="@color/navigation_fab"
+    app:srcCompat="@mipmap/ic_skip_next"/>
+
+</RelativeLayout>

@@ -9,27 +9,20 @@
   android:background="@color/primary_light"
   tools:context=".add_recipe.add_recipe.add_ingredients.AddIngredientsActivityView">
 
-  <LinearLayout
-    android:id="@+id/titleLayout"
+  <android.support.v7.widget.Toolbar
+    android:id="@+id/toolbar_add_ingredient"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:background="@color/primary"
+    android:minHeight="?attr/actionBarSize"
+    app:titleTextColor="@android:color/black">
+  </android.support.v7.widget.Toolbar>
 
-    <TextView
-      android:id="@+id/titleTextView"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_weight="1"
-      android:gravity="center"
-      android:text="Dodawanie składników"
-      android:textColor="@color/primary_text"
-      android:textSize="30sp"/>
-  </LinearLayout>
   <ScrollView
     android:id="@+id/scrollViewAddIngredientLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_below="@id/titleLayout">
+    android:layout_below="@id/toolbar_add_ingredient">
 
     <LinearLayout
       android:id="@+id/addIngredientsLayout"
@@ -44,14 +37,38 @@
     android:id="@+id/addIngredientFab"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:layout_centerHorizontal="true"
     android:layout_alignParentBottom="true"
-    android:layout_alignParentEnd="true"
-    android:layout_marginBottom="25dp"
-    android:layout_marginEnd="25dp"
     android:visibility="visible"
     android:clickable="true"
     android:elevation="6dp"
     app:srcCompat="@android:drawable/ic_input_add"
     android:tint="@android:color/white"
     app:backgroundTint="@color/accent"/>
+
+  <android.support.design.widget.FloatingActionButton
+    android:id="@+id/previousActionFab"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:layout_alignParentLeft="true"
+    android:clickable="true"
+    android:elevation="6dp"
+    android:tint="@android:color/white"
+    android:visibility="visible"
+    app:backgroundTint="@color/navigation_fab"
+    app:srcCompat="@mipmap/ic_skip_previous"/>
+
+  <android.support.design.widget.FloatingActionButton
+    android:id="@+id/nextActionFab"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:layout_alignParentRight="true"
+    android:clickable="true"
+    android:elevation="6dp"
+    android:tint="@android:color/white"
+    android:visibility="visible"
+    app:backgroundTint="@color/navigation_fab"
+    app:srcCompat="@mipmap/ic_skip_next"/>
 </RelativeLayout>
