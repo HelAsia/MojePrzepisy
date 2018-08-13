@@ -78,8 +78,8 @@
   <string name="desserts">Deser</string>
   <string name="cakes">Ciasta</string>
   
-  <string name="add_recipe_title_step_one">Dodanie przepisu - krok 1 [główne informacje]</string>
-  <string name="add_recipe_title_step_two">Dodanie przepisu - krok 2 [składniki]</string>
+  <string name="add_recipe_title_step_one">Krok 1: Główne informacje</string>
+  <string name="add_recipe_title_step_two">Krok 2: Dodaj składniki</string>
 
   <string name="load_photo">Załaduj zdjęcie</string>
   <string name="choose_category">Wybierz kategorię przepisu</string>
@@ -91,6 +91,8 @@
   <string name="set_time">Ustaw</string>
 
   <string name="add_time">Dodaj czas</string>
+
+  <string name="rating_name">Ocena przepisu :   </string>
 
 
 </resources>

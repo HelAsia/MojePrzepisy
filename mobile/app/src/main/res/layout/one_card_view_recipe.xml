@@ -70,7 +70,7 @@
         <ImageView
           android:id="@+id/star_image_view"
           android:layout_width="30dp"
-          android:layout_height="30dp"
+          android:layout_height="wrap_content"
           android:src="@mipmap/ic_star"/>
 
         <ImageView
