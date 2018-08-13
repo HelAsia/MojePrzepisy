@@ -3,8 +3,72 @@
   xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/activity_add_steps_view"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
+  android:background="@color/primary_light"
   tools:context=".add_recipe.add_recipe.add_steps.AddStepsActivityView">
 
+  <android.support.v7.widget.Toolbar
+    android:id="@+id/toolbar_add_step"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/primary"
+    android:minHeight="?attr/actionBarSize"
+    app:titleTextColor="@android:color/black">
+  </android.support.v7.widget.Toolbar>
+
+  <ScrollView
+    android:id="@+id/scrollViewAddIngredientLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@id/toolbar_add_ingredient">
+
+    <LinearLayout
+      android:id="@+id/addsStepsLayout"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      android:orientation="vertical">
+
+    </LinearLayout>
+  </ScrollView>
+  <android.support.design.widget.FloatingActionButton
+    android:id="@+id/addStepFab"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_centerHorizontal="true"
+    android:layout_alignParentBottom="true"
+    android:visibility="visible"
+    android:clickable="true"
+    android:elevation="6dp"
+    app:srcCompat="@android:drawable/ic_input_add"
+    android:tint="@android:color/white"
+    app:backgroundTint="@color/accent"/>
+
+  <android.support.design.widget.FloatingActionButton
+    android:id="@+id/previousActionFab"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:layout_alignParentLeft="true"
+    android:clickable="true"
+    android:elevation="6dp"
+    android:tint="@android:color/white"
+    android:visibility="visible"
+    app:backgroundTint="@color/navigation_fab"
+    app:srcCompat="@mipmap/ic_skip_previous"/>
+
+  <android.support.design.widget.FloatingActionButton
+    android:id="@+id/nextActionFab"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:layout_alignParentRight="true"
+    android:clickable="true"
+    android:elevation="6dp"
+    android:tint="@android:color/white"
+    android:visibility="visible"
+    app:backgroundTint="@color/navigation_fab"
+    app:srcCompat="@mipmap/ic_skip_next"/>
 </RelativeLayout>

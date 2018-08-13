@@ -86,9 +86,9 @@ public class MainCardsPresenter implements MainCardsContract.Presenter,
   @Override
   public void setNavigationViewListener(NavigationView navigationView, boolean ifLogged) {
     if(ifLogged) {
-      cardsView.setNavigationViewListenerWithRegistriation(navigationView);
+      cardsView.setNavigationViewListenerWithRegistration(navigationView);
     }else {
-      cardsView.setNavigationViewListenerWithoutRegistriation(navigationView);
+      cardsView.setNavigationViewListenerWithoutRegistration(navigationView);
     }
   }
 

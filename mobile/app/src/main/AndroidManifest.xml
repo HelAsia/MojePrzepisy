@@ -45,6 +45,8 @@
     </activity>
     <activity android:name=".add_recipe.add_recipe.add_steps.AddStepsActivityView">
     </activity>
+    <activity android:name=".add_recipe.add_recipe.display_all_recipe_elements.DisplayAllRecipeElementsActivityView">
+    </activity>
   </application>
 
 </manifest>

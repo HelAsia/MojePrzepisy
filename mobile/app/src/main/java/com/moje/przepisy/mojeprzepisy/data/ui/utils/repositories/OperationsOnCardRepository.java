@@ -3,8 +3,8 @@ package com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories;
 import android.content.Context;
 import android.util.Log;
 import com.moje.przepisy.mojeprzepisy.data.model.OneRecipeCard;
+import com.moje.przepisy.mojeprzepisy.data.network.CardAPI;
 import com.moje.przepisy.mojeprzepisy.data.network.RetrofitSingleton;
-import com.moje.przepisy.mojeprzepisy.data.network.UserAPI;
 import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -14,24 +14,24 @@ import retrofit2.Retrofit;
 public class OperationsOnCardRepository implements OperationsOnCardRepositoryInterface {
 
   private Retrofit retrofit;
-  private UserAPI userAPI;
+  private CardAPI cardAPI;
 
   public OperationsOnCardRepository(Context context) {
     this.retrofit = RetrofitSingleton.getRetrofitInstance(context);
-    this.userAPI = retrofit.create(UserAPI.class);
+    this.cardAPI = retrofit.create(CardAPI.class);
   }
 
   @Override
   public void getCardsSortedByChoseMethod(final OnCardsListener cardsListener, String method) {
-    Call<List<OneRecipeCard>> resp = userAPI.getCards();
+    Call<List<OneRecipeCard>> resp = cardAPI.getCards();
     if (method.equals("default")){
-      resp = userAPI.getCards();
+      resp = cardAPI.getCards();
     }else if (method.equals("alphabetically")){
-      resp = userAPI.getCardsSortedAlphabetically();
+      resp = cardAPI.getCardsSortedAlphabetically();
     }else if (method.equals("lastAdded")){
-      resp = userAPI.getCardsSortedByLastAdded();
+      resp = cardAPI.getCardsSortedByLastAdded();
     }else if (method.equals("highestRated")){
-      resp = userAPI.getCardsSortedByHighestRated();
+      resp = cardAPI.getCardsSortedByHighestRated();
     }
     resp.enqueue(new Callback<List<OneRecipeCard>>() {
       @Override
@@ -58,7 +58,7 @@ public class OperationsOnCardRepository implements OperationsOnCardRepositoryInt
   @Override
   public void getCardsSortedBySearchedQuery(final OnCardsListener cardsListener, String recipeName) {
     OneRecipeCard oneRecipeCard = new OneRecipeCard(recipeName);
-    Call<List<OneRecipeCard>> resp = userAPI.getCardsSortedBySearchedQuery(oneRecipeCard);
+    Call<List<OneRecipeCard>> resp = cardAPI.getCardsSortedBySearchedQuery(oneRecipeCard);
 
     resp.enqueue(new Callback<List<OneRecipeCard>>() {
       @Override

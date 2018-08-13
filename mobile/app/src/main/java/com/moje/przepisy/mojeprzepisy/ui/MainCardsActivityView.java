@@ -47,7 +47,7 @@ public class MainCardsActivityView extends AppCompatActivity implements MainCard
     setContentView(R.layout.activity_main_cards);
     context = getApplicationContext();
 
-    presenter = new MainCardsPresenter(this,new OperationsOnCardRepository(getApplicationContext()));
+    presenter = new MainCardsPresenter(this,new OperationsOnCardRepository(context));
     presenter.getSortedMethod(context);
     setToolbar();
     presenter.setDrawerLayoutListener(getDrawerLayout());
@@ -98,7 +98,7 @@ public class MainCardsActivityView extends AppCompatActivity implements MainCard
   }
 
   @Override
-  public void setNavigationViewListenerWithRegistriation(NavigationView navigationView) {
+  public void setNavigationViewListenerWithRegistration(NavigationView navigationView) {
     navigationView.getMenu().clear();
     navigationView.inflateMenu(R.menu.drawer_registered_menu);
     navigationView.setNavigationItemSelectedListener(
@@ -135,7 +135,7 @@ public class MainCardsActivityView extends AppCompatActivity implements MainCard
   }
 
   @Override
-  public void setNavigationViewListenerWithoutRegistriation(NavigationView navigationView) {
+  public void setNavigationViewListenerWithoutRegistration(NavigationView navigationView) {
     navigationView.getMenu().clear();
     navigationView.inflateMenu(R.menu.drawer_no_registered_menu);
     navigationView.setNavigationItemSelectedListener(

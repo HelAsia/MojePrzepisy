@@ -21,9 +21,9 @@ public interface MainCardsContract {
 
     void setToolbar();
 
-    void setNavigationViewListenerWithRegistriation(NavigationView navigationView);
+    void setNavigationViewListenerWithRegistration(NavigationView navigationView);
 
-    void setNavigationViewListenerWithoutRegistriation(NavigationView navigationView);
+    void setNavigationViewListenerWithoutRegistration(NavigationView navigationView);
   }
 
   interface Presenter {

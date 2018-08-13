@@ -1,5 +1,6 @@
 package com.moje.przepisy.mojeprzepisy.add_recipe.add_recipe.add_ingredients;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import com.moje.przepisy.mojeprzepisy.R;
 import com.moje.przepisy.mojeprzepisy.add_recipe.add_recipe.add_main_recipe_page.AddRecipeActivityView;
 import com.moje.przepisy.mojeprzepisy.add_recipe.add_recipe.add_steps.AddStepsActivityView;
 import com.moje.przepisy.mojeprzepisy.data.model.IngredientElementsId;
+import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.RecipeRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -24,9 +26,11 @@ public class AddIngredientsActivityView extends AppCompatActivity implements Vie
   @BindView(R.id.addIngredientFab) FloatingActionButton addIngredientFab;
   @BindView(R.id.previousActionFab) FloatingActionButton previousActionFab;
   @BindView(R.id.nextActionFab) FloatingActionButton nextActionFab;
+  Context context;
+  private AddIngredientsContract.Presenter presenter;
   String backgroundColorString = "#CCFFCC";
   int[] layoutElementsArray = new int[6];
-  List<ImageView> imageViewList = new ArrayList<>();
+  List<ImageView> deleteImageViewsList = new ArrayList<>();
   List<IngredientElementsId> ingredientElementsIdList = new ArrayList<>();
   Random randomNumber = new Random();
   LinearLayout linearLayoutOneIngredient;
@@ -35,7 +39,10 @@ public class AddIngredientsActivityView extends AppCompatActivity implements Vie
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_add_ingredients_view);
+    context = getApplicationContext();
     ButterKnife.bind(this);
+
+    presenter = new AddIngredientsPresenter(this, RecipeRepository())
 
     linearLayoutOneIngredient = (LinearLayout) findViewById(
         R.id.addIngredientsLayout);
@@ -142,12 +149,12 @@ public class AddIngredientsActivityView extends AppCompatActivity implements Vie
 
   public void setDeleteImageViews(List<IngredientElementsId> ingredientElementsIdList){
     for (int i = 0; i < ingredientElementsIdList.size(); i++){
-      imageViewList.add((ImageView) findViewById(ingredientElementsIdList.get(i).getDeleteImageViewId()));
+      deleteImageViewsList.add((ImageView) findViewById(ingredientElementsIdList.get(i).getDeleteImageViewId()));
     }
   }
 
   public void setDeleteImageViewListener(){
-    for(ImageView oneImageView : imageViewList){
+    for(ImageView oneImageView : deleteImageViewsList){
       oneImageView.setOnClickListener(this);
     }
   }
