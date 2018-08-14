@@ -11,16 +11,17 @@ public interface AddIngredientsContract {
 
     void setToolbar();
 
-    void setIngredientElementsIdList(List<IngredientElementsId> ingredientElementsIdList);
-
     ViewGroup getInsideChildElementView(int childId);
 
   }
 
   interface Presenter {
-    int checkPositionOfLayoutToRemove(int elementId, List<IngredientElementsId> ingredientElementsIdList);
+
+    int getPositionOfLayoutToRemove(int elementId, List<IngredientElementsId> ingredientElementsIdList);
 
     int generateViewId();
+
+    void setChildId(android.view.View child);
 
     void setBackground(android.view.View child);
 
@@ -31,6 +32,10 @@ public interface AddIngredientsContract {
     void getInsideChildElementsToArray(ViewGroup insideChildElementView);
 
     IngredientElementsId getLayoutForIngredient( android.view.View child);
+
+    void addLayoutToElementsIdList(android.view.View child);
+
+    List<IngredientElementsId> getIngredientElementsIdList();
 
   }
 

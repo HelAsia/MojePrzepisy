@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import com.moje.przepisy.mojeprzepisy.data.model.IngredientElementsId;
 import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.RecipeRepository;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -14,14 +15,15 @@ public class AddIngredientsPresenter implements AddIngredientsContract.Presenter
   private AddIngredientsContract.View ingredientsView;
   private String backgroundColorString = "#CCFFCC";
   private Random randomNumber = new Random();
-  int[] layoutElementsArray = new int[6];
+  private int[] layoutElementsArray = new int[6];
+  private List<IngredientElementsId> ingredientElementsIdList = new ArrayList<>();
 
   public AddIngredientsPresenter(AddIngredientsContract.View ingredientsView, RecipeRepository recipeRepository){
     this.ingredientsView = ingredientsView;
     this.recipeRepository = recipeRepository;
   }
 
-  public int checkPositionOfLayoutToRemove(int elementId, List<IngredientElementsId> ingredientElementsIdList){
+  public int getPositionOfLayoutToRemove(int elementId, List<IngredientElementsId> ingredientElementsIdList){
     for (int i = 0; i < ingredientElementsIdList.size(); i++){
       if (ingredientElementsIdList.get(i).getDeleteImageViewId() == elementId){
         return i;
@@ -55,10 +57,12 @@ public class AddIngredientsPresenter implements AddIngredientsContract.Presenter
     }
   }
 
-  public void setIngredientElementsIdList(List<IngredientElementsId> ingredientElementsIdList){
-    if(ingredientsView != null){
-      ingredientsView.setIngredientElementsIdList(ingredientElementsIdList);
-    }
+  public List<IngredientElementsId> getIngredientElementsIdList(){
+    return ingredientElementsIdList;
+  }
+
+  public void setChildId(View child){
+    child.setId(generateViewId());
   }
 
   public void getElementsIdToArray(ViewGroup childElementsView){
@@ -87,6 +91,10 @@ public class AddIngredientsPresenter implements AddIngredientsContract.Presenter
     IngredientElementsId layoutForIngredient = new IngredientElementsId(child.getId(), this.layoutElementsArray[0],
         this.layoutElementsArray[1], this.layoutElementsArray[2], this.layoutElementsArray[3], this.layoutElementsArray[4], this.layoutElementsArray[5]);
     return layoutForIngredient;
+  }
+
+  public void addLayoutToElementsIdList(View child){
+    ingredientElementsIdList.add(getLayoutForIngredient(child));
   }
 }
 
