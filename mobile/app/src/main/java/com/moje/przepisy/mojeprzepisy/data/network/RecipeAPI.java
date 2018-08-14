@@ -16,7 +16,6 @@ import retrofit2.http.Path;
 
 public interface RecipeAPI {
 
-
   @GET("recipe/{recipeId}")
   Call<List<Recipe>> getRecipe(@Path("recipeId") int recipeId);
 

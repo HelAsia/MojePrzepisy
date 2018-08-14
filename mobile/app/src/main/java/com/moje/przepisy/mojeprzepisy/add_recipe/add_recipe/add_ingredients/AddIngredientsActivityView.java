@@ -22,17 +22,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class AddIngredientsActivityView extends AppCompatActivity implements View.OnClickListener {
+public class AddIngredientsActivityView extends AppCompatActivity implements AddIngredientsContract.View,
+    View.OnClickListener {
   @BindView(R.id.addIngredientFab) FloatingActionButton addIngredientFab;
   @BindView(R.id.previousActionFab) FloatingActionButton previousActionFab;
   @BindView(R.id.nextActionFab) FloatingActionButton nextActionFab;
-  Context context;
   private AddIngredientsContract.Presenter presenter;
-  String backgroundColorString = "#CCFFCC";
-  int[] layoutElementsArray = new int[6];
+  Context context;
   List<ImageView> deleteImageViewsList = new ArrayList<>();
   List<IngredientElementsId> ingredientElementsIdList = new ArrayList<>();
-  Random randomNumber = new Random();
+
   LinearLayout linearLayoutOneIngredient;
 
   @Override
@@ -42,10 +41,9 @@ public class AddIngredientsActivityView extends AppCompatActivity implements Vie
     context = getApplicationContext();
     ButterKnife.bind(this);
 
-    presenter = new AddIngredientsPresenter(this, RecipeRepository())
+    presenter = new AddIngredientsPresenter(this, new RecipeRepository(context));
 
-    linearLayoutOneIngredient = (LinearLayout) findViewById(
-        R.id.addIngredientsLayout);
+    linearLayoutOneIngredient = (LinearLayout) findViewById(R.id.addIngredientsLayout);
 
     addIngredientFab.setOnClickListener(this);
     previousActionFab.setOnClickListener(this);
@@ -58,16 +56,15 @@ public class AddIngredientsActivityView extends AppCompatActivity implements Vie
   public void onClick(View view){
     if(view.getId() == R.id.addIngredientFab){
       View child = getLayoutInflater().inflate(R.layout.one_ingredient_layout, null);
-      child.setId(generateViewId());
+      child.setId(presenter.generateViewId());
 
-      setBackground(child);
+      presenter.setBackground(child);
       linearLayoutOneIngredient.addView(child);
-      getElementsIdToArray(child);
 
-      IngredientElementsId layoutForIngredient = new IngredientElementsId(child.getId(), this.layoutElementsArray[0],
-          this.layoutElementsArray[1], this.layoutElementsArray[2], this.layoutElementsArray[3], this.layoutElementsArray[4], this.layoutElementsArray[5]);
+      ViewGroup childElementsView = getChildElementView(child);
+      presenter.getElementsIdToArray(childElementsView);
 
-      ingredientElementsIdList.add(layoutForIngredient);
+      ingredientElementsIdList.add(presenter.getLayoutForIngredient(child));
       setDeleteImageViews(ingredientElementsIdList);
       setDeleteImageViewListener();
 
@@ -78,7 +75,7 @@ public class AddIngredientsActivityView extends AppCompatActivity implements Vie
     }else {
       View myViewToRemove = findViewById(view.getId());
 
-      int position = checkPositionOfLayoutToRemove(view.getId(), ingredientElementsIdList);
+      int position = presenter.checkPositionOfLayoutToRemove(view.getId(), ingredientElementsIdList);
 
       ViewGroup firstLineLayoutParentViewToRemove = (ViewGroup) myViewToRemove.getParent();
       ViewGroup firstAndSecondLineLayoutParentParentViewToRemove = (ViewGroup) firstLineLayoutParentViewToRemove.getParent();
@@ -86,7 +83,7 @@ public class AddIngredientsActivityView extends AppCompatActivity implements Vie
       linearLayoutOneIngredient.removeView(firstAndSecondLineLayoutParentParentViewToRemove);
       ingredientElementsIdList.remove(position);
 
-      setIngredientBackgroundAfterDelete();
+      presenter.setIngredientBackgroundAfterDelete(linearLayoutOneIngredient);
     }
   }
 
@@ -96,55 +93,16 @@ public class AddIngredientsActivityView extends AppCompatActivity implements Vie
     setSupportActionBar(toolbar);
   }
 
-  public int checkPositionOfLayoutToRemove(int elementId, List<IngredientElementsId> ingredientElementsIdList){
-    for (int i = 0; i < ingredientElementsIdList.size(); i++){
-      if (ingredientElementsIdList.get(i).getDeleteImageViewId() == elementId){
-        return i;
-      }
-    }
-    return -1;
+  public void setIngredientElementsIdList(List<IngredientElementsId> ingredientElementsIdList){
+    this.ingredientElementsIdList = ingredientElementsIdList;
   }
 
-  public void setBackground(View child){
-    if(backgroundColorString.equals("#ffffff")){
-      this.backgroundColorString = "#CCFFCC";
-    }else if(backgroundColorString.equals("#CCFFCC")){
-      this.backgroundColorString = "#ffffff";
-    }
-    child.setBackgroundColor(Color.parseColor(backgroundColorString));
+  public ViewGroup getChildElementView(View child){
+    return (ViewGroup) findViewById(child.getId());
   }
 
-  public void setIngredientBackgroundAfterDelete(){
-    for(int i = 0; i < linearLayoutOneIngredient.getChildCount(); i++){
-      View linearLayoutOneIngredientView = linearLayoutOneIngredient.getChildAt(i);
-      if(i % 2 == 0) {
-        this.backgroundColorString = "#ffffff";
-      }else if(i % 2 == 1){
-        this.backgroundColorString = "#CCFFCC";
-      }
-      linearLayoutOneIngredientView.setBackgroundColor(Color.parseColor( backgroundColorString));
-    }
-  }
-
-  public void getElementsIdToArray(View child){
-    ViewGroup childElementsView = (ViewGroup) findViewById(child.getId());
-    for(int i = 0; i < childElementsView.getChildCount(); i++){
-      View childOneElementView = childElementsView.getChildAt(i);
-      childOneElementView.setId(generateViewId());
-      int childId = childOneElementView.getId();
-      if (i == 0){
-        this.layoutElementsArray[0] = childId;
-        ViewGroup insideChildElementView = (ViewGroup) findViewById(childId);
-        for(int j = 0; j < insideChildElementView.getChildCount(); j++){
-          View insideChildOneElementView = insideChildElementView.getChildAt(j);
-          insideChildOneElementView.setId(generateViewId());
-          int insideChildId = insideChildOneElementView.getId();
-          this.layoutElementsArray[j+1] = insideChildId;
-        }
-      }if (i == 1){
-        this.layoutElementsArray[5] = childId;
-      }
-    }
+  public ViewGroup getInsideChildElementView(int childId){
+    return (ViewGroup) findViewById(childId);
   }
 
   public void setDeleteImageViews(List<IngredientElementsId> ingredientElementsIdList){
@@ -157,10 +115,6 @@ public class AddIngredientsActivityView extends AppCompatActivity implements Vie
     for(ImageView oneImageView : deleteImageViewsList){
       oneImageView.setOnClickListener(this);
     }
-  }
-
-  public int generateViewId(){
-     return randomNumber.nextInt((1000000000 - 100 + 1) + 100);
   }
 
   public void navigateToPreviousPage(){
