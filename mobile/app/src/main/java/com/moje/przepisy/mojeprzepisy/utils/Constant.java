@@ -14,6 +14,10 @@ public class Constant {
 
  public static final String PREF_SORTED_METHOD = "PREF_SORTED_METHOD";
 
+ public static final String PREF_INGREDIENT_ID = "PREF_INGREDIENT_ID";
+
+  public static final String PREF_INGREDIENT= "PREF_INGREDIENT";
+
 
 }
 
