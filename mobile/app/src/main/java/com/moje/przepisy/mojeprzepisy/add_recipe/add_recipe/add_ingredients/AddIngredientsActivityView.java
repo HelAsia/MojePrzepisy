@@ -51,23 +51,23 @@ public class AddIngredientsActivityView extends AppCompatActivity implements Add
   public void onClick(View view){
     if(view.getId() == R.id.addIngredientFab){
       View child = getLayoutInflater().inflate(R.layout.one_ingredient_layout, null);
-      presenter.setChildId(child);
 
-      presenter.setBackground(child);
+      presenter.setChildWithIdAndBackground(child);
       linearLayoutOneIngredient.addView(child);
 
-      ViewGroup childElementsView = getChildElementView(child);
-      presenter.getElementsIdToArray(childElementsView);
+      int[] elementsIdArray = presenter.getElementsIdToArray(getChildElementView(child));
 
-      presenter.addLayoutToElementsIdList(child);
+      presenter.addLayoutToElementsIdList(child, elementsIdArray);
 
       setDeleteImageViews(presenter.getIngredientElementsIdList());
       setDeleteImageViewListener();
 
     }else if(view.getId() == R.id.previousActionFab){
       navigateToPreviousPage();
+
     }else if((view.getId() == R.id.nextActionFab)) {
       navigateToNextPage();
+
     }else {
       View myViewToRemove = findViewById(view.getId());
 
@@ -78,7 +78,6 @@ public class AddIngredientsActivityView extends AppCompatActivity implements Add
 
       linearLayoutOneIngredient.removeView(firstAndSecondLineLayoutParentParentViewToRemove);
       presenter.getIngredientElementsIdList().remove(position);
-
       presenter.setIngredientBackgroundAfterDelete(linearLayoutOneIngredient);
     }
   }
@@ -118,5 +117,4 @@ public class AddIngredientsActivityView extends AppCompatActivity implements Add
     Intent intent = new Intent(AddIngredientsActivityView.this, AddStepsActivityView.class);
     startActivity(intent);
   }
-
 }

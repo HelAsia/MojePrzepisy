@@ -17,7 +17,8 @@ import com.moje.przepisy.mojeprzepisy.add_recipe.add_recipe.add_steps.AddStepsAc
 import com.moje.przepisy.mojeprzepisy.ui.MainCardsActivityView;
 import com.moje.przepisy.mojeprzepisy.utils.TimeSetDialog;
 
-public class AddRecipeActivityView extends AppCompatActivity implements View.OnClickListener {
+public class AddRecipeActivityView extends AppCompatActivity implements AddRecipeContract.View,
+    View.OnClickListener {
   @BindView(R.id.previousActionFab) FloatingActionButton previousActionFab;
   @BindView(R.id.nextActionFab) FloatingActionButton nextActionFab;
   @BindView(R.id.preparedTimeEditText) TextView preparedTimeEditText;

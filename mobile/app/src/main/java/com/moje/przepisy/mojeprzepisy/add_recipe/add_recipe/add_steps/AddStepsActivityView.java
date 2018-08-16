@@ -1,5 +1,6 @@
 package com.moje.przepisy.mojeprzepisy.add_recipe.add_recipe.add_steps;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -16,36 +17,29 @@ import com.moje.przepisy.mojeprzepisy.R;
 import com.moje.przepisy.mojeprzepisy.add_recipe.add_recipe.add_ingredients.AddIngredientsActivityView;
 import com.moje.przepisy.mojeprzepisy.add_recipe.add_recipe.display_all_recipe_elements.DisplayAllRecipeElementsActivityView;
 import com.moje.przepisy.mojeprzepisy.data.model.StepElementsId;
+import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.RecipeRepository;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
-public class AddStepsActivityView extends AppCompatActivity implements View.OnClickListener {
+public class AddStepsActivityView extends AppCompatActivity implements AddStepContract.View,
+    View.OnClickListener {
   @BindView(R.id.addStepFab) FloatingActionButton addStepFab;
   @BindView(R.id.previousActionFab) FloatingActionButton previousActionFab;
   @BindView(R.id.nextActionFab) FloatingActionButton nextActionFab;
-  String backgroundColorString = "#CCFFCC";
-  int[] layoutElementsArray = new int[12];
+  @BindView(R.id.addsStepsLayout) LinearLayout linearLayoutOneStep;
+  private AddStepContract.Presenter presenter;
+  Context context;
   List<ImageView> deleteImageViewsList = new ArrayList<>();
-  List<StepElementsId> stepElementsIdList = new ArrayList<>();
-  Random randomNumber = new Random();
-  LinearLayout linearLayoutOneStep;
-
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_add_steps_view);
+
+    context = getApplicationContext();
     ButterKnife.bind(this);
 
-    linearLayoutOneStep = (LinearLayout) findViewById(
-        R.id.addsStepsLayout);
-
-
-    for(int i = 0 ; i < stepElementsIdList.size(); i++){
-      View child = findViewById(stepElementsIdList.get(i).getLayoutId());
-      linearLayoutOneStep.addView(child);
-    }
+    presenter = new AddStepPresenter(this, new RecipeRepository(context));
 
     addStepFab.setOnClickListener(this);
     previousActionFab.setOnClickListener(this);
@@ -58,37 +52,34 @@ public class AddStepsActivityView extends AppCompatActivity implements View.OnCl
   public void onClick(View view) {
     if(view.getId() == R.id.addStepFab){
       View child = getLayoutInflater().inflate(R.layout.one_step_layout, null);
-      child.setId(generateViewId());
 
-      setBackground(child);
+      presenter.setChildWithIdAndBackgroundAndAddToList(child);
       linearLayoutOneStep.addView(child);
-      getElementsIdToArray(child);
 
-      StepElementsId layoutForSteps = new StepElementsId(child.getId(), this.layoutElementsArray[0],
-          this.layoutElementsArray[1], this.layoutElementsArray[2], this.layoutElementsArray[3], this.layoutElementsArray[4],
-          this.layoutElementsArray[5], this.layoutElementsArray[6], this.layoutElementsArray[7], this.layoutElementsArray[8],
-          this.layoutElementsArray[9], this.layoutElementsArray[10], this.layoutElementsArray[11]);
+      int[] elementsIdArray = presenter.getElementsIdToArray(getChildElementView(child));
 
-      stepElementsIdList.add(layoutForSteps);
-      setDeleteImageViews(stepElementsIdList);
+      presenter.addLayoutToElementsIdList(child, elementsIdArray);
+
+      setDeleteImageViews(presenter.getStepElementsIdList());
       setDeleteImageViewListener();
 
     }else if(view.getId() == R.id.previousActionFab){
       navigateToPreviousPage();
+
     }else if((view.getId() == R.id.nextActionFab)) {
       navigateToNextPage();
+
     }else {
       View myViewToRemove = findViewById(view.getId());
 
-      int position = checkPositionOfLayoutToRemove(view.getId(), stepElementsIdList);
+      int position = presenter.getPositionOfLayoutToRemove(view.getId(), presenter.getStepElementsIdList());
 
       ViewGroup firstLineLayoutParentViewToRemove = (ViewGroup) myViewToRemove.getParent();
       ViewGroup firstAndSecondLineLayoutParentParentViewToRemove = (ViewGroup) firstLineLayoutParentViewToRemove.getParent();
 
       linearLayoutOneStep.removeView(firstAndSecondLineLayoutParentParentViewToRemove);
-      stepElementsIdList.remove(position);
-
-      setIngredientBackgroundAfterDelete();
+      presenter.getStepElementsIdList().remove(position);
+      presenter.setIngredientBackgroundAfterDelete(linearLayoutOneStep);
     }
   }
 
@@ -98,73 +89,12 @@ public class AddStepsActivityView extends AppCompatActivity implements View.OnCl
     setSupportActionBar(toolbar);
   }
 
-  public int checkPositionOfLayoutToRemove(int elementId, List<StepElementsId> stepElementsIdsList){
-    for (int i = 0; i < stepElementsIdsList.size(); i++){
-      if (stepElementsIdsList.get(i).getDeleteImageViewId() == elementId){
-        return i;
-      }
-    }
-    return -1;
+  public ViewGroup getChildElementView(View child){
+    return (ViewGroup) findViewById(child.getId());
   }
 
-  public void setBackground(View child){
-    if(backgroundColorString.equals("#ffffff")){
-      this.backgroundColorString = "#CCFFCC";
-    }else if(backgroundColorString.equals("#CCFFCC")){
-      this.backgroundColorString = "#ffffff";
-    }
-    child.setBackgroundColor(Color.parseColor(backgroundColorString));
-  }
-
-  public void setIngredientBackgroundAfterDelete(){
-    for(int i = 0; i < linearLayoutOneStep.getChildCount(); i++){
-      View linearLayoutOneStepView = linearLayoutOneStep.getChildAt(i);
-      if(i % 2 == 0) {
-        this.backgroundColorString = "#ffffff";
-      }else if(i % 2 == 1){
-        this.backgroundColorString = "#CCFFCC";
-      }
-      linearLayoutOneStepView.setBackgroundColor(Color.parseColor( backgroundColorString));
-    }
-  }
-
-  public void getElementsIdToArray(View child){
-    ViewGroup childElementsView = (ViewGroup) findViewById(child.getId());
-    for(int i = 0; i < childElementsView.getChildCount(); i++){
-      View childOneElementView = childElementsView.getChildAt(i);
-      childOneElementView.setId(generateViewId());
-      int childId = childOneElementView.getId();
-      if (i == 0){
-        this.layoutElementsArray[0] = childId;
-        ViewGroup insideChildElementView = (ViewGroup) findViewById(childId);
-        for(int j = 0; j < insideChildElementView.getChildCount(); j++){
-          View insideChildOneElementView = insideChildElementView.getChildAt(j);
-          insideChildOneElementView.setId(generateViewId());
-          int insideChildId = insideChildOneElementView.getId();
-          this.layoutElementsArray[j+1] = insideChildId;
-        }
-      }if (i == 1){
-        this.layoutElementsArray[4] = childId;
-      }if (i == 2){
-        this.layoutElementsArray[5] = childId;
-        ViewGroup insideChildElementView = (ViewGroup) findViewById(childId);
-        for(int j = 0; j < insideChildElementView.getChildCount(); j++){
-          View insideChildOneElementView = insideChildElementView.getChildAt(j);
-          insideChildOneElementView.setId(generateViewId());
-          int insideChildId = insideChildOneElementView.getId();
-          this.layoutElementsArray[j+6] = insideChildId;
-          if(j == 3){
-            ViewGroup doubleInsideChildElementView = (ViewGroup) findViewById(insideChildId);
-            for(int k = 0; k < doubleInsideChildElementView.getChildCount(); k++){
-              View doubleInsideChildOneElementView = doubleInsideChildElementView.getChildAt(k);
-              doubleInsideChildOneElementView.setId(generateViewId());
-              int doubleInsideChildId = doubleInsideChildOneElementView.getId();
-              this.layoutElementsArray[k+9] = doubleInsideChildId;
-            }
-          }
-        }
-      }
-    }
+  public ViewGroup getInsideChildElementView(int childId){
+    return (ViewGroup) findViewById(childId);
   }
 
   public void setDeleteImageViews(List<StepElementsId> stepElementsIds){
@@ -173,14 +103,10 @@ public class AddStepsActivityView extends AppCompatActivity implements View.OnCl
     }
   }
 
-  public void setDeleteImageViewListener(){
-    for(ImageView oneImageView : deleteImageViewsList){
+  public void setDeleteImageViewListener() {
+    for (ImageView oneImageView : deleteImageViewsList) {
       oneImageView.setOnClickListener(this);
     }
-  }
-
-  public int generateViewId(){
-    return randomNumber.nextInt((1000000000 - 100 + 1) + 100);
   }
 
   public void navigateToPreviousPage(){

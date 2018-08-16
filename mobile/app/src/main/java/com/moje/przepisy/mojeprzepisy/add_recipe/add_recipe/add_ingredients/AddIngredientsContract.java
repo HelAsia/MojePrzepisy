@@ -27,15 +27,15 @@ public interface AddIngredientsContract {
 
     void setIngredientBackgroundAfterDelete(LinearLayout linearLayoutOneIngredient);
 
-    void getElementsIdToArray(ViewGroup childElementsView);
+    int[] getElementsIdToArray(ViewGroup childElementsView);
 
     void getInsideChildElementsToArray(ViewGroup insideChildElementView);
 
-    IngredientElementsId getLayoutForIngredient( android.view.View child);
-
-    void addLayoutToElementsIdList(android.view.View child);
+    void addLayoutToElementsIdList(android.view.View child, int[] layoutElementsArray);
 
     List<IngredientElementsId> getIngredientElementsIdList();
+
+    void setChildWithIdAndBackground(android.view.View child);
 
   }
 

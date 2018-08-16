@@ -65,7 +65,7 @@ public class AddIngredientsPresenter implements AddIngredientsContract.Presenter
     child.setId(generateViewId());
   }
 
-  public void getElementsIdToArray(ViewGroup childElementsView){
+  public int[] getElementsIdToArray(ViewGroup childElementsView){
     for(int childNumber = 0; childNumber < childElementsView.getChildCount(); childNumber++){
       View childOneElementView = childElementsView.getChildAt(childNumber);
       childOneElementView.setId(generateViewId());
@@ -77,24 +77,26 @@ public class AddIngredientsPresenter implements AddIngredientsContract.Presenter
         this.layoutElementsArray[5] = childId;
       }
     }
+    return this.layoutElementsArray;
   }
   public void getInsideChildElementsToArray(ViewGroup insideChildElementView){
     for(int insideChildNumber = 0; insideChildNumber < insideChildElementView.getChildCount(); insideChildNumber++){
       View insideChildOneElementView = insideChildElementView.getChildAt(insideChildNumber);
       insideChildOneElementView.setId(generateViewId());
       int insideChildId = insideChildOneElementView.getId();
-      this.layoutElementsArray[insideChildNumber+1] = insideChildId;
+      this.layoutElementsArray[insideChildNumber + 1] = insideChildId;
     }
   }
 
-  public IngredientElementsId getLayoutForIngredient(View child){
+  public void addLayoutToElementsIdList(View child, int[] layoutElementsArray){
     IngredientElementsId layoutForIngredient = new IngredientElementsId(child.getId(), this.layoutElementsArray[0],
         this.layoutElementsArray[1], this.layoutElementsArray[2], this.layoutElementsArray[3], this.layoutElementsArray[4], this.layoutElementsArray[5]);
-    return layoutForIngredient;
+    ingredientElementsIdList.add(layoutForIngredient);
   }
 
-  public void addLayoutToElementsIdList(View child){
-    ingredientElementsIdList.add(getLayoutForIngredient(child));
+  public void setChildWithIdAndBackground(View child){
+    setChildId(child);
+    setBackground(child);
   }
 }
 
