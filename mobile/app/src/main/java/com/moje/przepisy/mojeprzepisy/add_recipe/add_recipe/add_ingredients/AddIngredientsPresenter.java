@@ -70,6 +70,11 @@ public class AddIngredientsPresenter implements AddIngredientsContract.Presenter
     return ingredientElementsIdList;
   }
 
+  @Override
+  public void setIngredientElementsIdList(List<IngredientElementsId> ingredientElementsIdList) {
+    this.ingredientElementsIdList = ingredientElementsIdList;
+  }
+
   public void setChildId(View child){
     child.setId(generateViewId());
   }
@@ -135,7 +140,7 @@ public class AddIngredientsPresenter implements AddIngredientsContract.Presenter
   }
 
   @Override
-  public void deletePojoIdListFromPreferences(String jsonList, Context context) {
+  public void deletePojoIdListFromPreferences(Context context) {
     SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
     editor.remove(Constant.PREF_INGREDIENT_ID);
     editor.apply();
@@ -143,7 +148,7 @@ public class AddIngredientsPresenter implements AddIngredientsContract.Presenter
   }
 
   @Override
-  public void deletePojoListFromPreferences(String jsonList, Context context) {
+  public void deletePojoListFromPreferences(Context context) {
     SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
     editor.remove(Constant.PREF_INGREDIENT);
     editor.apply();
@@ -168,10 +173,14 @@ public class AddIngredientsPresenter implements AddIngredientsContract.Presenter
 
   @Override
   public List<Ingredient> getIngredientListAfterChangeScreen(String jsonList) {
-    Type type = new TypeToken<List<Ingredient>>(){}.getType();
+    Type type = new TypeToken<List<Ingredient>>() {}.getType();
     return gson.fromJson(jsonList, type);
   }
 
-
+  public void setChildIdAfterChangeScreen(View child, List<IngredientElementsId> ingredientElementsIdList){
+    for(IngredientElementsId ingredientElementsId : ingredientElementsIdList){
+      child.setId(ingredientElementsId.getLayoutId());
+    }
+  }
 }
 

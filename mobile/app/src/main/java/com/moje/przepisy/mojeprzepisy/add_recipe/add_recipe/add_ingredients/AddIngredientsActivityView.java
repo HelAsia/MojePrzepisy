@@ -45,6 +45,49 @@ public class AddIngredientsActivityView extends AppCompatActivity implements Add
     nextActionFab.setOnClickListener(this);
 
     setToolbar();
+
+    if(presenter.getPojoIdListFromPreferences(context) != null){
+      List<IngredientElementsId> ingredientElementsIdList = presenter.getIngredientElementsIdListAfterChangeScreen(presenter.getPojoIdListFromPreferences(context));
+      presenter.setIngredientElementsIdList(ingredientElementsIdList);
+      for(IngredientElementsId ingredientElementsId : ingredientElementsIdList){
+        View child = getLayoutInflater().inflate(R.layout.one_ingredient_layout, null);
+        child.setId(ingredientElementsId.getLayoutId());
+        presenter.setBackground(child);
+        linearLayoutOneIngredient.addView(child);
+
+        ViewGroup childElementsView = getChildElementView(child);
+        for(int childNumber = 0; childNumber < childElementsView.getChildCount(); childNumber++){
+          View childOneElementView = childElementsView.getChildAt(childNumber);
+          if (childNumber == 0){
+            childOneElementView.setId(ingredientElementsId.getOneIngredientLayoutId());
+
+            ViewGroup insideChildElementView = getInsideChildElementView(childOneElementView.getId());
+            for(int insideChildNumber = 0; insideChildNumber < insideChildElementView.getChildCount(); insideChildNumber++){
+              View insideChildOneElementView = insideChildElementView.getChildAt(insideChildNumber);
+              switch (insideChildNumber){
+                case 0:
+                  insideChildOneElementView.setId(ingredientElementsId.getMenuImageViewId());
+                case 1:
+                  insideChildOneElementView.setId(ingredientElementsId.getIngredientQuantityEditTextId());
+                case 2:
+                  insideChildOneElementView.setId(ingredientElementsId.getIngredientUnitSpinnerId());
+                case 3:
+                  insideChildOneElementView.setId(ingredientElementsId.getDeleteImageViewId());
+              }
+            }
+          }if (childNumber == 1){
+            childElementsView.setId(ingredientElementsId.getIngredientNameEditTextId());
+          }
+        }
+      }
+      setDeleteImageViews(ingredientElementsIdList);
+      setDeleteImageViewListener();
+    }
+  }
+
+  @Override
+  public Context getContext() {
+    return context;
   }
 
   @Override
@@ -61,6 +104,9 @@ public class AddIngredientsActivityView extends AppCompatActivity implements Add
 
       setDeleteImageViews(presenter.getIngredientElementsIdList());
       setDeleteImageViewListener();
+
+      String pojoIdToJson = presenter.convertPojoIdToJsonString(presenter.getIngredientElementsIdList());
+      presenter.addPojoIdListToPreferences(pojoIdToJson, context);
 
     }else if(view.getId() == R.id.previousActionFab){
       navigateToPreviousPage();
@@ -98,7 +144,9 @@ public class AddIngredientsActivityView extends AppCompatActivity implements Add
 
   public void setDeleteImageViews(List<IngredientElementsId> ingredientElementsIdList){
     for (int i = 0; i < ingredientElementsIdList.size(); i++){
-      deleteImageViewsList.add((ImageView) findViewById(ingredientElementsIdList.get(i).getDeleteImageViewId()));
+      int foo = ingredientElementsIdList.get(i).getDeleteImageViewId();
+      ImageView id = (ImageView) findViewById(foo);
+      deleteImageViewsList.add(id);
     }
   }
 

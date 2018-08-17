@@ -15,6 +15,8 @@ public interface AddIngredientsContract {
 
     ViewGroup getInsideChildElementView(int childId);
 
+    Context getContext();
+
   }
 
   interface Presenter {
@@ -37,7 +39,10 @@ public interface AddIngredientsContract {
 
     List<IngredientElementsId> getIngredientElementsIdList();
 
+    void setIngredientElementsIdList(List<IngredientElementsId> ingredientElementsIdList);
+
     void setChildWithIdAndBackground(android.view.View child);
+
 
     String convertPojoIdToJsonString(List<IngredientElementsId> ingredientElementsIdList);
 
@@ -47,9 +52,9 @@ public interface AddIngredientsContract {
 
     void addPojoListToPreferences(String jsonList, Context context);
 
-    void deletePojoIdListFromPreferences(String jsonList, Context context);
+    void deletePojoIdListFromPreferences(Context context);
 
-    void deletePojoListFromPreferences(String jsonList, Context context);
+    void deletePojoListFromPreferences(Context context);
 
     String getPojoIdListFromPreferences(Context context);
 
@@ -59,6 +64,8 @@ public interface AddIngredientsContract {
 
     List<Ingredient> getIngredientListAfterChangeScreen(String jsonList);
 
+
+    void setChildIdAfterChangeScreen(android.view.View child, List<IngredientElementsId> ingredientElementsIdList);
   }
 
 }

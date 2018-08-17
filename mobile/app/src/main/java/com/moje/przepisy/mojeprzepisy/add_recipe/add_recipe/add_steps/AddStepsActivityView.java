@@ -2,7 +2,6 @@ package com.moje.przepisy.mojeprzepisy.add_recipe.add_recipe.add_steps;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -46,6 +45,69 @@ public class AddStepsActivityView extends AppCompatActivity implements AddStepCo
     nextActionFab.setOnClickListener(this);
 
     setToolbar();
+
+    if(presenter.getPojoIdListFromPreferences(context) != null){
+      List<StepElementsId> stepElementsIdList = presenter.getStepElementsIdListAfterChangeScreen(presenter.getPojoIdListFromPreferences(context));
+      presenter.setStepElementsIdList(stepElementsIdList);
+      for(StepElementsId stepElementsId : stepElementsIdList){
+        View child = getLayoutInflater().inflate(R.layout.one_step_layout, null);
+        child.setId(stepElementsId.getLayoutId());
+        presenter.setBackground(child);
+        linearLayoutOneStep.addView(child);
+
+        ViewGroup childElementsView = getChildElementView(child);
+        for(int childNumber = 0; childNumber < childElementsView.getChildCount(); childNumber++){
+          View childOneElementView = childElementsView.getChildAt(childNumber);
+          if (childNumber == 0){
+            childOneElementView.setId(stepElementsId.getOneStepLayoutId());
+
+            ViewGroup insideChildElementView = getInsideChildElementView(childOneElementView.getId());
+            for(int insideChildNumber = 0; insideChildNumber < insideChildElementView.getChildCount(); insideChildNumber++){
+              View insideChildOneElementView = insideChildElementView.getChildAt(insideChildNumber);
+              switch (insideChildNumber){
+                case 0:
+                  insideChildOneElementView.setId(stepElementsId.getMenuImageViewId());
+                case 1:
+                  insideChildOneElementView.setId(stepElementsId.getStepOrDescriptionSpinnerId());
+                case 2:
+                  insideChildOneElementView.setId(stepElementsId.getDeleteImageViewId());
+              }
+            }
+          }else if (childNumber == 1){
+            childOneElementView.setId(stepElementsId.getStepEditTextId());
+          }else if (childNumber == 2){
+            childOneElementView.setId(stepElementsId.getLoadPhotoLayoutId());
+
+            ViewGroup insideChildElementView = getInsideChildElementView(childOneElementView.getId());
+            for(int insideChildNumber = 0; insideChildNumber < insideChildElementView.getChildCount(); insideChildNumber++){
+              View insideChildOneElementView = insideChildElementView.getChildAt(insideChildNumber);
+              if (insideChildNumber == 0) {
+                insideChildOneElementView.setId(stepElementsId.getMainPhotoImageViewId());
+              }else if(insideChildNumber == 1) {
+                insideChildOneElementView.setId(stepElementsId.getLoadPictureTextViewId());
+              }else if(insideChildNumber == 2){
+                  insideChildOneElementView.setId(stepElementsId.getLoadPhotoOptionId());
+
+                  ViewGroup doubleInsideChildElementView = getInsideChildElementView(insideChildOneElementView.getId());
+                  for(int doubleInsideChildNumber = 0; doubleInsideChildNumber < doubleInsideChildElementView.getChildCount(); doubleInsideChildNumber++){
+                    View doubleInsideOneChildElementView = doubleInsideChildElementView.getChildAt(doubleInsideChildNumber);
+                    switch (doubleInsideChildNumber){
+                      case 0:
+                        doubleInsideOneChildElementView.setId(stepElementsId.getGalleryImageViewId());
+                      case 1:
+                        doubleInsideOneChildElementView.setId(stepElementsId.getCameraImageViewId());
+                      case 2:
+                        doubleInsideOneChildElementView.setId(stepElementsId.getURLImageViewId());
+                    }
+                  }
+              }
+            }
+          }
+        }
+      }
+      setDeleteImageViews(stepElementsIdList);
+      setDeleteImageViewListener();
+    }
   }
 
   @Override
@@ -53,7 +115,7 @@ public class AddStepsActivityView extends AppCompatActivity implements AddStepCo
     if(view.getId() == R.id.addStepFab){
       View child = getLayoutInflater().inflate(R.layout.one_step_layout, null);
 
-      presenter.setChildWithIdAndBackgroundAndAddToList(child);
+      presenter.setChildWithIdAndBackground(child);
       linearLayoutOneStep.addView(child);
 
       int[] elementsIdArray = presenter.getElementsIdToArray(getChildElementView(child));
@@ -62,6 +124,9 @@ public class AddStepsActivityView extends AppCompatActivity implements AddStepCo
 
       setDeleteImageViews(presenter.getStepElementsIdList());
       setDeleteImageViewListener();
+
+      String pojoIdToJson = presenter.convertPojoIdToJsonString(presenter.getStepElementsIdList());
+      presenter.addPojoIdListToPreferences(pojoIdToJson, context);
 
     }else if(view.getId() == R.id.previousActionFab){
       navigateToPreviousPage();

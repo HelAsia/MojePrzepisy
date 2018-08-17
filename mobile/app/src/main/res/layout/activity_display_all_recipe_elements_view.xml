@@ -7,4 +7,12 @@
   android:layout_height="match_parent"
   tools:context=".add_recipe.add_recipe.display_all_recipe_elements.DisplayAllRecipeElementsActivityView">
 
+
+  <Button
+    android:id="@+id/cleanButton"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_centerHorizontal="true"
+    android:layout_centerVertical="true"
+    android:text="Wyczyść Shared Preferences"/>
 </RelativeLayout>

@@ -1,11 +1,19 @@
 package com.moje.przepisy.mojeprzepisy.add_recipe.add_recipe.add_steps;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.moje.przepisy.mojeprzepisy.data.model.Step;
 import com.moje.przepisy.mojeprzepisy.data.model.StepElementsId;
 import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.RecipeRepository;
+import com.moje.przepisy.mojeprzepisy.utils.Constant;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -19,8 +27,7 @@ public class AddStepPresenter implements AddStepContract.Presenter {
   private int[] layoutElementsArray = new int[12];
   private int insideChildNumber;
   private int insideChildId;
-
-
+  private Gson gson = new Gson();
 
   public AddStepPresenter(AddStepContract.View stepsView, RecipeRepository recipeRepository){
     this.stepsView = stepsView;
@@ -61,8 +68,14 @@ public class AddStepPresenter implements AddStepContract.Presenter {
     }
   }
 
+  @Override
   public List<StepElementsId> getStepElementsIdList(){
     return stepElementsIdList;
+  }
+
+  @Override
+  public void setStepElementsIdList(List<StepElementsId> stepElementsIdList) {
+    this.stepElementsIdList = stepElementsIdList;
   }
 
   public void setChildId(View child){
@@ -121,8 +134,79 @@ public class AddStepPresenter implements AddStepContract.Presenter {
     stepElementsIdList.add(layoutForSteps);
   }
 
-  public void setChildWithIdAndBackgroundAndAddToList(View child){
+  public void setChildWithIdAndBackground(View child){
     setChildId(child);
     setBackground(child);
+  }
+
+  @Override
+  public String convertPojoIdToJsonString(List<StepElementsId> stepElementsIdList) {
+    Type type = new TypeToken<List<StepElementsId>>(){}.getType();
+    return gson.toJson(stepElementsIdList, type);
+  }
+
+  @Override
+  public String convertPojoToJsonString(List<Step> step) {
+    Type type = new TypeToken<List<Step>>(){}.getType();
+    return gson.toJson(step, type);
+  }
+
+  @Override
+  public void addPojoIdListToPreferences(String jsonList, Context context) {
+    SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
+    editor.putString(Constant.PREF_STEP_ID, jsonList).apply();
+    editor.commit();
+  }
+
+  @Override
+  public void addPojoListToPreferences(String jsonList, Context context) {
+    SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
+    editor.putString(Constant.PREF_STEP, jsonList).apply();
+    editor.commit();
+  }
+
+  @Override
+  public void deletePojoIdListFromPreferences(Context context) {
+    SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
+    editor.remove(Constant.PREF_STEP_ID);
+    editor.apply();
+    editor.commit();
+  }
+
+  @Override
+  public void deletePojoListFromPreferences(Context context) {
+    SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
+    editor.remove(Constant.PREF_STEP);
+    editor.apply();
+    editor.commit();
+  }
+
+  @Override
+  public String getPojoIdListFromPreferences(Context context) {
+    return PreferenceManager.getDefaultSharedPreferences(context).getString(Constant.PREF_STEP_ID, null);
+  }
+
+  @Override
+  public String getPojoListFromPreferences(Context context) {
+    return PreferenceManager.getDefaultSharedPreferences(context).getString(Constant.PREF_STEP, null);
+  }
+
+  @Override
+  public List<StepElementsId> getStepElementsIdListAfterChangeScreen(String jsonList) {
+    Type type = new TypeToken<List<StepElementsId>>(){}.getType();
+    return gson.fromJson(jsonList, type);
+  }
+
+  @Override
+  public List<Step> getStepListAfterChangeScreen(String jsonList) {
+    Type type = new TypeToken<List<Step>>() {}.getType();
+    return gson.fromJson(jsonList, type);
+  }
+
+  @Override
+  public void setChildIdAfterChangeScreen(View child, List<StepElementsId> stepElementsIds) {
+    for (StepElementsId stepElementsId : stepElementsIds) {
+      child.setId(stepElementsId.getLayoutId());
+    }
   }
 }
