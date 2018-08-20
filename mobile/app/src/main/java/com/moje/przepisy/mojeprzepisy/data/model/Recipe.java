@@ -11,6 +11,7 @@ public class Recipe {
   public Timestamp recipeCookTime;
   public Timestamp recipeBakeTime;
 
+
   public Recipe(){
 
   }
