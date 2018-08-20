@@ -1,16 +1,24 @@
 package com.moje.przepisy.mojeprzepisy.data.model;
 
 public class Ingredient {
-  public int ingredientId;
-  public int recipeId;
-  public int ingredientQuantity;
-  public String ingredientUnit;
-  public String ingredientName;
-  public String ingredientGroup;
+  private int ingredientId;
+  private int recipeId;
+  private int ingredientQuantity;
+  private int ingredientUnit;
+  private String ingredientName;
+  private String ingredientGroup;
+
+  public Ingredient(int ingredientQuantity, int ingredientUnit, String ingredientName){
+    this.ingredientQuantity = ingredientQuantity;
+    this.ingredientUnit = ingredientUnit;
+    this.ingredientName = ingredientName;
+  }
 
   public Ingredient(){
 
   }
+
+
 
   public int getIngredientId() {
     return ingredientId;
@@ -24,7 +32,7 @@ public class Ingredient {
     return ingredientQuantity;
   }
 
-  public String getIngredientUnit() {
+  public int getIngredientUnit() {
     return ingredientUnit;
   }
 
@@ -48,7 +56,7 @@ public class Ingredient {
     this.ingredientQuantity = ingredientQuantity;
   }
 
-  public void setIngredientUnit(String ingredientUnit) {
+  public void setIngredientUnit(int ingredientUnit) {
     this.ingredientUnit = ingredientUnit;
   }
 

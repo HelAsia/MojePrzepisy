@@ -24,15 +24,13 @@
     android:layout_height="wrap_content"
     android:layout_below="@id/toolbar_add_ingredient">
 
-    <LinearLayout
-      android:id="@+id/addIngredientsLayout"
+    <android.support.v7.widget.RecyclerView
+      android:id="@+id/addIngredientsRecyclerView"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_weight="1"
-      android:orientation="vertical">
-
-    </LinearLayout>
+      android:layout_height="match_parent"
+      android:scrollbars="vertical"/>
   </ScrollView>
+
   <android.support.design.widget.FloatingActionButton
     android:id="@+id/addIngredientFab"
     android:layout_width="wrap_content"

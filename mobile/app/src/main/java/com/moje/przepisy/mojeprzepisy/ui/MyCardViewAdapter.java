@@ -24,9 +24,9 @@ import java.util.List;
 
 public class MyCardViewAdapter extends RecyclerView.Adapter<MyCardViewAdapter.ViewHolder> {
   public Context context;
-  public List<OneRecipeCard> cardsList;
+  private List<OneRecipeCard> cardsList;
 
-  public MyCardViewAdapter(Context context, List<OneRecipeCard> cardsList) {
+  MyCardViewAdapter(Context context, List<OneRecipeCard> cardsList) {
     this.context = context;
     this.cardsList = cardsList;
     setHasStableIds(true);

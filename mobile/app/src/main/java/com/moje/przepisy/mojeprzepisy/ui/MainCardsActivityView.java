@@ -36,9 +36,6 @@ public class MainCardsActivityView extends AppCompatActivity implements MainCard
   private MainCardsContract.Presenter presenter;
   private DrawerLayout drawerLayout;
   Context context;
-  private RecyclerView recyclerView;
-  private MyCardViewAdapter adapter;
-  private boolean ifLogged = false;
   @BindView(R.id.my_fab) FloatingActionButton floatingActionButton;
 
   @Override
@@ -60,8 +57,8 @@ public class MainCardsActivityView extends AppCompatActivity implements MainCard
 
   @Override
   public void setRecyclerView(List<OneRecipeCard> cardList){
-    adapter = new MyCardViewAdapter(this, cardList);
-    recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
+    MyCardViewAdapter adapter = new MyCardViewAdapter(this, cardList);
+    RecyclerView recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
     recyclerView.setAdapter(adapter);
     recyclerView.setLayoutManager(new LinearLayoutManager(this));
   }
@@ -93,7 +90,7 @@ public class MainCardsActivityView extends AppCompatActivity implements MainCard
   }
 
   public boolean getIfLoggedStatus(){
-    ifLogged = getIntent().getExtras().getBoolean("LOGGED");
+    boolean ifLogged = getIntent().getExtras().getBoolean("LOGGED");
     return ifLogged;
   }
 

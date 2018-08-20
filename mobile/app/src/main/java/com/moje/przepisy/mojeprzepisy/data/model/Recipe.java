@@ -3,14 +3,18 @@ package com.moje.przepisy.mojeprzepisy.data.model;
 import java.sql.Timestamp;
 
 public class Recipe {
-  public int recipeId;
-  public int recipeMainPictureId;
-  public String recipeName;
-  public String recipeDescription;
-  public Timestamp recipePrepareTime;
-  public Timestamp recipeCookTime;
-  public Timestamp recipeBakeTime;
+  private int recipeId;
+  private int recipeMainPictureId;
+  private String recipeName;
+  private String recipeDescription;
+  private Timestamp recipePrepareTime;
+  private Timestamp recipeCookTime;
+  private Timestamp recipeBakeTime;
 
+  public Ingredient[] ingredients;
+  public IngredientElementsId[] ingredientElementsIds;
+  public Step[] steps;
+  public StepElementsId[] stepElementsIds;
 
   public Recipe(){
 
