@@ -1,4 +1,5 @@
 from Logger import *
+from utils import *
 
 
 class Ingredients:
@@ -30,9 +31,14 @@ class Ingredients:
 
     def addIngredient(self, recipeId, ingredientQuantity, ingredientUnit,
                       ingredientName, ingredientGroup):
+
+        if not checkIsInteger(ingredientQuantity):
+            Logger.err("User has passed 'ingredientQuantity' as non-integer! '{}'".format(ingredientQuantity))
+            return {}
+
         query = u"INSERT INTO ingredients " \
                 u"(recipe_id, ingredient_quantity, ingredient_unit, ingredient_name, group_ingredient_name) " \
-                u"values ({}, '{}', '{}', {} ".format(recipeId, ingredientQuantity, ingredientUnit, ingredientName, ingredientGroup)
+                u"values ({}, '{}', '{}', {} ".format(recipeId, int(ingredientQuantity), ingredientUnit, ingredientName, ingredientGroup)
 
         queryResult = self.database.query(query)
 

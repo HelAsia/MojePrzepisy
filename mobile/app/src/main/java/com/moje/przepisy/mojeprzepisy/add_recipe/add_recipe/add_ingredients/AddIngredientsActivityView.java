@@ -9,15 +9,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.moje.przepisy.mojeprzepisy.R;
 import com.moje.przepisy.mojeprzepisy.add_recipe.add_recipe.add_main_recipe_page.AddRecipeActivityView;
 import com.moje.przepisy.mojeprzepisy.add_recipe.add_recipe.add_steps.AddStepsActivityView;
 import com.moje.przepisy.mojeprzepisy.data.model.Ingredient;
-import com.moje.przepisy.mojeprzepisy.data.model.IngredientElementsId;
 import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.RecipeRepository;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,8 +24,6 @@ public class AddIngredientsActivityView extends AppCompatActivity implements Add
   @BindView(R.id.addIngredientFab) FloatingActionButton addIngredientFab;
   @BindView(R.id.previousActionFab) FloatingActionButton previousActionFab;
   @BindView(R.id.nextActionFab) FloatingActionButton nextActionFab;
-  @BindView(R.id.addIngredientsRecyclerView) RecyclerView addIngredientsRecyclerView;
-  List<ImageView> deleteImageViewsList = new ArrayList<>();
   List<Ingredient> ingredientList = new ArrayList<>();
   private AddIngredientsContract.Presenter presenter;
   Context context;
@@ -52,7 +47,13 @@ public class AddIngredientsActivityView extends AppCompatActivity implements Add
     ingredientList = presenter.getIngredientListAfterChangeScreen(presenter.getPojoListFromPreferences(context));
 
     if(ingredientList != null){
-      setRecyclerView(ingredientList);
+      presenter.setIngredientList(ingredientList);
+      setRecyclerView(presenter.getIngredientList());
+    }else {
+      Ingredient emptyIngredient = new Ingredient(1, 1, "np. cukier");
+      presenter.getIngredientList().add(emptyIngredient);
+      presenter.setIngredientList(presenter.getIngredientList());
+      setRecyclerView(presenter.getIngredientList());
     }
   }
 
@@ -70,16 +71,15 @@ public class AddIngredientsActivityView extends AppCompatActivity implements Add
     return context;
   }
 
-
   @Override
   public void onClick(View view){
     if(view.getId() == R.id.addIngredientFab){
 
       Ingredient emptyIngredient = new Ingredient(1, 1, "np. cukier");
 
-      ingredientList.add(emptyIngredient);
-      setRecyclerView(ingredientList);
+      presenter.getIngredientList().add(emptyIngredient);
       presenter.setIngredientList(ingredientList);
+      setRecyclerView(presenter.getIngredientList());
 
       String pojoToJson = presenter.convertPojoToJsonString(presenter.getIngredientList());
       presenter.addPojoListToPreferences(pojoToJson, context);

@@ -16,7 +16,6 @@
   card_view:cardElevation="50dp">
 
   <LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/one_ingredient_layout"
     android:layout_width="match_parent"
     android:background="@color/white_transparent"

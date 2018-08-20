@@ -5,10 +5,14 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -42,7 +46,7 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
   }
 
   @Override
-  public void onBindViewHolder(IngredientsAdapter.ViewHolder viewHolder, int position) {
+  public void onBindViewHolder(@NonNull IngredientsAdapter.ViewHolder viewHolder, int position) {
     viewHolder.bind(ingredientList.get(position));
   }
 
@@ -74,6 +78,61 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
           addPojoListToPreferences(pojoJson, context);
         }
       });
+
+      ingredientQuantityEditText.addTextChangedListener(new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        }
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+          int ingredientQuantity = Integer.valueOf(ingredientQuantityEditText.getText().toString());
+          Ingredient updatedIngredient = new Ingredient(ingredientQuantity, ingredientList.get(getAdapterPosition()).getIngredientUnit(), ingredientList.get(getAdapterPosition()).getIngredientName());
+          ingredientList.set(getAdapterPosition(), updatedIngredient);
+
+          String pojoJson = convertPojoToJsonString(ingredientList);
+          addPojoListToPreferences(pojoJson, context);
+        }
+        @Override
+        public void afterTextChanged(Editable editable) {
+        }
+      });
+
+      ingredientNameEditText.addTextChangedListener(new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        }
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+          String ingredientName = ingredientNameEditText.getText().toString();
+          Ingredient updatedIngredient = new Ingredient(ingredientList.get(getAdapterPosition()).getIngredientQuantity(), ingredientList.get(getAdapterPosition()).getIngredientUnit(), ingredientName);
+          ingredientList.set(getAdapterPosition(), updatedIngredient);
+
+          String pojoJson = convertPojoToJsonString(ingredientList);
+          addPojoListToPreferences(pojoJson, context);
+        }
+        @Override
+        public void afterTextChanged(Editable editable) {
+        }
+      });
+
+      ingredientUnitSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+        @Override
+        public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+            int ingredientUnit = (int) adapterView.getSelectedItemId();
+
+            Ingredient updatedIngredient = new Ingredient(ingredientList.get(getAdapterPosition()).getIngredientQuantity(), ingredientUnit, ingredientList.get(getAdapterPosition()).getIngredientName());
+            ingredientList.set(getAdapterPosition(), updatedIngredient);
+
+            String pojoJson = convertPojoToJsonString(ingredientList);
+            addPojoListToPreferences(pojoJson, context);
+        }
+        @Override
+        public void onNothingSelected(AdapterView<?> adapterView) {
+        }
+      });
+
     }
 
     void bind(Ingredient ingredient) {
@@ -97,11 +156,5 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
     SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
     editor.putString(Constant.PREF_INGREDIENT, jsonList).apply();
     editor.commit();
-  }
-
-  public List<Ingredient> getIngredientList(){
-    for(int i = 0; i < getItemCount(); i++){
-      ViewHolder.bind
-    }
   }
 }

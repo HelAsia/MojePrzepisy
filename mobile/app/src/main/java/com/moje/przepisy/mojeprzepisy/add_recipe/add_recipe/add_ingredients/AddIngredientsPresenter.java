@@ -8,30 +8,22 @@ import android.view.View;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.moje.przepisy.mojeprzepisy.data.model.Ingredient;
-import com.moje.przepisy.mojeprzepisy.data.model.IngredientElementsId;
 import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.RecipeRepository;
 import com.moje.przepisy.mojeprzepisy.utils.Constant;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class AddIngredientsPresenter implements AddIngredientsContract.Presenter {
   private RecipeRepository recipeRepository;
   private AddIngredientsContract.View ingredientsView;
   private String backgroundColorString = "#CCFFCC";
-  private Random randomNumber = new Random();
-  private List<IngredientElementsId> ingredientElementsIdList = new ArrayList<>();
   private List<Ingredient> ingredientList = new ArrayList<>();
   private Gson gson = new Gson();
 
   public AddIngredientsPresenter(AddIngredientsContract.View ingredientsView, RecipeRepository recipeRepository){
     this.ingredientsView = ingredientsView;
     this.recipeRepository = recipeRepository;
-  }
-
-  public int generateViewId(){
-    return randomNumber.nextInt((1000000000 - 100 + 1) + 100);
   }
 
   public void setBackground(View child){
@@ -43,6 +35,7 @@ public class AddIngredientsPresenter implements AddIngredientsContract.Presenter
     child.setBackgroundColor(Color.parseColor(backgroundColorString));
   }
 
+  @Override
   public List<Ingredient> getIngredientList(){
     return ingredientList;
   }

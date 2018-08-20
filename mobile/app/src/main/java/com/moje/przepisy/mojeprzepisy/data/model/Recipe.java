@@ -12,9 +12,7 @@ public class Recipe {
   private Timestamp recipeBakeTime;
 
   public Ingredient[] ingredients;
-  public IngredientElementsId[] ingredientElementsIds;
   public Step[] steps;
-  public StepElementsId[] stepElementsIds;
 
   public Recipe(){
 

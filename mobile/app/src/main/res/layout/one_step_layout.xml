@@ -1,96 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<android.support.v7.widget.CardView
   xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  android:id="@+id/one_step_layout"
+  xmlns:card_view="http://schemas.android.com/apk/res-auto"
+  android:id="@+id/step_my_card_view_layout"
   android:layout_width="match_parent"
-  android:background="@color/white_transparent"
   android:layout_height="wrap_content"
+  android:layout_margin="0dp"
+  android:background="@color/white"
   android:clickable="true"
   android:focusable="true"
-  android:layout_centerHorizontal="true"
-  android:layout_centerVertical="true"
-  android:orientation="vertical">
+  android:foreground="?android:attr/selectableItemBackground"
+  android:orientation="vertical"
+  card_view:cardBackgroundColor="@color/white"
+  card_view:cardCornerRadius="0dp"
+  card_view:cardElevation="50dp">
   <LinearLayout
-    android:id="@+id/oneStepLayout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/one_step_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="horizontal">
-    <ImageView
-      android:id="@+id/menuImageView"
-      android:layout_width="wrap_content"
-      android:layout_height="match_parent"
-      android:layout_weight="0.1"
-      android:clickable="false"
-      android:src="@drawable/ic_menu"/>
-    <Spinner
-      android:id="@+id/stepOrDescriptionSpinner"
-      android:layout_width="wrap_content"
-      android:layout_height="match_parent"
-      android:layout_weight="1"
-      android:entries="@array/step_or_description"/>
-    <ImageView
-      android:id="@+id/deleteImageView"
-      android:layout_width="wrap_content"
-      android:layout_height="match_parent"
-      android:layout_weight="1"
-      android:clickable="true"
-      android:src="@android:drawable/ic_delete"/>
-  </LinearLayout>
-  <EditText
-    android:id="@+id/stepEditText"
-    android:layout_width="match_parent"
+    android:background="@color/white_transparent"
     android:layout_height="wrap_content"
-    android:layout_weight="0.1"
-    android:ems="10"
-    android:hint="@string/description"
-    android:inputType="textPersonName"/>
-  <LinearLayout
-    android:id="@+id/loadPhotoLayout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_below="@+id/recipeNameEditText"
+    android:clickable="true"
+    android:focusable="true"
+    android:layout_centerHorizontal="true"
+    android:layout_centerVertical="true"
     android:orientation="vertical">
-    <ImageView
-      android:id="@+id/mainPhotoImageView"
-      android:layout_width="200dp"
-      android:layout_height="200dp"
-      android:layout_gravity="center"
-      app:srcCompat="@android:drawable/ic_menu_gallery"/>
-    <TextView
-      android:id="@+id/loadPictureTextView"
+    <LinearLayout
+      android:id="@+id/oneStepLayout"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="horizontal">
+      <ImageView
+        android:id="@+id/menuImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="0.1"
+        android:clickable="false"
+        android:src="@drawable/ic_menu"/>
+      <TextView
+        android:id="@+id/stepNumberTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:layout_weight="0.1"
+        android:text="Krok"/>
+      <Spinner
+        android:id="@+id/stepNumberSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:entries="@array/step_number"/>
+      <ImageView
+        android:id="@+id/deleteImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:clickable="true"
+        android:src="@android:drawable/ic_delete"/>
+    </LinearLayout>
+    <EditText
+      android:id="@+id/stepEditText"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:background="@color/blue_transparent"
-      android:gravity="center"
-      android:text="@string/load_photo"
-      android:textColor="@color/primary_text"
-      android:textSize="@dimen/edit_text_size"/>
+      android:layout_weight="0.1"
+      android:ems="10"
+      android:hint="@string/description"
+      android:inputType="textPersonName"/>
     <LinearLayout
+      android:id="@+id/loadPhotoLayout"
       android:layout_width="match_parent"
-      android:layout_height="60dp"
-      android:orientation="horizontal">
-
+      android:layout_height="match_parent"
+      android:layout_below="@+id/recipeNameEditText"
+      android:orientation="vertical">
       <ImageView
-        android:id="@+id/galleryImageView"
+        android:id="@+id/mainPhotoImageView"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_gravity="center"
+        app:srcCompat="@android:drawable/ic_menu_gallery"/>
+      <TextView
+        android:id="@+id/loadPictureTextView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:src="@mipmap/ic_image"/>
+        android:layout_height="wrap_content"
+        android:background="@color/blue_transparent"
+        android:gravity="center"
+        android:text="@string/load_photo"
+        android:textColor="@color/primary_text"
+        android:textSize="@dimen/edit_text_size"/>
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal">
 
-      <ImageView
-        android:id="@+id/cameraImageView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:src="@mipmap/ic_camera_alt"/>
+        <ImageView
+          android:id="@+id/galleryImageView"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:layout_weight="1"
+          android:src="@mipmap/ic_image"/>
 
-      <ImageView
-        android:id="@+id/URLImageView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:src="@mipmap/ic_find_in_page"/>
+        <ImageView
+          android:id="@+id/cameraImageView"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:layout_weight="1"
+          android:src="@mipmap/ic_camera_alt"/>
+
+        <ImageView
+          android:id="@+id/URLImageView"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:layout_weight="1"
+          android:src="@mipmap/ic_find_in_page"/>
+      </LinearLayout>
     </LinearLayout>
   </LinearLayout>
-</LinearLayout>
+</android.support.v7.widget.CardView>

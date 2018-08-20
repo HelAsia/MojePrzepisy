@@ -11,12 +11,7 @@ import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.moje.przepisy.mojeprzepisy.R;
-import com.moje.przepisy.mojeprzepisy.add_recipe.add_recipe.add_ingredients.AddIngredientsActivityView;
-import com.moje.przepisy.mojeprzepisy.add_recipe.add_recipe.add_ingredients.AddIngredientsContract;
-import com.moje.przepisy.mojeprzepisy.add_recipe.add_recipe.add_ingredients.AddIngredientsPresenter;
-import com.moje.przepisy.mojeprzepisy.data.model.IngredientElementsId;
 import com.moje.przepisy.mojeprzepisy.data.model.StepElementsId;
-import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.RecipeRepository;
 import com.moje.przepisy.mojeprzepisy.utils.Constant;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +19,6 @@ import java.util.List;
 public class DisplayAllRecipeElementsActivityView extends AppCompatActivity{
   @BindView(R.id.cleanButton) Button cleanButton;
   List<StepElementsId> stepElementsIdList = new ArrayList<>();
-  List<IngredientElementsId> ingredientElementsIdList = new ArrayList<>();
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -36,10 +30,10 @@ public class DisplayAllRecipeElementsActivityView extends AppCompatActivity{
       @Override
       public void onClick(View view) {
         SharedPreferences.Editor ingredientsEditor = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit();
-        ingredientsEditor.remove(Constant.PREF_INGREDIENT_ID);
+        ingredientsEditor.remove(Constant.PREF_INGREDIENT);
         ingredientsEditor.apply();
         SharedPreferences.Editor stepsEditor = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit();
-        stepsEditor.remove(Constant.PREF_STEP_ID);
+        stepsEditor.remove(Constant.PREF_STEP);
         stepsEditor.apply();
         Toast.makeText(DisplayAllRecipeElementsActivityView.this, "Usunięte", Toast.LENGTH_SHORT).show();
       }
@@ -53,14 +47,5 @@ public class DisplayAllRecipeElementsActivityView extends AppCompatActivity{
   public void setStepElementsIdList(
       List<StepElementsId> stepElementsIdList) {
     this.stepElementsIdList = stepElementsIdList;
-  }
-
-  public List<IngredientElementsId> getIngredientElementsIdList() {
-    return ingredientElementsIdList;
-  }
-
-  public void setIngredientElementsIdList(
-      List<IngredientElementsId> ingredientElementsIdList) {
-    this.ingredientElementsIdList = ingredientElementsIdList;
   }
 }

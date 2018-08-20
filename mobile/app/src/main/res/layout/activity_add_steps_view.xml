@@ -6,6 +6,8 @@
   android:id="@+id/activity_add_steps_view"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
+  android:focusable="true"
+  android:focusableInTouchMode="true"
   android:background="@color/primary_light"
   tools:context=".add_recipe.add_recipe.add_steps.AddStepsActivityView">
 
@@ -24,14 +26,12 @@
     android:layout_height="wrap_content"
     android:layout_below="@id/toolbar_add_ingredient">
 
-    <LinearLayout
-      android:id="@+id/addsStepsLayout"
+    <android.support.v7.widget.RecyclerView
+      android:id="@+id/addStepsRecyclerView"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_weight="1"
-      android:orientation="vertical">
+      android:layout_height="match_parent"
+      android:scrollbars="vertical"/>
 
-    </LinearLayout>
   </ScrollView>
   <android.support.design.widget.FloatingActionButton
     android:id="@+id/addStepFab"

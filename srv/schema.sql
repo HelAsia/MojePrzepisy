@@ -42,30 +42,30 @@ CREATE TABLE recipes (
     recipe_category varchar(80) NOT NULL,
     recipe_created_date_time datetime,
     PRIMARY KEY (recipe_id),
-    FOREIGN KEY (user_id) REFERENCES users(user_id)
+    FOREIGN KEY (user_id) REFERENCES users(user_id),
     FOREIGN KEY (recipe_main_picture_id) REFERENCES photos(photo_id)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 CREATE TABLE photos (
-    photo_id int(11) NOT NULL AUTO_INCREMENT
+    photo_id int(11) NOT NULL AUTO_INCREMENT,
     photo_url varchar(1000),
     photo_image varchar(1000),
-    PRIMARY KEY (photo_id),
+    PRIMARY KEY (photo_id)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 CREATE TABLE steps (
-    step_id int(11) NOT NULL AUTO_INCREMENT
+    step_id int(11) NOT NULL AUTO_INCREMENT,
     recipe_id int(11),
     photo_id int(11),
     step_number int(11) NOT NULL,
     step_description varchar(5000),
     PRIMARY KEY (step_id),
-    FOREIGN KEY (recipe_id) REFERENCES recipes(recipe_id)
+    FOREIGN KEY (recipe_id) REFERENCES recipes(recipe_id),
     FOREIGN KEY (photo_id) REFERENCES photos(photo_id)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 CREATE TABLE ingredients (
-    ingredient_id int(11) NOT NULL AUTO_INCREMENT
+    ingredient_id int(11) NOT NULL AUTO_INCREMENT,
     recipe_id int(11),
     ingredient_quantity int(11),
     ingredient_unit varchar(100),
@@ -76,13 +76,13 @@ CREATE TABLE ingredients (
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 CREATE TABLE comments (
-    comment_id int(11) NOT NULL AUTO_INCREMENT
+    comment_id int(11) NOT NULL AUTO_INCREMENT,
     recipe_id int(11) NOT NULL,
     user_id int(11) NOT NULL,
     comment varchar(5000) NOT NULL,
     created_date datetime,
     PRIMARY KEY (comment_id),
-    FOREIGN KEY (recipe_id) REFERENCES recipes(recipe_id)
+    FOREIGN KEY (recipe_id) REFERENCES recipes(recipe_id),
     FOREIGN KEY (user_id) REFERENCES users(user_id)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 

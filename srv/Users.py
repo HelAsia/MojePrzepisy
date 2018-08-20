@@ -19,13 +19,22 @@ class Users:
 
 
     def loginUser(self,login, password):
+        if len(login) >= 80:
+            return 500, u'Passed login is too long', None
+
+        if len(password) >= 80:
+            return 500, u'Passed login is too long', None
+
+        if len(login) == 0:
+            return 500, u'Passed login was empty', None
+
         query = u"SELECT user_id " \
                 u"FROM users " \
                 u"WHERE user_login = '{}' AND user_password = '{}'".format(login, password)
 
         queryResult = self.database.query(query)
 
-        if queryResult:
+        if queryResult :
             return 200, u'You are logged in', queryResult[0]['user_id']
         else:
             return 404, u'Login or password do not exist', None

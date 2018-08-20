@@ -18,8 +18,6 @@ public class Ingredient {
 
   }
 
-
-
   public int getIngredientId() {
     return ingredientId;
   }
