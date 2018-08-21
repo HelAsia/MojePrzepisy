@@ -114,7 +114,7 @@
             android:textColor="@color/primary_text"
             android:textSize="@dimen/edit_text_size"/>
           <Spinner
-            android:id="@+id/spinner"
+            android:id="@+id/categoryChooseSpinner"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:entries="@array/recipe_category_array"/>

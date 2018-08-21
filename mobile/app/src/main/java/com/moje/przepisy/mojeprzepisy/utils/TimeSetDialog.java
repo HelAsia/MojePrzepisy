@@ -25,7 +25,7 @@ public class TimeSetDialog {
     final NumberPicker minutePicker = dialog.findViewById(R.id.minutePicker);
 
     hourPicker.setMinValue(0);
-    hourPicker.setMaxValue(72);
+    hourPicker.setMaxValue(24);
     hourPicker.setWrapSelectorWheel(true);
     minutePicker.setMinValue(0);
     minutePicker.setMaxValue(59);
@@ -36,11 +36,18 @@ public class TimeSetDialog {
       @Override
       public void onClick(View v) {
         hourInt = hourPicker.getValue();
+        if(hourInt < 10){
+          hour = "0" + Integer.toString(hourInt);
+        }
         hour = Integer.toString(hourInt);
+
         minuteInt = minutePicker.getValue();
+        if(minuteInt < 10){
+          minute = "0" + Integer.toString(minuteInt);
+        }
         minute = Integer.toString(minuteInt);
         dialog.dismiss();
-        textViewToSet.setText(hour + " : " + minute);
+        textViewToSet.setText(hour + ":" + minute+ ":00");
       }
     });
     dialog.show();

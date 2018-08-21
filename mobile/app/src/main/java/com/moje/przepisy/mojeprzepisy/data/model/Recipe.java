@@ -1,18 +1,14 @@
 package com.moje.przepisy.mojeprzepisy.data.model;
 
-import java.sql.Timestamp;
-
 public class Recipe {
   private int recipeId;
-  private int recipeMainPictureId;
+  private String recipeMainPictureId;
   private String recipeName;
   private String recipeDescription;
-  private Timestamp recipePrepareTime;
-  private Timestamp recipeCookTime;
-  private Timestamp recipeBakeTime;
-
-  public Ingredient[] ingredients;
-  public Step[] steps;
+  private int recipeCategory;
+  private java.sql.Time recipePrepareTime;
+  private java.sql.Time recipeCookTime;
+  private java.sql.Time recipeBakeTime;
 
   public Recipe(){
 
@@ -22,7 +18,7 @@ public class Recipe {
     return recipeId;
   }
 
-  public int getRecipeMainPictureId() {
+  public String getRecipeMainPictureId() {
     return recipeMainPictureId;
   }
 
@@ -34,15 +30,15 @@ public class Recipe {
     return recipeDescription;
   }
 
-  public Timestamp getRecipePrepareTime() {
+  public java.sql.Time getRecipePrepareTime() {
     return recipePrepareTime;
   }
 
-  public Timestamp getRecipeCookTime() {
+  public java.sql.Time getRecipeCookTime() {
     return recipeCookTime;
   }
 
-  public Timestamp getRecipeBakeTime() {
+  public java.sql.Time getRecipeBakeTime() {
     return recipeBakeTime;
   }
 
@@ -50,7 +46,7 @@ public class Recipe {
     this.recipeId = recipeId;
   }
 
-  public void setRecipeMainPictureId(int recipeMainPictureId) {
+  public void setRecipeMainPictureId(String recipeMainPictureId) {
     this.recipeMainPictureId = recipeMainPictureId;
   }
 
@@ -62,15 +58,23 @@ public class Recipe {
     this.recipeDescription = recipeDescription;
   }
 
-  public void setRecipePrepareTime(Timestamp recipePrepareTime) {
+  public void setRecipePrepareTime(java.sql.Time recipePrepareTime) {
     this.recipePrepareTime = recipePrepareTime;
   }
 
-  public void setRecipeCookTime(Timestamp recipeCookTime) {
+  public void setRecipeCookTime(java.sql.Time recipeCookTime) {
     this.recipeCookTime = recipeCookTime;
   }
 
-  public void setRecipeBakeTime(Timestamp recipeBakeTime) {
+  public void setRecipeBakeTime(java.sql.Time recipeBakeTime) {
     this.recipeBakeTime = recipeBakeTime;
+  }
+
+  public int getRecipeCategory() {
+    return recipeCategory;
+  }
+
+  public void setRecipeCategory(int recipeCategory) {
+    this.recipeCategory = recipeCategory;
   }
 }

@@ -11,14 +11,12 @@ import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.moje.przepisy.mojeprzepisy.R;
-import com.moje.przepisy.mojeprzepisy.data.model.StepElementsId;
 import com.moje.przepisy.mojeprzepisy.utils.Constant;
 import java.util.ArrayList;
 import java.util.List;
 
 public class DisplayAllRecipeElementsActivityView extends AppCompatActivity{
   @BindView(R.id.cleanButton) Button cleanButton;
-  List<StepElementsId> stepElementsIdList = new ArrayList<>();
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -35,17 +33,11 @@ public class DisplayAllRecipeElementsActivityView extends AppCompatActivity{
         SharedPreferences.Editor stepsEditor = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit();
         stepsEditor.remove(Constant.PREF_STEP);
         stepsEditor.apply();
+        SharedPreferences.Editor recipeEditor = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit();
+        recipeEditor.remove(Constant.PREF_RECIPE);
+        recipeEditor.apply();
         Toast.makeText(DisplayAllRecipeElementsActivityView.this, "Usunięte", Toast.LENGTH_SHORT).show();
       }
     });
-  }
-
-  public List<StepElementsId> getStepElementsIdList() {
-    return stepElementsIdList;
-  }
-
-  public void setStepElementsIdList(
-      List<StepElementsId> stepElementsIdList) {
-    this.stepElementsIdList = stepElementsIdList;
   }
 }

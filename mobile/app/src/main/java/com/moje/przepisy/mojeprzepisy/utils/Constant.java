@@ -14,12 +14,11 @@ public class Constant {
 
  public static final String PREF_SORTED_METHOD = "PREF_SORTED_METHOD";
 
- public static final String PREF_INGREDIENT_ID = "PREF_INGREDIENT_ID";
-
  public static final String PREF_INGREDIENT = "PREF_INGREDIENT";
 
- public static final String PREF_STEP_ID = "PREF_STEP_ID";
-
  public static final String PREF_STEP = "PREF_STEP";
+
+ public static final String PREF_RECIPE = "PREF_RECIPE";
+
 }
 

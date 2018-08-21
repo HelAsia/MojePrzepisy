@@ -28,7 +28,6 @@ public class AddIngredientsActivityView extends AppCompatActivity implements Add
   private AddIngredientsContract.Presenter presenter;
   Context context;
 
-
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
