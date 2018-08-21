@@ -10,10 +10,10 @@ import android.widget.TextView;
 import com.moje.przepisy.mojeprzepisy.R;
 
 public class TimeSetDialog {
-  String hour;
-  String minute;
-  int hourInt;
-  int minuteInt;
+  private String hour;
+  private String minute;
+  private int hourInt;
+  private int minuteInt;
 
   public void showDialog(Activity activity, final TextView textViewToSet){
     final Dialog dialog = new Dialog(activity);

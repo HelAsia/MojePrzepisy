@@ -43,6 +43,7 @@ public class AddRecipePresenter implements AddRecipeContract.Presenter{
 
   public void setRecipeValueOnScreen(){
     setRecipe(getRecipeAfterChangeScreen(getPojoFromPreferences(recipeView.getContext())));
+    recipeView.setMainPhotoImageView(getRecipe().getRecipeMainPictureId());
     recipeView.setRecipeNameEditText(getRecipe().getRecipeName());
     recipeView.setCategoryChooseSpinner(getRecipe().getRecipeCategory());
     recipeView.setPreparedTimeEditText(getRecipe().getRecipePrepareTime());

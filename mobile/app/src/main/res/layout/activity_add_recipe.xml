@@ -71,18 +71,21 @@
             android:orientation="horizontal">
 
             <ImageView
+              android:id="@+id/galleryImageView"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:layout_weight="1"
               android:src="@mipmap/ic_image"/>
 
             <ImageView
+              android:id="@+id/cameraImageView"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:layout_weight="1"
               android:src="@mipmap/ic_camera_alt"/>
 
             <ImageView
+              android:id="@+id/URLImageView"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:layout_weight="1"

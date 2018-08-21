@@ -1,6 +1,8 @@
 package com.moje.przepisy.mojeprzepisy.add_recipe.add_recipe.add_main_recipe_page;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import com.moje.przepisy.mojeprzepisy.data.model.Recipe;
 
 public interface AddRecipeContract {
@@ -13,7 +15,7 @@ public interface AddRecipeContract {
 
     void setRecipeNameEditText(String recipeName);
 
-    void setMainPhotoImageView();
+    void setMainPhotoImageView(String bitmapString);
 
     void setCategoryChooseSpinner(int position);
 
@@ -22,6 +24,16 @@ public interface AddRecipeContract {
     void setCookTimeEditText(java.sql.Time time);
 
     void setBakeTimeEditText(java.sql.Time time);
+
+    void loadImageFromCamera(android.view.View view);
+
+    void loadImageFromGallery(android.view.View view);
+
+    void onActivityResult(int requestCode, int resultCode, Intent data);
+
+    String BitMapToString(Bitmap bitmap);
+
+    Bitmap StringToBitMap(String encodedString);
   }
 
   interface Presenter{
@@ -39,7 +51,6 @@ public interface AddRecipeContract {
     Recipe getRecipeAfterChangeScreen(String json);
 
     void setRecipeValueOnScreen();
-
   }
 
 }
