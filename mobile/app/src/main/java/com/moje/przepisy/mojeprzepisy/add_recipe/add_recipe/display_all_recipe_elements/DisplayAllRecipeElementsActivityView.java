@@ -43,6 +43,7 @@ public class DisplayAllRecipeElementsActivityView extends AppCompatActivity impl
     saveRecipeImageView.setOnClickListener(new OnClickListener() {
       @Override
       public void onClick(View view) {
+        // po kliknięciu powinno wysyłać dane do serwera - > dopisać
         SharedPreferences.Editor ingredientsEditor = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit();
         ingredientsEditor.remove(Constant.PREF_INGREDIENT);
         ingredientsEditor.apply();
@@ -52,13 +53,21 @@ public class DisplayAllRecipeElementsActivityView extends AppCompatActivity impl
         SharedPreferences.Editor recipeEditor = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit();
         recipeEditor.remove(Constant.PREF_RECIPE);
         recipeEditor.apply();
-        Toast.makeText(DisplayAllRecipeElementsActivityView.this, "Usunięte", Toast.LENGTH_SHORT).show();
       }
     });
 
     presenter = new DisplayAllRecipeElementsPresenter(this, new RecipeRepository(context));
 
     setToolbar();
+
+    recipeList = presenter.getRecipeListAfterChangeScreen(presenter.getRecipeListPojoFromPreferences(context));
+
+    if(recipeList != null){
+      presenter.setRecipeList(recipeList);
+      setRecipeRecyclerView(presenter.getRecipeList());
+    }else {
+      Toast.makeText(context, "Nie udało się pobrać głównych informacji o przepisie!", Toast.LENGTH_SHORT).show();
+    }
 
     ingredientList = presenter.getIngredientListAfterChangeScreen(presenter.getIngredientsPojoListFromPreferences(context));
 
@@ -69,14 +78,15 @@ public class DisplayAllRecipeElementsActivityView extends AppCompatActivity impl
       Toast.makeText(context, "Nie udało się pobrać składników!", Toast.LENGTH_SHORT).show();
     }
 
-    recipeList = presenter.getRecipeListAfterChangeScreen(presenter.getRecipeListPojoFromPreferences(context));
+    stepList = presenter.getStepListAfterChangeScreen(presenter.getStepsPojoListFromPreferences(context));
 
-    if(recipeList != null){
-      presenter.setRecipeList(recipeList);
-      setRecipeRecyclerView(presenter.getRecipeList());
+    if(stepList != null){
+      presenter.setStepList(stepList);
+      setStepsRecyclerView(presenter.getStepList());
     }else {
-      Toast.makeText(context, "Nie udało się pobrać składników!", Toast.LENGTH_SHORT).show();
+      Toast.makeText(context, "Nie udało się pobrać kroków!", Toast.LENGTH_SHORT).show();
     }
+
   }
 
   @Override
@@ -106,14 +116,14 @@ public class DisplayAllRecipeElementsActivityView extends AppCompatActivity impl
     recyclerView.setAdapter(adapter);
     recyclerView.setLayoutManager(new LinearLayoutManager(this));
   }
-/*
+
   @Override
   public void setStepsRecyclerView(List<Step> stepList) {
     StepsDisplayAdapter adapter = new StepsDisplayAdapter (this, stepList);
-    RecyclerView recyclerView = (RecyclerView) findViewById(R.id.addIngredientsRecyclerView);
+    RecyclerView recyclerView = (RecyclerView) findViewById(R.id.addStepsRecyclerView);
     recyclerView.setAdapter(adapter);
     recyclerView.setLayoutManager(new LinearLayoutManager(this));
-  }*/
+  }
 
   @Override
   public void onClick(View view) {

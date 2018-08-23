@@ -41,7 +41,6 @@
           android:layout_height="match_parent"
           android:layout_weight="1"
           android:gravity="center"
-          android:text="Główne informacje:"
           android:textColor="@color/primary_text"
           android:textSize="18sp"/>
         <ImageView
@@ -66,7 +65,7 @@
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:layout_below="@+id/addMainRecipeInfoRecyclerView"
-        android:background="@android:color/darker_gray"/>
+        android:background="@color/aqua_transparent"/>
 
       <LinearLayout
         android:id="@+id/ingredientsLayoutEOL"
@@ -102,7 +101,7 @@
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:layout_below="@+id/addIngredientsRecyclerView"
-        android:background="@android:color/darker_gray"/>
+        android:background="@color/aqua_transparent"/>
 
       <LinearLayout
         android:id="@+id/stepsLayoutEOL"

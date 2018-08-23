@@ -26,6 +26,7 @@ public class AddStepsActivityView extends AppCompatActivity implements AddStepCo
   @BindView(R.id.nextActionFab) FloatingActionButton nextActionFab;
   List<Step> stepList = new ArrayList<>();
   private AddStepContract.Presenter presenter;
+  int stepNumber = -1;
   Context context;
 
   @Override
@@ -50,7 +51,7 @@ public class AddStepsActivityView extends AppCompatActivity implements AddStepCo
       presenter.setStepList(stepList);
       setRecyclerView(presenter.getStepList());
     }else {
-      Step emptyStep = new Step("https://img.freepik.com/free-icon/gallery_318-131678.jpg?size=338c&ext=jpg", 1, "Opis kroku");
+      Step emptyStep = new Step("https://img.freepik.com/free-icon/gallery_318-131678.jpg?size=338c&ext=jpg", 0, "Opis kroku");
       presenter.getStepList().add(emptyStep);
       presenter.setStepList(presenter.getStepList());
       setRecyclerView(presenter.getStepList());
@@ -74,7 +75,8 @@ public class AddStepsActivityView extends AppCompatActivity implements AddStepCo
   public void onClick(View view) {
     if(view.getId() == R.id.addStepFab){
 
-      Step emptyStep = new Step("https://img.freepik.com/free-icon/gallery_318-131678.jpg?size=338c&ext=jpg", 1, "Opis kroku");
+      Step emptyStep = new Step("https://img.freepik.com/free-icon/gallery_318-131678.jpg?size=338c&ext=jpg", stepNumber + 1, "Opis kroku");
+      this.stepNumber = stepNumber + 1;
 
       presenter.getStepList().add(emptyStep);
       presenter.setStepList(presenter.getStepList());

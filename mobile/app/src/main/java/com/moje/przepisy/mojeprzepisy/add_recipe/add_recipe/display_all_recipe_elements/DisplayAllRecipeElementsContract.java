@@ -18,7 +18,7 @@ public interface DisplayAllRecipeElementsContract {
 
     void setIngredientsRecyclerView(List<Ingredient> ingredientList);
 
-//    void setStepsRecyclerView(List<Step> stepList);
+    void setStepsRecyclerView(List<Step> stepList);
   }
 
   interface Presenter {

@@ -15,12 +15,14 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.moje.przepisy.mojeprzepisy.R;
 import com.moje.przepisy.mojeprzepisy.data.model.Recipe;
+import com.moje.przepisy.mojeprzepisy.utils.SimpleConverter;
 import java.sql.Time;
 import java.util.List;
 
 public class MainRecipeInfoAdapter extends RecyclerView.Adapter<MainRecipeInfoAdapter.ViewHolder>{
   public Context context;
   private List<Recipe> recipeList;
+  private SimpleConverter converter = new SimpleConverter();
 
   MainRecipeInfoAdapter(Context context, List<Recipe> recipeList){
     this.context = context;
@@ -78,17 +80,7 @@ public class MainRecipeInfoAdapter extends RecyclerView.Adapter<MainRecipeInfoAd
       preparedTimeTextView.setText(recipePrepareTime.toString());
       cookTimeTextView.setText(recipeCookTime.toString());
       bakeTimeTextView.setText(recipeBakeTime.toString());
-      recipeImageView.setImageBitmap(StringToBitMap(recipeMainPicture));
-    }
-    public Bitmap StringToBitMap(String encodedString){
-      try{
-        byte [] encodeByte= Base64.decode(encodedString,Base64.DEFAULT);
-        Bitmap bitmap= BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
-        return bitmap;
-      }catch(Exception e){
-        e.getMessage();
-        return null;
-      }
+      recipeImageView.setImageBitmap(converter.StringToBitMap(recipeMainPicture));
     }
   }
 }

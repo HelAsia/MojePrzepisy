@@ -35,6 +35,7 @@ import com.moje.przepisy.mojeprzepisy.add_recipe.add_recipe.add_ingredients.AddI
 import com.moje.przepisy.mojeprzepisy.data.model.Recipe;
 import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.RecipeRepository;
 import com.moje.przepisy.mojeprzepisy.ui.MainCardsActivityView;
+import com.moje.przepisy.mojeprzepisy.utils.SimpleConverter;
 import com.moje.przepisy.mojeprzepisy.utils.TimeSetDialog;
 import java.io.ByteArrayOutputStream;
 import java.sql.Time;
@@ -59,6 +60,7 @@ public class AddRecipeActivityView extends AppCompatActivity implements AddRecip
   List<Recipe> recipeList = new ArrayList<>();
   TimeSetDialog timeSetDialog = new TimeSetDialog();
   private static int RESULT_LOAD_IMG = 1;
+  SimpleConverter converter = new SimpleConverter();
   String imgDecodableString;
   Context context;
 
@@ -123,7 +125,7 @@ public class AddRecipeActivityView extends AppCompatActivity implements AddRecip
     presenter.getRecipeList().get(position).setRecipeName(recipeNameEditText.getText().toString());
     BitmapDrawable drawable = (BitmapDrawable) mainPhotoImageView.getDrawable();
     Bitmap bitmap = drawable.getBitmap();
-    presenter.getRecipeList().get(position).setRecipeMainPictureId(BitMapToString(bitmap));
+    presenter.getRecipeList().get(position).setRecipeMainPictureId(converter.BitMapToString(bitmap));
     presenter.getRecipeList().get(position).setRecipeCategory((String) categoryChooseSpinner.getSelectedItem());
     presenter.getRecipeList().get(position).setRecipePrepareTime(java.sql.Time.valueOf(preparedTimeEditText.getText().toString()));
     presenter.getRecipeList().get(position).setRecipeCookTime(java.sql.Time.valueOf(cookTimeEditText.getText().toString()));
@@ -138,7 +140,7 @@ public class AddRecipeActivityView extends AppCompatActivity implements AddRecip
   }
 
   public void setMainPhotoImageView(String bitmapString){
-    mainPhotoImageView.setImageBitmap(StringToBitMap(bitmapString));
+    mainPhotoImageView.setImageBitmap(converter.StringToBitMap(bitmapString));
   }
 
   public void setCategoryChooseSpinner(String category){
@@ -236,24 +238,5 @@ public class AddRecipeActivityView extends AppCompatActivity implements AddRecip
   public void navigateToNextPage(){
     Intent intent = new Intent (AddRecipeActivityView.this, AddIngredientsActivityView.class);
     startActivity(intent);
-  }
-
-  public String BitMapToString(Bitmap bitmap) {
-    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-    bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
-    byte[] b = baos.toByteArray();
-    String bitmapInString = Base64.encodeToString(b, Base64.DEFAULT);
-    return bitmapInString;
-  }
-
-  public Bitmap StringToBitMap(String encodedString){
-    try{
-      byte [] encodeByte=Base64.decode(encodedString,Base64.DEFAULT);
-      Bitmap bitmap=BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
-      return bitmap;
-    }catch(Exception e){
-      e.getMessage();
-      return null;
-    }
   }
 }

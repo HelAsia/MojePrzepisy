@@ -92,7 +92,7 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> 
         public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
           int stepNumber = (int) adapterView.getSelectedItemId();
           Step updatedStep = new Step(stepList.get(getAdapterPosition()).getPhotoId(),
-              stepNumber, stepList.get(getAdapterPosition()).getStepDescription());
+              stepNumber + 1, stepList.get(getAdapterPosition()).getStepDescription());
           stepList.set(getAdapterPosition(), updatedStep);
 
           String pojoJson = convertPojoToJsonString(stepList);

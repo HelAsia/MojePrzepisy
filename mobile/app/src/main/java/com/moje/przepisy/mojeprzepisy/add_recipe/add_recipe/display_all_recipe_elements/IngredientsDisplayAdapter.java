@@ -17,7 +17,6 @@ import java.util.List;
 public class IngredientsDisplayAdapter extends RecyclerView.Adapter<IngredientsDisplayAdapter.ViewHolder> {
   public Context context;
   private List<Ingredient> ingredientList;
-  private Gson gson = new Gson();
 
   IngredientsDisplayAdapter(Context context, List<Ingredient> ingredientList){
     this.context = context;

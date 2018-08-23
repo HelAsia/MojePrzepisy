@@ -49,9 +49,10 @@
       android:text="TextView"/>
     <ImageView
       android:id="@+id/stepImageView"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      android:layout_width="300dp"
+      android:layout_height="300dp"
       android:layout_weight="1"
+      android:layout_gravity="center_horizontal"
       card_view:srcCompat="@android:drawable/ic_menu_gallery"/>
   </LinearLayout>
 

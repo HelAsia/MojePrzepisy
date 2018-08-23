@@ -2,7 +2,6 @@ package com.moje.przepisy.mojeprzepisy.add_recipe.add_recipe.add_main_recipe_pag
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import com.moje.przepisy.mojeprzepisy.data.model.Recipe;
 import java.util.List;
 
@@ -31,10 +30,6 @@ public interface AddRecipeContract {
     void loadImageFromGallery(android.view.View view);
 
     void onActivityResult(int requestCode, int resultCode, Intent data);
-
-    String BitMapToString(Bitmap bitmap);
-
-    Bitmap StringToBitMap(String encodedString);
   }
 
   interface Presenter{

@@ -20,6 +20,14 @@ card_view:cardElevation="50dp">
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+    <TextView
+      android:id="@+id/recipeNameTextView"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:gravity="center"
+      android:text="TextView"
+      android:textColor="@color/primary_text"
+      android:textSize="24sp"/>
     <ImageView
       android:id="@+id/recipeImageView"
       android:layout_width="300dp"
@@ -30,86 +38,111 @@ card_view:cardElevation="50dp">
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       android:orientation="horizontal">
-      <TextView
-        android:id="@+id/recipeNamePatternTextView"
-        android:layout_width="10dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.5"
-        android:text="Nazwa przepisu:"/>
-      <TextView
-        android:id="@+id/recipeNameTextView"
+      <ImageView
+        android:id="@+id/imageView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="0.5"
-        android:text="TextView"/>
-    </LinearLayout>
-    <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:orientation="horizontal">
-      <TextView
-        android:id="@+id/recipeCategoryPatternTextView"
-        android:layout_width="10dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.5"
-        android:text="Kategoria:"/>
+        card_view:srcCompat="@mipmap/ic_local_offer_black_18dp"/>
       <TextView
         android:id="@+id/recipeCategoryTextView"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="0.5"
+        android:gravity="center"
         android:text="TextView"/>
+    </LinearLayout>
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="20dp"
+      android:orientation="vertical">
     </LinearLayout>
     <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       android:orientation="horizontal">
-      <TextView
-        android:id="@+id/prepareTimePatternTextView"
-        android:layout_width="10dp"
+      <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Czas przygotowania:"/>
+        android:layout_weight="0.5"
+        card_view:srcCompat="@mipmap/ic_access_time_black_18dp"/>
+      <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="0.5"
+        card_view:srcCompat="@mipmap/restaurant"/>
       <TextView
         android:id="@+id/preparedTimeTextView"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="1"
+        android:gravity="center"
         android:text="TextView"/>
+    </LinearLayout>
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="10dp"
+      android:orientation="vertical">
     </LinearLayout>
     <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       android:orientation="horizontal">
-      <TextView
-        android:id="@+id/cookTimePatternTextView"
-        android:layout_width="10dp"
+      <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Czas gotowania:"/>
+        android:layout_weight="0.5"
+        card_view:srcCompat="@mipmap/ic_access_time_black_18dp"/>
+      <ImageView
+        android:id="@+id/imageView8"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="0.5"
+        card_view:srcCompat="@mipmap/cook_icon"/>
       <TextView
         android:id="@+id/cookTimeTextView"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="1"
+        android:gravity="center"
         android:text="TextView"/>
+    </LinearLayout>
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="10dp"
+      android:orientation="vertical">
     </LinearLayout>
     <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       android:orientation="horizontal">
-      <TextView
-        android:id="@+id/bakeTimePatternTextView"
-        android:layout_width="10dp"
+      <ImageView
+        android:id="@+id/imageView9"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Czas pieczenia:"/>
+        android:layout_weight="0.5"
+        card_view:srcCompat="@mipmap/ic_access_time_black_18dp"/>
+      <ImageView
+        android:id="@+id/imageView10"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="0.5"
+        card_view:srcCompat="@mipmap/bake_icon"/>
       <TextView
         android:id="@+id/bakeTimeTextView"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="1"
+        android:gravity="center"
         android:text="TextView"/>
+    </LinearLayout>
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="10dp"
+      android:orientation="vertical">
     </LinearLayout>
   </LinearLayout>
 </android.support.v7.widget.CardView>
