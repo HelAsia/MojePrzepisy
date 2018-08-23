@@ -2,8 +2,8 @@ package com.moje.przepisy.mojeprzepisy.data.network;
 
 import com.moje.przepisy.mojeprzepisy.data.model.Comment;
 import com.moje.przepisy.mojeprzepisy.data.model.Ingredient;
-import com.moje.przepisy.mojeprzepisy.data.model.PhotoRecipe;
 import com.moje.przepisy.mojeprzepisy.data.model.Recipe;
+import com.moje.przepisy.mojeprzepisy.data.model.PhotoRecipe;
 import com.moje.przepisy.mojeprzepisy.data.model.Step;
 import java.util.List;
 import retrofit2.Call;

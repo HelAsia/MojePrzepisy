@@ -4,11 +4,11 @@ public class Ingredient {
   private int ingredientId;
   private int recipeId;
   private int ingredientQuantity;
-  private int ingredientUnit;
+  private String ingredientUnit;
   private String ingredientName;
   private String ingredientGroup;
 
-  public Ingredient(int ingredientQuantity, int ingredientUnit, String ingredientName){
+  public Ingredient(int ingredientQuantity, String ingredientUnit, String ingredientName){
     this.ingredientQuantity = ingredientQuantity;
     this.ingredientUnit = ingredientUnit;
     this.ingredientName = ingredientName;
@@ -30,7 +30,7 @@ public class Ingredient {
     return ingredientQuantity;
   }
 
-  public int getIngredientUnit() {
+  public String getIngredientUnit() {
     return ingredientUnit;
   }
 
@@ -54,7 +54,7 @@ public class Ingredient {
     this.ingredientQuantity = ingredientQuantity;
   }
 
-  public void setIngredientUnit(int ingredientUnit) {
+  public void setIngredientUnit(String ingredientUnit) {
     this.ingredientUnit = ingredientUnit;
   }
 

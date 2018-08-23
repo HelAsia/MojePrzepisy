@@ -5,7 +5,7 @@ public class Recipe {
   private String recipeMainPictureId;
   private String recipeName;
   private String recipeDescription;
-  private int recipeCategory;
+  private String recipeCategory;
   private java.sql.Time recipePrepareTime;
   private java.sql.Time recipeCookTime;
   private java.sql.Time recipeBakeTime;
@@ -70,11 +70,11 @@ public class Recipe {
     this.recipeBakeTime = recipeBakeTime;
   }
 
-  public int getRecipeCategory() {
+  public String getRecipeCategory() {
     return recipeCategory;
   }
 
-  public void setRecipeCategory(int recipeCategory) {
+  public void setRecipeCategory(String recipeCategory) {
     this.recipeCategory = recipeCategory;
   }
 }

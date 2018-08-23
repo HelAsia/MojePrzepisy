@@ -22,6 +22,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -113,7 +114,7 @@ public class AddRecipeActivityView extends AppCompatActivity implements AddRecip
     BitmapDrawable drawable = (BitmapDrawable) mainPhotoImageView.getDrawable();
     Bitmap bitmap = drawable.getBitmap();
     presenter.getRecipe().setRecipeMainPictureId(BitMapToString(bitmap));
-    presenter.getRecipe().setRecipeCategory((int)categoryChooseSpinner.getSelectedItemId());
+    presenter.getRecipe().setRecipeCategory((String) categoryChooseSpinner.getSelectedItem());
     presenter.getRecipe().setRecipePrepareTime(java.sql.Time.valueOf(preparedTimeEditText.getText().toString()));
     presenter.getRecipe().setRecipeCookTime(java.sql.Time.valueOf(cookTimeEditText.getText().toString()));
     presenter.getRecipe().setRecipeBakeTime(java.sql.Time.valueOf(bakeTimeEditText.getText().toString()));
@@ -130,8 +131,10 @@ public class AddRecipeActivityView extends AppCompatActivity implements AddRecip
     mainPhotoImageView.setImageBitmap(StringToBitMap(bitmapString));
   }
 
-  public void setCategoryChooseSpinner(int position){
-    categoryChooseSpinner.setSelection(position);
+  public void setCategoryChooseSpinner(String category){
+    ArrayAdapter myAdap = (ArrayAdapter)  categoryChooseSpinner.getAdapter();
+    int categorySpinnerPosition = myAdap.getPosition(category);
+    categoryChooseSpinner.setSelection(categorySpinnerPosition);
   }
 
   public void setPreparedTimeEditText(java.sql.Time time){

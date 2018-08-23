@@ -21,10 +21,10 @@
   </android.support.v7.widget.Toolbar>
 
   <ScrollView
-    android:id="@+id/scrollViewAddIngredientLayout"
+    android:id="@+id/scrollViewLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_below="@id/toolbar_add_ingredient">
+    android:layout_below="@id/toolbar_whole_recipe">
 
     <android.support.v7.widget.RecyclerView
       android:id="@+id/addStepsRecyclerView"

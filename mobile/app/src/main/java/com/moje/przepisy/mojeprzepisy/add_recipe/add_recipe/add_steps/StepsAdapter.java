@@ -144,6 +144,7 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> 
       });
     }
 
+
     void bind(Step step) {
       int stepNumber = step.getStepNumber();
       String stepDescription = step.getStepDescription();

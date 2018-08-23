@@ -49,7 +49,7 @@ public class AddIngredientsActivityView extends AppCompatActivity implements Add
       presenter.setIngredientList(ingredientList);
       setRecyclerView(presenter.getIngredientList());
     }else {
-      Ingredient emptyIngredient = new Ingredient(1, 1, "np. cukier");
+      Ingredient emptyIngredient = new Ingredient(1, "kg", "np. cukier");
       presenter.getIngredientList().add(emptyIngredient);
       presenter.setIngredientList(presenter.getIngredientList());
       setRecyclerView(presenter.getIngredientList());
@@ -74,7 +74,7 @@ public class AddIngredientsActivityView extends AppCompatActivity implements Add
   public void onClick(View view){
     if(view.getId() == R.id.addIngredientFab){
 
-      Ingredient emptyIngredient = new Ingredient(1, 1, "np. cukier");
+      Ingredient emptyIngredient = new Ingredient(1, "kg", "np. cukier");
 
       presenter.getIngredientList().add(emptyIngredient);
       presenter.setIngredientList(ingredientList);
@@ -92,7 +92,7 @@ public class AddIngredientsActivityView extends AppCompatActivity implements Add
   }
 
   public void setToolbar() {
-    Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_add_ingredient);
+    Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_whole_recipe);
     toolbar.setSubtitle(R.string.add_recipe_title_step_two);
     setSupportActionBar(toolbar);
   }

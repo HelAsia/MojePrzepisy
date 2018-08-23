@@ -13,6 +13,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -120,7 +121,7 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
       ingredientUnitSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
         @Override
         public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
-            int ingredientUnit = (int) adapterView.getSelectedItemId();
+            String ingredientUnit = (String) adapterView.getSelectedItem();
 
             Ingredient updatedIngredient = new Ingredient(ingredientList.get(getAdapterPosition()).getIngredientQuantity(), ingredientUnit, ingredientList.get(getAdapterPosition()).getIngredientName());
             ingredientList.set(getAdapterPosition(), updatedIngredient);
@@ -137,11 +138,13 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
 
     void bind(Ingredient ingredient) {
       int ingredientQuantity = ingredient.getIngredientQuantity();
-      int ingredientUnit = ingredient.getIngredientUnit();
+      String ingredientUnit = ingredient.getIngredientUnit();
       String ingredientName = ingredient.getIngredientName();
 
+      ArrayAdapter myAdap = (ArrayAdapter)  ingredientUnitSpinner.getAdapter();
+      int ingredientUnitSpinnerPosition = myAdap.getPosition(ingredientUnit);
       ingredientQuantityEditText.setText(Integer.toString(ingredientQuantity));
-      ingredientUnitSpinner.setSelection(ingredientUnit);
+      ingredientUnitSpinner.setSelection(ingredientUnitSpinnerPosition);
       ingredientNameEditText.setText(ingredientName);
     }
   }

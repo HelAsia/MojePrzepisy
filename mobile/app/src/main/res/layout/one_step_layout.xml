@@ -64,9 +64,14 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_weight="0.1"
+      android:minLines="6"
+      android:lines="8"
+      android:gravity="top|left"
+      android:maxLines="10"
       android:ems="10"
       android:hint="@string/description"
-      android:inputType="textPersonName"/>
+      android:scrollbars="vertical"
+      android:inputType="textMultiLine"/>
     <LinearLayout
       android:id="@+id/loadPhotoLayout"
       android:layout_width="match_parent"

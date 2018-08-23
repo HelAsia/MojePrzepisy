@@ -91,7 +91,7 @@
   <string name="set_time_title">Ustaw czas (HH:MM)</string>
   <string name="set_time">Ustaw</string>
 
-  <string name="add_time">Dodaj czas</string>
+  <string name="add_time">HH:MM</string>
 
   <string name="rating_name">Ocena przepisu:</string>
 

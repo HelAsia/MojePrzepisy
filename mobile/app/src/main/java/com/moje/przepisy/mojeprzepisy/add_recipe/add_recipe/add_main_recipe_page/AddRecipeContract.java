@@ -17,7 +17,7 @@ public interface AddRecipeContract {
 
     void setMainPhotoImageView(String bitmapString);
 
-    void setCategoryChooseSpinner(int position);
+    void setCategoryChooseSpinner(String category);
 
     void setPreparedTimeEditText(java.sql.Time time);
 
