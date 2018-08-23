@@ -14,7 +14,7 @@ public interface DisplayAllRecipeElementsContract {
 
     Context getContext();
 
- //   void setRecipeRecyclerView(List<Recipe> recipeList);
+    void setRecipeRecyclerView(List<Recipe> recipeList);
 
     void setIngredientsRecyclerView(List<Ingredient> ingredientList);
 
@@ -25,19 +25,27 @@ public interface DisplayAllRecipeElementsContract {
 
     List<Recipe> getRecipeList();
 
-    void setRecipeList(List<Recipe> recipe);
+    void setRecipeList(List<Recipe> recipeList);
 
     List<Ingredient> getIngredientList();
 
-    void setIngredientList(List<Ingredient> ingredient);
+    void setIngredientList(List<Ingredient> ingredientList);
 
     List<Step> getStepList();
 
-    void setStepList(List<Step> step);
+    void setStepList(List<Step> stepList);
 
-    String getPojoListFromPreferences(Context context);
+    String getIngredientsPojoListFromPreferences(Context context);
 
     List<Ingredient> getIngredientListAfterChangeScreen(String jsonList);
+
+    String getRecipeListPojoFromPreferences(Context context);
+
+    List<Recipe> getRecipeListAfterChangeScreen(String jsonList);
+
+    String getStepsPojoListFromPreferences(Context context);
+
+    List<Step> getStepListAfterChangeScreen(String jsonList);
 
   }
 

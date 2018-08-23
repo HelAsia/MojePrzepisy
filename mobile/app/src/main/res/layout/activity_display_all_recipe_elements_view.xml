@@ -30,80 +30,116 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content">
 
-      <TextView
-        android:id="@+id/recipeMainInfoTextViewEOL"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/primary_text"
-        android:text="Przepis"/>
+      <LinearLayout
+        android:id="@+id/recipeMainInfoLayoutEOL"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+        <TextView
+          android:id="@+id/recipeMainInfoTextViewEOL"
+          android:layout_width="100dp"
+          android:layout_height="match_parent"
+          android:layout_weight="1"
+          android:gravity="center"
+          android:text="Główne informacje:"
+          android:textColor="@color/primary_text"
+          android:textSize="18sp"/>
+        <ImageView
+          android:id="@+id/recipeEditImageView"
+          android:layout_width="20dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          app:srcCompat="@android:drawable/ic_menu_edit"/>
+
+      </LinearLayout>
 
       <android.support.v7.widget.RecyclerView
         android:id="@+id/addMainRecipeInfoRecyclerView"
-        android:layout_below="@+id/recipeMainInfoTextViewEOL"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/recipeMainInfoLayoutEOL"
         android:scrollbars="vertical">
       </android.support.v7.widget.RecyclerView>
 
-      <Button
-        android:id="@+id/recipeEditButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+      <View
+        android:id="@+id/deviderOne"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
         android:layout_below="@+id/addMainRecipeInfoRecyclerView"
-        android:text="Edytuj główne informacje o przepisie"/>
+        android:background="@android:color/darker_gray"/>
 
-      <TextView
-        android:id="@+id/ingredientsTextViewEOL"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/recipeEditButton"
-        android:text="Składniki:"
-        android:textColor="@color/primary_text"/>
-
+      <LinearLayout
+        android:id="@+id/ingredientsLayoutEOL"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/deviderOne"
+        android:orientation="horizontal">
+        <TextView
+          android:id="@+id/ingredientsTextViewEOL"
+          android:layout_width="100dp"
+          android:layout_height="match_parent"
+          android:layout_weight="1"
+          android:gravity="center"
+          android:text="Składniki:"
+          android:textColor="@color/primary_text"
+          android:textSize="18sp"/>
+        <ImageView
+          android:id="@+id/ingredientsEditImageView"
+          android:layout_width="20dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          app:srcCompat="@android:drawable/ic_menu_edit"/>
+      </LinearLayout>
       <android.support.v7.widget.RecyclerView
         android:id="@+id/addIngredientsRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/ingredientsTextViewEOL"
+        android:layout_below="@+id/ingredientsLayoutEOL"
         android:scrollbars="vertical"/>
 
-      <Button
-        android:id="@+id/IngredientsEditButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+      <View
+        android:id="@+id/deviderTwo"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
         android:layout_below="@+id/addIngredientsRecyclerView"
-        android:text="Edytuj główne informacje o przepisie"/>
+        android:background="@android:color/darker_gray"/>
 
-      <TextView
-        android:id="@+id/stepsTextViewEOL"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/IngredientsEditButton"
-        android:text="Kroki:"
-        android:textColor="@color/primary_text"/>
-
-
+      <LinearLayout
+        android:id="@+id/stepsLayoutEOL"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/deviderTwo"
+        android:orientation="horizontal">
+        <TextView
+          android:id="@+id/stepsTextViewEOL"
+          android:layout_width="100dp"
+          android:layout_height="match_parent"
+          android:layout_weight="1"
+          android:gravity="center"
+          android:text="Kroki:"
+          android:textColor="@color/primary_text"
+          android:textSize="18sp"/>
+        <ImageView
+          android:id="@+id/stepsEditImageView"
+          android:layout_width="20dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          app:srcCompat="@android:drawable/ic_menu_edit"/>
+      </LinearLayout>
       <android.support.v7.widget.RecyclerView
         android:id="@+id/addStepsRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/stepsTextViewEOL"
+        android:layout_below="@+id/stepsLayoutEOL"
         android:scrollbars="vertical"/>
 
-      <Button
-        android:id="@+id/StepsEditButton"
+      <ImageView
+        android:id="@+id/saveRecipeImageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/addStepsRecyclerView"
-        android:text="Edytuj główne informacje o przepisie"/>
-
-      <Button
-        android:id="@+id/saveRecipeButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/StepsEditButton"
-        android:text="Zapisz przepis"/>
+        app:srcCompat="@android:drawable/ic_menu_save"/>
 
     </RelativeLayout>
   </ScrollView>

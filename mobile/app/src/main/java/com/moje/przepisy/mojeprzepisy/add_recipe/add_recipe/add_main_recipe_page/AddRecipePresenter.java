@@ -4,14 +4,18 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.moje.przepisy.mojeprzepisy.data.model.Recipe;
 import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.RecipeRepository;
 import com.moje.przepisy.mojeprzepisy.utils.Constant;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AddRecipePresenter implements AddRecipeContract.Presenter{
   private RecipeRepository recipeRepository;
   private AddRecipeContract.View recipeView;
-  private Recipe recipe = new Recipe();
+  private List<Recipe> recipeList = new ArrayList<>();
   private Gson gson = new Gson();
 
   public AddRecipePresenter(AddRecipeContract.View recipeView, RecipeRepository recipeRepository){
@@ -20,44 +24,47 @@ public class AddRecipePresenter implements AddRecipeContract.Presenter{
   }
 
   @Override
-  public Recipe getRecipe(){
-    return recipe;
+  public List<Recipe> getRecipeList(){
+    return recipeList;
   }
 
   @Override
-  public void setRecipe(Recipe recipe){
-    this.recipe = recipe;
+  public void setRecipe(List<Recipe> recipeList){
+    this.recipeList = recipeList;
   }
 
   @Override
-  public String convertPojoToJsonString(Recipe recipe) {
-    return gson.toJson(recipe);
+  public String convertPojoToJsonString(List<Recipe> recipeList) {
+    Type type = new TypeToken<List<Recipe>>(){}.getType();
+    return gson.toJson(recipeList, type);
   }
 
   @Override
-  public void addPojoToPreferences(String json, Context context) {
+  public void addPojoToPreferences(String jsonList, Context context) {
     SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
-    editor.putString(Constant.PREF_RECIPE, json).apply();
+    editor.putString(Constant.PREF_RECIPE, jsonList).apply();
     editor.commit();
   }
 
   public void setRecipeValueOnScreen(){
-    setRecipe(getRecipeAfterChangeScreen(getPojoFromPreferences(recipeView.getContext())));
-    recipeView.setMainPhotoImageView(getRecipe().getRecipeMainPictureId());
-    recipeView.setRecipeNameEditText(getRecipe().getRecipeName());
-    recipeView.setCategoryChooseSpinner(getRecipe().getRecipeCategory());
-    recipeView.setPreparedTimeEditText(getRecipe().getRecipePrepareTime());
-    recipeView.setCookTimeEditText(getRecipe().getRecipeCookTime());
-    recipeView.setBakeTimeEditText(getRecipe().getRecipeBakeTime());
+    int position = 0;
+    setRecipe(getRecipeAfterChangeScreen(getPojoListFromPreferences(recipeView.getContext())));
+    recipeView.setMainPhotoImageView(getRecipeList().get(position).getRecipeMainPictureId());
+    recipeView.setRecipeNameEditText(getRecipeList().get(position).getRecipeName());
+    recipeView.setCategoryChooseSpinner(getRecipeList().get(position).getRecipeCategory());
+    recipeView.setPreparedTimeEditText(getRecipeList().get(position).getRecipePrepareTime());
+    recipeView.setCookTimeEditText(getRecipeList().get(position).getRecipeCookTime());
+    recipeView.setBakeTimeEditText(getRecipeList().get(position).getRecipeBakeTime());
   }
 
   @Override
-  public String getPojoFromPreferences(Context context) {
+  public String getPojoListFromPreferences(Context context) {
     return PreferenceManager.getDefaultSharedPreferences(context).getString(Constant.PREF_RECIPE, null);
   }
 
   @Override
-  public Recipe getRecipeAfterChangeScreen(String json) {
-    return gson.fromJson(json, Recipe.class);
+  public List<Recipe> getRecipeAfterChangeScreen(String jsonList) {
+    Type type = new TypeToken<List<Recipe>>() {}.getType();
+    return gson.fromJson(jsonList, type);
   }
 }

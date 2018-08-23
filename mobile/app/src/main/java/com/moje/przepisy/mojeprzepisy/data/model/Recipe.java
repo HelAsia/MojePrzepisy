@@ -1,8 +1,20 @@
 package com.moje.przepisy.mojeprzepisy.data.model;
 
+import java.sql.Time;
+
 public class Recipe {
   private int recipeId;
   private String recipeMainPictureId;
+
+  public Recipe(String recipeName,String recipeCategory, Time recipePrepareTime, Time recipeCookTime,
+      Time recipeBakeTime) {
+    this.recipeName = recipeName;
+    this.recipeCategory = recipeCategory;
+    this.recipePrepareTime = recipePrepareTime;
+    this.recipeCookTime = recipeCookTime;
+    this.recipeBakeTime = recipeBakeTime;
+  }
+
   private String recipeName;
   private String recipeDescription;
   private String recipeCategory;

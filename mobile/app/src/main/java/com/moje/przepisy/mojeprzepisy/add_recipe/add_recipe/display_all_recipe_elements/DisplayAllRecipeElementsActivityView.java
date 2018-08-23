@@ -10,12 +10,11 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.moje.przepisy.mojeprzepisy.R;
-import com.moje.przepisy.mojeprzepisy.add_recipe.add_recipe.add_ingredients.IngredientsAdapter;
 import com.moje.przepisy.mojeprzepisy.data.model.Ingredient;
 import com.moje.przepisy.mojeprzepisy.data.model.Recipe;
 import com.moje.przepisy.mojeprzepisy.data.model.Step;
@@ -31,6 +30,7 @@ public class DisplayAllRecipeElementsActivityView extends AppCompatActivity impl
   List<Ingredient> ingredientList = new ArrayList<>();
   List<Step> stepList = new ArrayList<>();
   Context context;
+  @BindView(R.id.saveRecipeImageView)ImageView saveRecipeImageView;
 
 
   @Override
@@ -40,7 +40,7 @@ public class DisplayAllRecipeElementsActivityView extends AppCompatActivity impl
     context = getApplicationContext();
     ButterKnife.bind(this);
 
-/*    cleanButton.setOnClickListener(new OnClickListener() {
+    saveRecipeImageView.setOnClickListener(new OnClickListener() {
       @Override
       public void onClick(View view) {
         SharedPreferences.Editor ingredientsEditor = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit();
@@ -54,17 +54,26 @@ public class DisplayAllRecipeElementsActivityView extends AppCompatActivity impl
         recipeEditor.apply();
         Toast.makeText(DisplayAllRecipeElementsActivityView.this, "Usunięte", Toast.LENGTH_SHORT).show();
       }
-    });*/
+    });
 
     presenter = new DisplayAllRecipeElementsPresenter(this, new RecipeRepository(context));
 
     setToolbar();
 
-    ingredientList = presenter.getIngredientListAfterChangeScreen(presenter.getPojoListFromPreferences(context));
+    ingredientList = presenter.getIngredientListAfterChangeScreen(presenter.getIngredientsPojoListFromPreferences(context));
 
     if(ingredientList != null){
       presenter.setIngredientList(ingredientList);
       setIngredientsRecyclerView(presenter.getIngredientList());
+    }else {
+      Toast.makeText(context, "Nie udało się pobrać składników!", Toast.LENGTH_SHORT).show();
+    }
+
+    recipeList = presenter.getRecipeListAfterChangeScreen(presenter.getRecipeListPojoFromPreferences(context));
+
+    if(recipeList != null){
+      presenter.setRecipeList(recipeList);
+      setRecipeRecyclerView(presenter.getRecipeList());
     }else {
       Toast.makeText(context, "Nie udało się pobrać składników!", Toast.LENGTH_SHORT).show();
     }
@@ -82,13 +91,13 @@ public class DisplayAllRecipeElementsActivityView extends AppCompatActivity impl
     return context;
   }
 
-/*  @Override
+  @Override
   public void setRecipeRecyclerView(List<Recipe> recipeList) {
     MainRecipeInfoAdapter adapter = new MainRecipeInfoAdapter(this, recipeList);
     RecyclerView recyclerView = (RecyclerView) findViewById(R.id.addMainRecipeInfoRecyclerView);
     recyclerView.setAdapter(adapter);
     recyclerView.setLayoutManager(new LinearLayoutManager(this));
-  }*/
+  }
 
   @Override
   public void setIngredientsRecyclerView(List<Ingredient> ingredientList) {

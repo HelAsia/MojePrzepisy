@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import com.moje.przepisy.mojeprzepisy.data.model.Recipe;
+import java.util.List;
 
 public interface AddRecipeContract {
 
@@ -38,17 +39,17 @@ public interface AddRecipeContract {
 
   interface Presenter{
 
-    Recipe getRecipe();
+    List<Recipe> getRecipeList();
 
-    void setRecipe(Recipe recipe);
+    void setRecipe(List<Recipe> recipeList);
 
-    String convertPojoToJsonString(Recipe recipe);
+    String convertPojoToJsonString(List<Recipe> recipeList);
 
     void addPojoToPreferences(String json, Context context);
 
-    String getPojoFromPreferences(Context context);
+    String getPojoListFromPreferences(Context context);
 
-    Recipe getRecipeAfterChangeScreen(String json);
+    List<Recipe> getRecipeAfterChangeScreen(String jsonList);
 
     void setRecipeValueOnScreen();
   }

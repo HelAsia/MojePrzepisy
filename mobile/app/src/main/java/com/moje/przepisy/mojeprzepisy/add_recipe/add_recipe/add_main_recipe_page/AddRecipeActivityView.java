@@ -37,6 +37,9 @@ import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.RecipeRepositor
 import com.moje.przepisy.mojeprzepisy.ui.MainCardsActivityView;
 import com.moje.przepisy.mojeprzepisy.utils.TimeSetDialog;
 import java.io.ByteArrayOutputStream;
+import java.sql.Time;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AddRecipeActivityView extends AppCompatActivity implements AddRecipeContract.View,
     View.OnClickListener {
@@ -53,6 +56,7 @@ public class AddRecipeActivityView extends AppCompatActivity implements AddRecip
   @BindView(R.id.galleryImageView) ImageView galleryImageView;
   @BindView(R.id.cameraImageView) ImageView cameraImageView;
   private AddRecipeContract.Presenter presenter;
+  List<Recipe> recipeList = new ArrayList<>();
   TimeSetDialog timeSetDialog = new TimeSetDialog();
   private static int RESULT_LOAD_IMG = 1;
   String imgDecodableString;
@@ -77,9 +81,14 @@ public class AddRecipeActivityView extends AppCompatActivity implements AddRecip
 
     setToolbar();
 
-    Recipe recipe = presenter.getRecipeAfterChangeScreen(presenter.getPojoFromPreferences(context));
-    if(recipe != null){
+    recipeList = presenter.getRecipeAfterChangeScreen(presenter.getPojoListFromPreferences(context));
+    if(recipeList != null){
       presenter.setRecipeValueOnScreen();
+    }else {
+      Time ts = new Time(503000);
+      Recipe recipe = new Recipe("Nazwa przepisu", "Przekąski", ts, ts, ts);
+      presenter.getRecipeList().add(recipe);
+      presenter.setRecipe(presenter.getRecipeList());
     }
   }
 
@@ -110,16 +119,17 @@ public class AddRecipeActivityView extends AppCompatActivity implements AddRecip
   }
 
   public void setRecipeValueInPreferences(){
-    presenter.getRecipe().setRecipeName(recipeNameEditText.getText().toString());
+    int position = 0;
+    presenter.getRecipeList().get(position).setRecipeName(recipeNameEditText.getText().toString());
     BitmapDrawable drawable = (BitmapDrawable) mainPhotoImageView.getDrawable();
     Bitmap bitmap = drawable.getBitmap();
-    presenter.getRecipe().setRecipeMainPictureId(BitMapToString(bitmap));
-    presenter.getRecipe().setRecipeCategory((String) categoryChooseSpinner.getSelectedItem());
-    presenter.getRecipe().setRecipePrepareTime(java.sql.Time.valueOf(preparedTimeEditText.getText().toString()));
-    presenter.getRecipe().setRecipeCookTime(java.sql.Time.valueOf(cookTimeEditText.getText().toString()));
-    presenter.getRecipe().setRecipeBakeTime(java.sql.Time.valueOf(bakeTimeEditText.getText().toString()));
+    presenter.getRecipeList().get(position).setRecipeMainPictureId(BitMapToString(bitmap));
+    presenter.getRecipeList().get(position).setRecipeCategory((String) categoryChooseSpinner.getSelectedItem());
+    presenter.getRecipeList().get(position).setRecipePrepareTime(java.sql.Time.valueOf(preparedTimeEditText.getText().toString()));
+    presenter.getRecipeList().get(position).setRecipeCookTime(java.sql.Time.valueOf(cookTimeEditText.getText().toString()));
+    presenter.getRecipeList().get(position).setRecipeBakeTime(java.sql.Time.valueOf(bakeTimeEditText.getText().toString()));
 
-    String pojoJson = presenter.convertPojoToJsonString(presenter.getRecipe());
+    String pojoJson = presenter.convertPojoToJsonString(presenter.getRecipeList());
     presenter.addPojoToPreferences(pojoJson, context);
   }
 

@@ -17,6 +17,8 @@ public class DisplayAllRecipeElementsPresenter implements DisplayAllRecipeElemen
   private RecipeRepository recipeRepository;
   private DisplayAllRecipeElementsContract.View recipeElementsView;
   private List<Ingredient> ingredientList = new ArrayList<>();
+  private List<Recipe> recipeList = new ArrayList<>();
+  private List<Step> stepList = new ArrayList<>();
   private Gson gson = new Gson();
 
   public DisplayAllRecipeElementsPresenter(DisplayAllRecipeElementsContract.View recipeElementsView, RecipeRepository recipeRepository){
@@ -26,12 +28,12 @@ public class DisplayAllRecipeElementsPresenter implements DisplayAllRecipeElemen
 
   @Override
   public List<Recipe> getRecipeList() {
-    return null;
+    return recipeList;
   }
 
   @Override
-  public void setRecipeList(List<Recipe> recipe) {
-
+  public void setRecipeList(List<Recipe> recipeList) {
+    this.recipeList = recipeList;
   }
 
   @Override
@@ -46,17 +48,17 @@ public class DisplayAllRecipeElementsPresenter implements DisplayAllRecipeElemen
 
   @Override
   public List<Step> getStepList() {
-    return null;
+    return stepList;
   }
 
   @Override
-  public void setStepList(List<Step> step) {
-
+  public void setStepList(List<Step> stepList) {
+    this.stepList = stepList;
   }
 
 
   @Override
-  public String getPojoListFromPreferences(Context context) {
+  public String getIngredientsPojoListFromPreferences(Context context) {
     return PreferenceManager
         .getDefaultSharedPreferences(context).getString(Constant.PREF_INGREDIENT, null);
   }
@@ -64,6 +66,30 @@ public class DisplayAllRecipeElementsPresenter implements DisplayAllRecipeElemen
   @Override
   public List<Ingredient> getIngredientListAfterChangeScreen(String jsonList) {
     Type type = new TypeToken<List<Ingredient>>() {}.getType();
+    return gson.fromJson(jsonList, type);
+  }
+
+  @Override
+  public String getRecipeListPojoFromPreferences(Context context) {
+    return PreferenceManager
+        .getDefaultSharedPreferences(context).getString(Constant.PREF_RECIPE, null);
+  }
+
+  @Override
+  public List<Recipe> getRecipeListAfterChangeScreen(String jsonList) {
+    Type type = new TypeToken<List<Recipe>>() {}.getType();
+    return gson.fromJson(jsonList, type);
+  }
+
+  @Override
+  public String getStepsPojoListFromPreferences(Context context) {
+    return PreferenceManager
+        .getDefaultSharedPreferences(context).getString(Constant.PREF_STEP, null);
+  }
+
+  @Override
+  public List<Step> getStepListAfterChangeScreen(String jsonList) {
+    Type type = new TypeToken<List<Step>>() {}.getType();
     return gson.fromJson(jsonList, type);
   }
 }
