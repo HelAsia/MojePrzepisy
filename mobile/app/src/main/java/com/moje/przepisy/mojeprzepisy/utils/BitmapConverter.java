@@ -5,7 +5,7 @@ import android.graphics.BitmapFactory;
 import android.util.Base64;
 import java.io.ByteArrayOutputStream;
 
-public class SimpleConverter {
+public class BitmapConverter {
   public String BitMapToString(Bitmap bitmap) {
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
@@ -22,5 +22,4 @@ public class SimpleConverter {
       return null;
     }
   }
-
 }

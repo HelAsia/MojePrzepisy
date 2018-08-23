@@ -1,11 +1,8 @@
 package com.moje.przepisy.mojeprzepisy.add_recipe.add_recipe.display_all_recipe_elements;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,14 +12,14 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.moje.przepisy.mojeprzepisy.R;
 import com.moje.przepisy.mojeprzepisy.data.model.Recipe;
-import com.moje.przepisy.mojeprzepisy.utils.SimpleConverter;
+import com.moje.przepisy.mojeprzepisy.utils.BitmapConverter;
 import java.sql.Time;
 import java.util.List;
 
 public class MainRecipeInfoAdapter extends RecyclerView.Adapter<MainRecipeInfoAdapter.ViewHolder>{
   public Context context;
   private List<Recipe> recipeList;
-  private SimpleConverter converter = new SimpleConverter();
+  private BitmapConverter converter = new BitmapConverter();
 
   MainRecipeInfoAdapter(Context context, List<Recipe> recipeList){
     this.context = context;

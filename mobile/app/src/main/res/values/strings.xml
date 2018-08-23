@@ -99,5 +99,8 @@
   <string name="all_steps_description">Cały opis</string>
 
   <string name="edit">Edytuj</string>
+  <string name="set_url">Podaj adres URL zdjęcia</string>
+  <string name="save">Zapisz</string>
+  <string name="url_address">Adres URL</string>
 
 </resources>

@@ -20,7 +20,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Base64;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -29,15 +28,15 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import butterknife.BindView;
+
 import butterknife.ButterKnife;
 import com.moje.przepisy.mojeprzepisy.R;
 import com.moje.przepisy.mojeprzepisy.add_recipe.add_recipe.add_ingredients.AddIngredientsActivityView;
 import com.moje.przepisy.mojeprzepisy.data.model.Recipe;
 import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.RecipeRepository;
 import com.moje.przepisy.mojeprzepisy.ui.MainCardsActivityView;
-import com.moje.przepisy.mojeprzepisy.utils.SimpleConverter;
+import com.moje.przepisy.mojeprzepisy.utils.BitmapConverter;
 import com.moje.przepisy.mojeprzepisy.utils.TimeSetDialog;
-import java.io.ByteArrayOutputStream;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
@@ -56,11 +55,14 @@ public class AddRecipeActivityView extends AppCompatActivity implements AddRecip
   @BindView(R.id.bakeTimeEditText) TextView bakeTimeEditText;
   @BindView(R.id.galleryImageView) ImageView galleryImageView;
   @BindView(R.id.cameraImageView) ImageView cameraImageView;
+  @BindView(R.id.URLImageView) ImageView URLImageView;
   private AddRecipeContract.Presenter presenter;
   List<Recipe> recipeList = new ArrayList<>();
   TimeSetDialog timeSetDialog = new TimeSetDialog();
+  URLDialog urlDialog = new URLDialog();
   private static int RESULT_LOAD_IMG = 1;
-  SimpleConverter converter = new SimpleConverter();
+  BitmapConverter converter = new BitmapConverter();
+  String imageUrlAddress;
   String imgDecodableString;
   Context context;
 
@@ -80,6 +82,7 @@ public class AddRecipeActivityView extends AppCompatActivity implements AddRecip
     bakeTimeEditText.setOnClickListener(this);
     galleryImageView.setOnClickListener(this);
     cameraImageView.setOnClickListener(this);
+    URLImageView.setOnClickListener(this);
 
     setToolbar();
 
@@ -117,6 +120,8 @@ public class AddRecipeActivityView extends AppCompatActivity implements AddRecip
       loadImageFromGallery(view);
     }else if(view.getId() == R.id.cameraImageView){
       loadImageFromCamera(view);
+    }else if(view.getId() == R.id.URLImageView){
+      urlDialog.showDialog(AddRecipeActivityView.this, mainPhotoImageView);
     }
   }
 

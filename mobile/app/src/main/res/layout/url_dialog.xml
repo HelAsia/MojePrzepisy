@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:card_view="http://schemas.android.com/apk/res-auto"
+  android:id="@+id/url_dialog_my_card_view_layout"
+  android:orientation="vertical"
+  android:layout_width="wrap_content"
+  android:layout_height="wrap_content"
+  android:layout_margin="10dp"
+  android:background="@color/white"
+  android:foreground="?android:attr/selectableItemBackground"
+  card_view:cardCornerRadius="30dp"
+  card_view:cardBackgroundColor="@color/white"
+  card_view:cardElevation="50dp">
+
+  <RelativeLayout
+    android:id="@+id/main_time_set_dialog_layout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <LinearLayout
+      android:id="@+id/first_space_layout"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/space_layout_size"
+      android:orientation="vertical">
+    </LinearLayout>
+    <TextView
+      android:id="@+id/setURL_TextView"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_below="@+id/first_space_layout"
+      android:gravity="center"
+      android:text="@string/set_url"/>
+    <LinearLayout
+      android:id="@+id/second_space_layout"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/space_layout_size"
+      android:layout_below="@+id/setURL_TextView"
+      android:orientation="vertical">
+    </LinearLayout>
+    <EditText
+      android:id="@+id/setURL_EditText"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:ems="10"
+      android:inputType="textUri"
+      android:gravity="center"
+      android:layout_below="@+id/second_space_layout"
+      android:hint="@string/url_address"/>
+
+    <Button
+      android:id="@+id/set_url_button"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_below="@+id/setURL_EditText"
+      android:layout_centerHorizontal="true"
+      android:background="@drawable/bright_buton_wuth_rounded_corners"
+      android:text="@string/save"/>
+
+    <LinearLayout
+      android:id="@+id/third_space_layout"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/space_layout_size"
+      android:layout_below="@+id/set_time_button"
+      android:orientation="vertical">
+    </LinearLayout>
+  </RelativeLayout>
+</android.support.v7.widget.CardView>
