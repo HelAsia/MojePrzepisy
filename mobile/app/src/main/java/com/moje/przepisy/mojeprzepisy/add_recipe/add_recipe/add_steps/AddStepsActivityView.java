@@ -22,8 +22,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.ImageView;
 import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -32,25 +30,20 @@ import com.moje.przepisy.mojeprzepisy.add_recipe.add_recipe.add_ingredients.AddI
 import com.moje.przepisy.mojeprzepisy.add_recipe.add_recipe.display_all_recipe_elements.DisplayAllRecipeElementsActivityView;
 import com.moje.przepisy.mojeprzepisy.data.model.Step;
 import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.RecipeRepository;
-import com.moje.przepisy.mojeprzepisy.utils.BitmapConverter;
-import java.security.PublicKey;
-import java.util.ArrayList;
 import java.util.List;
 
 public class AddStepsActivityView extends AppCompatActivity implements AddStepContract.View,
-    View.OnClickListener {
+    View.OnClickListener, StepsAdapter.OnShareClickedListener {
   private static final int MY_CAMERA_PERMISSION_CODE = 100;
   private static final int CAMERA_REQUEST = 1888;
   private static int RESULT_LOAD_IMG = 1;
   @BindView(R.id.addStepFab) FloatingActionButton addStepFab;
   @BindView(R.id.previousActionFab) FloatingActionButton previousActionFab;
   @BindView(R.id.nextActionFab) FloatingActionButton nextActionFab;
-  List<Step> stepList = new ArrayList<>();
   private AddStepContract.Presenter presenter;
-  StepsAdapter mainAdapter;
   public Bitmap testBitmap;
   String imgDecodableString;
-  int stepNumber = -1;
+
   Context context;
 
   @Override
@@ -62,29 +55,19 @@ public class AddStepsActivityView extends AppCompatActivity implements AddStepCo
 
     presenter = new AddStepPresenter(this, new RecipeRepository(context));
 
-    addStepFab.setOnClickListener(this);
-    previousActionFab.setOnClickListener(this);
-    nextActionFab.setOnClickListener(this);
+    setListeners();
 
     setToolbar();
 
-    stepList = presenter.getStepListAfterChangeScreen(presenter.getPojoListFromPreferences(context));
-
-    if(stepList != null){
-      presenter.setStepList(stepList);
-      setRecyclerView(presenter.getStepList());
-    }else {
-      Step emptyStep = new Step("https://img.freepik.com/free-icon/gallery_318-131678.jpg?size=338c&ext=jpg", 0, "Opis kroku");
-      presenter.getStepList().add(emptyStep);
-      presenter.setStepList(presenter.getStepList());
-      setRecyclerView(presenter.getStepList());
-    }
+    presenter.setFirstScreen();
   }
 
   @Override
   public void setRecyclerView(List<Step> stepList) {
     StepsAdapter adapter = new StepsAdapter(this, stepList);
     RecyclerView recyclerView = (RecyclerView) findViewById(R.id.addStepsRecyclerView);
+    adapter.setGalleryOnShareClickedListener(this);
+    adapter.setCameraOnShareClickedListener(this);
     recyclerView.setAdapter(adapter);
     recyclerView.setLayoutManager(new LinearLayoutManager(this));
   }
@@ -95,18 +78,16 @@ public class AddStepsActivityView extends AppCompatActivity implements AddStepCo
   }
 
   @Override
+  public void setListeners(){
+    addStepFab.setOnClickListener(this);
+    previousActionFab.setOnClickListener(this);
+    nextActionFab.setOnClickListener(this);
+  }
+
+  @Override
   public void onClick(View view) {
     if(view.getId() == R.id.addStepFab){
-
-      Step emptyStep = new Step("https://img.freepik.com/free-icon/gallery_318-131678.jpg?size=338c&ext=jpg", stepNumber + 1, "Opis kroku");
-      this.stepNumber = stepNumber + 1;
-
-      presenter.getStepList().add(emptyStep);
-      presenter.setStepList(presenter.getStepList());
-      setRecyclerView(presenter.getStepList());
-
-      String pojoToJson = presenter.convertPojoToJsonString(presenter.getStepList());
-      presenter.addPojoListToPreferences(pojoToJson, context);
+      presenter.setNextStep();
 
     }else if(view.getId() == R.id.previousActionFab){
       navigateToPreviousPage();
@@ -171,6 +152,7 @@ public class AddStepsActivityView extends AppCompatActivity implements AddStepCo
 
         testBitmap = BitmapFactory.decodeFile(imgDecodableString);
 
+
       }else if(requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
         Bitmap photo = (Bitmap) data.getExtras().get("data");
         testBitmap = photo;
@@ -196,6 +178,17 @@ public class AddStepsActivityView extends AppCompatActivity implements AddStepCo
   public void navigateToNextPage(){
     Intent intent = new Intent(AddStepsActivityView.this, DisplayAllRecipeElementsActivityView.class);
     startActivity(intent);
+  }
+
+  @Override
+  public void ShareGalleryClicked(String massage) {
+    loadImageFromGallery();
+  }
+
+  @RequiresApi(api = VERSION_CODES.M)
+  @Override
+  public void ShareCameraClicked(String massage) {
+    loadImageFromCamera();
   }
 
 }

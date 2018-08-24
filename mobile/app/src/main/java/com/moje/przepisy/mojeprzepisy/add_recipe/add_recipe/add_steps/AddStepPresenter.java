@@ -2,9 +2,7 @@ package com.moje.przepisy.mojeprzepisy.add_recipe.add_recipe.add_steps;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.preference.PreferenceManager;
-import android.view.View;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.moje.przepisy.mojeprzepisy.data.model.Step;
@@ -18,21 +16,12 @@ public class AddStepPresenter implements AddStepContract.Presenter {
   private RecipeRepository recipeRepository;
   private AddStepContract.View stepsView;
   private List<Step> stepList = new ArrayList<>();
-  private String backgroundColorString = "#CCFFCC";
   private Gson gson = new Gson();
+  private int stepNumber = -1;
 
-  public AddStepPresenter(AddStepContract.View stepsView, RecipeRepository recipeRepository){
+  AddStepPresenter(AddStepContract.View stepsView, RecipeRepository recipeRepository){
     this.stepsView = stepsView;
     this.recipeRepository = recipeRepository;
-  }
-
-  public void setBackground(View child){
-    if(backgroundColorString.equals("#ffffff")){
-      this.backgroundColorString = "#CCFFCC";
-    }else if(backgroundColorString.equals("#CCFFCC")){
-      this.backgroundColorString = "#ffffff";
-    }
-    child.setBackgroundColor(Color.parseColor(backgroundColorString));
   }
 
   @Override
@@ -59,14 +48,6 @@ public class AddStepPresenter implements AddStepContract.Presenter {
   }
 
   @Override
-  public void deletePojoListFromPreferences(Context context) {
-    SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
-    editor.remove(Constant.PREF_STEP);
-    editor.apply();
-    editor.commit();
-  }
-
-  @Override
   public String getPojoListFromPreferences(Context context) {
     return PreferenceManager.getDefaultSharedPreferences(context).getString(Constant.PREF_STEP, null);
   }
@@ -75,5 +56,33 @@ public class AddStepPresenter implements AddStepContract.Presenter {
   public List<Step> getStepListAfterChangeScreen(String jsonList) {
     Type type = new TypeToken<List<Step>>() {}.getType();
     return gson.fromJson(jsonList, type);
+  }
+
+  @Override
+  public void setFirstScreen() {
+    List<Step> stepFirstList = getStepListAfterChangeScreen(getPojoListFromPreferences(stepsView.getContext()));
+    if(stepFirstList != null){
+      stepList = stepFirstList;
+      setStepList(stepList);
+      stepsView.setRecyclerView(stepList);
+    }else {
+      Step emptyStep = new Step("https://img.freepik.com/free-icon/gallery_318-131678.jpg?size=338c&ext=jpg", -1, "Opis kroku");
+      stepList.add(emptyStep);
+      setStepList(stepList);
+      stepsView.setRecyclerView(stepList);
+    }
+  }
+
+  @Override
+  public void setNextStep() {
+    this.stepNumber = stepNumber + 1;
+    Step emptyStep = new Step("https://img.freepik.com/free-icon/gallery_318-131678.jpg?size=338c&ext=jpg", stepNumber, "Opis kroku");
+
+    stepList.add(emptyStep);
+    setStepList(stepList);
+    stepsView.setRecyclerView(stepList);
+
+    String pojoToJson = convertPojoToJsonString(stepList);
+    addPojoListToPreferences(pojoToJson, stepsView.getContext());
   }
 }

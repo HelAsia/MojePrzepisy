@@ -21,6 +21,8 @@ public interface AddStepContract {
 
     Bitmap getTestBitmap();
 
+    void setListeners();
+
   }
 
   interface Presenter {
@@ -33,10 +35,12 @@ public interface AddStepContract {
 
     void addPojoListToPreferences(String jsonList, Context context);
 
-    void deletePojoListFromPreferences(Context context);
-
     String getPojoListFromPreferences(Context context);
 
     List<Step> getStepListAfterChangeScreen(String jsonList);
+
+    void setFirstScreen();
+
+    void setNextStep();
   }
 }

@@ -15,10 +15,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.NumberPicker;
-import android.widget.NumberPicker.OnValueChangeListener;
 import android.widget.Spinner;
-import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.squareup.picasso.Picasso;
@@ -32,6 +29,9 @@ import java.util.List;
 
 public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> {
   public Context context;
+  private OnShareClickedListener callbackGallery;
+  private OnShareClickedListener callbackCamera;
+  private AddStepContract.View stepView;
   private List<Step> stepList;
   private Gson gson = new Gson();
 
@@ -40,6 +40,21 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> 
     this.stepList = stepList;
     setHasStableIds(true);
   }
+
+  public void setGalleryOnShareClickedListener(OnShareClickedListener callbackGallery) {
+    this.callbackGallery = callbackGallery;
+  }
+
+  public void setCameraOnShareClickedListener(OnShareClickedListener callbackCamera) {
+    this.callbackCamera = callbackCamera;
+  }
+
+  public interface OnShareClickedListener {
+    void ShareGalleryClicked(String massage);
+
+    void ShareCameraClicked(String massage);
+  }
+
 
   @NonNull
   @Override
@@ -129,12 +144,17 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> 
       galleryImageView.setOnClickListener(new OnClickListener() {
         @Override
         public void onClick(View view) {
+          callbackGallery.ShareGalleryClicked("Gallery");
+
+            mainPhotoImageView.setImageBitmap(stepView.getTestBitmap());
+
         }
       });
 
       cameraImageView.setOnClickListener(new OnClickListener() {
         @Override
         public void onClick(View view) {
+          callbackCamera.ShareCameraClicked("Camera");
         }
       });
 
