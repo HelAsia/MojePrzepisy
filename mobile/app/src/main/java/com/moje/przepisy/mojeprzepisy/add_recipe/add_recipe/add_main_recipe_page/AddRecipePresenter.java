@@ -3,6 +3,7 @@ package com.moje.przepisy.mojeprzepisy.add_recipe.add_recipe.add_main_recipe_pag
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.preference.PreferenceManager;
 import com.google.gson.Gson;
@@ -20,7 +21,7 @@ public class AddRecipePresenter implements AddRecipeContract.Presenter{
   private RecipeRepository recipeRepository;
   private AddRecipeContract.View recipeView;
   private List<Recipe> recipeList = new ArrayList<>();
-  BitmapConverter converter = new BitmapConverter();
+  private BitmapConverter converter = new BitmapConverter();
   private Gson gson = new Gson();
 
   public AddRecipePresenter(AddRecipeContract.View recipeView, RecipeRepository recipeRepository){
@@ -78,17 +79,33 @@ public class AddRecipePresenter implements AddRecipeContract.Presenter{
     addPojoToPreferences(pojoJson, recipeView.getContext());
   }
 
-
   public void setFirstScreen(){
-    recipeList = getRecipeAfterChangeScreen(getPojoListFromPreferences(recipeView.getContext()));
-    if(recipeList != null){
+    List<Recipe> recipeFirstList = getRecipeAfterChangeScreen(getPojoListFromPreferences(recipeView.getContext()));
+    if(recipeFirstList != null){
+      recipeList = recipeFirstList;
       setRecipeValueOnScreen();
     }else {
       Time ts = new Time(503000);
       Recipe recipe = new Recipe("Nazwa przepisu", "Przekąski", ts, ts, ts);
-      getRecipeList().add(recipe);
-      setRecipe(getRecipeList());
+      recipeList.add(recipe);
+      setRecipe(recipeList);
     }
+  }
+
+  @Override
+  public Boolean checkIfValueIsEmpty() {
+    if (recipeView.getRecipeNameEditText().getText().toString().equals("")){
+      recipeView.getRecipeNameEditText().setHintTextColor(Color.parseColor("#ff3300"));
+      recipeView.getRecipeNameEditText().setHint("Brak nazwy! Uzypełnij nazwę.");
+      return true;
+    }if(recipeView.getPreparedTimeEditText().getText().toString().equals("HH:MM")){
+      recipeView.getPreparedTimeEditText().setText("00:00:00");
+    }if(recipeView.getCookTimeEditText().getText().toString().equals("HH:MM")){
+      recipeView.getCookTimeEditText().setText("00:00:00");
+    }if (recipeView.getBakeTimeEditText().getText().toString().equals("HH:MM")){
+      recipeView.getBakeTimeEditText().setText("00:00:00");
+    }
+    return false;
   }
 
   @Override

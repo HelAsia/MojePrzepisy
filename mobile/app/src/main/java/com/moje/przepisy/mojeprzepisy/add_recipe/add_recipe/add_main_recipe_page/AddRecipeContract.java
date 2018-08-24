@@ -68,6 +68,8 @@ public interface AddRecipeContract {
 
     void setFirstScreen();
 
+    Boolean checkIfValueIsEmpty();
+
   }
 
 }
