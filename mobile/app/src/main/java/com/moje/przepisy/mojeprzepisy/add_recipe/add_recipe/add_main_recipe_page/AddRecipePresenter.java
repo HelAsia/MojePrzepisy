@@ -2,13 +2,17 @@ package com.moje.przepisy.mojeprzepisy.add_recipe.add_recipe.add_main_recipe_pag
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.preference.PreferenceManager;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.moje.przepisy.mojeprzepisy.data.model.Recipe;
 import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.RecipeRepository;
+import com.moje.przepisy.mojeprzepisy.utils.BitmapConverter;
 import com.moje.przepisy.mojeprzepisy.utils.Constant;
 import java.lang.reflect.Type;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +20,7 @@ public class AddRecipePresenter implements AddRecipeContract.Presenter{
   private RecipeRepository recipeRepository;
   private AddRecipeContract.View recipeView;
   private List<Recipe> recipeList = new ArrayList<>();
+  BitmapConverter converter = new BitmapConverter();
   private Gson gson = new Gson();
 
   public AddRecipePresenter(AddRecipeContract.View recipeView, RecipeRepository recipeRepository){
@@ -32,6 +37,7 @@ public class AddRecipePresenter implements AddRecipeContract.Presenter{
   public void setRecipe(List<Recipe> recipeList){
     this.recipeList = recipeList;
   }
+
 
   @Override
   public String convertPojoToJsonString(List<Recipe> recipeList) {
@@ -55,6 +61,34 @@ public class AddRecipePresenter implements AddRecipeContract.Presenter{
     recipeView.setPreparedTimeEditText(getRecipeList().get(position).getRecipePrepareTime());
     recipeView.setCookTimeEditText(getRecipeList().get(position).getRecipeCookTime());
     recipeView.setBakeTimeEditText(getRecipeList().get(position).getRecipeBakeTime());
+  }
+
+  public void setRecipeValueInPreferences(){
+    int position = 0;
+    getRecipeList().get(position).setRecipeName(recipeView.getRecipeNameEditText().getText().toString());
+    BitmapDrawable drawable = (BitmapDrawable) recipeView.getMainPhotoImageView().getDrawable();
+    Bitmap bitmap = drawable.getBitmap();
+    getRecipeList().get(position).setRecipeMainPictureId(converter.BitMapToString(bitmap));
+    getRecipeList().get(position).setRecipeCategory((String) recipeView.getCategoryChooseSpinner().getSelectedItem());
+    getRecipeList().get(position).setRecipePrepareTime(java.sql.Time.valueOf(recipeView.getPreparedTimeEditText().getText().toString()));
+    getRecipeList().get(position).setRecipeCookTime(java.sql.Time.valueOf(recipeView.getCookTimeEditText().getText().toString()));
+    getRecipeList().get(position).setRecipeBakeTime(java.sql.Time.valueOf(recipeView.getBakeTimeEditText().getText().toString()));
+
+    String pojoJson = convertPojoToJsonString(getRecipeList());
+    addPojoToPreferences(pojoJson, recipeView.getContext());
+  }
+
+
+  public void setFirstScreen(){
+    recipeList = getRecipeAfterChangeScreen(getPojoListFromPreferences(recipeView.getContext()));
+    if(recipeList != null){
+      setRecipeValueOnScreen();
+    }else {
+      Time ts = new Time(503000);
+      Recipe recipe = new Recipe("Nazwa przepisu", "Przekąski", ts, ts, ts);
+      getRecipeList().add(recipe);
+      setRecipe(getRecipeList());
+    }
   }
 
   @Override

@@ -1,7 +1,10 @@
 package com.moje.przepisy.mojeprzepisy.add_recipe.add_recipe.add_main_recipe_page;
 
 import android.content.Context;
-import android.content.Intent;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.Spinner;
+import android.widget.TextView;
 import com.moje.przepisy.mojeprzepisy.data.model.Recipe;
 import java.util.List;
 
@@ -25,11 +28,24 @@ public interface AddRecipeContract {
 
     void setBakeTimeEditText(java.sql.Time time);
 
-    void loadImageFromCamera(android.view.View view);
+    EditText getRecipeNameEditText();
 
-    void loadImageFromGallery(android.view.View view);
+    ImageView getMainPhotoImageView();
 
-    void onActivityResult(int requestCode, int resultCode, Intent data);
+    Spinner getCategoryChooseSpinner();
+
+    TextView getPreparedTimeEditText();
+
+    TextView getCookTimeEditText();
+
+    TextView getBakeTimeEditText();
+
+    void loadImageFromCamera();
+
+    void loadImageFromGallery();
+
+    void setListeners();
+
   }
 
   interface Presenter{
@@ -47,6 +63,11 @@ public interface AddRecipeContract {
     List<Recipe> getRecipeAfterChangeScreen(String jsonList);
 
     void setRecipeValueOnScreen();
+
+    void setRecipeValueInPreferences();
+
+    void setFirstScreen();
+
   }
 
 }

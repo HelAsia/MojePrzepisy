@@ -45,6 +45,7 @@ public class AddRecipeActivityView extends AppCompatActivity implements AddRecip
     View.OnClickListener {
   private static final int MY_CAMERA_PERMISSION_CODE = 100;
   private static final int CAMERA_REQUEST = 1888;
+  private static int RESULT_LOAD_IMG = 1;
   @BindView(R.id.previousActionFab) FloatingActionButton previousActionFab;
   @BindView(R.id.nextActionFab) FloatingActionButton nextActionFab;
   @BindView(R.id.recipeNameEditText) EditText recipeNameEditText;
@@ -57,12 +58,9 @@ public class AddRecipeActivityView extends AppCompatActivity implements AddRecip
   @BindView(R.id.cameraImageView) ImageView cameraImageView;
   @BindView(R.id.URLImageView) ImageView URLImageView;
   private AddRecipeContract.Presenter presenter;
-  List<Recipe> recipeList = new ArrayList<>();
   TimeSetDialog timeSetDialog = new TimeSetDialog();
   URLDialog urlDialog = new URLDialog();
-  private static int RESULT_LOAD_IMG = 1;
   BitmapConverter converter = new BitmapConverter();
-  String imageUrlAddress;
   String imgDecodableString;
   Context context;
 
@@ -75,26 +73,11 @@ public class AddRecipeActivityView extends AppCompatActivity implements AddRecip
 
     presenter = new AddRecipePresenter(this, new RecipeRepository(context));
 
-    nextActionFab.setOnClickListener(this);
-    previousActionFab.setOnClickListener(this);
-    preparedTimeEditText.setOnClickListener(this);
-    cookTimeEditText.setOnClickListener(this);
-    bakeTimeEditText.setOnClickListener(this);
-    galleryImageView.setOnClickListener(this);
-    cameraImageView.setOnClickListener(this);
-    URLImageView.setOnClickListener(this);
+    setListeners();
 
     setToolbar();
 
-    recipeList = presenter.getRecipeAfterChangeScreen(presenter.getPojoListFromPreferences(context));
-    if(recipeList != null){
-      presenter.setRecipeValueOnScreen();
-    }else {
-      Time ts = new Time(503000);
-      Recipe recipe = new Recipe("Nazwa przepisu", "Przekąski", ts, ts, ts);
-      presenter.getRecipeList().add(recipe);
-      presenter.setRecipe(presenter.getRecipeList());
-    }
+    presenter.setFirstScreen();
   }
 
   public Context getContext(){
@@ -105,10 +88,10 @@ public class AddRecipeActivityView extends AppCompatActivity implements AddRecip
   @Override
   public void onClick(View view) {
     if(view.getId() == R.id.previousActionFab){
-      setRecipeValueInPreferences();
+      presenter.setRecipeValueInPreferences();
       navigateToPreviousPage();
     }else if(view.getId() == R.id.nextActionFab){
-      setRecipeValueInPreferences();
+      presenter.setRecipeValueInPreferences();
       navigateToNextPage();
     }else if(view.getId() == R.id.preparedTimeEditText){
       timeSetDialog.showDialog(AddRecipeActivityView.this, preparedTimeEditText);
@@ -117,58 +100,81 @@ public class AddRecipeActivityView extends AppCompatActivity implements AddRecip
     }else if(view.getId() == R.id.bakeTimeEditText){
       timeSetDialog.showDialog(AddRecipeActivityView.this, bakeTimeEditText);
     }else if(view.getId() == R.id.galleryImageView){
-      loadImageFromGallery(view);
+      loadImageFromGallery();
     }else if(view.getId() == R.id.cameraImageView){
-      loadImageFromCamera(view);
+      loadImageFromCamera();
     }else if(view.getId() == R.id.URLImageView){
       urlDialog.showDialog(AddRecipeActivityView.this, mainPhotoImageView);
     }
   }
 
-  public void setRecipeValueInPreferences(){
-    int position = 0;
-    presenter.getRecipeList().get(position).setRecipeName(recipeNameEditText.getText().toString());
-    BitmapDrawable drawable = (BitmapDrawable) mainPhotoImageView.getDrawable();
-    Bitmap bitmap = drawable.getBitmap();
-    presenter.getRecipeList().get(position).setRecipeMainPictureId(converter.BitMapToString(bitmap));
-    presenter.getRecipeList().get(position).setRecipeCategory((String) categoryChooseSpinner.getSelectedItem());
-    presenter.getRecipeList().get(position).setRecipePrepareTime(java.sql.Time.valueOf(preparedTimeEditText.getText().toString()));
-    presenter.getRecipeList().get(position).setRecipeCookTime(java.sql.Time.valueOf(cookTimeEditText.getText().toString()));
-    presenter.getRecipeList().get(position).setRecipeBakeTime(java.sql.Time.valueOf(bakeTimeEditText.getText().toString()));
-
-    String pojoJson = presenter.convertPojoToJsonString(presenter.getRecipeList());
-    presenter.addPojoToPreferences(pojoJson, context);
-  }
-
+  @Override
   public void setRecipeNameEditText(String recipeName){
     recipeNameEditText.setText(recipeName);
   }
 
+  @Override
   public void setMainPhotoImageView(String bitmapString){
     mainPhotoImageView.setImageBitmap(converter.StringToBitMap(bitmapString));
   }
 
+  @Override
   public void setCategoryChooseSpinner(String category){
     ArrayAdapter myAdap = (ArrayAdapter)  categoryChooseSpinner.getAdapter();
     int categorySpinnerPosition = myAdap.getPosition(category);
     categoryChooseSpinner.setSelection(categorySpinnerPosition);
   }
 
+  @Override
   public void setPreparedTimeEditText(java.sql.Time time){
     preparedTimeEditText.setText(time.toString());
   }
 
+  @Override
   public void setCookTimeEditText(java.sql.Time time){
     cookTimeEditText.setText(time.toString());
   }
 
+  @Override
   public void setBakeTimeEditText(java.sql.Time time){
     bakeTimeEditText.setText(time.toString());
   }
 
+  @Override
+  public EditText getRecipeNameEditText() {
+    return recipeNameEditText;
+  }
+
+  @Override
+  public ImageView getMainPhotoImageView() {
+    return mainPhotoImageView;
+  }
+
+  @Override
+  public Spinner getCategoryChooseSpinner() {
+    return categoryChooseSpinner;
+  }
+
+  @Override
+  public TextView getPreparedTimeEditText() {
+    return preparedTimeEditText;
+  }
+
+  @Override
+  public TextView getCookTimeEditText() {
+    return cookTimeEditText;
+  }
+
+  @Override
+  public TextView getBakeTimeEditText() {
+    return bakeTimeEditText;
+  }
+
+
+
   @RequiresApi(api = VERSION_CODES.M)
   @Override
-  public void loadImageFromCamera(View view) {
+  public void loadImageFromCamera() {
     if(ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA)!= PackageManager.PERMISSION_GRANTED){
       requestPermissions(new String[]{Manifest.permission.CAMERA}, MY_CAMERA_PERMISSION_CODE);
     }else {
@@ -192,7 +198,7 @@ public class AddRecipeActivityView extends AppCompatActivity implements AddRecip
   }
 
   @Override
-  public void loadImageFromGallery(View view) {
+  public void loadImageFromGallery() {
     Intent galleryIntent = new Intent(Intent.ACTION_PICK,
         Media.EXTERNAL_CONTENT_URI);
     startActivityForResult(galleryIntent, RESULT_LOAD_IMG);
@@ -232,6 +238,17 @@ public class AddRecipeActivityView extends AppCompatActivity implements AddRecip
     Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_add_recipe);
     toolbar.setSubtitle(R.string.add_recipe_title_step_one);
     setSupportActionBar(toolbar);
+  }
+
+  public void setListeners(){
+    nextActionFab.setOnClickListener(this);
+    previousActionFab.setOnClickListener(this);
+    preparedTimeEditText.setOnClickListener(this);
+    cookTimeEditText.setOnClickListener(this);
+    bakeTimeEditText.setOnClickListener(this);
+    galleryImageView.setOnClickListener(this);
+    cameraImageView.setOnClickListener(this);
+    URLImageView.setOnClickListener(this);
   }
 
   public void navigateToPreviousPage(){

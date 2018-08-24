@@ -3,6 +3,7 @@ package com.moje.przepisy.mojeprzepisy.ui;
 import android.animation.Animator;
 import android.content.Context;
 import android.os.Build.VERSION_CODES;
+import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -33,7 +34,7 @@ public class MyCardViewAdapter extends RecyclerView.Adapter<MyCardViewAdapter.Vi
   }
 
   @Override
-  public MyCardViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int i) {
+  public MyCardViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
     LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
     View v = layoutInflater.inflate(R.layout.one_card_view_recipe, parent, false);
     return new MyCardViewAdapter.ViewHolder(v);

@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.NumberPicker;
 import android.widget.NumberPicker.OnValueChangeListener;
 import android.widget.Spinner;
+import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.squareup.picasso.Picasso;
@@ -33,6 +34,8 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> 
   public Context context;
   private List<Step> stepList;
   private Gson gson = new Gson();
+  AddStepContract.View addStepsActivityView;
+  //AddStepsActivityView addStepsActivityView = new AddStepsActivityView();
 
   StepsAdapter(Context context, List<Step> stepList){
     this.context = context;
@@ -128,6 +131,8 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> 
       galleryImageView.setOnClickListener(new OnClickListener() {
         @Override
         public void onClick(View view) {
+          addStepsActivityView.loadImageFromGallery();
+          mainPhotoImageView.setImageBitmap(addStepsActivityView.getTestBitmap());
         }
       });
 

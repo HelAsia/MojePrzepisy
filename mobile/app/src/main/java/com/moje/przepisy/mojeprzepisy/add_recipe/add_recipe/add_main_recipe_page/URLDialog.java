@@ -7,6 +7,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 import com.moje.przepisy.mojeprzepisy.R;
 
@@ -26,8 +27,9 @@ public class URLDialog {
       @Override
       public void onClick(View v) {
         urlStringValue = urlAddressEditText.getText().toString();
-        dialog.dismiss();
+
         Picasso.get().load(urlStringValue).into(imageView);
+          dialog.dismiss();
       }
     });
     dialog.show();
