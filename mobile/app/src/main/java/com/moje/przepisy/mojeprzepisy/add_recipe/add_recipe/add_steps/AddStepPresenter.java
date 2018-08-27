@@ -25,11 +25,6 @@ public class AddStepPresenter implements AddStepContract.Presenter {
   }
 
   @Override
-  public List<Step> getStepList(){
-    return stepList;
-  }
-
-  @Override
   public void setStepList(List<Step> stepList) {
     this.stepList = stepList;
   }

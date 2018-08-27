@@ -25,13 +25,9 @@ import java.util.List;
 
 public class DisplayAllRecipeElementsActivityView extends AppCompatActivity implements DisplayAllRecipeElementsContract.View,
     View.OnClickListener{
-  private DisplayAllRecipeElementsContract.Presenter presenter;
-  List<Recipe> recipeList = new ArrayList<>();
-  List<Ingredient> ingredientList = new ArrayList<>();
-  List<Step> stepList = new ArrayList<>();
-  Context context;
   @BindView(R.id.saveRecipeImageView)ImageView saveRecipeImageView;
-
+  private DisplayAllRecipeElementsContract.Presenter presenter;
+  Context context;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -40,53 +36,22 @@ public class DisplayAllRecipeElementsActivityView extends AppCompatActivity impl
     context = getApplicationContext();
     ButterKnife.bind(this);
 
-    saveRecipeImageView.setOnClickListener(new OnClickListener() {
-      @Override
-      public void onClick(View view) {
-        // po kliknięciu powinno wysyłać dane do serwera - > dopisać
-        SharedPreferences.Editor ingredientsEditor = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit();
-        ingredientsEditor.remove(Constant.PREF_INGREDIENT);
-        ingredientsEditor.apply();
-        SharedPreferences.Editor stepsEditor = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit();
-        stepsEditor.remove(Constant.PREF_STEP);
-        stepsEditor.apply();
-        SharedPreferences.Editor recipeEditor = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit();
-        recipeEditor.remove(Constant.PREF_RECIPE);
-        recipeEditor.apply();
-      }
-    });
-
     presenter = new DisplayAllRecipeElementsPresenter(this, new RecipeRepository(context));
 
     setToolbar();
 
-    recipeList = presenter.getRecipeListAfterChangeScreen(presenter.getRecipeListPojoFromPreferences(context));
+    saveRecipeImageView.setOnClickListener(new OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        // po kliknięciu powinno wysyłać dane do serwera - > dopisać
+        presenter.deleteAllSharedPreferences();
 
-    if(recipeList != null){
-      presenter.setRecipeList(recipeList);
-      setRecipeRecyclerView(presenter.getRecipeList());
-    }else {
-      Toast.makeText(context, "Nie udało się pobrać głównych informacji o przepisie!", Toast.LENGTH_SHORT).show();
-    }
+      }
+    });
 
-    ingredientList = presenter.getIngredientListAfterChangeScreen(presenter.getIngredientsPojoListFromPreferences(context));
-
-    if(ingredientList != null){
-      presenter.setIngredientList(ingredientList);
-      setIngredientsRecyclerView(presenter.getIngredientList());
-    }else {
-      Toast.makeText(context, "Nie udało się pobrać składników!", Toast.LENGTH_SHORT).show();
-    }
-
-    stepList = presenter.getStepListAfterChangeScreen(presenter.getStepsPojoListFromPreferences(context));
-
-    if(stepList != null){
-      presenter.setStepList(stepList);
-      setStepsRecyclerView(presenter.getStepList());
-    }else {
-      Toast.makeText(context, "Nie udało się pobrać kroków!", Toast.LENGTH_SHORT).show();
-    }
-
+    presenter.setRecipeDetailsScreen();
+    presenter.setIngredientsDetailScreen();
+    presenter.setStepsDetailsScreen();
   }
 
   @Override

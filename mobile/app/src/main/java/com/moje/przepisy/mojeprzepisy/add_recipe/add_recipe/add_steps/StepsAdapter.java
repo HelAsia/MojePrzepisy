@@ -1,12 +1,17 @@
 package com.moje.przepisy.mojeprzepisy.add_recipe.add_recipe.add_steps;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.preference.PreferenceManager;
+import android.provider.MediaStore.Images.Media;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -16,14 +21,16 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import com.squareup.picasso.Picasso;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.moje.przepisy.mojeprzepisy.R;
 import com.moje.przepisy.mojeprzepisy.data.model.Step;
+import com.moje.przepisy.mojeprzepisy.utils.BitmapConverter;
 import com.moje.przepisy.mojeprzepisy.utils.Constant;
+import com.squareup.picasso.Picasso;
 import java.lang.reflect.Type;
 import java.util.List;
 
@@ -31,9 +38,13 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> 
   public Context context;
   private OnShareClickedListener callbackGallery;
   private OnShareClickedListener callbackCamera;
+  private BitmapConverter converter = new BitmapConverter();
   private AddStepContract.View stepView;
   private List<Step> stepList;
   private Gson gson = new Gson();
+  private Bitmap bitmap = null;
+  private Boolean state = false;
+  private static int GALLERY_REQUEST = 1;
 
   StepsAdapter(Context context, List<Step> stepList){
     this.context = context;
@@ -51,10 +62,24 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> 
 
   public interface OnShareClickedListener {
     void ShareGalleryClicked(String massage);
-
     void ShareCameraClicked(String massage);
   }
 
+  public void setBitmap(Bitmap bitmap){
+    this.bitmap = bitmap;
+  }
+
+  public Bitmap getBitmap() {
+    return bitmap;
+  }
+
+  public void setState(Boolean state){
+    this.state = state;
+  }
+
+  public Boolean getState(){
+    return state;
+  }
 
   @NonNull
   @Override
@@ -65,9 +90,31 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> 
   }
 
   @Override
-  public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
+  public void onBindViewHolder(@NonNull final ViewHolder viewHolder, final int position) {
     viewHolder.bind(stepList.get(position));
+
+    viewHolder.galleryImageView.setOnClickListener(new OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        callbackGallery.ShareGalleryClicked("Gallery");
+
+        while(getBitmap() == null){
+
+        }
+        Toast.makeText(context, "TEST", Toast.LENGTH_SHORT).show();
+
+        viewHolder.mainPhotoImageView.setImageBitmap(bitmap);
+
+        Step updatedStep = new Step(converter.BitMapToString(bitmap),
+            stepList.get(position).getStepNumber(), stepList.get(position).getStepDescription());
+        stepList.set(position, updatedStep);
+
+        String pojoJson = convertPojoToJsonString(stepList);
+        addPojoListToPreferences(pojoJson, context);
+      }
+    });
   }
+
 
   @Override
   public int getItemCount() {
@@ -141,20 +188,44 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> 
         }
       });
 
-      galleryImageView.setOnClickListener(new OnClickListener() {
+/*      galleryImageView.setOnClickListener(new OnClickListener() {
         @Override
         public void onClick(View view) {
           callbackGallery.ShareGalleryClicked("Gallery");
 
-            mainPhotoImageView.setImageBitmap(stepView.getTestBitmap());
+          while(getBitmap() == null){
+
+          }
+
+          mainPhotoImageView.setImageBitmap(bitmap);
+
+          Step updatedStep = new Step(converter.BitMapToString(bitmap),
+              stepList.get(getAdapterPosition()).getStepNumber(), stepList.get(getAdapterPosition()).getStepDescription());
+          stepList.set(getAdapterPosition(), updatedStep);
+
+          String pojoJson = convertPojoToJsonString(stepList);
+          addPojoListToPreferences(pojoJson, context);
 
         }
-      });
+      });*/
 
       cameraImageView.setOnClickListener(new OnClickListener() {
         @Override
         public void onClick(View view) {
           callbackCamera.ShareCameraClicked("Camera");
+
+          while(!state){
+
+          }
+
+          mainPhotoImageView.setImageBitmap(bitmap);
+
+          Step updatedStep = new Step(converter.BitMapToString(bitmap),
+              stepList.get(getAdapterPosition()).getStepNumber(), stepList.get(getAdapterPosition()).getStepDescription());
+          stepList.set(getAdapterPosition(), updatedStep);
+
+          String pojoJson = convertPojoToJsonString(stepList);
+          addPojoListToPreferences(pojoJson, context);
         }
       });
 

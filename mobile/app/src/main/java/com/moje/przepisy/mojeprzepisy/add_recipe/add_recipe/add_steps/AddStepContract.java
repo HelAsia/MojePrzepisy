@@ -1,7 +1,6 @@
 package com.moje.przepisy.mojeprzepisy.add_recipe.add_recipe.add_steps;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import com.moje.przepisy.mojeprzepisy.data.model.Step;
 import java.util.List;
 
@@ -19,15 +18,11 @@ public interface AddStepContract {
 
     void loadImageFromGallery();
 
-    Bitmap getTestBitmap();
-
     void setListeners();
 
   }
 
   interface Presenter {
-
-    List<Step> getStepList();
 
     void setStepList(List<Step> stepList);
 

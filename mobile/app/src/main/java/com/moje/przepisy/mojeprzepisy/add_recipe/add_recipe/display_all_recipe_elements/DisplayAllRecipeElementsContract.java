@@ -47,6 +47,14 @@ public interface DisplayAllRecipeElementsContract {
 
     List<Step> getStepListAfterChangeScreen(String jsonList);
 
+    void deleteAllSharedPreferences();
+
+    void setRecipeDetailsScreen();
+
+    void setIngredientsDetailScreen();
+
+    void setStepsDetailsScreen();
+
   }
 
 }

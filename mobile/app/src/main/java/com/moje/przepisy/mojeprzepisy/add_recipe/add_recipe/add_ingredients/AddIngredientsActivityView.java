@@ -24,7 +24,6 @@ public class AddIngredientsActivityView extends AppCompatActivity implements Add
   @BindView(R.id.addIngredientFab) FloatingActionButton addIngredientFab;
   @BindView(R.id.previousActionFab) FloatingActionButton previousActionFab;
   @BindView(R.id.nextActionFab) FloatingActionButton nextActionFab;
-  List<Ingredient> ingredientList = new ArrayList<>();
   private AddIngredientsContract.Presenter presenter;
   Context context;
 
@@ -37,23 +36,11 @@ public class AddIngredientsActivityView extends AppCompatActivity implements Add
 
     presenter = new AddIngredientsPresenter(this, new RecipeRepository(context));
 
-    addIngredientFab.setOnClickListener(this);
-    previousActionFab.setOnClickListener(this);
-    nextActionFab.setOnClickListener(this);
+    setListeners();
 
     setToolbar();
-
-    ingredientList = presenter.getIngredientListAfterChangeScreen(presenter.getPojoListFromPreferences(context));
-
-    if(ingredientList != null){
-      presenter.setIngredientList(ingredientList);
-      setRecyclerView(presenter.getIngredientList());
-    }else {
-      Ingredient emptyIngredient = new Ingredient(1, "kg", "np. cukier");
-      presenter.getIngredientList().add(emptyIngredient);
-      presenter.setIngredientList(presenter.getIngredientList());
-      setRecyclerView(presenter.getIngredientList());
-    }
+    
+    presenter.setFirstScreen();
   }
 
   @Override
@@ -62,6 +49,13 @@ public class AddIngredientsActivityView extends AppCompatActivity implements Add
     RecyclerView recyclerView = (RecyclerView) findViewById(R.id.addIngredientsRecyclerView);
     recyclerView.setAdapter(adapter);
     recyclerView.setLayoutManager(new LinearLayoutManager(this));
+  }
+
+  @Override
+  public void setListeners() {
+    addIngredientFab.setOnClickListener(this);
+    previousActionFab.setOnClickListener(this);
+    nextActionFab.setOnClickListener(this);
   }
 
 
@@ -73,15 +67,7 @@ public class AddIngredientsActivityView extends AppCompatActivity implements Add
   @Override
   public void onClick(View view){
     if(view.getId() == R.id.addIngredientFab){
-
-      Ingredient emptyIngredient = new Ingredient(1, "kg", "np. cukier");
-
-      presenter.getIngredientList().add(emptyIngredient);
-      presenter.setIngredientList(ingredientList);
-      setRecyclerView(presenter.getIngredientList());
-
-      String pojoToJson = presenter.convertPojoToJsonString(presenter.getIngredientList());
-      presenter.addPojoListToPreferences(pojoToJson, context);
+      presenter.setNextStep();
 
     }else if(view.getId() == R.id.previousActionFab){
       navigateToPreviousPage();

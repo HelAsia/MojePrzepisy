@@ -59,14 +59,6 @@ public class AddIngredientsPresenter implements AddIngredientsContract.Presenter
   }
 
   @Override
-  public void deletePojoListFromPreferences(Context context) {
-    SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
-    editor.remove(Constant.PREF_INGREDIENT);
-    editor.apply();
-    editor.commit();
-  }
-
-  @Override
   public String getPojoListFromPreferences(Context context) {
     return PreferenceManager.getDefaultSharedPreferences(context).getString(Constant.PREF_INGREDIENT, null);
   }
@@ -75,6 +67,33 @@ public class AddIngredientsPresenter implements AddIngredientsContract.Presenter
   public List<Ingredient> getIngredientListAfterChangeScreen(String jsonList) {
     Type type = new TypeToken<List<Ingredient>>() {}.getType();
     return gson.fromJson(jsonList, type);
+  }
+
+  @Override
+  public void setFirstScreen() {
+    List<Ingredient> ingredientFirstList = getIngredientListAfterChangeScreen(getPojoListFromPreferences(ingredientsView.getContext()));
+    if(ingredientFirstList != null){
+      ingredientList = ingredientFirstList;
+      setIngredientList(ingredientList);
+      ingredientsView.setRecyclerView(ingredientList);
+    }else {
+      Ingredient emptyIngredient = new Ingredient(1, "kg", "np. cukier");
+      ingredientList.add(emptyIngredient);
+      setIngredientList(ingredientList);
+      ingredientsView.setRecyclerView(ingredientList);
+    }
+  }
+
+  @Override
+  public void setNextStep() {
+    Ingredient emptyIngredient = new Ingredient(1, "kg", "np. cukier");
+
+    ingredientList.add(emptyIngredient);
+    setIngredientList(ingredientList);
+    ingredientsView.setRecyclerView(ingredientList);
+
+    String pojoToJson = convertPojoToJsonString(ingredientList);
+    addPojoListToPreferences(pojoToJson, ingredientsView.getContext());
   }
 }
 

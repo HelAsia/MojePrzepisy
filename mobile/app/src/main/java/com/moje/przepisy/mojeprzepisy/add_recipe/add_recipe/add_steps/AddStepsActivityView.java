@@ -22,6 +22,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,19 +32,20 @@ import com.moje.przepisy.mojeprzepisy.add_recipe.add_recipe.display_all_recipe_e
 import com.moje.przepisy.mojeprzepisy.data.model.Step;
 import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.RecipeRepository;
 import java.util.List;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class AddStepsActivityView extends AppCompatActivity implements AddStepContract.View,
     View.OnClickListener, StepsAdapter.OnShareClickedListener {
   private static final int MY_CAMERA_PERMISSION_CODE = 100;
   private static final int CAMERA_REQUEST = 1888;
-  private static int RESULT_LOAD_IMG = 1;
+  private static int GALLERY_REQUEST = 1;
   @BindView(R.id.addStepFab) FloatingActionButton addStepFab;
   @BindView(R.id.previousActionFab) FloatingActionButton previousActionFab;
   @BindView(R.id.nextActionFab) FloatingActionButton nextActionFab;
   private AddStepContract.Presenter presenter;
   public Bitmap testBitmap;
   String imgDecodableString;
-
+  StepsAdapter mainAdapter;
   Context context;
 
   @Override
@@ -69,7 +71,16 @@ public class AddStepsActivityView extends AppCompatActivity implements AddStepCo
     adapter.setGalleryOnShareClickedListener(this);
     adapter.setCameraOnShareClickedListener(this);
     recyclerView.setAdapter(adapter);
+    setMainAdapter(adapter);
     recyclerView.setLayoutManager(new LinearLayoutManager(this));
+  }
+
+  public void setMainAdapter(StepsAdapter adapter){
+    this.mainAdapter = adapter;
+  }
+
+  public StepsAdapter getMainAdapter() {
+    return mainAdapter;
   }
 
   @Override
@@ -92,7 +103,7 @@ public class AddStepsActivityView extends AppCompatActivity implements AddStepCo
     }else if(view.getId() == R.id.previousActionFab){
       navigateToPreviousPage();
 
-    }else if((view.getId() == R.id.nextActionFab)) {
+    }else if(view.getId() == R.id.nextActionFab) {
       navigateToNextPage();
     }
   }
@@ -105,6 +116,7 @@ public class AddStepsActivityView extends AppCompatActivity implements AddStepCo
     }else {
       Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
       startActivityForResult(cameraIntent, CAMERA_REQUEST);
+      onActivityResult(CAMERA_REQUEST, Activity.RESULT_OK, cameraIntent);
     }
   }
 
@@ -125,18 +137,15 @@ public class AddStepsActivityView extends AppCompatActivity implements AddStepCo
   public void loadImageFromGallery() {
     Intent galleryIntent = new Intent(Intent.ACTION_PICK,
         Media.EXTERNAL_CONTENT_URI);
-    startActivityForResult(galleryIntent, RESULT_LOAD_IMG);
-  }
-
-  public Bitmap getTestBitmap(){
-    return testBitmap;
+      startActivityForResult(galleryIntent, GALLERY_REQUEST);
+  //    onActivityResult(GALLERY_REQUEST, Activity.RESULT_OK, galleryIntent);
   }
 
   @Override
   public void onActivityResult(int requestCode, int resultCode, Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
     try{
-      if(requestCode == RESULT_LOAD_IMG && resultCode == RESULT_OK
+      if(requestCode == GALLERY_REQUEST && resultCode == Activity.RESULT_OK
           && null != data){
         Uri selectedImage = data.getData();
         String[] filePathColumn = {MediaStore.Images.Media.DATA};
@@ -152,10 +161,13 @@ public class AddStepsActivityView extends AppCompatActivity implements AddStepCo
 
         testBitmap = BitmapFactory.decodeFile(imgDecodableString);
 
+        getMainAdapter().setBitmap(testBitmap);
 
-      }else if(requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
-        Bitmap photo = (Bitmap) data.getExtras().get("data");
-        testBitmap = photo;
+      }else if(requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
+        testBitmap = (Bitmap) data.getExtras().get("data");
+        getMainAdapter().setBitmap(testBitmap);
+        getMainAdapter().setState(true);
+
       }else {
         Toast.makeText(this, "Zdjęcie nie zostało wybrane.", Toast.LENGTH_LONG).show();
       }
@@ -190,5 +202,4 @@ public class AddStepsActivityView extends AppCompatActivity implements AddStepCo
   public void ShareCameraClicked(String massage) {
     loadImageFromCamera();
   }
-
 }

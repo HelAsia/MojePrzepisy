@@ -13,6 +13,8 @@ public interface AddIngredientsContract {
     Context getContext();
 
     void setRecyclerView(List<Ingredient> ingredientList);
+
+    void setListeners();
   }
 
   interface Presenter {
@@ -27,10 +29,14 @@ public interface AddIngredientsContract {
 
     void addPojoListToPreferences(String jsonList, Context context);
 
-    void deletePojoListFromPreferences(Context context);
-
     String getPojoListFromPreferences(Context context);
 
     List<Ingredient> getIngredientListAfterChangeScreen(String jsonList);
+
+    void setFirstScreen();
+
+    void setNextStep();
+
+
   }
 }
