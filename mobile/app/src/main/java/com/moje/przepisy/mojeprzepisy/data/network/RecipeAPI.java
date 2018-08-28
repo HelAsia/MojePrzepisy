@@ -70,18 +70,4 @@ public interface RecipeAPI {
   @DELETE("recipe/comment/{commentId}")
   Call<List<Comment>> deleteComment(@Path("commentId") int commentId, @Body Comment comment);
 
-
-  /*@GET("recipe/photo/{photoId}")
-  Call<List<PhotoRecipe>> getPhoto(@Path("photoId") int photoId);
-
-  @POST("recipe/photo/{photoId}/{columnName}/{columnValue}")
-  Call<List<PhotoRecipe>> editPhoto(@Path("photoId") int photoId, @Path("columnName") String columnName, @Path("columnValue") String columnValue);
-
-  @PUT("recipe/photo")
-  Call<List<PhotoRecipe>> addPhoto(@Body PhotoRecipe photoRecipe);
-
-  @DELETE("recipe/photo/{commentId}")
-  Call<List<PhotoRecipe>> deletePhoto(@Path("photoId") int photoId, @Body PhotoRecipe photoRecipe);*/
-
-
 }

@@ -15,12 +15,10 @@ class Steps:
 
     def getStep(self, recipeID):
         query = u"SELECT S.recipe_id AS id, S.step_id AS stepId " \
-                u"P.photo_url AS photoURL, P.photo_image AS photoImage, S.step_number AS stepNumber, " \
+                u"S.photo_image AS photoImage, S.step_number AS stepNumber, " \
                 u"S.step_description AS stepDescription " \
                 u"FROM steps AS S " \
-                u"INNER JOIN photos AS P " \
-                u"ON S.photo_id = P.photo_id " \
-                u"WHERE R.recipe_id LIKE '{}'".format(recipeID)
+                u"WHERE S.recipe_id LIKE '{}'".format(recipeID)
 
         queryResult = self.database.query(query)
 
@@ -30,26 +28,19 @@ class Steps:
         else:
             return {}
 
-    def addStep(self, recipeId, photoId, stepNumber,
+    def addStep(self, recipeId, photoImage, stepNumber,
                 stepDescription):
         query = u"INSERT INTO steps " \
-                u"(recipe_id, photo_id, step_number, step_description) " \
-                u"values ({}, '{}', '{}', {} ".format(recipeId, photoId, stepNumber, stepDescription)
+                u"(recipe_id, photo_image, step_number, step_description) " \
+                u"values ({}, '{}', '{}', {} ".format(recipeId, photoImage, stepNumber, stepDescription)
 
         queryResult = self.database.query(query)
 
-        queryStepId = u"SELECT step_id " \
-                        u"FROM steps " \
-                        u"WHERE " \
-                        u"recipe_id = {} AND photo_id = {} AND step_number = {} AND " \
-                        u"step_description = '{}' ".format(recipeId, photoId, stepNumber, stepDescription)
-
-        queryStepIdResult = self.database.query(queryStepId)
         if queryResult:
             Logger.dbg(queryResult)
-            return queryStepIdResult
+            return 200, u'You added steps'
         else:
-            return {}
+            return 404, u'Forwarded data are not correct'
 
     def editStep(self, columnName, columnValue, stepId):
         query = u"UPDATE steps " \

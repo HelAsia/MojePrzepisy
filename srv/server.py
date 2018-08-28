@@ -15,8 +15,6 @@ from recipe_elements.Recipes import *
 from recipe_elements.Steps import *
 from recipe_elements.Ingredients import *
 from recipe_elements.Comments import *
-from recipe_elements.Photos import *
-
 
 # Global definitions
 app = Flask(__name__)
@@ -444,61 +442,6 @@ def editComment(commentId, columnName, columnValue):
     comment = Comments(database)
 
     status, message = comment.editComment(columnName, columnValue, commentId)
-
-    return jsonify({
-        'status': status,
-        'message': message
-    })
-
-
-@app.route('/recipe/photo/<int:photoId>', methods=['GET'])
-def getPhoto(photoId):
-    photo = Photos(database)
-
-    photos = photo.getPhoto(photoId)
-
-    if not photos:
-        Logger.fail("There was no photos returned!")
-    return jsonify(photos)
-
-
-@app.route('/recipe/photo/<int:photoId>', methods=['DELETE'])
-@authorized
-def deletePhoto(photoId):
-    photo = Photos(database)
-
-    status, message = photo.deletePhoto(photoId)
-
-    return jsonify({
-        'status': status,
-        'message': message
-    })
-
-
-@app.route('/recipe/photo', methods=['PUT'])
-@authorized
-def addPhoto():
-    photo = Photos(database)
-
-    params = request.get_json()
-
-    photoURL = params.get('photoURL')
-    photoImage = params.get('photoImage')
-
-    status, message = photo.addPhoto(photoURL, photoImage)
-
-    return jsonify({
-        'status': status,
-        'message': message
-    })
-
-
-@app.route('/recipe/photo/<int:photoId>/<string:columnName>/<string:columnValue>/', methods=['POST'])
-@authorized
-def editPhoto(photoId, columnName, columnValue):
-    photo = Photos(database)
-
-    status, message = photo.editPhoto(columnName, columnValue, photoId)
 
     return jsonify({
         'status': status,

@@ -13,11 +13,31 @@ class Recipes:
     def setDatabase(self,database):
         self.database = database
 
+    def getRecipeId(self, userID, recipeName, recipeDescription, recipePrepareTime,
+                    recipeCookTime, recipeBakeTime, recipeMainPicture, recipeCategory):
+        queryRecipeId = u"SELECT recipe_id "\
+                        u"FROM recipes "\
+                        u"WHERE "\
+                        u"user_id = {} AND recipe_name = '{}' AND recipe_description = '{}' AND "\
+                        u"recipe_prepare_time = {} AND recipe_cook_time = {} AND recipe_bake_time = {} "\
+                        u"AND recipe_main_picture = {} " \
+                        u"AND recipe_category = '{}' ".format(userID, recipeName, recipeDescription,
+                                                                  recipePrepareTime, recipeCookTime,
+                                                                  recipeBakeTime, recipeMainPicture, recipeCategory)
+
+        queryResult = self.database.query(queryRecipeId)
+
+        if queryResult:
+            Logger.dbg(queryResult)
+            return queryResult
+        else:
+            return {}
+
     def getRecipe(self, recipeID):
-        query = u"SELECT R.recipe_id AS recipeID, U.user_login AS authorName, P.photo_id AS photoRecipe" \
+        query = u"SELECT R.recipe_id AS recipeId, U.user_login AS authorName, P.photo_id AS photoRecipe" \
                 u"R.recipe_name AS recipeName, R.recipe_description AS recipeDescription, " \
                 u"R.recipe_prepare_time AS prepareTime, R.recipe_cook_time AS cookTime, " \
-                u"R.recipe_bake_time AS bakeTime, R.recipe_main_picture_id AS mainPictureId, " \
+                u"R.recipe_bake_time AS bakeTime, R.recipe_main_picture AS recipeMainPicture, " \
                 u"R.recipe_category AS category, R.recipe_created_date_time AS createdTime" \
                 u"FROM recipes AS R " \
                 u"INNER JOIN users AS U " \
@@ -39,29 +59,18 @@ class Recipes:
                   recipeMainPictureId, recipeCategory):
         query = u"INSERT INTO recipes " \
                 u"(user_id, recipe_name, recipe_description, recipe_prepare_time, recipe_cook_time, " \
-                u"recipe_bake_time, recipe_main_picture_id, recipe_category, recipe_created_date_time) " \
+                u"recipe_bake_time, recipe_main_picture, recipe_category, recipe_created_date_time) " \
                 u"values ({}, '{}', '{}', {}, {}, {}, '{}', " \
                 u"{}, NOW())".format(userId, recipeName, recipeDescription, recipePrepareTime, recipeCookTime,
                                 recipeBakeTime, recipeMainPictureId, recipeCategory)
 
         queryResult = self.database.query(query)
 
-        queryRecipeId = u"SELECT recipe_id "\
-                        u"FROM recipes "\
-                        u"WHERE "\
-                        u"user_id = {} AND recipe_name = '{}' AND recipe_description = '{}' AND "\
-                        u"recipe_prepare_time = {} AND recipe_cook_time = {} AND recipe_bake_time = {} "\
-                        u"AND recipe_main_picture_id = {} " \
-                        u"AND recipe_category = '{}' ".format(userId, recipeName, recipeDescription,
-                                                                  recipePrepareTime, recipeCookTime,
-                                                                  recipeBakeTime, recipeMainPictureId, recipeCategory)
-
-        queryRecipeIdResult = self.database.query(queryRecipeId)
         if queryResult:
             Logger.dbg(queryResult)
-            return queryRecipeIdResult
+            return 200, u'You added a recipe'
         else:
-            return {}
+            return 404, u'Forwarded data are not correct'
 
     def editRecipe(self, columnName, columnValue, recipeId):
         query = u"UPDATE recipes " \

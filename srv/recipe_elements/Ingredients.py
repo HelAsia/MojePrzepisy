@@ -42,18 +42,11 @@ class Ingredients:
 
         queryResult = self.database.query(query)
 
-        queryIngredientId = u"SELECT ingredient_id " \
-                        u"FROM ingredients " \
-                        u"WHERE " \
-                        u"recipe_id = {} AND ingredient_quantity = {} AND ingredient_unit = '{}' AND " \
-                        u"ingredient_name = '{}' AND group_ingredient_name = '{}' ".format(recipeId, ingredientQuantity, ingredientUnit, ingredientName, ingredientGroup)
-
-        queryIngredientIdResult = self.database.query(queryIngredientId)
         if queryResult:
             Logger.dbg(queryResult)
-            return queryIngredientIdResult
+            return 200, u'You added ingredients'
         else:
-            return {}
+            return 404, u'Forwarded data are not correct'
 
     def editIngredient(self, columnName, columnValue, ingredientId):
         query = u"UPDATE ingredients " \
