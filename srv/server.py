@@ -188,6 +188,31 @@ def getSortedCards(sorted_method):
     return jsonify(cards)
 
 
+@app.route('recipe/id', methods=['GET'])
+def getRecipeId():
+    recipe = Recipes(database)
+    user = Users(database)
+    params = request.get_json()
+
+    userID = user.getUser(get_user_id())
+    recipeName = params.get('recipeName')
+    recipeMainPicture = params.get('recipeMainPicture')
+    recipeDescription = params.get('recipeDescription')
+    recipeCategory = params.get('recipeCategory')
+    recipePrepareTime = params.get('recipePrepareTime')
+    recipeCookTime = params.get('recipeCookTime')
+    recipeBakeTime = params.get('recipeBakeTime')
+
+
+    recipeId = recipe.getRecipeId(userID, recipeName, recipeDescription, recipePrepareTime,
+                                  recipeCookTime, recipeBakeTime, recipeMainPicture, recipeCategory)
+
+    return jsonify({
+        'recipeId': recipeId,
+    })
+
+
+
 @app.route('/recipe/<int:recipeId>', methods=['GET'])
 def getRecipe(recipeId):
     recipe = Recipes(database)
@@ -227,13 +252,13 @@ def addRecipe():
     recipePrepareTime = params.get('recipePrepareTime')
     recipeCookTime = params.get('recipeCookTime')
     recipeBakeTime = params.get('recipeBakeTime')
-    recipeMainPictureId = params.get('recipeMainPictureId')
+    recipeMainPicture = params.get('recipeMainPicture')
     recipeCategory = params.get('recipeCategory')
 
 
     status, message = recipe.addRecipe(userID, recipeName, recipeDescription,
                                         recipePrepareTime, recipeCookTime, recipeBakeTime,
-                                        recipeMainPictureId, recipeCategory)
+                                        recipeMainPicture, recipeCategory)
 
     return jsonify({
         'status': status,

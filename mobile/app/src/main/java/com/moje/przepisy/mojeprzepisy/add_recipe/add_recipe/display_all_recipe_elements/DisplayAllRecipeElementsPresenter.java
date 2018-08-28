@@ -2,6 +2,7 @@ package com.moje.przepisy.mojeprzepisy.add_recipe.add_recipe.display_all_recipe_
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.preference.PreferenceManager;
 import android.widget.Toast;
 import com.google.gson.Gson;
@@ -15,13 +16,20 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DisplayAllRecipeElementsPresenter implements DisplayAllRecipeElementsContract.Presenter {
+public class DisplayAllRecipeElementsPresenter implements DisplayAllRecipeElementsContract.Presenter,
+RecipeRepository.OnRecipeFinishedListener{
   private RecipeRepository recipeRepository;
   private DisplayAllRecipeElementsContract.View recipeElementsView;
   private List<Ingredient> ingredientList = new ArrayList<>();
+  private List<Ingredient> ingredientListWithRecipeId = new ArrayList<>();
   private List<Recipe> recipeList = new ArrayList<>();
   private List<Step> stepList = new ArrayList<>();
+  private List<Step> stepListWithRecipeId = new ArrayList<>();
   private Gson gson = new Gson();
+  private Boolean ifRecipeAdded;
+  private Boolean ifIngredientsAdded;
+  private Boolean ifStepsAdded;
+
 
   public DisplayAllRecipeElementsPresenter(DisplayAllRecipeElementsContract.View recipeElementsView, RecipeRepository recipeRepository){
     this.recipeElementsView = recipeElementsView;
@@ -142,5 +150,81 @@ public class DisplayAllRecipeElementsPresenter implements DisplayAllRecipeElemen
     }else {
       Toast.makeText(recipeElementsView.getContext(), "Nie udało się pobrać kroków!", Toast.LENGTH_SHORT).show();
     }
+  }
+
+  @Override
+  public int getRecipeIdFromServer() {
+    return recipeRepository.getRecipeId(recipeList.get(0));
+  }
+
+  @Override
+  public void addRecipeToServer() {
+    recipeRepository.addRecipe(recipeList,this);
+  }
+
+  @Override
+  public void addIngredientsToServer() {
+    recipeRepository.addIngredients(ingredientListWithRecipeId, this);
+  }
+
+  @Override
+  public void addStepsToServer() {
+    recipeRepository.addStep(stepListWithRecipeId, this);
+  }
+
+  @Override
+  public void addRecipeIdToIngredients() {
+    for(Ingredient ingredient : ingredientList){
+      Ingredient ingredientWithRecipeId = new Ingredient(getRecipeIdFromServer(), ingredient.getIngredientQuantity(),
+          ingredient.getIngredientUnit(), ingredient.getIngredientName());
+      ingredientListWithRecipeId.add(ingredientWithRecipeId);
+    }
+  }
+
+  @Override
+  public void addRecipeIdToSteps() {
+    for(Step step : stepList){
+      Step stepWithRecipeId = new Step(getRecipeIdFromServer(), step.getPhoto(),
+          step.getStepNumber(), step.getStepDescription());
+      stepListWithRecipeId.add(stepWithRecipeId);
+    }
+  }
+
+  @Override
+  public void saved() {
+    if(ifRecipeAdded && ifIngredientsAdded && ifStepsAdded){
+      deleteAllSharedPreferences();
+    }
+    recipeElementsView.getInformationTextView().setText("Nie udało się zapisać przepisu!");
+  }
+
+  @Override
+  public void onRecipeError() {
+    if(recipeElementsView != null){
+      recipeElementsView.getInformationTextView().setText("Wystąpił błąd podczas dodawania przepisu. Spróbuj ponownie.");
+    }
+  }
+
+  @Override
+  public void onRecipeSuccess() {
+    if (recipeElementsView != null) {
+      recipeElementsView.getInformationTextView().setTextColor(Color.parseColor("#8033ff33"));
+      recipeElementsView.getInformationTextView().setText("Przepis dodany pomyślnie!");
+    }
+  }
+
+  @Override
+  public void onRecipeAdded(Boolean ifAdded) {
+    ifRecipeAdded = ifAdded;
+  }
+
+  @Override
+  public void onIngredientsAdded(Boolean ifAdded) {
+    ifIngredientsAdded = ifAdded;
+  }
+
+  @Override
+  public void onStepsAdded(Boolean ifAdded) {
+    ifStepsAdded = ifAdded;
   }
 }

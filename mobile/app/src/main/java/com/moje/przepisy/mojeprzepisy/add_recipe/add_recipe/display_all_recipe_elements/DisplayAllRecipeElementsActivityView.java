@@ -1,9 +1,7 @@
 package com.moje.przepisy.mojeprzepisy.add_recipe.add_recipe.display_all_recipe_elements;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,7 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
-import android.widget.Toast;
+import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.moje.przepisy.mojeprzepisy.R;
@@ -19,13 +17,12 @@ import com.moje.przepisy.mojeprzepisy.data.model.Ingredient;
 import com.moje.przepisy.mojeprzepisy.data.model.Recipe;
 import com.moje.przepisy.mojeprzepisy.data.model.Step;
 import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.RecipeRepository;
-import com.moje.przepisy.mojeprzepisy.utils.Constant;
-import java.util.ArrayList;
 import java.util.List;
 
-public class DisplayAllRecipeElementsActivityView extends AppCompatActivity implements DisplayAllRecipeElementsContract.View,
-    View.OnClickListener{
+public class DisplayAllRecipeElementsActivityView extends AppCompatActivity implements
+    DisplayAllRecipeElementsContract.View{
   @BindView(R.id.saveRecipeImageView)ImageView saveRecipeImageView;
+  @BindView(R.id.informationTextView)TextView informationTextView;
   private DisplayAllRecipeElementsContract.Presenter presenter;
   Context context;
 
@@ -43,8 +40,10 @@ public class DisplayAllRecipeElementsActivityView extends AppCompatActivity impl
     saveRecipeImageView.setOnClickListener(new OnClickListener() {
       @Override
       public void onClick(View view) {
-        // po kliknięciu powinno wysyłać dane do serwera - > dopisać
-        presenter.deleteAllSharedPreferences();
+        presenter.addRecipeToServer();
+        presenter.addIngredientsToServer();
+        presenter.addStepsToServer();
+        presenter.saved();
 
       }
     });
@@ -91,7 +90,9 @@ public class DisplayAllRecipeElementsActivityView extends AppCompatActivity impl
   }
 
   @Override
-  public void onClick(View view) {
-
+  public TextView getInformationTextView() {
+    return informationTextView;
   }
+
+
 }

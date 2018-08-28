@@ -64,7 +64,7 @@ public class StepsDisplayAdapter extends RecyclerView.Adapter<StepsDisplayAdapte
     void bind(Step step) {
       int stepNumber = step.getStepNumber();
       String stepDescription = step.getStepDescription();
-      String photoId = step.getPhotoId();
+      String photoId = step.getPhoto();
 
       stepNumberTextView.setText(Integer.toString(stepNumber));
       stepDescriptionTextView.setText(stepDescription);

@@ -20,11 +20,18 @@
     app:titleTextColor="@android:color/black">
   </android.support.v7.widget.Toolbar>
 
+  <TextView
+    android:id="@+id/informationTextView"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_below="@id/toolbar_whole_recipe"
+    android:textColor="@color/red"
+    android:text=""/>
   <ScrollView
     android:id="@+id/scrollViewLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_below="@id/toolbar_whole_recipe">
+    android:layout_below="@id/informationTextView">
 
     <RelativeLayout
       android:layout_width="wrap_content"

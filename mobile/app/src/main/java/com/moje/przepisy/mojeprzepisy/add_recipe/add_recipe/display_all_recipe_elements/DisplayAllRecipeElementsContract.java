@@ -1,6 +1,7 @@
 package com.moje.przepisy.mojeprzepisy.add_recipe.add_recipe.display_all_recipe_elements;
 
 import android.content.Context;
+import android.widget.TextView;
 import com.moje.przepisy.mojeprzepisy.data.model.Ingredient;
 import com.moje.przepisy.mojeprzepisy.data.model.Recipe;
 import com.moje.przepisy.mojeprzepisy.data.model.Step;
@@ -19,6 +20,8 @@ public interface DisplayAllRecipeElementsContract {
     void setIngredientsRecyclerView(List<Ingredient> ingredientList);
 
     void setStepsRecyclerView(List<Step> stepList);
+
+    TextView getInformationTextView();
   }
 
   interface Presenter {
@@ -55,6 +58,19 @@ public interface DisplayAllRecipeElementsContract {
 
     void setStepsDetailsScreen();
 
+    int getRecipeIdFromServer();
+
+    void addRecipeToServer();
+
+    void addIngredientsToServer();
+
+    void addStepsToServer();
+
+    void addRecipeIdToIngredients();
+
+    void addRecipeIdToSteps();
+
+    void saved();
   }
 
 }

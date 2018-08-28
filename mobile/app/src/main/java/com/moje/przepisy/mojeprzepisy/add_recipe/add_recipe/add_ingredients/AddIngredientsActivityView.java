@@ -39,7 +39,7 @@ public class AddIngredientsActivityView extends AppCompatActivity implements Add
     setListeners();
 
     setToolbar();
-    
+
     presenter.setFirstScreen();
   }
 

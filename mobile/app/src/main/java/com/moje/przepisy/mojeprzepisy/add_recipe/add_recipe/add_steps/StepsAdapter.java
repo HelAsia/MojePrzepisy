@@ -1,17 +1,13 @@
 package com.moje.przepisy.mojeprzepisy.add_recipe.add_recipe.add_steps;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.preference.PreferenceManager;
-import android.provider.MediaStore.Images.Media;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -154,7 +150,7 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> 
         @Override
         public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
           int stepNumber = (int) adapterView.getSelectedItemId();
-          Step updatedStep = new Step(stepList.get(getAdapterPosition()).getPhotoId(),
+          Step updatedStep = new Step(stepList.get(getAdapterPosition()).getPhoto(),
               stepNumber + 1, stepList.get(getAdapterPosition()).getStepDescription());
           stepList.set(getAdapterPosition(), updatedStep);
 
@@ -176,7 +172,7 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> 
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
           String stepDescription = stepEditText.getText().toString();
-          Step updatedStep = new Step(stepList.get(getAdapterPosition()).getPhotoId(),
+          Step updatedStep = new Step(stepList.get(getAdapterPosition()).getPhoto(),
               stepList.get(getAdapterPosition()).getStepNumber(), stepDescription);
           stepList.set(getAdapterPosition(), updatedStep);
 
@@ -240,7 +236,7 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> 
     void bind(Step step) {
       int stepNumber = step.getStepNumber();
       String stepDescription = step.getStepDescription();
-      String mainPhoto = step.getPhotoId();
+      String mainPhoto = step.getPhoto();
 
       stepNumberSpinner.setSelection(stepNumber);
       stepEditText.setText(stepDescription);

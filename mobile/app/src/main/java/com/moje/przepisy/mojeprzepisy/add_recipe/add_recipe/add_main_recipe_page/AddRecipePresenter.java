@@ -56,7 +56,7 @@ public class AddRecipePresenter implements AddRecipeContract.Presenter{
   public void setRecipeValueOnScreen(){
     int position = 0;
     setRecipe(getRecipeAfterChangeScreen(getPojoListFromPreferences(recipeView.getContext())));
-    recipeView.setMainPhotoImageView(getRecipeList().get(position).getRecipeMainPictureId());
+    recipeView.setMainPhotoImageView(getRecipeList().get(position).getRecipeMainPicture());
     recipeView.setRecipeNameEditText(getRecipeList().get(position).getRecipeName());
     recipeView.setCategoryChooseSpinner(getRecipeList().get(position).getRecipeCategory());
     recipeView.setPreparedTimeEditText(getRecipeList().get(position).getRecipePrepareTime());
@@ -69,7 +69,7 @@ public class AddRecipePresenter implements AddRecipeContract.Presenter{
     getRecipeList().get(position).setRecipeName(recipeView.getRecipeNameEditText().getText().toString());
     BitmapDrawable drawable = (BitmapDrawable) recipeView.getMainPhotoImageView().getDrawable();
     Bitmap bitmap = drawable.getBitmap();
-    getRecipeList().get(position).setRecipeMainPictureId(converter.BitMapToString(bitmap));
+    getRecipeList().get(position).setRecipeMainPicture(converter.BitMapToString(bitmap));
     getRecipeList().get(position).setRecipeCategory((String) recipeView.getCategoryChooseSpinner().getSelectedItem());
     getRecipeList().get(position).setRecipePrepareTime(java.sql.Time.valueOf(recipeView.getPreparedTimeEditText().getText().toString()));
     getRecipeList().get(position).setRecipeCookTime(java.sql.Time.valueOf(recipeView.getCookTimeEditText().getText().toString()));
@@ -86,7 +86,7 @@ public class AddRecipePresenter implements AddRecipeContract.Presenter{
       setRecipeValueOnScreen();
     }else {
       Time ts = new Time(503000);
-      Recipe recipe = new Recipe("Nazwa przepisu", "Przekąski", ts, ts, ts);
+      Recipe recipe = new Recipe("Nazwa przepisu", "https://img.freepik.com/free-icon/gallery_318-131678.jpg?size=338c&ext=jpg", "Przekąski", ts, ts, ts);
       recipeList.add(recipe);
       setRecipe(recipeList);
     }

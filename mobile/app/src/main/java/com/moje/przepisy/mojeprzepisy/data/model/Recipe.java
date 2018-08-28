@@ -4,23 +4,36 @@ import java.sql.Time;
 
 public class Recipe {
   private int recipeId;
-  private String recipeMainPictureId;
+  private String recipeName;
+  private String recipeMainPicture;
+  private String recipeDescription;
+  private String recipeCategory;
+  private java.sql.Time recipePrepareTime;
+  private java.sql.Time recipeCookTime;
+  private java.sql.Time recipeBakeTime;
 
-  public Recipe(String recipeName,String recipeCategory, Time recipePrepareTime, Time recipeCookTime,
-      Time recipeBakeTime) {
+  public Recipe(int recipeId, String recipeName, String recipeMainPicture,
+      String recipeDescription, String recipeCategory, Time recipePrepareTime,
+      Time recipeCookTime, Time recipeBakeTime) {
+    this.recipeId = recipeId;
     this.recipeName = recipeName;
+    this.recipeMainPicture = recipeMainPicture;
+    this.recipeDescription = recipeDescription;
     this.recipeCategory = recipeCategory;
     this.recipePrepareTime = recipePrepareTime;
     this.recipeCookTime = recipeCookTime;
     this.recipeBakeTime = recipeBakeTime;
   }
 
-  private String recipeName;
-  private String recipeDescription;
-  private String recipeCategory;
-  private java.sql.Time recipePrepareTime;
-  private java.sql.Time recipeCookTime;
-  private java.sql.Time recipeBakeTime;
+  public Recipe(String recipeName,String recipeMainPicture, String recipeCategory, Time recipePrepareTime, Time recipeCookTime,
+      Time recipeBakeTime) {
+    this.recipeName = recipeName;
+    this.recipeMainPicture = recipeMainPicture;
+    this.recipeCategory = recipeCategory;
+    this.recipePrepareTime = recipePrepareTime;
+    this.recipeCookTime = recipeCookTime;
+    this.recipeBakeTime = recipeBakeTime;
+  }
 
   public Recipe(){
 
@@ -30,8 +43,8 @@ public class Recipe {
     return recipeId;
   }
 
-  public String getRecipeMainPictureId() {
-    return recipeMainPictureId;
+  public String getRecipeMainPicture() {
+    return recipeMainPicture;
   }
 
   public String getRecipeName() {
@@ -58,8 +71,8 @@ public class Recipe {
     this.recipeId = recipeId;
   }
 
-  public void setRecipeMainPictureId(String recipeMainPictureId) {
-    this.recipeMainPictureId = recipeMainPictureId;
+  public void setRecipeMainPicture(String recipeMainPicture) {
+    this.recipeMainPicture = recipeMainPicture;
   }
 
   public void setRecipeName(String recipeName) {
@@ -89,4 +102,5 @@ public class Recipe {
   public void setRecipeCategory(String recipeCategory) {
     this.recipeCategory = recipeCategory;
   }
+
 }

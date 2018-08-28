@@ -161,7 +161,7 @@ public class MainCardsActivityView extends AppCompatActivity implements MainCard
 
             }else if (id == R.id.licences_nav) {
               Intent intent = new Intent(MainCardsActivityView.this, LicensesActivity.class);
-
+              startActivity(intent);
             }
             return false;
           }

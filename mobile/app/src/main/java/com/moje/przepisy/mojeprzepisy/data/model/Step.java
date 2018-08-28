@@ -3,7 +3,7 @@ package com.moje.przepisy.mojeprzepisy.data.model;
 public class Step {
   private int stepId;
   private int recipeId;
-  private String photoId;
+  private String photo;
   private int stepNumber;
   private String stepDescription;
 
@@ -11,8 +11,15 @@ public class Step {
 
   }
 
-  public Step(String photoId, int stepNumber, String stepDescription){
-    this.photoId = photoId;
+  public Step(String photo, int stepNumber, String stepDescription){
+    this.photo = photo;
+    this.stepNumber = stepNumber;
+    this.stepDescription = stepDescription;
+  }
+
+  public Step(int recipeId, String photo, int stepNumber, String stepDescription) {
+    this.recipeId = recipeId;
+    this.photo = photo;
     this.stepNumber = stepNumber;
     this.stepDescription = stepDescription;
   }
@@ -25,8 +32,8 @@ public class Step {
     return recipeId;
   }
 
-  public String getPhotoId() {
-    return photoId;
+  public String getPhoto() {
+    return photo;
   }
 
   public int getStepNumber() {
@@ -45,8 +52,8 @@ public class Step {
     this.recipeId = recipeId;
   }
 
-  public void setPhotoId(String photoId) {
-    this.photoId = photoId;
+  public void setPhoto(String photo) {
+    this.photo = photo;
   }
 
   public void setStepNumber(int stepNumber) {
