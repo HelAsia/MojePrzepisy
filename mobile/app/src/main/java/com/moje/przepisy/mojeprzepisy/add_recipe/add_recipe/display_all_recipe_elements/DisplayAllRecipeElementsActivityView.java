@@ -1,5 +1,8 @@
 package com.moje.przepisy.mojeprzepisy.add_recipe.add_recipe.display_all_recipe_elements;
 
+import android.app.Activity;
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -21,6 +24,7 @@ import java.util.List;
 
 public class DisplayAllRecipeElementsActivityView extends AppCompatActivity implements
     DisplayAllRecipeElementsContract.View{
+  public static final int PLEASE_WAIT_DIALOG = 1;
   @BindView(R.id.saveRecipeImageView)ImageView saveRecipeImageView;
   @BindView(R.id.informationTextView)TextView informationTextView;
   private DisplayAllRecipeElementsContract.Presenter presenter;
@@ -40,17 +44,30 @@ public class DisplayAllRecipeElementsActivityView extends AppCompatActivity impl
     saveRecipeImageView.setOnClickListener(new OnClickListener() {
       @Override
       public void onClick(View view) {
-        presenter.addRecipeToServer();
-        presenter.addIngredientsToServer();
-        presenter.addStepsToServer();
-        presenter.saved();
+        presenter.startBackgroundActions(DisplayAllRecipeElementsActivityView.this);
 
       }
     });
-
     presenter.setRecipeDetailsScreen();
     presenter.setIngredientsDetailScreen();
     presenter.setStepsDetailsScreen();
+  }
+
+  @Override
+  public Dialog onCreateDialog(int dialogId) {
+
+    switch (dialogId) {
+      case PLEASE_WAIT_DIALOG:
+        ProgressDialog dialog = new ProgressDialog(this);
+        dialog.setTitle("Zapisywanie");
+        dialog.setMessage("Proszę czekać....");
+        dialog.setCancelable(true);
+        return dialog;
+
+      default:
+        break;
+    }
+    return null;
   }
 
   @Override

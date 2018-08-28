@@ -18,9 +18,9 @@ public interface RecipeRepositoryInterface {
     void onIngredientsAdded(Boolean ifAdded);
 
     void onStepsAdded(Boolean ifAdded);
-  }
 
-  int getRecipeId(Recipe recipe);
+    void setRecipeId(String message);
+  }
 
   void addRecipe(List<Recipe> recipeList, OnRecipeFinishedListener listener);
 

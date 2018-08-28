@@ -34,7 +34,7 @@ class Comments:
                 u"(recipe_id, user_id, comment, created_date) " \
                 u"values ({}, {}, '{}', now() ".format(recipeId, userId, comment)
 
-        queryResult = self.database.query(query)
+        queryResult, rows, msg = self.database.insert(query)
 
         queryCommentId = u"SELECT comment_id " \
                          u"FROM comments " \

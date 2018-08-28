@@ -6,19 +6,17 @@ public class Recipe {
   private int recipeId;
   private String recipeName;
   private String recipeMainPicture;
-  private String recipeDescription;
   private String recipeCategory;
   private java.sql.Time recipePrepareTime;
   private java.sql.Time recipeCookTime;
   private java.sql.Time recipeBakeTime;
 
   public Recipe(int recipeId, String recipeName, String recipeMainPicture,
-      String recipeDescription, String recipeCategory, Time recipePrepareTime,
+      String recipeCategory, Time recipePrepareTime,
       Time recipeCookTime, Time recipeBakeTime) {
     this.recipeId = recipeId;
     this.recipeName = recipeName;
     this.recipeMainPicture = recipeMainPicture;
-    this.recipeDescription = recipeDescription;
     this.recipeCategory = recipeCategory;
     this.recipePrepareTime = recipePrepareTime;
     this.recipeCookTime = recipeCookTime;
@@ -51,10 +49,6 @@ public class Recipe {
     return recipeName;
   }
 
-  public String getRecipeDescription() {
-    return recipeDescription;
-  }
-
   public java.sql.Time getRecipePrepareTime() {
     return recipePrepareTime;
   }
@@ -77,10 +71,6 @@ public class Recipe {
 
   public void setRecipeName(String recipeName) {
     this.recipeName = recipeName;
-  }
-
-  public void setRecipeDescription(String recipeDescription) {
-    this.recipeDescription = recipeDescription;
   }
 
   public void setRecipePrepareTime(java.sql.Time recipePrepareTime) {

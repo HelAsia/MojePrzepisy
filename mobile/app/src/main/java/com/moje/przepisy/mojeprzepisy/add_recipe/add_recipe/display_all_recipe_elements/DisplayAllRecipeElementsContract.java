@@ -1,5 +1,6 @@
 package com.moje.przepisy.mojeprzepisy.add_recipe.add_recipe.display_all_recipe_elements;
 
+import android.app.Activity;
 import android.content.Context;
 import android.widget.TextView;
 import com.moje.przepisy.mojeprzepisy.data.model.Ingredient;
@@ -58,8 +59,6 @@ public interface DisplayAllRecipeElementsContract {
 
     void setStepsDetailsScreen();
 
-    int getRecipeIdFromServer();
-
     void addRecipeToServer();
 
     void addIngredientsToServer();
@@ -71,6 +70,15 @@ public interface DisplayAllRecipeElementsContract {
     void addRecipeIdToSteps();
 
     void saved();
+
+    Boolean getIfRecipeAdded();
+
+    Boolean getIfIngredientsAdded();
+
+    Boolean getIfStepsAdded();
+
+    void startBackgroundActions(Activity activity);
+
   }
 
 }

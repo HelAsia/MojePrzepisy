@@ -44,6 +44,7 @@ def authorized(f):
     @wraps(f)
     def validator(*args, **kwargs):
         sess = Session(session, database)
+        Logger.dbg("validator: Request headers:\n=====\n{}\n=====\n".format(request.headers))
         if not sess.validate_session():
             Logger.fail('@authorized: User not authenticated.')
             return jsonify({
@@ -186,7 +187,7 @@ def getSortedCards(sorted_method):
     return jsonify(cards)
 
 
-@app.route('recipe/id', methods=['GET'])
+@app.route('/recipe/id', methods=['GET'])
 def getRecipeId():
     recipe = Recipes(database)
     user = Users(database)
@@ -194,16 +195,14 @@ def getRecipeId():
 
     userID = user.getUser(get_user_id())
     recipeName = params.get('recipeName')
-    recipeMainPicture = params.get('recipeMainPicture')
-    recipeDescription = params.get('recipeDescription')
     recipeCategory = params.get('recipeCategory')
     recipePrepareTime = params.get('recipePrepareTime')
     recipeCookTime = params.get('recipeCookTime')
     recipeBakeTime = params.get('recipeBakeTime')
 
 
-    recipeId = recipe.getRecipeId(userID, recipeName, recipeDescription, recipePrepareTime,
-                                  recipeCookTime, recipeBakeTime, recipeMainPicture, recipeCategory)
+    recipeId = recipe.getRecipeId(userID, recipeName, recipePrepareTime,
+                                  recipeCookTime, recipeBakeTime, recipeCategory)
 
     return jsonify({
         'recipeId': recipeId,
@@ -239,14 +238,11 @@ def deleteRecipe(recipeId):
 @authorized
 def addRecipe():
     recipe = Recipes(database)
-    user = Users(database)
-
-    userID = user.getUser(get_user_id())
+    userID = get_user_id()
 
     params = request.get_json()
 
     recipeName = params.get('recipeName')
-    recipeDescription = params.get('recipeDescription')
     recipePrepareTime = params.get('recipePrepareTime')
     recipeCookTime = params.get('recipeCookTime')
     recipeBakeTime = params.get('recipeBakeTime')
@@ -254,7 +250,7 @@ def addRecipe():
     recipeCategory = params.get('recipeCategory')
 
 
-    status, message = recipe.addRecipe(userID, recipeName, recipeDescription,
+    status, message = recipe.addRecipe(userID, recipeName,
                                         recipePrepareTime, recipeCookTime, recipeBakeTime,
                                         recipeMainPicture, recipeCategory)
 

@@ -37,10 +37,10 @@ class Ingredients:
             return {}
 
         query = u"INSERT INTO ingredients " \
-                u"(recipe_id, ingredient_quantity, ingredient_unit, ingredient_name, group_ingredient_name) " \
-                u"values ({}, '{}', '{}', {} ".format(recipeId, int(ingredientQuantity), ingredientUnit, ingredientName, ingredientGroup)
+                u"(recipe_id, ingredient_quantity, ingredient_unit, ingredient_name) " \
+                u"values ({}, {}, '{}', '{}' )".format(recipeId, int(ingredientQuantity), ingredientUnit, ingredientName)
 
-        queryResult = self.database.query(query)
+        queryResult, rows, msg = self.database.insert(query)
 
         if queryResult:
             Logger.dbg(queryResult)

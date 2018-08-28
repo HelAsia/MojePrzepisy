@@ -1,8 +1,10 @@
 package com.moje.przepisy.mojeprzepisy.add_recipe.add_recipe.display_all_recipe_elements;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.widget.Toast;
 import com.google.gson.Gson;
@@ -26,14 +28,27 @@ RecipeRepository.OnRecipeFinishedListener{
   private List<Step> stepList = new ArrayList<>();
   private List<Step> stepListWithRecipeId = new ArrayList<>();
   private Gson gson = new Gson();
-  private Boolean ifRecipeAdded;
-  private Boolean ifIngredientsAdded;
-  private Boolean ifStepsAdded;
+  private Boolean ifRecipeAdded = false;
+  private Boolean ifIngredientsAdded = false;
+  private Boolean ifStepsAdded = false;
+  private int recipeId;
 
 
   public DisplayAllRecipeElementsPresenter(DisplayAllRecipeElementsContract.View recipeElementsView, RecipeRepository recipeRepository){
     this.recipeElementsView = recipeElementsView;
     this.recipeRepository = recipeRepository;
+  }
+
+  public Boolean getIfRecipeAdded() {
+    return ifRecipeAdded;
+  }
+
+  public Boolean getIfIngredientsAdded() {
+    return ifIngredientsAdded;
+  }
+
+  public Boolean getIfStepsAdded() {
+    return ifStepsAdded;
   }
 
   @Override
@@ -153,29 +168,26 @@ RecipeRepository.OnRecipeFinishedListener{
   }
 
   @Override
-  public int getRecipeIdFromServer() {
-    return recipeRepository.getRecipeId(recipeList.get(0));
-  }
-
-  @Override
   public void addRecipeToServer() {
     recipeRepository.addRecipe(recipeList,this);
   }
 
   @Override
   public void addIngredientsToServer() {
+    addRecipeIdToIngredients();
     recipeRepository.addIngredients(ingredientListWithRecipeId, this);
   }
 
   @Override
   public void addStepsToServer() {
+    addRecipeIdToSteps();
     recipeRepository.addStep(stepListWithRecipeId, this);
   }
 
   @Override
   public void addRecipeIdToIngredients() {
     for(Ingredient ingredient : ingredientList){
-      Ingredient ingredientWithRecipeId = new Ingredient(getRecipeIdFromServer(), ingredient.getIngredientQuantity(),
+      Ingredient ingredientWithRecipeId = new Ingredient(recipeId, ingredient.getIngredientQuantity(),
           ingredient.getIngredientUnit(), ingredient.getIngredientName());
       ingredientListWithRecipeId.add(ingredientWithRecipeId);
     }
@@ -184,7 +196,7 @@ RecipeRepository.OnRecipeFinishedListener{
   @Override
   public void addRecipeIdToSteps() {
     for(Step step : stepList){
-      Step stepWithRecipeId = new Step(getRecipeIdFromServer(), step.getPhoto(),
+      Step stepWithRecipeId = new Step(recipeId, step.getPhoto(),
           step.getStepNumber(), step.getStepDescription());
       stepListWithRecipeId.add(stepWithRecipeId);
     }
@@ -192,10 +204,23 @@ RecipeRepository.OnRecipeFinishedListener{
 
   @Override
   public void saved() {
+    addRecipeToServer();
+    while (!getIfRecipeAdded()){
+
+    }
+    addIngredientsToServer();
+    while (!getIfIngredientsAdded()){
+
+    }
+    addStepsToServer();
+    while (!getIfStepsAdded()){
+
+    }
     if(ifRecipeAdded && ifIngredientsAdded && ifStepsAdded){
       deleteAllSharedPreferences();
+    }else {
+      recipeElementsView.getInformationTextView().setText("Nie udało się zapisać przepisu!");
     }
-    recipeElementsView.getInformationTextView().setText("Nie udało się zapisać przepisu!");
   }
 
   @Override
@@ -226,5 +251,49 @@ RecipeRepository.OnRecipeFinishedListener{
   @Override
   public void onStepsAdded(Boolean ifAdded) {
     ifStepsAdded = ifAdded;
+  }
+
+  @Override
+  public void setRecipeId(String message) {
+    recipeId = Integer.parseInt(message);
+  }
+
+  @Override
+  public void startBackgroundActions(Activity activity){
+    new BackgroundActions(activity).execute();
+  }
+
+  private class BackgroundActions extends AsyncTask<Void, Void, Void> {
+
+    private Activity activity;
+
+
+    public BackgroundActions(Activity activity) {
+      this.activity = activity;
+    }
+
+    @Override
+    protected void onPreExecute() {
+      activity.showDialog(DisplayAllRecipeElementsActivityView.PLEASE_WAIT_DIALOG);
+    }
+
+    @Override
+    protected Void doInBackground(Void... arg0) {
+      try {
+        saved();
+        Thread.sleep(5000);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+      return null;
+
+    }
+
+    @Override
+    protected void onPostExecute(Void result) {
+      activity.removeDialog(DisplayAllRecipeElementsActivityView.PLEASE_WAIT_DIALOG);
+      Toast.makeText(activity, "Zapisano!", Toast.LENGTH_SHORT).show();
+    }
+
   }
 }

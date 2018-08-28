@@ -43,7 +43,7 @@ public class OperationsOnCardRepository implements OperationsOnCardRepositoryInt
           Log.i("SERWER", "Id: " + recipe.id);
           Log.i("SERWER", "Author: " + recipe.authorName);
           Log.i("SERWER", "Favorite: " + recipe.favoritesCount);
-          Log.i("SERWER", "PhotoRecipe: " + recipe.photoRecipe);
+          Log.i("SERWER", "PhotoRecipe: " + recipe.recipeMainPicture);
           Log.i("SERWER", "Recipe: " + recipe.recipeName);
           Log.i("SERWER", "Stars: " + recipe.starsCount);
         }

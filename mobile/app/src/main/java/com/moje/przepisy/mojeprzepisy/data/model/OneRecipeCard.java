@@ -13,7 +13,7 @@ public class OneRecipeCard {
   public int favoritesCount;
   public String recipeName;
   public String authorName;
-  public String photoRecipe;
+  public String recipeMainPicture;
   public Timestamp date;
 
   public OneRecipeCard(){
@@ -22,21 +22,6 @@ public class OneRecipeCard {
 
   public OneRecipeCard(String recipeName){
     this.recipeName = recipeName;
-  }
-
-  public String toString() {
-      String out;
-
-      out = String.format(
-          "Recipe(%d, %d, %d, '%s', '%s', '%s'",
-          this.id,
-          this.starsCount,
-          this.favoritesCount,
-          this.recipeName,
-          this.authorName,
-          this.photoRecipe
-          );
-      return out;
   }
 
   public long getId() {
@@ -59,8 +44,8 @@ public class OneRecipeCard {
     return authorName;
   }
 
-  public String getPhotoRecipe() {
-    return photoRecipe;
+  public String getRecipeMainPicture() {
+    return recipeMainPicture;
   }
 
   public Timestamp getDate() {
@@ -87,8 +72,8 @@ public class OneRecipeCard {
     this.authorName = authorName;
   }
 
-  public void setPhotoRecipe(String photoRecipe) {
-    this.photoRecipe = photoRecipe;
+  public void setRecipeMainPicture(String recipeMainPicture) {
+    this.recipeMainPicture = recipeMainPicture;
   }
 
 }

@@ -88,7 +88,6 @@ public class AddRecipeActivityView extends AppCompatActivity implements AddRecip
   @Override
   public void onClick(View view) {
     if(view.getId() == R.id.previousActionFab){
-      presenter.setRecipeValueInPreferences();
       navigateToPreviousPage();
     }else if(view.getId() == R.id.nextActionFab){
       if(!presenter.checkIfValueIsEmpty()){

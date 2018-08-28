@@ -17,30 +17,10 @@ import retrofit2.Retrofit;
 public class RecipeRepository implements RecipeRepositoryInterface{
   private Retrofit retrofit;
   private RecipeAPI recipeAPI;
-  private int recipeId;
 
   public RecipeRepository(Context context) {
     this.retrofit = RetrofitSingleton.getRetrofitInstance(context);
     this.recipeAPI = retrofit.create(RecipeAPI.class);
-  }
-
-  @Override
-  public int getRecipeId(Recipe recipe) {
-    Call<Recipe> resp = recipeAPI.getRecipeId(recipe);
-    resp.enqueue(new Callback<Recipe>() {
-      @Override
-      public void onResponse(Call<Recipe> call, Response<Recipe> response) {
-        Recipe recipe = response.body();
-        recipeId = recipe.getRecipeId();
-      }
-
-      @Override
-      public void onFailure(Call<Recipe> call, Throwable t) {
-        Log.i("SERWER", t.getMessage());
-        recipeId = -1;
-      }
-    });
-    return recipeId;
   }
 
   @Override
@@ -51,9 +31,12 @@ public class RecipeRepository implements RecipeRepositoryInterface{
       public void onResponse(Call<Message> call, Response<Message> response) {
         Message message = response.body();
         if(message.status == 200){
+          Log.i("Recipe: ", "OK. Recipe has been added");
           listener.onRecipeSuccess();
+          listener.setRecipeId(message.message);
           listener.onRecipeAdded(true);
         }else if(message.status == 404){
+          Log.e("Recipe: ", "NOT OK. Recipe hasn't been added");
           listener.onRecipeError();
           listener.onRecipeAdded(false);
         }

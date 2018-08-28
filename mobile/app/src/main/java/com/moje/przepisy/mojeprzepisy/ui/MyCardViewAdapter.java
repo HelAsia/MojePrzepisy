@@ -87,7 +87,7 @@ public class MyCardViewAdapter extends RecyclerView.Adapter<MyCardViewAdapter.Vi
     }
 
     void bind(OneRecipeCard card) {
-      String recipePhoto = card.getPhotoRecipe();
+      String recipeMainPicture = card.getRecipeMainPicture();
       String recipeName = card.getRecipeName();
       String recipeAuthor = card.getAuthorName();
       int starsCount = card.getStarsCount();
@@ -95,7 +95,7 @@ public class MyCardViewAdapter extends RecyclerView.Adapter<MyCardViewAdapter.Vi
       String starsCountString = String.valueOf(starsCount);
       String favoritesCountString = String.valueOf(favoritesCount);
 
-      Picasso.get().load(recipePhoto).into(recipeImageView);
+      Picasso.get().load(recipeMainPicture).into(recipeImageView);
       recipeNameTextView.setText(recipeName);
       recipeAuthorTextView.setText(recipeAuthor);
       starsCountTextView.setText(starsCountString);

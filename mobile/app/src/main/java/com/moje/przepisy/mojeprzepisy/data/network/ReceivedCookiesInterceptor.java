@@ -6,7 +6,6 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import com.moje.przepisy.mojeprzepisy.utils.Constant;
 import java.io.IOException;
-import java.util.HashSet;
 import okhttp3.Interceptor;
 import okhttp3.Response;
 
@@ -22,17 +21,16 @@ public class ReceivedCookiesInterceptor implements Interceptor{
     Response orginalResponse = chain.proceed(chain.request());
 
     if(!orginalResponse.headers("Set-Cookie").isEmpty()) {
-      HashSet<String> cookies = (HashSet<String>) PreferenceManager.getDefaultSharedPreferences(context)
-          .getStringSet(Constant.PREF_COOKIES,new HashSet<String>());
-
+      String cookies = (String) PreferenceManager.getDefaultSharedPreferences(context)
+          .getString(Constant.PREF_COOKIES,new String());
 
       for (String header : orginalResponse.headers("Set-Cookie")){
-        cookies.add(header);
+        cookies = header;
         Log.i("DEB","Received cookie: " + cookies);
       }
 
       SharedPreferences.Editor memes = PreferenceManager.getDefaultSharedPreferences(context).edit();
-      memes.putStringSet(Constant.PREF_COOKIES,cookies).apply();
+      memes.putString(Constant.PREF_COOKIES,cookies).apply();
       memes.commit();
     }
 

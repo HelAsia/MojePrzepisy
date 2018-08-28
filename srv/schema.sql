@@ -6,7 +6,6 @@ CREATE DATABASE IF NOT EXISTS przepisy;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS sessions;
 DROP TABLE IF EXISTS recipes;
-DROP TABLE IF EXISTS photos;
 DROP TABLE IF EXISTS steps;
 DROP TABLE IF EXISTS ingredients;
 DROP TABLE IF EXISTS comments;
@@ -34,16 +33,14 @@ CREATE TABLE recipes (
     recipe_id int(11) NOT NULL AUTO_INCREMENT,
     user_id int(11),
     recipe_name varchar(80) NOT NULL,
-    recipe_description varchar(5000) NOT NULL,
     recipe_prepare_time time DEFAULT NULL,
     recipe_cook_time time DEFAULT NULL,
     recipe_bake_time time DEFAULT NULL,
-    recipe_main_picture_id blob, DEFAULT NULL,
+    recipe_main_picture blob DEFAULT NULL,
     recipe_category varchar(80) NOT NULL,
     recipe_created_date_time datetime,
     PRIMARY KEY (recipe_id),
-    FOREIGN KEY (user_id) REFERENCES users(user_id),
-    FOREIGN KEY (recipe_main_picture_id) REFERENCES photos(photo_id)
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 CREATE TABLE steps (
@@ -53,8 +50,7 @@ CREATE TABLE steps (
     step_number int(11) NOT NULL,
     step_description varchar(5000),
     PRIMARY KEY (step_id),
-    FOREIGN KEY (recipe_id) REFERENCES recipes(recipe_id),
-    FOREIGN KEY (photo_id) REFERENCES photos(photo_id)
+    FOREIGN KEY (recipe_id) REFERENCES recipes(recipe_id)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 CREATE TABLE ingredients (
@@ -63,7 +59,6 @@ CREATE TABLE ingredients (
     ingredient_quantity int(11),
     ingredient_unit varchar(100),
     ingredient_name varchar(100),
-    group_ingredient_name varchar(100),
     PRIMARY KEY (ingredient_id),
     FOREIGN KEY (recipe_id) REFERENCES recipes(recipe_id)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;

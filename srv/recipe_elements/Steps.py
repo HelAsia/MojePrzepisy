@@ -32,14 +32,16 @@ class Steps:
                 stepDescription):
         query = u"INSERT INTO steps " \
                 u"(recipe_id, photo_image, step_number, step_description) " \
-                u"values ({}, '{}', '{}', {} ".format(recipeId, photoImage, stepNumber, stepDescription)
+                u"values ({}, '{}', {}, '{}' )".format(recipeId, photoImage, int(stepNumber), stepDescription)
 
-        queryResult = self.database.query(query)
+        queryResult, rows, msg = self.database.insert(query)
 
         if queryResult:
             Logger.dbg(queryResult)
+            Logger.ok("OK. Step has been added")
             return 200, u'You added steps'
         else:
+            Logger.fail("NOT OK. Step hasn't been added")
             return 404, u'Forwarded data are not correct'
 
     def editStep(self, columnName, columnValue, stepId):
