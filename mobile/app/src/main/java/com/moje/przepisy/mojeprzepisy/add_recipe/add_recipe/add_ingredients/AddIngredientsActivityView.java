@@ -15,8 +15,7 @@ import com.moje.przepisy.mojeprzepisy.R;
 import com.moje.przepisy.mojeprzepisy.add_recipe.add_recipe.add_main_recipe_page.AddRecipeActivityView;
 import com.moje.przepisy.mojeprzepisy.add_recipe.add_recipe.add_steps.AddStepsActivityView;
 import com.moje.przepisy.mojeprzepisy.data.model.Ingredient;
-import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.RecipeRepository;
-import java.util.ArrayList;
+import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.recipe.RecipeRepository;
 import java.util.List;
 
 public class AddIngredientsActivityView extends AppCompatActivity implements AddIngredientsContract.View,

@@ -1,6 +1,6 @@
 package com.moje.przepisy.mojeprzepisy.log_in;
 
-import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.UserRepository;
+import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.user.UserRepository;
 
 public class LoginPresenter implements LoginContract.Presenter, UserRepository.OnLoginFinishedListener {
 

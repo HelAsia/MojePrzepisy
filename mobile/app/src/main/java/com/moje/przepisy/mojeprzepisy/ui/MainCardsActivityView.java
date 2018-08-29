@@ -25,8 +25,8 @@ import com.moje.przepisy.mojeprzepisy.R;
 import com.moje.przepisy.mojeprzepisy.SearchSwipeActivity;
 import com.moje.przepisy.mojeprzepisy.add_recipe.add_recipe.add_main_recipe_page.AddRecipeActivityView;
 import com.moje.przepisy.mojeprzepisy.data.model.OneRecipeCard;
-import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.OperationsOnCardRepository;
-import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.RecipeRepository;
+import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.cards.OperationsOnCardRepository;
+import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.recipe.RecipeRepository;
 import com.moje.przepisy.mojeprzepisy.log_in.LoginActivityView;
 import com.moje.przepisy.mojeprzepisy.log_out.LogoutActivityView;
 import com.moje.przepisy.mojeprzepisy.register.RegisterActivityView;
@@ -34,10 +34,10 @@ import java.util.List;
 
 public class MainCardsActivityView extends AppCompatActivity implements MainCardsContract.View,
     View.OnClickListener,MyCardViewAdapter.OnShareClickedListener {
+  @BindView(R.id.my_fab) FloatingActionButton floatingActionButton;
   private MainCardsContract.Presenter presenter;
   private DrawerLayout drawerLayout;
   Context context;
-  @BindView(R.id.my_fab) FloatingActionButton floatingActionButton;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {

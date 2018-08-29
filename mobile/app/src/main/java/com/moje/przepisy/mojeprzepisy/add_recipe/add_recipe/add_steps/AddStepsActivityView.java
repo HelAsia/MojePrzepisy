@@ -22,7 +22,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -30,9 +29,8 @@ import com.moje.przepisy.mojeprzepisy.R;
 import com.moje.przepisy.mojeprzepisy.add_recipe.add_recipe.add_ingredients.AddIngredientsActivityView;
 import com.moje.przepisy.mojeprzepisy.add_recipe.add_recipe.display_all_recipe_elements.DisplayAllRecipeElementsActivityView;
 import com.moje.przepisy.mojeprzepisy.data.model.Step;
-import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.RecipeRepository;
+import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.recipe.RecipeRepository;
 import java.util.List;
-import java.util.concurrent.locks.ReentrantLock;
 
 public class AddStepsActivityView extends AppCompatActivity implements AddStepContract.View,
     View.OnClickListener, StepsAdapter.OnShareClickedListener {

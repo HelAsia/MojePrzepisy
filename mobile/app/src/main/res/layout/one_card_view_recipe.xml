@@ -20,7 +20,7 @@
     android:layout_width="match_parent"
     android:layout_height="350dp"
     android:layout_margin="10dp"
-    android:background="@color/creamy"
+    android:background="@color/white"
     android:orientation="vertical"
     android:transitionName="layout_transition"
     android:weightSum="1">

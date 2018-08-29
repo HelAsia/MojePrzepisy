@@ -9,7 +9,7 @@ import android.preference.PreferenceManager;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.moje.przepisy.mojeprzepisy.data.model.Recipe;
-import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.RecipeRepository;
+import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.recipe.RecipeRepository;
 import com.moje.przepisy.mojeprzepisy.utils.BitmapConverter;
 import com.moje.przepisy.mojeprzepisy.utils.Constant;
 import java.lang.reflect.Type;

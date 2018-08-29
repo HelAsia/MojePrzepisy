@@ -8,7 +8,6 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
@@ -32,14 +31,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.moje.przepisy.mojeprzepisy.R;
 import com.moje.przepisy.mojeprzepisy.add_recipe.add_recipe.add_ingredients.AddIngredientsActivityView;
-import com.moje.przepisy.mojeprzepisy.data.model.Recipe;
-import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.RecipeRepository;
+import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.recipe.RecipeRepository;
 import com.moje.przepisy.mojeprzepisy.ui.MainCardsActivityView;
 import com.moje.przepisy.mojeprzepisy.utils.BitmapConverter;
 import com.moje.przepisy.mojeprzepisy.utils.TimeSetDialog;
-import java.sql.Time;
-import java.util.ArrayList;
-import java.util.List;
 
 public class AddRecipeActivityView extends AppCompatActivity implements AddRecipeContract.View,
     View.OnClickListener {

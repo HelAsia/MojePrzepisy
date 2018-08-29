@@ -1,6 +1,5 @@
 package com.moje.przepisy.mojeprzepisy.add_recipe.add_recipe.display_all_recipe_elements;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -20,7 +19,7 @@ import com.moje.przepisy.mojeprzepisy.R;
 import com.moje.przepisy.mojeprzepisy.data.model.Ingredient;
 import com.moje.przepisy.mojeprzepisy.data.model.Recipe;
 import com.moje.przepisy.mojeprzepisy.data.model.Step;
-import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.RecipeRepository;
+import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.recipe.RecipeRepository;
 import com.moje.przepisy.mojeprzepisy.ui.MainCardsActivityView;
 import java.util.List;
 

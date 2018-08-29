@@ -1,4 +1,4 @@
-package com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories;
+package com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.user;
 
 public interface UserRepositoryInterface {
 

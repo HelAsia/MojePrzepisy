@@ -9,7 +9,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.moje.przepisy.mojeprzepisy.R;
-import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.UserRepository;
+import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.user.UserRepository;
 import com.moje.przepisy.mojeprzepisy.ui.MainCardsActivityView;
 
 public class LogoutActivityView extends AppCompatActivity implements LogoutContract.View,

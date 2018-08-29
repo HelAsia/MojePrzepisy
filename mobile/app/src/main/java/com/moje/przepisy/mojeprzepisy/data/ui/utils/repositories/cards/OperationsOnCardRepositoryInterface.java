@@ -1,4 +1,4 @@
-package com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories;
+package com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.cards;
 
 import com.moje.przepisy.mojeprzepisy.data.model.OneRecipeCard;
 import java.util.List;

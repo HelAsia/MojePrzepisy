@@ -1,6 +1,6 @@
 package com.moje.przepisy.mojeprzepisy.log_out;
 
-import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.UserRepository;
+import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.user.UserRepository;
 
 public class LogoutPresenter implements LogoutContract.Presenter, UserRepository.OnLogoutFinishedListener {
 

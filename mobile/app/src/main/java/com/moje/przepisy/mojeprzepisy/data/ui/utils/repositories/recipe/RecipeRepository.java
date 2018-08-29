@@ -1,4 +1,4 @@
-package com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories;
+package com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.recipe;
 
 import android.content.Context;
 import android.util.Log;
@@ -149,12 +149,5 @@ public class RecipeRepository implements RecipeRepositoryInterface{
         Log.i("SERWER", t.getMessage());
       }
     });
-
-
-
-
-
-
-
   }
 }

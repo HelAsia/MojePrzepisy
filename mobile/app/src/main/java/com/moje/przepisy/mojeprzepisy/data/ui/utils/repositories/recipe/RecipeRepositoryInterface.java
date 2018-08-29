@@ -1,4 +1,4 @@
-package com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories;
+package com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.recipe;
 
 import com.moje.przepisy.mojeprzepisy.data.model.Ingredient;
 import com.moje.przepisy.mojeprzepisy.data.model.Recipe;

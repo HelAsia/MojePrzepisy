@@ -1,6 +1,6 @@
 package com.moje.przepisy.mojeprzepisy.register;
 
-import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.UserRepository;
+import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.user.UserRepository;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
