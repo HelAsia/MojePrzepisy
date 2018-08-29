@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,6 +21,7 @@ import com.moje.przepisy.mojeprzepisy.data.model.Ingredient;
 import com.moje.przepisy.mojeprzepisy.data.model.Recipe;
 import com.moje.przepisy.mojeprzepisy.data.model.Step;
 import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.RecipeRepository;
+import com.moje.przepisy.mojeprzepisy.ui.MainCardsActivityView;
 import java.util.List;
 
 public class DisplayAllRecipeElementsActivityView extends AppCompatActivity implements
@@ -109,6 +111,13 @@ public class DisplayAllRecipeElementsActivityView extends AppCompatActivity impl
   @Override
   public TextView getInformationTextView() {
     return informationTextView;
+  }
+
+  @Override
+  public void navigateToMainCardsScreen() {
+    Intent intent = new Intent(DisplayAllRecipeElementsActivityView.this, MainCardsActivityView.class);
+    intent.putExtra("LOGGED",true);
+    startActivity(intent);
   }
 
 

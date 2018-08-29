@@ -14,25 +14,6 @@ class Recipes:
     def setDatabase(self,database):
         self.database = database
 
-    def getRecipeId(self, userID, recipeName, recipePrepareTime,
-                    recipeCookTime, recipeBakeTime, recipeCategory):
-        queryRecipeId = u"SELECT recipe_id "\
-                        u"FROM recipes "\
-                        u"WHERE "\
-                        u"user_id = {} AND recipe_name = '{}' AND "\
-                        u"recipe_prepare_time = '{}' AND recipe_cook_time = '{}' AND recipe_bake_time = '{}' "\
-                        u"AND recipe_category = '{}' ".format(userID, recipeName, normalizeTime(recipePrepareTime),
-                                                              normalizeTime(recipeCookTime),normalizeTime(recipeBakeTime),
-                                                              recipeCategory)
-
-        queryResult = self.database.query(queryRecipeId)
-
-        if queryResult:
-            Logger.dbg(queryResult)
-            return queryResult
-        else:
-            return {}
-
     def getRecipe(self, recipeID):
         query = u"SELECT R.recipe_id AS recipeId, U.user_login AS authorName, " \
                 u"R.recipe_main_picture AS recipeMainPicture" \

@@ -2,6 +2,7 @@ package com.moje.przepisy.mojeprzepisy.ui;
 
 import android.animation.Animator;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Build.VERSION_CODES;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
@@ -16,6 +17,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.moje.przepisy.mojeprzepisy.R;
 import com.moje.przepisy.mojeprzepisy.data.model.OneRecipeCard;
+import com.moje.przepisy.mojeprzepisy.utils.BitmapConverter;
 import com.squareup.picasso.Picasso;
 import java.util.List;
 
@@ -26,6 +28,7 @@ import java.util.List;
 public class MyCardViewAdapter extends RecyclerView.Adapter<MyCardViewAdapter.ViewHolder> {
   public Context context;
   private List<OneRecipeCard> cardsList;
+  private BitmapConverter converter = new BitmapConverter();
 
   MyCardViewAdapter(Context context, List<OneRecipeCard> cardsList) {
     this.context = context;
@@ -88,6 +91,7 @@ public class MyCardViewAdapter extends RecyclerView.Adapter<MyCardViewAdapter.Vi
 
     void bind(OneRecipeCard card) {
       String recipeMainPicture = card.getRecipeMainPicture();
+      Bitmap recipeMainPictureBitmap = converter.StringToBitMap(recipeMainPicture);
       String recipeName = card.getRecipeName();
       String recipeAuthor = card.getAuthorName();
       int starsCount = card.getStarsCount();
@@ -95,7 +99,9 @@ public class MyCardViewAdapter extends RecyclerView.Adapter<MyCardViewAdapter.Vi
       String starsCountString = String.valueOf(starsCount);
       String favoritesCountString = String.valueOf(favoritesCount);
 
-      Picasso.get().load(recipeMainPicture).into(recipeImageView);
+//      Picasso.get().load(recipeMainPicture).into(recipeImageView);
+//      Picasso.get().load(recipeMainPictureBitmap).into(recipeImageView);
+      recipeImageView.setImageBitmap(recipeMainPictureBitmap);
       recipeNameTextView.setText(recipeName);
       recipeAuthorTextView.setText(recipeAuthor);
       starsCountTextView.setText(starsCountString);

@@ -3,7 +3,6 @@ package com.moje.przepisy.mojeprzepisy.add_recipe.add_recipe.display_all_recipe_
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.widget.Toast;
@@ -11,6 +10,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.moje.przepisy.mojeprzepisy.data.model.Ingredient;
 import com.moje.przepisy.mojeprzepisy.data.model.Recipe;
+import com.moje.przepisy.mojeprzepisy.data.model.Stars;
 import com.moje.przepisy.mojeprzepisy.data.model.Step;
 import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.RecipeRepository;
 import com.moje.przepisy.mojeprzepisy.utils.Constant;
@@ -31,6 +31,7 @@ RecipeRepository.OnRecipeFinishedListener{
   private Boolean ifRecipeAdded = false;
   private Boolean ifIngredientsAdded = false;
   private Boolean ifStepsAdded = false;
+  private Boolean ifStarsAdded = false;
   private int recipeId;
 
 
@@ -49,6 +50,10 @@ RecipeRepository.OnRecipeFinishedListener{
 
   public Boolean getIfStepsAdded() {
     return ifStepsAdded;
+  }
+
+  public Boolean getIfStarsAdded() {
+    return ifStarsAdded;
   }
 
   @Override
@@ -185,6 +190,12 @@ RecipeRepository.OnRecipeFinishedListener{
   }
 
   @Override
+  public void addStarsToServer() {
+    Stars stars = new Stars(recipeId, 0, 0);
+    recipeRepository.addStars(stars, this);
+  }
+
+  @Override
   public void addRecipeIdToIngredients() {
     for(Ingredient ingredient : ingredientList){
       Ingredient ingredientWithRecipeId = new Ingredient(recipeId, ingredient.getIngredientQuantity(),
@@ -216,11 +227,16 @@ RecipeRepository.OnRecipeFinishedListener{
     while (!getIfStepsAdded()){
 
     }
-    if(ifRecipeAdded && ifIngredientsAdded && ifStepsAdded){
+    addStarsToServer();
+    while (!getIfStarsAdded()){
+
+    }
+    if(ifRecipeAdded && ifIngredientsAdded && ifStepsAdded && ifStarsAdded){
       deleteAllSharedPreferences();
     }else {
       recipeElementsView.getInformationTextView().setText("Nie udało się zapisać przepisu!");
     }
+    recipeElementsView.navigateToMainCardsScreen();
   }
 
   @Override
@@ -231,10 +247,9 @@ RecipeRepository.OnRecipeFinishedListener{
   }
 
   @Override
-  public void onRecipeSuccess() {
-    if (recipeElementsView != null) {
-      recipeElementsView.getInformationTextView().setTextColor(Color.parseColor("#8033ff33"));
-      recipeElementsView.getInformationTextView().setText("Przepis dodany pomyślnie!");
+  public void onStarsError() {
+    if(recipeElementsView != null){
+      recipeElementsView.getInformationTextView().setText("Wystąpił błąd podczas dodawania gwiazdek. Spróbuj ponownie.");
     }
   }
 
@@ -251,6 +266,11 @@ RecipeRepository.OnRecipeFinishedListener{
   @Override
   public void onStepsAdded(Boolean ifAdded) {
     ifStepsAdded = ifAdded;
+  }
+
+  @Override
+  public void onStarsAdded(Boolean ifAdded) {
+    ifStarsAdded = ifAdded;
   }
 
   @Override

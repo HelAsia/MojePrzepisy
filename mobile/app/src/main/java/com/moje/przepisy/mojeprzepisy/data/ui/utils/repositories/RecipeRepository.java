@@ -5,6 +5,7 @@ import android.util.Log;
 import com.moje.przepisy.mojeprzepisy.data.model.Ingredient;
 import com.moje.przepisy.mojeprzepisy.data.model.Message;
 import com.moje.przepisy.mojeprzepisy.data.model.Recipe;
+import com.moje.przepisy.mojeprzepisy.data.model.Stars;
 import com.moje.przepisy.mojeprzepisy.data.model.Step;
 import com.moje.przepisy.mojeprzepisy.data.network.RecipeAPI;
 import com.moje.przepisy.mojeprzepisy.data.network.RetrofitSingleton;
@@ -32,7 +33,6 @@ public class RecipeRepository implements RecipeRepositoryInterface{
         Message message = response.body();
         if(message.status == 200){
           Log.i("Recipe: ", "OK. Recipe has been added");
-          listener.onRecipeSuccess();
           listener.setRecipeId(message.message);
           listener.onRecipeAdded(true);
         }else if(message.status == 404){
@@ -49,7 +49,6 @@ public class RecipeRepository implements RecipeRepositoryInterface{
         listener.onRecipeAdded(false);
       }
     });
-
   }
 
   @Override
@@ -61,7 +60,6 @@ public class RecipeRepository implements RecipeRepositoryInterface{
         public void onResponse(Call<Message> call, Response<Message> response) {
           Message message = response.body();
           if(message.status == 200){
-            listener.onRecipeSuccess();
             listener.onIngredientsAdded(true);
           }else if(message.status == 404){
             listener.onRecipeError();
@@ -88,7 +86,6 @@ public class RecipeRepository implements RecipeRepositoryInterface{
         public void onResponse(Call<Message> call, Response<Message> response) {
           Message message = response.body();
           if(message.status == 200){
-            listener.onRecipeSuccess();
             listener.onStepsAdded(true);
           }else if(message.status == 404){
             listener.onRecipeError();
@@ -104,5 +101,31 @@ public class RecipeRepository implements RecipeRepositoryInterface{
         }
       });
     }
+  }
+
+  @Override
+  public void addStars(Stars stars, final OnRecipeFinishedListener listener) {
+    Call<Message> resp = recipeAPI.addStars(stars);
+    resp.enqueue(new Callback<Message>() {
+      @Override
+      public void onResponse(Call<Message> call, Response<Message> response) {
+        Message message = response.body();
+        if(message.status == 200){
+          Log.i("Stars: ", "OK. Stars has been added");
+          listener.onStarsAdded(true);
+        }else if(message.status == 404){
+          Log.e("Stars: ", "NOT OK. Stars hasn't been added");
+          listener.onStarsError();
+          listener.onStarsAdded(false);
+        }
+      }
+
+      @Override
+      public void onFailure(Call<Message> call, Throwable t) {
+        Log.i("SERWER", t.getMessage());
+        listener.onStarsError();
+        listener.onStarsAdded(false);
+      }
+    });
   }
 }

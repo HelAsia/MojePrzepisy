@@ -4,6 +4,7 @@ import com.moje.przepisy.mojeprzepisy.data.model.Comment;
 import com.moje.przepisy.mojeprzepisy.data.model.Ingredient;
 import com.moje.przepisy.mojeprzepisy.data.model.Message;
 import com.moje.przepisy.mojeprzepisy.data.model.Recipe;
+import com.moje.przepisy.mojeprzepisy.data.model.Stars;
 import com.moje.przepisy.mojeprzepisy.data.model.Step;
 import java.util.List;
 import retrofit2.Call;
@@ -66,5 +67,17 @@ public interface RecipeAPI {
 
   @DELETE("recipe/comment/{commentId}")
   Call<List<Comment>> deleteComment(@Path("commentId") int commentId, @Body Comment comment);
+
+  @GET("recipe/stars/{recipeId}")
+  Call<Message> getStars(@Path("recipeId") int recipeId);
+
+  @POST("recipe/stars/{recipeId}/{columnName}/{columnValue}")
+  Call<Message> editStars(@Path("recipeId") int recipeId, @Path("columnName") String columnName, @Path("columnValue") String columnValue);
+
+  @PUT("recipe/stars")
+  Call<Message> addStars(@Body Stars stars);
+
+  @DELETE("recipe/stars{recipeId}")
+  Call<Message> deleteStars(@Path("recipeId") int recipeId);
 
 }

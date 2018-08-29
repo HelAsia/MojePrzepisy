@@ -23,6 +23,8 @@ public interface DisplayAllRecipeElementsContract {
     void setStepsRecyclerView(List<Step> stepList);
 
     TextView getInformationTextView();
+
+    void navigateToMainCardsScreen();
   }
 
   interface Presenter {
@@ -64,6 +66,8 @@ public interface DisplayAllRecipeElementsContract {
     void addIngredientsToServer();
 
     void addStepsToServer();
+
+    void addStarsToServer();
 
     void addRecipeIdToIngredients();
 

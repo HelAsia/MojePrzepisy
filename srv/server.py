@@ -15,6 +15,7 @@ from recipe_elements.Recipes import *
 from recipe_elements.Steps import *
 from recipe_elements.Ingredients import *
 from recipe_elements.Comments import *
+from recipe_elements.Stars import *
 
 # Global definitions
 app = Flask(__name__)
@@ -220,20 +221,6 @@ def getRecipe(recipeId):
         Logger.fail("There was no recipe returned!")
     return jsonify(recipes)
 
-
-@app.route('/recipe/<int:recipeId>', methods=['DELETE'])
-@authorized
-def deleteRecipe(recipeId):
-    recipe = Recipes(database)
-
-    status, message = recipe.deleteRecipe(recipeId)
-
-    return jsonify({
-        'status': status,
-        'message': message
-    })
-
-
 @app.route('/recipe', methods=['PUT'])
 @authorized
 def addRecipe():
@@ -438,6 +425,65 @@ def editComment(commentId, columnName, columnValue):
     comment = Comments(database)
 
     status, message = comment.editComment(columnName, columnValue, commentId)
+
+    return jsonify({
+        'status': status,
+        'message': message
+    })
+
+@app.route('/recipe/stars/<int:recipeId>', methods=['GET'])
+def getStars(recipeId):
+    star = Stars(database)
+    userID = get_user_id()
+
+    stars = star.getStars(recipeId, userID)
+
+    if not stars:
+        Logger.fail("There was no stars returned!")
+    return jsonify(stars)
+
+
+@app.route('/recipe/stars/<int:recipeId>', methods=['DELETE'])
+@authorized
+def deleteStars(recipeId):
+    star = Stars(database)
+    userID = get_user_id()
+
+    status, message = star.deleteStars(recipeId, userID)
+
+    return jsonify({
+        'status': status,
+        'message': message
+    })
+
+
+@app.route('/recipe/stars', methods=['PUT'])
+@authorized
+def addStars():
+    star = Stars(database)
+    userID = get_user_id()
+
+    params = request.get_json()
+
+    starsCount = params.get('starsCount')
+    favoritesCount = params.get('favoritesCount')
+    recipeId = params.get('recipeId')
+
+    status, message = star.addStars(userID, recipeId, starsCount, favoritesCount)
+
+    return jsonify({
+        'status': status,
+        'message': message
+    })
+
+
+@app.route('/recipe/stars/<int:recipeId>/<string:columnName>/<string:columnValue>/', methods=['POST'])
+@authorized
+def editStars(recipeId, columnName, columnValue):
+    star = Stars(database)
+    userID = get_user_id()
+
+    status, message = star.editRecipe(columnName, columnValue, recipeId, userID)
 
     return jsonify({
         'status': status,
