@@ -104,7 +104,7 @@ public class RecipeRepository implements RecipeRepositoryInterface{
   }
 
   @Override
-  public void addStars(Stars stars, final OnRecipeFinishedListener listener) {
+  public void addFirstStars(Stars stars, final OnRecipeFinishedListener listener) {
     Call<Message> resp = recipeAPI.addStars(stars);
     resp.enqueue(new Callback<Message>() {
       @Override
@@ -127,5 +127,34 @@ public class RecipeRepository implements RecipeRepositoryInterface{
         listener.onStarsAdded(false);
       }
     });
+  }
+
+  @Override
+  public void editStars(int recipeId, String columnName, int columnValue, final OnStarsEditListener listener) {
+    Call<Message> resp = recipeAPI.editStars(recipeId, columnName, columnValue);
+    resp.enqueue(new Callback<Message>() {
+      @Override
+      public void onResponse(Call<Message> call, Response<Message> response) {
+        Message message = response.body();
+        if(message.status == 200){
+          Log.i("Stars: ", "OK. Stars has been added");
+          listener.refreshCards();
+        }else if(message.status == 404){
+          Log.e("Stars: ", "NOT OK. Stars hasn't been added");
+        }
+      }
+
+      @Override
+      public void onFailure(Call<Message> call, Throwable t) {
+        Log.i("SERWER", t.getMessage());
+      }
+    });
+
+
+
+
+
+
+
   }
 }

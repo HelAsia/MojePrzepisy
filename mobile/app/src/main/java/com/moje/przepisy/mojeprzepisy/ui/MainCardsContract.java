@@ -11,6 +11,8 @@ public interface MainCardsContract {
 
   interface View {
 
+    Context getContext();
+
     NavigationView getNavigationView();
 
     DrawerLayout getDrawerLayout();
@@ -27,6 +29,8 @@ public interface MainCardsContract {
   }
 
   interface Presenter {
+
+    void sentStars(int recipeId, int starRate);
 
     void getAllCardsFromServer();
 

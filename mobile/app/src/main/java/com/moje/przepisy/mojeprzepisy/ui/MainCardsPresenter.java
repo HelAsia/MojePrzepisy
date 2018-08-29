@@ -10,17 +10,20 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.View;
 import com.moje.przepisy.mojeprzepisy.data.model.OneRecipeCard;
 import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.OperationsOnCardRepository;
+import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.RecipeRepository;
 import com.moje.przepisy.mojeprzepisy.utils.Constant;
 import java.util.List;
 
 public class MainCardsPresenter implements MainCardsContract.Presenter,
-    OperationsOnCardRepository.OnCardsListener {
+    OperationsOnCardRepository.OnCardsListener, RecipeRepository.OnStarsEditListener {
   private OperationsOnCardRepository operationsOnCardRepository;
   private MainCardsContract.View cardsView;
+  private RecipeRepository recipeRepository;
 
-  public MainCardsPresenter(MainCardsContract.View cardsView, OperationsOnCardRepository operationsOnCardRepository) {
+  public MainCardsPresenter(MainCardsContract.View cardsView, OperationsOnCardRepository operationsOnCardRepository, RecipeRepository recipeRepository) {
     this.cardsView = cardsView;
     this.operationsOnCardRepository = operationsOnCardRepository;
+    this.recipeRepository = recipeRepository;
   }
 
   @Override
@@ -39,6 +42,11 @@ public class MainCardsPresenter implements MainCardsContract.Presenter,
     }else if(sortedMethodPref.equals("highestRated")){
       getAllCardsSortedByHighestRatedFromServer();
     }
+  }
+
+  @Override
+  public void sentStars(int recipeId, int starRate) {
+    recipeRepository.editStars(recipeId, "stars", starRate, this);
   }
 
   @Override
@@ -129,5 +137,10 @@ public class MainCardsPresenter implements MainCardsContract.Presenter,
   @Override
   public void onDestroy() {
     cardsView = null;
+  }
+
+  @Override
+  public void refreshCards() {
+    getSortedMethod(cardsView.getContext());
   }
 }

@@ -45,24 +45,29 @@ class Stars:
 
     def editStars(self, columnName, columnValue, recipeId, userID):
         query = u"UPDATE users_recipes_stars " \
-                u"SET {} = '{}'" \
-                u"WHERE recipe_id = {}" \
-                u"AND user_id = {})".format(columnName, columnValue, recipeId, userID)
+                u"SET {} = {} " \
+                u"WHERE recipe_id = {} " \
+                u"AND user_id = {}".format(columnName, columnValue, recipeId, userID)
 
-        queryResult = self.database.query(query)
+        queryResult, rows, msg = self.database.insert(query)
 
-        if queryResult:
-            Logger.dbg(str(tuple(queryResult)))
+        if rows > 0:
+            Logger.dbg(queryResult)
+            return 200, u'Your changed {}={}'.format(columnName, columnValue)
+        elif rows == 0:
+            Logger.dbg(queryResult)
+            self.addStars(userID, recipeId, columnValue, 0)
             return 200, u'Your changed {}={}'.format(columnName, columnValue)
         else:
+            Logger.dbg(queryResult)
             return 404, u'Forwarded data to check are not correct'
 
-    def deleteRecipe(self, recipeId, userID):
+    def deleteStars(self, recipeId, userID):
         query = u"DELETE FROM users_recipes_stars " \
                 u"WHERE recipe_id = {}" \
                 u"AND user_id = {})".format(recipeId, userID)
 
-        queryResult = self.database.query(query)
+        queryResult = self.database.delete(query)
 
         if queryResult:
             Logger.dbg(str(tuple(queryResult)))

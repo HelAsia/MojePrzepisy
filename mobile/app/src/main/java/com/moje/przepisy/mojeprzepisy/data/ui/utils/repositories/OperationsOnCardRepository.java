@@ -40,7 +40,7 @@ public class OperationsOnCardRepository implements OperationsOnCardRepositoryInt
         cardsListener.setRecipesList(recipes);
 
        for (OneRecipeCard recipe : recipes) {
-          Log.i("SERWER", "Id: " + recipe.id);
+          Log.i("SERWER", "Id: " + recipe.recipeId);
           Log.i("SERWER", "Author: " + recipe.authorName);
           Log.i("SERWER", "Favorite: " + recipe.favoritesCount);
           Log.i("SERWER", "PhotoRecipe: " + recipe.recipeMainPicture);

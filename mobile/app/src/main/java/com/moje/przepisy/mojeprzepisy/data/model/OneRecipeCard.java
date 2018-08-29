@@ -8,7 +8,7 @@ import java.sql.Timestamp;
  */
 
 public class OneRecipeCard {
-  public int id;
+  public int recipeId;
   public int starsCount;
   public int favoritesCount;
   public String recipeName;
@@ -24,8 +24,8 @@ public class OneRecipeCard {
     this.recipeName = recipeName;
   }
 
-  public long getId() {
-    return id;
+  public int getRecipeId() {
+    return recipeId;
   }
 
   public int getStarsCount() {
@@ -52,8 +52,8 @@ public class OneRecipeCard {
     return date;
   }
 
-  public void setId(int id) {
-    this.id = id;
+  public void setRecipeId(int recipeId) {
+    this.recipeId = recipeId;
   }
 
   public void setStarsCount(int starsCount) {

@@ -477,13 +477,13 @@ def addStars():
     })
 
 
-@app.route('/recipe/stars/<int:recipeId>/<string:columnName>/<string:columnValue>/', methods=['POST'])
+@app.route('/recipe/stars/<int:recipeId>/<string:columnName>/<string:columnValue>', methods=['POST'])
 @authorized
 def editStars(recipeId, columnName, columnValue):
     star = Stars(database)
     userID = get_user_id()
 
-    status, message = star.editRecipe(columnName, columnValue, recipeId, userID)
+    status, message = star.editStars(columnName, columnValue, recipeId, userID)
 
     return jsonify({
         'status': status,

@@ -192,7 +192,7 @@ RecipeRepository.OnRecipeFinishedListener{
   @Override
   public void addStarsToServer() {
     Stars stars = new Stars(recipeId, 0, 0);
-    recipeRepository.addStars(stars, this);
+    recipeRepository.addFirstStars(stars, this);
   }
 
   @Override

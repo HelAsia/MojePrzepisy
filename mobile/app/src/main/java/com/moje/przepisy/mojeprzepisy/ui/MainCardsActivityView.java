@@ -26,13 +26,14 @@ import com.moje.przepisy.mojeprzepisy.SearchSwipeActivity;
 import com.moje.przepisy.mojeprzepisy.add_recipe.add_recipe.add_main_recipe_page.AddRecipeActivityView;
 import com.moje.przepisy.mojeprzepisy.data.model.OneRecipeCard;
 import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.OperationsOnCardRepository;
+import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.RecipeRepository;
 import com.moje.przepisy.mojeprzepisy.log_in.LoginActivityView;
 import com.moje.przepisy.mojeprzepisy.log_out.LogoutActivityView;
 import com.moje.przepisy.mojeprzepisy.register.RegisterActivityView;
 import java.util.List;
 
 public class MainCardsActivityView extends AppCompatActivity implements MainCardsContract.View,
-    View.OnClickListener {
+    View.OnClickListener,MyCardViewAdapter.OnShareClickedListener {
   private MainCardsContract.Presenter presenter;
   private DrawerLayout drawerLayout;
   Context context;
@@ -44,7 +45,7 @@ public class MainCardsActivityView extends AppCompatActivity implements MainCard
     setContentView(R.layout.activity_main_cards);
     context = getApplicationContext();
 
-    presenter = new MainCardsPresenter(this,new OperationsOnCardRepository(context));
+    presenter = new MainCardsPresenter(this,new OperationsOnCardRepository(context), new RecipeRepository(context));
     presenter.getSortedMethod(context);
     setToolbar();
     presenter.setDrawerLayoutListener(getDrawerLayout());
@@ -55,12 +56,17 @@ public class MainCardsActivityView extends AppCompatActivity implements MainCard
 
   }
 
+  public Context getContext() {
+    return context;
+  }
+
   @Override
   public void setRecyclerView(List<OneRecipeCard> cardList){
     MyCardViewAdapter adapter = new MyCardViewAdapter(this, cardList);
     RecyclerView recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
     recyclerView.setAdapter(adapter);
     recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    adapter.setStarsOnShareClickedListener(this);
   }
 
   @Override
@@ -234,6 +240,11 @@ public class MainCardsActivityView extends AppCompatActivity implements MainCard
   public void onClick(View view) {
     Intent intent = new Intent(MainCardsActivityView.this, AddRecipeActivityView.class);
     startActivity(intent);
+  }
+
+  @Override
+  public void shareStarsClicked(int recipeId, int starRate) {
+    presenter.sentStars(recipeId, starRate);
   }
 }
 

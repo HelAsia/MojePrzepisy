@@ -25,11 +25,17 @@ public interface RecipeRepositoryInterface {
     void setRecipeId(String message);
   }
 
+  interface OnStarsEditListener{
+    void refreshCards();
+  }
+
   void addRecipe(List<Recipe> recipeList, OnRecipeFinishedListener listener);
 
   void addIngredients(List<Ingredient> ingredientList, OnRecipeFinishedListener listener);
 
   void addStep(List<Step> stepList, OnRecipeFinishedListener listener);
 
-  void addStars(Stars stars, OnRecipeFinishedListener listener);
+  void addFirstStars(Stars stars, OnRecipeFinishedListener listener);
+
+  void editStars(int recipeId, String columnName, int columnValue, OnStarsEditListener listener);
 }

@@ -9,9 +9,12 @@ import android.support.annotation.RequiresApi;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RatingBar;
+import android.widget.RatingBar.OnRatingBarChangeListener;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,12 +31,21 @@ import java.util.List;
 public class MyCardViewAdapter extends RecyclerView.Adapter<MyCardViewAdapter.ViewHolder> {
   public Context context;
   private List<OneRecipeCard> cardsList;
+  private OnShareClickedListener callbackStars;
   private BitmapConverter converter = new BitmapConverter();
 
   MyCardViewAdapter(Context context, List<OneRecipeCard> cardsList) {
     this.context = context;
     this.cardsList = cardsList;
     setHasStableIds(true);
+  }
+
+  public void setStarsOnShareClickedListener(OnShareClickedListener callbackStars) {
+    this.callbackStars = callbackStars;
+  }
+
+  public interface OnShareClickedListener {
+    void shareStarsClicked(int recipeId, int starRate);
   }
 
   @Override
@@ -44,8 +56,24 @@ public class MyCardViewAdapter extends RecyclerView.Adapter<MyCardViewAdapter.Vi
   }
 
   @Override
-  public void onBindViewHolder(ViewHolder viewHolder, int position) {
+  public void onBindViewHolder(final ViewHolder viewHolder, final int position) {
     viewHolder.bind(cardsList.get(position));
+
+    viewHolder.starImageView.setOnClickListener(new OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        viewHolder.ratingBarStars.setVisibility(View.VISIBLE);
+      }
+    });
+
+    viewHolder.ratingBarStars.setOnRatingBarChangeListener(new OnRatingBarChangeListener() {
+      @Override
+      public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
+        int recipeId = (int)getItemId(position);
+        int rate = (int)v;
+        callbackStars.shareStarsClicked(recipeId, rate);
+      }
+    });
   }
 
   @Override
@@ -74,7 +102,7 @@ public class MyCardViewAdapter extends RecyclerView.Adapter<MyCardViewAdapter.Vi
 
   @Override
   public long getItemId(int position) {
-    return cardsList.get(position).getId();
+    return cardsList.get(position).getRecipeId();
   }
 
   public class ViewHolder extends RecyclerView.ViewHolder {
@@ -83,6 +111,8 @@ public class MyCardViewAdapter extends RecyclerView.Adapter<MyCardViewAdapter.Vi
     @BindView(R.id.text_view_recipe_author) TextView recipeAuthorTextView;
     @BindView(R.id.text_view_star_count) TextView starsCountTextView;
     @BindView(R.id.text_view_favorites_count) TextView favoritesCountTextView;
+    @BindView(R.id.ratingBarStars) RatingBar ratingBarStars;
+    @BindView(R.id.starImageView) ImageView starImageView;
 
     public ViewHolder(View v) {
       super(v);
@@ -105,6 +135,7 @@ public class MyCardViewAdapter extends RecyclerView.Adapter<MyCardViewAdapter.Vi
       recipeNameTextView.setText(recipeName);
       recipeAuthorTextView.setText(recipeAuthor);
       starsCountTextView.setText(starsCountString);
+      ratingBarStars.setRating(starsCount);
       favoritesCountTextView.setText(favoritesCountString);
     }
   }

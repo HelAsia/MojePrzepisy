@@ -20,7 +20,7 @@
     android:layout_width="match_parent"
     android:layout_height="350dp"
     android:layout_margin="10dp"
-    android:background="@color/white"
+    android:background="@color/creamy"
     android:orientation="vertical"
     android:transitionName="layout_transition"
     android:weightSum="1">
@@ -60,39 +60,39 @@
       android:id="@+id/ratingBarStars"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_below="@+id/image_view_photo_recipe"
+      android:layout_below="@+id/starAndHeartLayout"
+      android:visibility="invisible"
       android:scaleX="0.5"
       android:scaleY="0.5"
       android:stepSize="1"/>
-    <TextView
-      android:id="@+id/textViewRatingName"
-      android:layout_width="wrap_content"
-      android:layout_height="match_parent"
-      android:layout_below="@id/ratingBarStars"
-      android:text="@string/rating_name"
-      android:textColor="@color/black"
-      android:gravity="center"
-      android:textSize="18sp"/>
-    <TextView
-      android:id="@+id/text_view_star_count"
-      android:layout_width="wrap_content"
-      android:layout_height="match_parent"
-      android:layout_below="@+id/ratingBarStars"
-      android:layout_toRightOf="@+id/textViewRatingName"
-      android:gravity="center"
-      android:text="10"
-      android:textColor="@color/black"
-      android:textSize="15sp"
-      android:transitionName="name_recipe_transition"/>
     <LinearLayout
+      android:id="@+id/starAndHeartLayout"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_alignBottom="@+id/ratingBarStars"
+      android:layout_height="30dp"
       android:layout_below="@+id/image_view_photo_recipe"
       android:layout_gravity="center"
-      android:layout_toRightOf="@+id/ratingBarStars"
       android:background="@color/white">
 
+      <ImageView
+        android:id="@+id/starImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="0.25"
+        card_view:srcCompat="@mipmap/ic_star"/>
+      <TextView
+        android:id="@+id/text_view_star_count"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="0.25"
+        android:gravity="center"
+        android:text="5"
+        android:textSize="18sp"/>
+      <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="0.25"
+        />
       <ImageView
         android:id="@+id/heart_image_view"
         android:layout_width="wrap_content"
@@ -109,9 +109,9 @@
         android:layout_weight="0.25"
         android:gravity="center"
         android:text="5"
-        android:textColor="@color/black"/>
+        android:textColor="@color/black"
+        android:textSize="18sp"/>
 
     </LinearLayout>
   </RelativeLayout>
-
 </android.support.v7.widget.CardView>
