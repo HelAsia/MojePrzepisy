@@ -1,11 +1,9 @@
 package com.moje.przepisy.mojeprzepisy.data.network;
 
-import com.moje.przepisy.mojeprzepisy.data.model.Message;
 import com.moje.przepisy.mojeprzepisy.data.model.OneRecipeCard;
 import java.util.List;
 import retrofit2.Call;
 import retrofit2.http.Body;
-import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 
@@ -26,14 +24,7 @@ public interface CardAPI {
   @POST("cards/searchedCards")
   Call<List<OneRecipeCard>> getCardsSortedBySearchedQuery(@Body OneRecipeCard oneRecipeCard);
 
-
   @GET("/cards/userCards")
   Call<List<OneRecipeCard>> getUserCards();
-
-  @POST("/cards/userCards")
-  Call<Message> changeUserCards(@Body OneRecipeCard oneRecipeCard);
-
-  @DELETE("/cards/userCards")
-  Call<Message> deleteUserCards(@Body OneRecipeCard oneRecipeCard);
 
 }

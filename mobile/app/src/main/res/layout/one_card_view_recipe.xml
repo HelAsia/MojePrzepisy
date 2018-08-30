@@ -56,15 +56,6 @@
       android:layout_gravity="center"
       android:src="@mipmap/ic_image"/>
 
-    <RatingBar
-      android:id="@+id/ratingBarStars"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_below="@+id/starAndHeartLayout"
-      android:visibility="invisible"
-      android:scaleX="0.5"
-      android:scaleY="0.5"
-      android:stepSize="1"/>
     <LinearLayout
       android:id="@+id/starAndHeartLayout"
       android:layout_width="match_parent"
@@ -111,7 +102,16 @@
         android:text="5"
         android:textColor="@color/black"
         android:textSize="18sp"/>
-
     </LinearLayout>
+    <RatingBar
+      android:id="@+id/ratingBarStars"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_below="@+id/starAndHeartLayout"
+      android:layout_centerHorizontal="true"
+      android:scaleX="0.5"
+      android:scaleY="0.5"
+      android:stepSize="1"
+      android:visibility="invisible"/>
   </RelativeLayout>
 </android.support.v7.widget.CardView>

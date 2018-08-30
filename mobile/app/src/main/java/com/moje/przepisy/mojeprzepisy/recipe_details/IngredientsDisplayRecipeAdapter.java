@@ -1,4 +1,4 @@
-package com.moje.przepisy.mojeprzepisy.add_recipe.add_recipe.display_all_recipe_elements;
+package com.moje.przepisy.mojeprzepisy.recipe_details;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -7,17 +7,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.ButterKnife;
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import com.moje.przepisy.mojeprzepisy.R;
 import com.moje.przepisy.mojeprzepisy.data.model.Ingredient;
 import java.util.List;
 
-public class IngredientsDisplayAdapter extends RecyclerView.Adapter<IngredientsDisplayAdapter.ViewHolder> {
+public class IngredientsDisplayRecipeAdapter extends RecyclerView.Adapter<IngredientsDisplayRecipeAdapter.ViewHolder> {
   public Context context;
   private List<Ingredient> ingredientList;
 
-  IngredientsDisplayAdapter(Context context, List<Ingredient> ingredientList){
+  IngredientsDisplayRecipeAdapter(Context context, List<Ingredient> ingredientList){
     this.context = context;
     this.ingredientList = ingredientList;
     setHasStableIds(true);
@@ -25,19 +25,19 @@ public class IngredientsDisplayAdapter extends RecyclerView.Adapter<IngredientsD
 
   @NonNull
   @Override
-  public IngredientsDisplayAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
+  public IngredientsDisplayRecipeAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
     LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
     View v = layoutInflater.inflate(R.layout.one_ingredient_display_layout, parent, false);
-    return new IngredientsDisplayAdapter.ViewHolder(v);
+    return new IngredientsDisplayRecipeAdapter.ViewHolder(v);
   }
 
   @Override
-  public void onBindViewHolder(@NonNull IngredientsDisplayAdapter.ViewHolder viewHolder, int position) {
+  public void onBindViewHolder(@NonNull IngredientsDisplayRecipeAdapter.ViewHolder viewHolder, int position) {
     viewHolder.bind(ingredientList.get(position));
   }
 
   @Override
-  public int getItemCount()  {
+  public int getItemCount() {
     return ingredientList.size();
   }
 

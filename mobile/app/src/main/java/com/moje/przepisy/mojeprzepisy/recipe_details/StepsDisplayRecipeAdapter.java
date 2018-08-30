@@ -1,4 +1,4 @@
-package com.moje.przepisy.mojeprzepisy.add_recipe.add_recipe.display_all_recipe_elements;
+package com.moje.przepisy.mojeprzepisy.recipe_details;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -15,12 +15,12 @@ import com.moje.przepisy.mojeprzepisy.data.model.Step;
 import com.moje.przepisy.mojeprzepisy.utils.BitmapConverter;
 import java.util.List;
 
-public class StepsDisplayAdapter extends RecyclerView.Adapter<StepsDisplayAdapter.ViewHolder> {
+public class StepsDisplayRecipeAdapter extends RecyclerView.Adapter<StepsDisplayRecipeAdapter.ViewHolder> {
   public Context context;
   private List<Step> stepList;
   private BitmapConverter converter = new BitmapConverter();
 
-  StepsDisplayAdapter(Context context, List<Step> stepList){
+  StepsDisplayRecipeAdapter(Context context, List<Step> stepList){
     this.context = context;
     this.stepList = stepList;
     setHasStableIds(true);
@@ -28,14 +28,14 @@ public class StepsDisplayAdapter extends RecyclerView.Adapter<StepsDisplayAdapte
 
   @NonNull
   @Override
-  public StepsDisplayAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
+  public StepsDisplayRecipeAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
     LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
     View v = layoutInflater.inflate(R.layout.one_step_display_layout, parent, false);
-    return new StepsDisplayAdapter.ViewHolder(v);
+    return new StepsDisplayRecipeAdapter.ViewHolder(v);
   }
 
   @Override
-  public void onBindViewHolder(@NonNull StepsDisplayAdapter.ViewHolder viewHolder, int position) {
+  public void onBindViewHolder(@NonNull StepsDisplayRecipeAdapter.ViewHolder viewHolder, int position) {
     viewHolder.bind(stepList.get(position));
   }
 
@@ -48,7 +48,6 @@ public class StepsDisplayAdapter extends RecyclerView.Adapter<StepsDisplayAdapte
   public long getItemId(int position) {
     return stepList.get(position).getStepId();
   }
-
 
   public class ViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.stepNumberTextView) TextView stepNumberTextView;

@@ -53,6 +53,7 @@
       android:layout_height="300dp"
       android:layout_weight="1"
       android:layout_gravity="center_horizontal"
+      android:visibility="visible"
       card_view:srcCompat="@android:drawable/ic_menu_gallery"/>
   </LinearLayout>
 
