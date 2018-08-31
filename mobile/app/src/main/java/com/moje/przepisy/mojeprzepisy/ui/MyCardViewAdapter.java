@@ -31,7 +31,8 @@ import java.util.List;
 public class MyCardViewAdapter extends RecyclerView.Adapter<MyCardViewAdapter.ViewHolder> {
   public Context context;
   private List<OneRecipeCard> cardsList;
-  private OnShareClickedListener callbackStars;
+  private OnShareStarsClickedListener callbackStars;
+  private OnShareRecipeIdClickedListener callbackRecipeId;
   private BitmapConverter converter = new BitmapConverter();
 
   MyCardViewAdapter(Context context, List<OneRecipeCard> cardsList) {
@@ -40,13 +41,22 @@ public class MyCardViewAdapter extends RecyclerView.Adapter<MyCardViewAdapter.Vi
     setHasStableIds(true);
   }
 
-  public void setStarsOnShareClickedListener(OnShareClickedListener callbackStars) {
+  public void setStarsOnShareClickedListener(OnShareStarsClickedListener callbackStars) {
     this.callbackStars = callbackStars;
   }
 
-  public interface OnShareClickedListener {
+  public interface OnShareStarsClickedListener {
     void shareStarsClicked(int recipeId, int starRate);
   }
+
+  public void setCallbackRecipeIdOnShareClickedListener(OnShareRecipeIdClickedListener callbackRecipeId) {
+    this.callbackRecipeId = callbackRecipeId;
+  }
+
+  public interface OnShareRecipeIdClickedListener {
+    void shareRecipeIdClicked(int recipeId);
+  }
+
 
   @Override
   public MyCardViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
@@ -72,6 +82,16 @@ public class MyCardViewAdapter extends RecyclerView.Adapter<MyCardViewAdapter.Vi
         int recipeId = (int)getItemId(position);
         int rate = (int)v;
         callbackStars.shareStarsClicked(recipeId, rate);
+      }
+    });
+
+    viewHolder.recipeImageView.setOnClickListener(new OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        int recipeId = (int)getItemId(position);
+        callbackRecipeId.shareRecipeIdClicked(recipeId);
+
+
       }
     });
   }
@@ -129,8 +149,6 @@ public class MyCardViewAdapter extends RecyclerView.Adapter<MyCardViewAdapter.Vi
       String starsCountString = String.valueOf(starsCount);
       String favoritesCountString = String.valueOf(favoritesCount);
 
-//      Picasso.get().load(recipeMainPicture).into(recipeImageView);
-//      Picasso.get().load(recipeMainPictureBitmap).into(recipeImageView);
       recipeImageView.setImageBitmap(recipeMainPictureBitmap);
       recipeNameTextView.setText(recipeName);
       recipeAuthorTextView.setText(recipeAuthor);

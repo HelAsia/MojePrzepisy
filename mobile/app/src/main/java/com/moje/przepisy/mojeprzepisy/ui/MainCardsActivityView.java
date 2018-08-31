@@ -17,6 +17,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MenuItem.OnMenuItemClickListener;
 import android.view.View;
 import android.widget.Toast;
 import butterknife.BindView;
@@ -29,11 +30,13 @@ import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.cards.Operation
 import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.recipe.RecipeRepository;
 import com.moje.przepisy.mojeprzepisy.log_in.LoginActivityView;
 import com.moje.przepisy.mojeprzepisy.log_out.LogoutActivityView;
+import com.moje.przepisy.mojeprzepisy.recipe_details.RecipeDetailsActivityView;
 import com.moje.przepisy.mojeprzepisy.register.RegisterActivityView;
+import com.moje.przepisy.mojeprzepisy.ui.MyCardViewAdapter.OnShareStarsClickedListener;
 import java.util.List;
 
 public class MainCardsActivityView extends AppCompatActivity implements MainCardsContract.View,
-    View.OnClickListener,MyCardViewAdapter.OnShareClickedListener {
+    View.OnClickListener,OnShareStarsClickedListener, MyCardViewAdapter.OnShareRecipeIdClickedListener {
   @BindView(R.id.my_fab) FloatingActionButton floatingActionButton;
   private MainCardsContract.Presenter presenter;
   private DrawerLayout drawerLayout;
@@ -56,6 +59,11 @@ public class MainCardsActivityView extends AppCompatActivity implements MainCard
 
   }
 
+  @Override
+  public void shareRecipeIdClicked(int recipeId) {
+    goToRecipeDetails(recipeId);
+  }
+
   public Context getContext() {
     return context;
   }
@@ -67,6 +75,7 @@ public class MainCardsActivityView extends AppCompatActivity implements MainCard
     recyclerView.setAdapter(adapter);
     recyclerView.setLayoutManager(new LinearLayoutManager(this));
     adapter.setStarsOnShareClickedListener(this);
+    adapter.setCallbackRecipeIdOnShareClickedListener(this);
   }
 
   @Override
@@ -180,6 +189,15 @@ public class MainCardsActivityView extends AppCompatActivity implements MainCard
     MenuInflater inflater = getMenuInflater();
     inflater.inflate(R.menu.sorting_menu, menu);
 
+    MenuItem refreshViewItem = menu.findItem(R.id.action_refresh);
+    refreshViewItem.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+      @Override
+      public boolean onMenuItemClick(MenuItem menuItem) {
+        presenter.refreshCardsAction();
+        return true;
+      }
+    });
+
     MenuItem searchViewItem = menu.findItem(R.id.action_search);
     final SearchView searchViewAndroidActionBar = (SearchView) MenuItemCompat.getActionView(searchViewItem);
     searchViewAndroidActionBar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -245,6 +263,13 @@ public class MainCardsActivityView extends AppCompatActivity implements MainCard
   @Override
   public void shareStarsClicked(int recipeId, int starRate) {
     presenter.sentStars(recipeId, starRate);
+  }
+
+  @Override
+  public void goToRecipeDetails(int recipeId){
+    Intent intent = new Intent(MainCardsActivityView.this, RecipeDetailsActivityView.class);
+    intent.putExtra("recipeId", recipeId);
+    startActivity(intent);
   }
 }
 

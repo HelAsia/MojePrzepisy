@@ -188,29 +188,6 @@ def getSortedCards(sorted_method):
     return jsonify(cards)
 
 
-@app.route('/recipe/id', methods=['GET'])
-def getRecipeId():
-    recipe = Recipes(database)
-    user = Users(database)
-    params = request.get_json()
-
-    userID = user.getUser(get_user_id())
-    recipeName = params.get('recipeName')
-    recipeCategory = params.get('recipeCategory')
-    recipePrepareTime = params.get('recipePrepareTime')
-    recipeCookTime = params.get('recipeCookTime')
-    recipeBakeTime = params.get('recipeBakeTime')
-
-
-    recipeId = recipe.getRecipeId(userID, recipeName, recipePrepareTime,
-                                  recipeCookTime, recipeBakeTime, recipeCategory)
-
-    return jsonify({
-        'recipeId': recipeId,
-    })
-
-
-
 @app.route('/recipe/<int:recipeId>', methods=['GET'])
 def getRecipe(recipeId):
     recipe = Recipes(database)
@@ -220,6 +197,7 @@ def getRecipe(recipeId):
     if not recipes:
         Logger.fail("There was no recipe returned!")
     return jsonify(recipes)
+
 
 @app.route('/recipe', methods=['PUT'])
 @authorized
@@ -437,6 +415,17 @@ def getStars(recipeId):
     userID = get_user_id()
 
     stars = star.getStars(recipeId, userID)
+
+    if not stars:
+        Logger.fail("There was no stars returned!")
+    return jsonify(stars)
+
+
+@app.route('/recipe/stars/detail/<int:recipeId>', methods=['GET'])
+def getRecipeDetailsStars(recipeId):
+    star = Stars(database)
+
+    stars = star.getRecipeDetailsStars(recipeId)
 
     if not stars:
         Logger.fail("There was no stars returned!")

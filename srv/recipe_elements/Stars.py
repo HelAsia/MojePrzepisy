@@ -27,6 +27,19 @@ class Stars:
         else:
             return {}
 
+    def getRecipeDetailsStars(self, recipeID):
+        query = u"SELECT favorivte AS favoritesCount, stars AS starsCount " \
+                u"FROM users_recipes_stars " \
+                u"WHERE recipe_id = {}".format(recipeID)
+
+        queryResult = self.database.query(query)
+
+        if queryResult:
+            Logger.dbg(queryResult)
+            return queryResult
+        else:
+            return {}
+
     def addStars(self, userID, recipeId, starsCount, favoritesCount):
 
         query = u"INSERT INTO users_recipes_stars " \

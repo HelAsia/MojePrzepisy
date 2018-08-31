@@ -14,13 +14,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.BindView;
 import com.moje.przepisy.mojeprzepisy.R;
-import com.moje.przepisy.mojeprzepisy.add_recipe.add_recipe.display_all_recipe_elements.IngredientsDisplayAdapter;
-import com.moje.przepisy.mojeprzepisy.add_recipe.add_recipe.display_all_recipe_elements.StepsDisplayAdapter;
 import com.moje.przepisy.mojeprzepisy.data.model.Comment;
 import com.moje.przepisy.mojeprzepisy.data.model.Ingredient;
 import com.moje.przepisy.mojeprzepisy.data.model.Step;
 import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.recipe.RecipeRepository;
-import com.moje.przepisy.mojeprzepisy.ui.MyCardViewAdapter.OnShareClickedListener;
 import java.util.List;
 import butterknife.ButterKnife;
 
@@ -39,6 +36,7 @@ public class RecipeDetailsActivityView extends AppCompatActivity implements Reci
   @BindView(R.id.heart_image_view) ImageView favoritesImageView;
   @BindView(R.id.text_view_favorites_count) TextView favoritesCountTextView;
   private RecipeDetailsContract.Presenter presenter;
+  private int recipeId;
   Context context;
 
   @Override
@@ -51,14 +49,20 @@ public class RecipeDetailsActivityView extends AppCompatActivity implements Reci
 
     setToolbar();
     setListeners();
+    presenter.setWholeRecipeElements();
   }
 
   @Override
   public void onClick(View view) {
-    if(view.getId() == R.id.addCommentButton){
+    if(view.getId() == R.id.commentEditText){
+
+    }else if (view.getId() == R.id.addCommentButton){
+
+    }else if(view.getId() == R.id.starImageView){
+
+    }else if(view.getId() == R.id.heart_image_view){
 
     }
-
   }
 
   @Override
@@ -75,13 +79,24 @@ public class RecipeDetailsActivityView extends AppCompatActivity implements Reci
   }
 
   @Override
-  public Context getContext() {
-    return context;
+  public int getRecipeId() {
+    this.recipeId = getIntent().getExtras().getInt("recipeId");
+    return recipeId;
+  }
+/*
+  @Override
+  public void setRecipeId(int recipeId) {
+    this.recipeId = getIntent().getExtras().getInt("recipeId");
   }
 
   @Override
-  public void setMainRecipeInfoLayout() {
+  public void getRecipeIdFromIntent(){
+    setRecipeId(getIntent().getExtras().getInt("recipeId"));
+  }*/
 
+  @Override
+  public Context getContext() {
+    return context;
   }
 
   @Override

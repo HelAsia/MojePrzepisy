@@ -14,11 +14,10 @@ class Steps:
         self.database = database
 
     def getStep(self, recipeID):
-        query = u"SELECT S.recipe_id AS id, S.step_id AS stepId " \
-                u"S.photo_image AS photoImage, S.step_number AS stepNumber, " \
-                u"S.step_description AS stepDescription " \
-                u"FROM steps AS S " \
-                u"WHERE S.recipe_id LIKE '{}'".format(recipeID)
+        query = u"SELECT recipe_id AS recipeId, step_id AS stepId, " \
+                u"photo_image AS photo, step_number AS stepNumber, " \
+                u"step_description AS stepDescription " \
+                u"WHERE recipe_id = {}".format(recipeID)
 
         queryResult = self.database.query(query)
 
@@ -48,10 +47,10 @@ class Steps:
         query = u"UPDATE steps " \
                 u"SET {} = '{}'" \
                 u"WHERE step_id = {}".format(columnName, columnValue, stepId)
-        queryResult = self.database.query(query)
+        queryResult, rows, msg = self.database.insert(query)
 
         if queryResult:
-            Logger.dbg(str(tuple(queryResult)))
+            Logger.dbg(queryResult)
             return 200, u'Your changed {}={}'.format(columnName, columnValue)
         else:
             return 404, u'Forwarded data to check are not correct'
@@ -59,10 +58,10 @@ class Steps:
     def deleteStep(self, stepId):
         query = u"DELETE FROM steps " \
                 u"WHERE step_id = {}".format(stepId)
-        queryResult = self.database.query(query)
+        queryResult, rows, msg = self.database.delete(query)
 
         if queryResult:
-            Logger.dbg(str(tuple(queryResult)))
+            Logger.dbg(queryResult)
             return 200, u'Your deleted step_id = {}'.format(stepId)
         else:
             return 404, u'Forwarded data to check are not correct'

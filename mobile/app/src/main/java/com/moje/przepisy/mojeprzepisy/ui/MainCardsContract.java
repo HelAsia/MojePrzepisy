@@ -26,6 +26,8 @@ public interface MainCardsContract {
     void setNavigationViewListenerWithRegistration(NavigationView navigationView);
 
     void setNavigationViewListenerWithoutRegistration(NavigationView navigationView);
+
+    void goToRecipeDetails(int recipeId);
   }
 
   interface Presenter {
@@ -54,9 +56,9 @@ public interface MainCardsContract {
 
     void setNavigationViewListener(NavigationView navigationView, boolean ifLogged);
 
-
     void onDestroy();
 
+    void refreshCardsAction();
   }
 
 }

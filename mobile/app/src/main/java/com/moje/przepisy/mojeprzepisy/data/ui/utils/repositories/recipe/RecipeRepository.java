@@ -2,6 +2,7 @@ package com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.recipe;
 
 import android.content.Context;
 import android.util.Log;
+import com.moje.przepisy.mojeprzepisy.data.model.Comment;
 import com.moje.przepisy.mojeprzepisy.data.model.Ingredient;
 import com.moje.przepisy.mojeprzepisy.data.model.Message;
 import com.moje.przepisy.mojeprzepisy.data.model.Recipe;
@@ -147,6 +148,121 @@ public class RecipeRepository implements RecipeRepositoryInterface{
       @Override
       public void onFailure(Call<Message> call, Throwable t) {
         Log.i("SERWER", t.getMessage());
+      }
+    });
+  }
+
+  @Override
+  public void getRecipe(int recipeId, final OnRecipeDisplayListener listener) {
+    Call<Recipe> resp = recipeAPI.getRecipe(recipeId);
+    resp.enqueue(new Callback<Recipe>() {
+      @Override
+      public void onResponse(Call<Recipe> call, Response<Recipe> response) {
+        Recipe recipe = response.body();
+        if(recipe != null){
+          Log.i("Recipe: ", "OK. Recipe has been downloaded");
+          listener.setMainInfoRecipe(recipe);
+        }else{
+          Log.e("Recipe: ", "NOT OK. Recipe hasn't been downloaded");
+          listener.onRecipeError();
+        }
+      }
+      @Override
+      public void onFailure(Call<Recipe> call, Throwable t) {
+        Log.i("SERWER", t.getMessage());
+        listener.onRecipeError();
+      }
+    });
+  }
+
+  @Override
+  public void getIngredients(int recipeId, final OnRecipeDisplayListener listener) {
+    Call<List<Ingredient>> resp = recipeAPI.getIngredient(recipeId);
+    resp.enqueue(new Callback<List<Ingredient>>() {
+      @Override
+      public void onResponse(Call<List<Ingredient>> call, Response<List<Ingredient>> response) {
+        List<Ingredient> ingredientList = response.body();
+        if(ingredientList != null){
+          Log.i("Ingredients: ", "OK. Ingredient has been downloaded");
+          listener.setIngredients(ingredientList);
+        }else{
+          Log.e("Ingredients: ", "NOT OK. Ingredient hasn't been downloaded");
+          listener.onIngredientsError();
+        }
+      }
+      @Override
+      public void onFailure(Call<List<Ingredient>> call, Throwable t) {
+        Log.i("SERWER", t.getMessage());
+        listener.onIngredientsError();
+      }
+    });
+  }
+
+  @Override
+  public void getSteps(int recipeId, final OnRecipeDisplayListener listener) {
+    Call<List<Step>> resp = recipeAPI.getStep(recipeId);
+    resp.enqueue(new Callback<List<Step>>() {
+      @Override
+      public void onResponse(Call<List<Step>> call, Response<List<Step>> response) {
+        List<Step> stepList = response.body();
+        if(stepList != null){
+          Log.i("Ingredients: ", "OK. Ingredient has been downloaded");
+          listener.setSteps(stepList);
+        }else{
+          Log.e("Ingredients: ", "NOT OK. Ingredient hasn't been downloaded");
+          listener.onStepsError();
+        }
+      }
+      @Override
+      public void onFailure(Call<List<Step>> call, Throwable t) {
+        Log.i("SERWER", t.getMessage());
+        listener.onStepsError();
+      }
+    });
+  }
+
+  @Override
+  public void getComments(int recipeId, final OnRecipeDisplayListener listener) {
+    Call<List<Comment>> resp = recipeAPI.getComment(recipeId);
+    resp.enqueue(new Callback<List<Comment>>() {
+      @Override
+      public void onResponse(Call<List<Comment>> call, Response<List<Comment>> response) {
+        List<Comment> commentList = response.body();
+        if(commentList != null){
+          Log.i("Ingredients: ", "OK. Ingredient has been downloaded");
+          listener.setComment(commentList);
+        }else{
+          Log.e("Ingredients: ", "NOT OK. Ingredient hasn't been downloaded");
+          listener.onCommentError();
+        }
+      }
+      @Override
+      public void onFailure(Call<List<Comment>> call, Throwable t) {
+        Log.i("SERWER", t.getMessage());
+        listener.onCommentError();
+      }
+    });
+  }
+
+  @Override
+  public void getRecipeDetailsStars(int recipeId, final OnRecipeDisplayListener listener) {
+    Call<Stars> resp = recipeAPI.getRecipeDetailsStars(recipeId);
+    resp.enqueue(new Callback<Stars>() {
+      @Override
+      public void onResponse(Call<Stars> call, Response<Stars> response) {
+        Stars stars = response.body();
+        if(stars != null){
+          Log.i("Ingredients: ", "OK. Ingredient has been downloaded");
+          listener.setStars(stars);
+        }else{
+          Log.e("Ingredients: ", "NOT OK. Ingredient hasn't been downloaded");
+          listener.onStarsError();
+        }
+      }
+      @Override
+      public void onFailure(Call<Stars> call, Throwable t) {
+        Log.i("SERWER", t.getMessage());
+        listener.onCommentError();
       }
     });
   }

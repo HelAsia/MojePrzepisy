@@ -140,6 +140,11 @@ public class MainCardsPresenter implements MainCardsContract.Presenter,
   }
 
   @Override
+  public void refreshCardsAction() {
+    getSortedMethod(cardsView.getContext());
+  }
+
+  @Override
   public void refreshCards() {
     getSortedMethod(cardsView.getContext());
   }

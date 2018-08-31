@@ -18,7 +18,7 @@ import retrofit2.http.Path;
 public interface RecipeAPI {
 
   @GET("recipe/{recipeId}")
-  Call<List<Recipe>> getRecipe(@Path("recipeId") int recipeId);
+  Call<Recipe> getRecipe(@Path("recipeId") int recipeId);
 
   @POST("recipe/{recipeId}/{columnName}/{columnValue}")
   Call<List<Recipe>> editRecipe(@Path("recipeId") int recipeId, @Path("columnName") String columnName, @Path("columnValue") String columnValue);
@@ -69,7 +69,10 @@ public interface RecipeAPI {
   Call<List<Comment>> deleteComment(@Path("commentId") int commentId, @Body Comment comment);
 
   @GET("recipe/stars/{recipeId}")
-  Call<Message> getStars(@Path("recipeId") int recipeId);
+  Call<Stars> getStars(@Path("recipeId") int recipeId);
+
+  @GET("recipe/stars/detail/{recipeId}")
+  Call<Stars> getRecipeDetailsStars(@Path("recipeId") int recipeId);
 
   @POST("recipe/stars/{recipeId}/{columnName}/{columnValue}")
   Call<Message> editStars(@Path("recipeId") int recipeId, @Path("columnName") String columnName, @Path("columnValue") int columnValue);

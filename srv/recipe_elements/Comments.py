@@ -14,12 +14,12 @@ class Comments:
         self.database = database
 
     def getComment(self, recipeID):
-        query = u"SELECT I.recipe_id AS recipeID, U.user_login AS authorName, " \
-                u"I.comment_id AS commentId, I.comment AS comment, I.created_date AS createdDate, " \
-                u"FROM ingredients AS I " \
+        query = u"SELECT C.recipe_id AS recipeID, U.user_login AS authorName, " \
+                u"C.comment_id AS commentId, C.comment AS comment, C.created_date AS createdDate, " \
+                u"FROM comments AS C " \
                 u"INNER JOIN users AS U " \
-                u"ON I.user_id = U.user_id " \
-                u"WHERE I.recipe_id LIKE '{}'".format(recipeID)
+                u"ON C.user_id = U.user_id " \
+                u"WHERE C.recipe_id = {}".format(recipeID)
 
         queryResult = self.database.query(query)
 

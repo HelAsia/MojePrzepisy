@@ -20,7 +20,11 @@ public interface RecipeDetailsContract {
 
     void setListeners();
 
-    void setMainRecipeInfoLayout();
+ //   void setRecipeId(int recipeId);
+
+    int getRecipeId();
+
+ //   void getRecipeIdFromIntent();
 
     void setIngredientsRecyclerView(List<Ingredient> ingredientList);
 
@@ -55,7 +59,7 @@ public interface RecipeDetailsContract {
   }
 
   interface Presenter{
-
+    void setWholeRecipeElements();
   }
 
 }

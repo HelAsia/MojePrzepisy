@@ -15,11 +15,10 @@ class Ingredients:
         self.database = database
 
     def getIngredient(self, recipeID):
-        query = u"SELECT I.recipe_id AS id, I.ingredient_id AS ingredientId " \
-                u"I.ingredient_quantity AS ingredientQuantity, I.ingredient_unit AS ingredientUnit, " \
-                u"I.ingredient_name AS ingredientName " \
-                u"FROM ingredient AS I " \
-                u"WHERE R.recipe_id LIKE '{}'".format(recipeID)
+        query = u"SELECT recipe_id AS recipeId, ingredient_id AS ingredientId " \
+                u"ingredient_quantity AS ingredientQuantity, ingredient_unit AS ingredientUnit, " \
+                u"ingredient_name AS ingredientName " \
+                u"WHERE recipe_id = {}".format(recipeID)
 
         queryResult = self.database.query(query)
 
