@@ -1,4 +1,5 @@
 from Logger import *
+import time
 
 
 class Comments:
@@ -14,16 +15,19 @@ class Comments:
         self.database = database
 
     def getComment(self, recipeID):
-        query = u"SELECT C.recipe_id AS recipeID, U.user_login AS authorName, " \
-                u"C.comment_id AS commentId, C.comment AS comment, C.created_date AS createdDate, " \
+        query = u"SELECT C.recipe_id AS recipeId, U.user_login AS authorName, " \
+                u"C.comment_id AS commentId, C.comment AS comment, C.created_date AS createdDate " \
                 u"FROM comments AS C " \
                 u"INNER JOIN users AS U " \
                 u"ON C.user_id = U.user_id " \
-                u"WHERE C.recipe_id = {}".format(recipeID)
+                u"WHERE C.recipe_id = {}; ".format(recipeID)
 
         queryResult = self.database.query(query)
 
         if queryResult:
+            for queryResultTime in queryResult:
+                queryResultTimeCreatedDate = time.mktime(queryResultTime['createdDate'].timetuple())
+                queryResultTime['createdDate'] = queryResultTimeCreatedDate
             Logger.dbg(queryResult)
             return queryResult
         else:

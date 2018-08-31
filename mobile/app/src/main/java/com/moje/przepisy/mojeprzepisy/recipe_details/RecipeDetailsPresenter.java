@@ -67,8 +67,8 @@ public class RecipeDetailsPresenter implements RecipeDetailsContract.Presenter,
   @Override
   public void setStars(Stars stars) {
     if(recipeDisplayView != null){
-      recipeDisplayView.getStarCountTextView().setText(stars.getStarsCount());
-      recipeDisplayView.getFavoritesCountTextView().setText(stars.getFavoritesCount());
+      recipeDisplayView.getStarCountTextView().setText(String.valueOf(stars.getStarsCount()));
+      recipeDisplayView.getFavoritesCountTextView().setText(String.valueOf(stars.getFavoritesCount()));
     }
   }
 

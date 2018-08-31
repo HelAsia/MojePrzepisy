@@ -20,11 +20,8 @@ public interface RecipeDetailsContract {
 
     void setListeners();
 
- //   void setRecipeId(int recipeId);
 
     int getRecipeId();
-
- //   void getRecipeIdFromIntent();
 
     void setIngredientsRecyclerView(List<Ingredient> ingredientList);
 

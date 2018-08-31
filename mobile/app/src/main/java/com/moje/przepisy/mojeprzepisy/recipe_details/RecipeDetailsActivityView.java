@@ -83,16 +83,6 @@ public class RecipeDetailsActivityView extends AppCompatActivity implements Reci
     this.recipeId = getIntent().getExtras().getInt("recipeId");
     return recipeId;
   }
-/*
-  @Override
-  public void setRecipeId(int recipeId) {
-    this.recipeId = getIntent().getExtras().getInt("recipeId");
-  }
-
-  @Override
-  public void getRecipeIdFromIntent(){
-    setRecipeId(getIntent().getExtras().getInt("recipeId"));
-  }*/
 
   @Override
   public Context getContext() {

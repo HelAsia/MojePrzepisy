@@ -17,7 +17,8 @@ class Steps:
         query = u"SELECT recipe_id AS recipeId, step_id AS stepId, " \
                 u"photo_image AS photo, step_number AS stepNumber, " \
                 u"step_description AS stepDescription " \
-                u"WHERE recipe_id = {}".format(recipeID)
+                u"FROM steps "\
+                u"WHERE recipe_id = {}; ".format(recipeID)
 
         queryResult = self.database.query(query)
 

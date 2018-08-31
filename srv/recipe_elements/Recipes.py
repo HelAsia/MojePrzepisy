@@ -1,5 +1,6 @@
 from Logger import *
 from utils import *
+import datetime
 
 
 class Recipes:
@@ -24,13 +25,17 @@ class Recipes:
                 u"FROM recipes AS R " \
                 u"INNER JOIN users AS U " \
                 u"ON R.user_id = U.user_id " \
-                u"WHERE R.recipe_id = {}".format(recipeID)
+                u"WHERE R.recipe_id = {}; ".format(recipeID)
 
         queryResult = self.database.query(query)
 
         if queryResult:
-            Logger.dbg(queryResult)
-            return queryResult
+            queryResultTime = queryResult[0]
+            queryResultTime['prepareTime'] = str((datetime.datetime.min + queryResultTime['prepareTime']).time())
+            queryResultTime['cookTime'] = str((datetime.datetime.min + queryResultTime['cookTime']).time())
+            queryResultTime['bakeTime'] = str((datetime.datetime.min + queryResultTime['bakeTime']).time())
+            Logger.dbg(queryResultTime)
+            return queryResultTime
         else:
             return {}
 

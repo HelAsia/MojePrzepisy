@@ -7,7 +7,7 @@ public class Comment {
   private int recipeId;
   private String comment;
   private String authorName;
-  private Timestamp createTime;
+  private Timestamp createdDate;
 
   public Comment(){
 
@@ -45,11 +45,11 @@ public class Comment {
     this.authorName = authorName;
   }
 
-  public Timestamp getCreateTime() {
-    return createTime;
+  public Timestamp getCreatedDate() {
+    return createdDate;
   }
 
-  public void setCreateTime(Timestamp createTime) {
-    this.createTime = createTime;
+  public void setCreatedDate(Timestamp createdDate) {
+    this.createdDate = createdDate;
   }
 }

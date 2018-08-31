@@ -15,7 +15,7 @@ class Stars:
         self.database = database
 
     def getStars(self, recipeID, userId):
-        query = u"SELECT favorivte AS favoritesCount, stars AS starsCount " \
+        query = u"SELECT favorite AS favoritesCount, stars AS starsCount " \
                 u"FROM users_recipes_stars " \
                 u"WHERE recipe_id LIKE '{}' AND user_id LIKE '{}')".format(recipeID, userId)
 
@@ -28,15 +28,15 @@ class Stars:
             return {}
 
     def getRecipeDetailsStars(self, recipeID):
-        query = u"SELECT favorivte AS favoritesCount, stars AS starsCount " \
+        query = u"SELECT count(favorite) AS favoritesCount, ROUND(avg(stars),0) AS starsCount " \
                 u"FROM users_recipes_stars " \
-                u"WHERE recipe_id = {}".format(recipeID)
+                u"WHERE recipe_id = {}; ".format(recipeID)
 
         queryResult = self.database.query(query)
 
         if queryResult:
             Logger.dbg(queryResult)
-            return queryResult
+            return queryResult[0]
         else:
             return {}
 

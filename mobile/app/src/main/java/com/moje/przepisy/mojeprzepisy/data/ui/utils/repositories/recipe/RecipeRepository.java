@@ -169,7 +169,7 @@ public class RecipeRepository implements RecipeRepositoryInterface{
       }
       @Override
       public void onFailure(Call<Recipe> call, Throwable t) {
-        Log.i("SERWER", t.getMessage());
+        Log.i("SERWER RECIPE: ", t.getMessage());
         listener.onRecipeError();
       }
     });
@@ -192,7 +192,7 @@ public class RecipeRepository implements RecipeRepositoryInterface{
       }
       @Override
       public void onFailure(Call<List<Ingredient>> call, Throwable t) {
-        Log.i("SERWER", t.getMessage());
+        Log.i("SERWER INGREDIENTS:", t.getMessage());
         listener.onIngredientsError();
       }
     });
@@ -206,16 +206,16 @@ public class RecipeRepository implements RecipeRepositoryInterface{
       public void onResponse(Call<List<Step>> call, Response<List<Step>> response) {
         List<Step> stepList = response.body();
         if(stepList != null){
-          Log.i("Ingredients: ", "OK. Ingredient has been downloaded");
+          Log.i("Steps: ", "OK. Steps has been downloaded");
           listener.setSteps(stepList);
         }else{
-          Log.e("Ingredients: ", "NOT OK. Ingredient hasn't been downloaded");
+          Log.e("Steps: ", "NOT OK. Steps hasn't been downloaded");
           listener.onStepsError();
         }
       }
       @Override
       public void onFailure(Call<List<Step>> call, Throwable t) {
-        Log.i("SERWER", t.getMessage());
+        Log.i("SERWER STEPS: ", t.getMessage());
         listener.onStepsError();
       }
     });
@@ -229,16 +229,16 @@ public class RecipeRepository implements RecipeRepositoryInterface{
       public void onResponse(Call<List<Comment>> call, Response<List<Comment>> response) {
         List<Comment> commentList = response.body();
         if(commentList != null){
-          Log.i("Ingredients: ", "OK. Ingredient has been downloaded");
+          Log.i("Comments: ", "OK. Comments has been downloaded");
           listener.setComment(commentList);
         }else{
-          Log.e("Ingredients: ", "NOT OK. Ingredient hasn't been downloaded");
+          Log.e("Comments: ", "NOT OK. Comments hasn't been downloaded");
           listener.onCommentError();
         }
       }
       @Override
       public void onFailure(Call<List<Comment>> call, Throwable t) {
-        Log.i("SERWER", t.getMessage());
+        Log.i("SERWER COMMENT: ", t.getMessage());
         listener.onCommentError();
       }
     });
@@ -261,8 +261,8 @@ public class RecipeRepository implements RecipeRepositoryInterface{
       }
       @Override
       public void onFailure(Call<Stars> call, Throwable t) {
-        Log.i("SERWER", t.getMessage());
-        listener.onCommentError();
+        Log.i("SERWER STARS: ", t.getMessage());
+        listener.onStarsError();
       }
     });
   }
