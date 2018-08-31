@@ -26,7 +26,7 @@ class Comments:
 
         if queryResult:
             for queryResultTime in queryResult:
-                queryResultTimeCreatedDate = time.mktime(queryResultTime['createdDate'].timetuple())
+                queryResultTimeCreatedDate = str(time.mktime(queryResultTime['createdDate'].timetuple()))
                 queryResultTime['createdDate'] = queryResultTimeCreatedDate
             Logger.dbg(queryResult)
             return queryResult

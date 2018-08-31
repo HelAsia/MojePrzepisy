@@ -123,18 +123,18 @@ public class AddRecipeActivityView extends AppCompatActivity implements AddRecip
   }
 
   @Override
-  public void setPreparedTimeEditText(java.sql.Time time){
-    preparedTimeEditText.setText(time.toString());
+  public void setPreparedTimeEditText(String time){
+    preparedTimeEditText.setText(time);
   }
 
   @Override
-  public void setCookTimeEditText(java.sql.Time time){
-    cookTimeEditText.setText(time.toString());
+  public void setCookTimeEditText(String time){
+    cookTimeEditText.setText(time);
   }
 
   @Override
-  public void setBakeTimeEditText(java.sql.Time time){
-    bakeTimeEditText.setText(time.toString());
+  public void setBakeTimeEditText(String time){
+    bakeTimeEditText.setText(time);
   }
 
   @Override

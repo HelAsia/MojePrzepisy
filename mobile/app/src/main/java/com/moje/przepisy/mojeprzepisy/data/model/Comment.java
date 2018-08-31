@@ -1,13 +1,11 @@
 package com.moje.przepisy.mojeprzepisy.data.model;
 
-import java.sql.Timestamp;
-
 public class Comment {
   private int commentId;
   private int recipeId;
   private String comment;
   private String authorName;
-  private Timestamp createdDate;
+  private String createdDate;
 
   public Comment(){
 
@@ -45,11 +43,11 @@ public class Comment {
     this.authorName = authorName;
   }
 
-  public Timestamp getCreatedDate() {
+  public String getCreatedDate() {
     return createdDate;
   }
 
-  public void setCreatedDate(Timestamp createdDate) {
+  public void setCreatedDate(String createdDate) {
     this.createdDate = createdDate;
   }
 }

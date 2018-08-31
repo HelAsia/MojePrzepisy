@@ -22,11 +22,11 @@ public interface AddRecipeContract {
 
     void setCategoryChooseSpinner(String category);
 
-    void setPreparedTimeEditText(java.sql.Time time);
+    void setPreparedTimeEditText(String time);
 
-    void setCookTimeEditText(java.sql.Time time);
+    void setCookTimeEditText(String time);
 
-    void setBakeTimeEditText(java.sql.Time time);
+    void setBakeTimeEditText(String time);
 
     EditText getRecipeNameEditText();
 

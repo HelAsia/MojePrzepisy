@@ -60,11 +60,11 @@ public class CommentDisplayRecipeAdapter extends RecyclerView.Adapter<CommentDis
 
     void bind(Comment comment) {
       String authorName = comment.getAuthorName();
-      Timestamp createTime = comment.getCreatedDate();
+      String createTime = comment.getCreatedDate();
       String commentText = comment.getComment();
 
       userNameTextView.setText(authorName);
-      createTimeTextView.setText(createTime.toString());
+      createTimeTextView.setText(createTime);
       commentTextView.setText(commentText);
     }
   }

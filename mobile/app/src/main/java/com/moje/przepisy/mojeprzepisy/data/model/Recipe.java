@@ -1,19 +1,17 @@
 package com.moje.przepisy.mojeprzepisy.data.model;
 
-import java.sql.Time;
-
 public class Recipe {
   private int recipeId;
   private String recipeName;
   private String recipeMainPicture;
   private String recipeCategory;
-  private java.sql.Time recipePrepareTime;
-  private java.sql.Time recipeCookTime;
-  private java.sql.Time recipeBakeTime;
+  private String recipePrepareTime;
+  private String recipeCookTime;
+  private String recipeBakeTime;
 
   public Recipe(int recipeId, String recipeName, String recipeMainPicture,
-      String recipeCategory, Time recipePrepareTime,
-      Time recipeCookTime, Time recipeBakeTime) {
+      String recipeCategory, String recipePrepareTime,
+      String recipeCookTime, String recipeBakeTime) {
     this.recipeId = recipeId;
     this.recipeName = recipeName;
     this.recipeMainPicture = recipeMainPicture;
@@ -23,8 +21,8 @@ public class Recipe {
     this.recipeBakeTime = recipeBakeTime;
   }
 
-  public Recipe(String recipeName,String recipeMainPicture, String recipeCategory, Time recipePrepareTime, Time recipeCookTime,
-      Time recipeBakeTime) {
+  public Recipe(String recipeName,String recipeMainPicture, String recipeCategory, String recipePrepareTime, String recipeCookTime,
+      String recipeBakeTime) {
     this.recipeName = recipeName;
     this.recipeMainPicture = recipeMainPicture;
     this.recipeCategory = recipeCategory;
@@ -49,15 +47,15 @@ public class Recipe {
     return recipeName;
   }
 
-  public java.sql.Time getRecipePrepareTime() {
+  public String getRecipePrepareTime() {
     return recipePrepareTime;
   }
 
-  public java.sql.Time getRecipeCookTime() {
+  public String getRecipeCookTime() {
     return recipeCookTime;
   }
 
-  public java.sql.Time getRecipeBakeTime() {
+  public String getRecipeBakeTime() {
     return recipeBakeTime;
   }
 
@@ -73,15 +71,15 @@ public class Recipe {
     this.recipeName = recipeName;
   }
 
-  public void setRecipePrepareTime(java.sql.Time recipePrepareTime) {
+  public void setRecipePrepareTime(String recipePrepareTime) {
     this.recipePrepareTime = recipePrepareTime;
   }
 
-  public void setRecipeCookTime(java.sql.Time recipeCookTime) {
+  public void setRecipeCookTime(String recipeCookTime) {
     this.recipeCookTime = recipeCookTime;
   }
 
-  public void setRecipeBakeTime(java.sql.Time recipeBakeTime) {
+  public void setRecipeBakeTime(String recipeBakeTime) {
     this.recipeBakeTime = recipeBakeTime;
   }
 

@@ -13,7 +13,6 @@ import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.recipe.RecipeRe
 import com.moje.przepisy.mojeprzepisy.utils.BitmapConverter;
 import com.moje.przepisy.mojeprzepisy.utils.Constant;
 import java.lang.reflect.Type;
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,9 +70,9 @@ public class AddRecipePresenter implements AddRecipeContract.Presenter{
     Bitmap bitmap = drawable.getBitmap();
     getRecipeList().get(position).setRecipeMainPicture(converter.BitMapToString(bitmap));
     getRecipeList().get(position).setRecipeCategory((String) recipeView.getCategoryChooseSpinner().getSelectedItem());
-    getRecipeList().get(position).setRecipePrepareTime(java.sql.Time.valueOf(recipeView.getPreparedTimeEditText().getText().toString()));
-    getRecipeList().get(position).setRecipeCookTime(java.sql.Time.valueOf(recipeView.getCookTimeEditText().getText().toString()));
-    getRecipeList().get(position).setRecipeBakeTime(java.sql.Time.valueOf(recipeView.getBakeTimeEditText().getText().toString()));
+    getRecipeList().get(position).setRecipePrepareTime(recipeView.getPreparedTimeEditText().getText().toString());
+    getRecipeList().get(position).setRecipeCookTime(recipeView.getCookTimeEditText().getText().toString());
+    getRecipeList().get(position).setRecipeBakeTime(recipeView.getBakeTimeEditText().getText().toString());
 
     String pojoJson = convertPojoToJsonString(getRecipeList());
     addPojoToPreferences(pojoJson, recipeView.getContext());
@@ -85,8 +84,7 @@ public class AddRecipePresenter implements AddRecipeContract.Presenter{
       recipeList = recipeFirstList;
       setRecipeValueOnScreen();
     }else {
-      Time ts = new Time(503000);
-      Recipe recipe = new Recipe("Nazwa przepisu", "https://img.freepik.com/free-icon/gallery_318-131678.jpg?size=338c&ext=jpg", "Przekąski", ts, ts, ts);
+      Recipe recipe = new Recipe("Nazwa przepisu", "https://img.freepik.com/free-icon/gallery_318-131678.jpg?size=338c&ext=jpg", "Przekąski", "00:00:00", "00:00:00", "00:00:00");
       recipeList.add(recipe);
       setRecipe(recipeList);
     }

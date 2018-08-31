@@ -37,9 +37,9 @@ public class RecipeDetailsPresenter implements RecipeDetailsContract.Presenter,
       recipeDisplayView.getRecipeImageView().
           setImageBitmap(converter.StringToBitMap(recipe.getRecipeMainPicture()));
       recipeDisplayView.getRecipeCategoryTextView().setText(recipe.getRecipeCategory());
-      recipeDisplayView.getPreparedTimeTextView().setText(recipe.getRecipePrepareTime().toString());
-      recipeDisplayView.getCookTimeTextView().setText(recipe.getRecipeCookTime().toString());
-      recipeDisplayView.getBakeTimeTextView().setText(recipe.getRecipeBakeTime().toString());
+      recipeDisplayView.getPreparedTimeTextView().setText(recipe.getRecipePrepareTime());
+      recipeDisplayView.getCookTimeTextView().setText(recipe.getRecipeCookTime());
+      recipeDisplayView.getBakeTimeTextView().setText(recipe.getRecipeBakeTime());
     }
   }
 

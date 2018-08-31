@@ -66,17 +66,17 @@ public class MainRecipeInfoAdapter extends RecyclerView.Adapter<MainRecipeInfoAd
     void bind(Recipe recipe) {
       String recipeName = recipe.getRecipeName();
       String recipeCategory = recipe.getRecipeCategory();
-      Time recipePrepareTime = recipe.getRecipePrepareTime();
-      Time recipeCookTime = recipe.getRecipeCookTime();
-      Time recipeBakeTime = recipe.getRecipeBakeTime();
+      String recipePrepareTime = recipe.getRecipePrepareTime();
+      String recipeCookTime = recipe.getRecipeCookTime();
+      String recipeBakeTime = recipe.getRecipeBakeTime();
       String recipeMainPicture = recipe.getRecipeMainPicture();
 
 
       recipeNameTextView.setText(recipeName);
       recipeCategoryTextView.setText(recipeCategory);
-      preparedTimeTextView.setText(recipePrepareTime.toString());
-      cookTimeTextView.setText(recipeCookTime.toString());
-      bakeTimeTextView.setText(recipeBakeTime.toString());
+      preparedTimeTextView.setText(recipePrepareTime);
+      cookTimeTextView.setText(recipeCookTime);
+      bakeTimeTextView.setText(recipeBakeTime);
       recipeImageView.setImageBitmap(converter.StringToBitMap(recipeMainPicture));
     }
   }
