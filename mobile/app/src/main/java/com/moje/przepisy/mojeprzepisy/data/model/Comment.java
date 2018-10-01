@@ -11,6 +11,12 @@ public class Comment {
 
   }
 
+  public Comment(String authorName, String createdDate, String comment){
+    this.authorName = authorName;
+    this.createdDate = createdDate;
+    this.comment = comment;
+  }
+
   public int getCommentId() {
     return commentId;
   }

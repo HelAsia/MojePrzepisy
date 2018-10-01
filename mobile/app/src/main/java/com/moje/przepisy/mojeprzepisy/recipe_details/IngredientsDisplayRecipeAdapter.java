@@ -61,9 +61,21 @@ public class IngredientsDisplayRecipeAdapter extends RecyclerView.Adapter<Ingred
       String ingredientUnit = ingredient.getIngredientUnit();
       String ingredientName = ingredient.getIngredientName();
 
-      quantityTextView.setText(Integer.toString(ingredientQuantity));
-      unitTextView.setText(ingredientUnit);
-      nameIngredientTextView.setText(ingredientName);
+      if(ingredientQuantity != 0){
+        quantityTextView.setText(Integer.toString(ingredientQuantity));
+      }else {
+        quantityTextView.setText("0");
+      }
+      if(ingredientUnit != null){
+        unitTextView.setText(ingredientUnit);
+      }else {
+        unitTextView.setText("brak");
+      }
+      if(ingredientName != null){
+        nameIngredientTextView.setText(ingredientName);
+      }else {
+        nameIngredientTextView.setText("Bran nazwy");
+      }
     }
   }
 }

@@ -14,8 +14,16 @@
   android:background="@color/primary_light">
 
   <ImageView
+    android:id="@+id/imageView"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    app:srcCompat="@drawable/logo"
-    android:id="@+id/imageView"/>
+    android:layout_below="@+id/errorTextView"
+    app:srcCompat="@drawable/logo"/>
+  <TextView
+    android:id="@+id/errorTextView"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_centerHorizontal="true"
+    android:text="TextView"
+    android:visibility="gone"/>
 </RelativeLayout>

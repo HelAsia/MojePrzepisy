@@ -361,8 +361,6 @@ def getComment(recipeId):
 
     comments = comment.getComment(recipeId)
 
-    if not comments:
-        Logger.fail("There was no comments returned!")
     return jsonify(comments)
 
 

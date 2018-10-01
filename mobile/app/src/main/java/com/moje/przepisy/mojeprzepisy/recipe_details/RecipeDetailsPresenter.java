@@ -1,11 +1,13 @@
 package com.moje.przepisy.mojeprzepisy.recipe_details;
 
 import android.widget.Toast;
+import com.moje.przepisy.mojeprzepisy.R;
 import com.moje.przepisy.mojeprzepisy.data.model.Comment;
 import com.moje.przepisy.mojeprzepisy.data.model.Ingredient;
 import com.moje.przepisy.mojeprzepisy.data.model.Recipe;
 import com.moje.przepisy.mojeprzepisy.data.model.Stars;
 import com.moje.przepisy.mojeprzepisy.data.model.Step;
+import com.squareup.picasso.Picasso;
 import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.recipe.RecipeRepository;
 import com.moje.przepisy.mojeprzepisy.utils.BitmapConverter;
 import java.util.List;
@@ -32,14 +34,40 @@ public class RecipeDetailsPresenter implements RecipeDetailsContract.Presenter,
 
   @Override
   public void setMainInfoRecipe(Recipe recipe) {
-    if(recipeDisplayView != null){
-      recipeDisplayView.getRecipeNameTextView().setText(recipe.getRecipeName());
-      recipeDisplayView.getRecipeImageView().
-          setImageBitmap(converter.StringToBitMap(recipe.getRecipeMainPicture()));
-      recipeDisplayView.getRecipeCategoryTextView().setText(recipe.getRecipeCategory());
-      recipeDisplayView.getPreparedTimeTextView().setText(recipe.getRecipePrepareTime());
-      recipeDisplayView.getCookTimeTextView().setText(recipe.getRecipeCookTime());
-      recipeDisplayView.getBakeTimeTextView().setText(recipe.getRecipeBakeTime());
+    if(recipeDisplayView != null) {
+      if (recipeDisplayView.getRecipeNameTextView() != null) {
+        recipeDisplayView.getRecipeNameTextView().setText(recipe.getRecipeName());
+      } else {
+        recipeDisplayView.getRecipeNameTextView().setText("Brak nazwy przepisu");
+      }
+      if (recipeDisplayView.getRecipeImageView() != null) {
+        recipeDisplayView.getRecipeImageView().
+            setImageBitmap(converter.StringToBitMap(recipe.getRecipeMainPicture()));
+      } else {
+        Picasso.get()
+            .load("https://img.freepik.com/free-icon/gallery_318-131678.jpg?size=338c&ext=jpg")
+            .into(recipeDisplayView.getRecipeImageView());
+      }
+      if (recipeDisplayView.getRecipeCategoryTextView() != null) {
+        recipeDisplayView.getRecipeCategoryTextView().setText(recipe.getRecipeCategory());
+      } else {
+        recipeDisplayView.getRecipeCategoryTextView().setText("Brak kategorii przepisu");
+      }
+      if (recipeDisplayView.getPreparedTimeTextView() != null) {
+        recipeDisplayView.getPreparedTimeTextView().setText(recipe.getRecipePrepareTime());
+      } else {
+        recipeDisplayView.getPreparedTimeTextView().setText("Brak czasu przygotowania");
+      }
+      if (recipeDisplayView.getCookTimeTextView() != null) {
+        recipeDisplayView.getCookTimeTextView().setText(recipe.getRecipeCookTime());
+      } else {
+        recipeDisplayView.getCookTimeTextView().setText("Brak czasu gotowania");
+      }
+      if (recipeDisplayView.getBakeTimeTextView() != null) {
+        recipeDisplayView.getBakeTimeTextView().setText(recipe.getRecipeBakeTime());
+      } else {
+        recipeDisplayView.getBakeTimeTextView().setText("Brak czasu pieczenia");
+      }
     }
   }
 

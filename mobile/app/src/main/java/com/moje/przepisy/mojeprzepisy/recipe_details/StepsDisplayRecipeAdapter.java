@@ -64,12 +64,21 @@ public class StepsDisplayRecipeAdapter extends RecyclerView.Adapter<StepsDisplay
       String stepDescription = step.getStepDescription();
       String photoId = step.getPhoto();
 
-      stepNumberTextView.setText(Integer.toString(stepNumber));
-      stepDescriptionTextView.setText(stepDescription);
+      if (stepNumber != 0) {
+        stepNumberTextView.setText(Integer.toString(stepNumber));
+      }else{
+        stepNumberTextView.setText("0");
+      }
+      if(stepDescription != null){
+        stepDescriptionTextView.setText(stepDescription);
+      }else{
+        stepDescriptionTextView.setText("Brak opisu");
+      }
       if(photoId == null || photoId.equals("https://img.freepik.com/free-icon/gallery_318-131678.jpg?size=338c&ext=jpg")){
         stepImageView.setVisibility(View.GONE);
+      }else {
+        stepImageView.setImageBitmap(converter.StringToBitMap(photoId));
       }
-      stepImageView.setImageBitmap(converter.StringToBitMap(photoId));
     }
   }
 }

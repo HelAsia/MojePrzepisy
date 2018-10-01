@@ -22,15 +22,12 @@ public class WelcomeRepository implements WelcomeRepositoryInterface {
 
   @Override
   public void checkUser(final OnLoggedListener loggedListener) {
-
     Call<Message> resp = userAPI.getUser();
-
     resp.enqueue(new Callback<Message>() {
       @Override
       public void onResponse(Call<Message> call, Response<Message> response) {
         Message msg = response.body();
         Log.i("SERVER", "Message: " + msg.message);
-
         if(msg.status == 401){
           loggedListener.onNotLogged();
         }else{
@@ -41,6 +38,7 @@ public class WelcomeRepository implements WelcomeRepositoryInterface {
       @Override
       public void onFailure(Call<Message> call, Throwable t) {
         Log.i("SERWER", t.getMessage());
+        loggedListener.showErrorMessage();
       }
     });
 

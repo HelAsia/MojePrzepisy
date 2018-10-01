@@ -6,6 +6,7 @@ public interface WelcomeContract {
 
     void navigateToMainRegisteredActivity();
     void navigateToHomePage();
+    void errorMessage();
 
   }
 

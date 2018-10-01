@@ -63,9 +63,19 @@ public class CommentDisplayRecipeAdapter extends RecyclerView.Adapter<CommentDis
       String createTime = comment.getCreatedDate();
       String commentText = comment.getComment();
 
-      userNameTextView.setText(authorName);
-      createTimeTextView.setText(createTime);
-      commentTextView.setText(commentText);
+      if (authorName != null) {
+        userNameTextView.setText(authorName);
+      }else{
+        userNameTextView.setText("Brak nazwy autora");
+      }
+      if (createTime != null) {
+        createTimeTextView.setText(createTime);
+      }else {
+        createTimeTextView.setText("Brak czasu stworzenia");
+      }
+      if(commentText!= null){
+        commentTextView.setText(commentText);
+      }
     }
   }
 }

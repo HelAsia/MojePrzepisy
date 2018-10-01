@@ -10,6 +10,7 @@ import com.moje.przepisy.mojeprzepisy.data.model.Stars;
 import com.moje.przepisy.mojeprzepisy.data.model.Step;
 import com.moje.przepisy.mojeprzepisy.data.network.RecipeAPI;
 import com.moje.przepisy.mojeprzepisy.data.network.RetrofitSingleton;
+import java.util.ArrayList;
 import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -162,7 +163,11 @@ public class RecipeRepository implements RecipeRepositoryInterface{
         if(recipe != null){
           Log.i("Recipe: ", "OK. Recipe has been downloaded");
           listener.setMainInfoRecipe(recipe);
-        }else{
+        }else if(recipe == null){
+          Log.i("Recipe: ", "OK. Recipe has been downloaded but is empty");
+          listener.setMainInfoRecipe(recipe);
+        }
+        else{
           Log.e("Recipe: ", "NOT OK. Recipe hasn't been downloaded");
           listener.onRecipeError();
         }
@@ -184,6 +189,9 @@ public class RecipeRepository implements RecipeRepositoryInterface{
         List<Ingredient> ingredientList = response.body();
         if(ingredientList != null){
           Log.i("Ingredients: ", "OK. Ingredient has been downloaded");
+          listener.setIngredients(ingredientList);
+        }else if(ingredientList == null){
+          Log.i("Ingredients: ", "OK. Ingredient has been downloaded but id empty");
           listener.setIngredients(ingredientList);
         }else{
           Log.e("Ingredients: ", "NOT OK. Ingredient hasn't been downloaded");
@@ -208,6 +216,9 @@ public class RecipeRepository implements RecipeRepositoryInterface{
         if(stepList != null){
           Log.i("Steps: ", "OK. Steps has been downloaded");
           listener.setSteps(stepList);
+        }else if(stepList == null){
+        Log.i("Ingredients: ", "OK. Ingredient has been downloaded but is empty");
+        listener.setSteps(stepList);
         }else{
           Log.e("Steps: ", "NOT OK. Steps hasn't been downloaded");
           listener.onStepsError();
@@ -239,7 +250,10 @@ public class RecipeRepository implements RecipeRepositoryInterface{
       @Override
       public void onFailure(Call<List<Comment>> call, Throwable t) {
         Log.i("SERWER COMMENT: ", t.getMessage());
-        listener.onCommentError();
+        Log.i("Comments: ", "OK. Comments has been downloaded but is empty");
+        List<Comment> commentList = new ArrayList<Comment>();
+        commentList.add(new Comment("Użytkownik", "Data utworzenia", "Brak komentarzy!"));
+        listener.setComment(commentList);
       }
     });
   }
@@ -252,10 +266,14 @@ public class RecipeRepository implements RecipeRepositoryInterface{
       public void onResponse(Call<Stars> call, Response<Stars> response) {
         Stars stars = response.body();
         if(stars != null){
-          Log.i("Ingredients: ", "OK. Ingredient has been downloaded");
+          Log.i("Stars: ", "OK. Stars have been downloaded");
           listener.setStars(stars);
-        }else{
-          Log.e("Ingredients: ", "NOT OK. Ingredient hasn't been downloaded");
+        }else if(stars == null){
+          Log.i("Stars: ", "OK. Stars have been downloaded but is empty");
+          listener.setStars(stars);
+        }
+        else{
+          Log.e("Stars: ", "NOT OK. Stars haven't been downloaded");
           listener.onStarsError();
         }
       }

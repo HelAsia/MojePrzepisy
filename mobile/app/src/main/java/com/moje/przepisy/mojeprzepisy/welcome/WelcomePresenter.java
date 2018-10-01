@@ -17,6 +17,11 @@ public class WelcomePresenter implements WelcomeContract.Presenter, WelcomeRepos
   }
 
   @Override
+  public void showErrorMessage() {
+    welcomeView.errorMessage();
+  }
+
+  @Override
   public void onDestroy() {
     welcomeView = null;
   }

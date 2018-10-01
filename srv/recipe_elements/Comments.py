@@ -31,6 +31,7 @@ class Comments:
             Logger.dbg(queryResult)
             return queryResult
         else:
+            Logger.dbg(queryResult)
             return {}
 
     def addComment(self, recipeId, userId, comment):
