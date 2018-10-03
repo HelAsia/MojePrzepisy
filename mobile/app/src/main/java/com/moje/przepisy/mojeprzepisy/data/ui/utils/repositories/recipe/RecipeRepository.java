@@ -121,7 +121,6 @@ public class RecipeRepository implements RecipeRepositoryInterface{
           listener.onStarsAdded(false);
         }
       }
-
       @Override
       public void onFailure(Call<Message> call, Throwable t) {
         Log.i("SERWER", t.getMessage());
@@ -145,7 +144,6 @@ public class RecipeRepository implements RecipeRepositoryInterface{
           Log.e("Stars: ", "NOT OK. Stars hasn't been added");
         }
       }
-
       @Override
       public void onFailure(Call<Message> call, Throwable t) {
         Log.i("SERWER", t.getMessage());

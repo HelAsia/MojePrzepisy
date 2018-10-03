@@ -82,3 +82,32 @@ CREATE TABLE users_recipes_stars (
     FOREIGN KEY (user_id) REFERENCES users(user_id),
     FOREIGN KEY (recipe_id) REFERENCES recipes(recipe_id)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
+-- TODO: Przykladowe rekordy - NIE WRZUCAC NA GITHUBA!
+
+insert into users (user_id, user_login, user_password, first_name, last_name, email)
+values
+(1, 'query', 'Query123!!', 'Ania', 'Zowal', 'anna@example.com'),
+(2, 'helcia0412', 'Asia1hel!!', 'Asia', 'Heluszka', 'asia@example.com'),
+(3, 'tita', 'Tita0522!', 'Agnieszka', 'Heluszka', 'aga@example.com');
+
+insert into recipes
+(recipe_id, user_id, recipe_name, recipe_prepare_time, recipe_cook_time, recipe_bake_time, recipe_main_picture, recipe_category, recipe_created_date_time)
+values
+(1, 1, 'Ogórkowa', '00:30:00', '00:30:00', '00:30:00', 'https://www.kwestiasmaku.com/sites/kwestiasmaku.com/files/ogorkowa_01.jpg' ,'zupa', NOW()),
+(2, 3, 'Pomidorowa', '00:30:00', '00:20:00', '00:30:00', 'https://s.mamotoja.pl/i/zupa-pomidorowa-piotra-murawskiego-BIG-37790.jpg', 'zupa', NOW()),
+(3, 2, 'Murzynek', '00:30:00', '00:10:00', '00:20:00', 'https://www.kwestiasmaku.com/sites/kwestiasmaku.com/files/murzynek_z_czeresniami_01.jpg' , 'ciasto', NOW()),
+(4, 2, 'Sernik', '00:40:00', '00:10:00', '00:30:00', 'https://d3iamf8ydd24h9.cloudfront.net/pictures/articles/2018/02/36751-v-900x556.jpg' , 'ciasto', NOW()),
+(5, 3, 'Mleko', '00:40:00', '00:10:00', '00:30:00', 'https://i.iplsc.com/pasteryzacja-zmienia-smak-mleka/000390MUH8PVBVIW-C122-F4.jpg' , 'ciasto', NOW());
+
+insert into users_recipes_stars
+(user_id, recipe_id, favorite, stars)
+values
+(1, 1, true, 1),
+(3, 2, true, 2),
+(2, 3, false, 2),
+(1, 2, true, 4),
+(3, 4, true, 2),
+(2, 4, false, 5),
+(2, 5, false, 5);
