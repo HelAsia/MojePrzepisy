@@ -1,7 +1,8 @@
-package com.moje.przepisy.mojeprzepisy;
+package com.moje.przepisy.mojeprzepisy.licenses;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import com.moje.przepisy.mojeprzepisy.R;
 
 public class LicensesActivity extends AppCompatActivity {
 

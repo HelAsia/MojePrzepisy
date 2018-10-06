@@ -18,13 +18,13 @@ public class ReceivedCookiesInterceptor implements Interceptor{
 
   @Override
   public Response intercept(Chain chain) throws IOException {
-    Response orginalResponse = chain.proceed(chain.request());
+    Response originalResponse = chain.proceed(chain.request());
 
-    if(!orginalResponse.headers("Set-Cookie").isEmpty()) {
+    if(!originalResponse.headers("Set-Cookie").isEmpty()) {
       String cookies = (String) PreferenceManager.getDefaultSharedPreferences(context)
           .getString(Constant.PREF_COOKIES,new String());
 
-      for (String header : orginalResponse.headers("Set-Cookie")){
+      for (String header : originalResponse.headers("Set-Cookie")){
         cookies = header;
         Log.i("DEB","Received cookie: " + cookies);
       }
@@ -34,6 +34,6 @@ public class ReceivedCookiesInterceptor implements Interceptor{
       memes.commit();
     }
 
-    return orginalResponse;
+    return originalResponse;
   }
 }

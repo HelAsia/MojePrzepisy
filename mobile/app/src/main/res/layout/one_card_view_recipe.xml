@@ -92,7 +92,7 @@
         android:layout_gravity="center"
         android:scaleX="0.5"
         android:scaleY="0.5"
-        android:src="@mipmap/ic_favorite_border"/>
+        android:src="@drawable/ic_favorite_border"/>
       <TextView
         android:id="@+id/text_view_favorites_count"
         android:layout_width="wrap_content"

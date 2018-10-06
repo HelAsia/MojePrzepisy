@@ -15,7 +15,8 @@ import com.moje.przepisy.mojeprzepisy.utils.Constant;
 import java.util.List;
 
 public class MainCardsPresenter implements MainCardsContract.Presenter,
-    OperationsOnCardRepository.OnCardsListener, RecipeRepository.OnStarsEditListener {
+    OperationsOnCardRepository.OnCardsListener, RecipeRepository.OnStarsEditListener,
+    RecipeRepository.OnHeartEditListener{
   private OperationsOnCardRepository operationsOnCardRepository;
   private MainCardsContract.View cardsView;
   private RecipeRepository recipeRepository;
@@ -46,7 +47,12 @@ public class MainCardsPresenter implements MainCardsContract.Presenter,
 
   @Override
   public void sentStars(int recipeId, int starRate) {
-    recipeRepository.editStars(recipeId, "stars", starRate, this);
+    recipeRepository.editStarsAndHeart(recipeId, "stars", starRate, this);
+  }
+
+  @Override
+  public void sentHeart(int recipeId, int favorite) {
+    recipeRepository.editStarsAndHeart(recipeId, "favorite", favorite, this);
   }
 
   @Override

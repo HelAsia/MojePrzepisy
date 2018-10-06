@@ -30,6 +30,10 @@ public interface RecipeRepositoryInterface {
     void refreshCards();
   }
 
+  interface OnHeartEditListener{
+    void refreshCards();
+  }
+
   interface OnRecipeDisplayListener{
     void setMainInfoRecipe(Recipe recipe);
 
@@ -61,7 +65,9 @@ public interface RecipeRepositoryInterface {
 
   void addFirstStars(Stars stars, OnRecipeFinishedListener listener);
 
-  void editStars(int recipeId, String columnName, int columnValue, OnStarsEditListener listener);
+  void editStarsAndHeart(int recipeId, String columnName, int columnValue, OnStarsEditListener listener);
+
+ // void editHeart(int recipeId, String columnName, Boolean columnValue, OnHeartEditListener listener);
 
   void getRecipe(int recipeId, final OnRecipeDisplayListener listener);
 

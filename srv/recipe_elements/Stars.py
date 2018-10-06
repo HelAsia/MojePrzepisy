@@ -44,7 +44,7 @@ class Stars:
 
         query = u"INSERT INTO users_recipes_stars " \
                 u"(user_id, recipe_id, favorite, stars) " \
-                u"values ({}, {}, {}, {} )" .format(userID, recipeId, starsCount, favoritesCount)
+                u"values ({}, {}, {}, {} )" .format(userID, recipeId, favoritesCount, starsCount)
 
         queryResult, rows, msg = self.database.insert(query)
 
@@ -57,6 +57,11 @@ class Stars:
             return 404, u'Forwarded data are not correct'
 
     def editStars(self, columnName, columnValue, recipeId, userID):
+        if columnName == "favorite":
+            if columnValue == 0:
+                columnValue = "false"
+            else:
+                columnValue = "true"
         query = u"UPDATE users_recipes_stars " \
                 u"SET {} = {} " \
                 u"WHERE recipe_id = {} " \
@@ -64,13 +69,13 @@ class Stars:
 
         queryResult, rows, msg = self.database.insert(query)
 
-        if rows > 0:
+        if rows >= 0:
             Logger.dbg(queryResult)
             return 200, u'Your changed {}={}'.format(columnName, columnValue)
-        elif rows == 0:
-            Logger.dbg(queryResult)
-            self.addStars(userID, recipeId, columnValue, 0)
-            return 200, u'Your changed {}={}'.format(columnName, columnValue)
+ #       elif rows == 0:
+ #           Logger.dbg(queryResult)
+ #           self.addStars(userID, recipeId, columnValue, 0)
+ #           return 200, u'Your changed {}={}'.format(columnName, columnValue)
         else:
             Logger.dbg(queryResult)
             return 404, u'Forwarded data to check are not correct'

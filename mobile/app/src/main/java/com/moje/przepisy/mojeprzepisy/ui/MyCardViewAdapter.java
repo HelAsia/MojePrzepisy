@@ -3,6 +3,9 @@ package com.moje.przepisy.mojeprzepisy.ui;
 import android.animation.Animator;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.Drawable.ConstantState;
 import android.os.Build.VERSION_CODES;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
@@ -16,12 +19,12 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.RatingBar.OnRatingBarChangeListener;
 import android.widget.TextView;
+import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.moje.przepisy.mojeprzepisy.R;
 import com.moje.przepisy.mojeprzepisy.data.model.OneRecipeCard;
 import com.moje.przepisy.mojeprzepisy.utils.BitmapConverter;
-import com.squareup.picasso.Picasso;
 import java.util.List;
 
 /**
@@ -32,6 +35,7 @@ public class MyCardViewAdapter extends RecyclerView.Adapter<MyCardViewAdapter.Vi
   public Context context;
   private List<OneRecipeCard> cardsList;
   private OnShareStarsClickedListener callbackStars;
+  private OnShareHeartClickedListener callbackHeart;
   private OnShareRecipeIdClickedListener callbackRecipeId;
   private BitmapConverter converter = new BitmapConverter();
 
@@ -39,6 +43,14 @@ public class MyCardViewAdapter extends RecyclerView.Adapter<MyCardViewAdapter.Vi
     this.context = context;
     this.cardsList = cardsList;
     setHasStableIds(true);
+  }
+
+  public void setHeartOnShareClickedListener(OnShareHeartClickedListener callbackHeart) {
+    this.callbackHeart = callbackHeart;
+  }
+
+  public interface OnShareHeartClickedListener {
+    void shareHeartClicked(int recipeId, int favorite);
   }
 
   public void setStarsOnShareClickedListener(OnShareStarsClickedListener callbackStars) {
@@ -69,10 +81,23 @@ public class MyCardViewAdapter extends RecyclerView.Adapter<MyCardViewAdapter.Vi
   public void onBindViewHolder(final ViewHolder viewHolder, final int position) {
     viewHolder.bind(cardsList.get(position));
 
+    viewHolder.recipeImageView.setOnClickListener(new OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        int recipeId = (int)getItemId(position);
+        callbackRecipeId.shareRecipeIdClicked(recipeId);
+      }
+    });
+
     viewHolder.starImageView.setOnClickListener(new OnClickListener() {
       @Override
       public void onClick(View view) {
-        viewHolder.ratingBarStars.setVisibility(View.VISIBLE);
+        if(viewHolder.ratingBarStars.getVisibility() == View.INVISIBLE){
+          viewHolder.ratingBarStars.setVisibility(View.VISIBLE);
+        }else {
+          viewHolder.ratingBarStars.setVisibility(View.INVISIBLE);
+        }
+
       }
     });
 
@@ -85,15 +110,43 @@ public class MyCardViewAdapter extends RecyclerView.Adapter<MyCardViewAdapter.Vi
       }
     });
 
-    viewHolder.recipeImageView.setOnClickListener(new OnClickListener() {
+    viewHolder.heartImageView.setOnClickListener(new OnClickListener() {
       @Override
       public void onClick(View view) {
+        Toast.makeText(context, "KLIKNĘTE", Toast.LENGTH_SHORT).show();
         int recipeId = (int)getItemId(position);
-        callbackRecipeId.shareRecipeIdClicked(recipeId);
+        Drawable heartOnCard = viewHolder.heartImageView.getDrawable();
+        Drawable heartBorder = context.getResources().getDrawable(R.mipmap.ic_favorite_border);
+        Drawable heartSolid = context.getResources().getDrawable(R.mipmap.ic_favorite);
 
+        Bitmap heartOnCardB = ((BitmapDrawable) viewHolder.heartImageView.getDrawable()).getBitmap();
+        Bitmap heartBorderB = ((BitmapDrawable) context.getResources().getDrawable(R.mipmap.ic_favorite_border)).getBitmap();
+        Bitmap heartSolidB = ((BitmapDrawable) context.getResources().getDrawable(R.mipmap.ic_favorite)).getBitmap();
 
+        ConstantState constHeartOnCard = heartOnCard.getConstantState();
+        ConstantState constHeartBorder = heartBorder.getConstantState();
+        ConstantState constHeartSolid = heartSolid.getConstantState();
+
+        Boolean isPressed = viewHolder.heartImageView.isPressed();
+
+        if(isPressed){
+          viewHolder.heartImageView.setImageDrawable(heartSolid);
+          callbackHeart.shareHeartClicked(recipeId, 1);
+        }else {
+          viewHolder.heartImageView.setImageDrawable(heartBorder);
+          callbackHeart.shareHeartClicked(recipeId, 0);
+        }
+
+        /*if(constHeartOnCard.equals(constHeartBorder)){
+          viewHolder.heartImageView.setImageDrawable(heartSolid);
+          callbackHeart.shareHeartClicked(recipeId, false);
+        }else if(constHeartOnCard.equals(constHeartSolid)){
+          viewHolder.heartImageView.setImageDrawable(heartBorder);
+          callbackHeart.shareHeartClicked(recipeId, true);
+        }*/
       }
     });
+
   }
 
   @Override
@@ -133,6 +186,7 @@ public class MyCardViewAdapter extends RecyclerView.Adapter<MyCardViewAdapter.Vi
     @BindView(R.id.text_view_favorites_count) TextView favoritesCountTextView;
     @BindView(R.id.ratingBarStars) RatingBar ratingBarStars;
     @BindView(R.id.starImageView) ImageView starImageView;
+    @BindView(R.id.heart_image_view) ImageView heartImageView;
 
     public ViewHolder(View v) {
       super(v);
@@ -155,6 +209,7 @@ public class MyCardViewAdapter extends RecyclerView.Adapter<MyCardViewAdapter.Vi
       starsCountTextView.setText(starsCountString);
       ratingBarStars.setRating(starsCount);
       favoritesCountTextView.setText(favoritesCountString);
+
     }
   }
 }

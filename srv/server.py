@@ -174,6 +174,7 @@ def getSearchedCards():
 @app.route('/cards/<string:sorted_method>', methods=['GET'])
 def getSortedCards(sorted_method):
     card = Cards(database)
+
     if sorted_method == 'default':
         cards = card.getAllCards()
     elif sorted_method == 'alphabetically':

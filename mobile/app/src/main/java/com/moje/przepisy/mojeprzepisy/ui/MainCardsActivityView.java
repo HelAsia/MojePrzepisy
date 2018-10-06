@@ -21,22 +21,24 @@ import android.view.MenuItem.OnMenuItemClickListener;
 import android.view.View;
 import android.widget.Toast;
 import butterknife.BindView;
-import com.moje.przepisy.mojeprzepisy.LicensesActivity;
 import com.moje.przepisy.mojeprzepisy.R;
-import com.moje.przepisy.mojeprzepisy.SearchSwipeActivity;
 import com.moje.przepisy.mojeprzepisy.add_recipe.add_recipe.add_main_recipe_page.AddRecipeActivityView;
 import com.moje.przepisy.mojeprzepisy.data.model.OneRecipeCard;
 import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.cards.OperationsOnCardRepository;
 import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.recipe.RecipeRepository;
+import com.moje.przepisy.mojeprzepisy.licenses.LicensesActivity;
 import com.moje.przepisy.mojeprzepisy.log_in.LoginActivityView;
 import com.moje.przepisy.mojeprzepisy.log_out.LogoutActivityView;
 import com.moje.przepisy.mojeprzepisy.recipe_details.RecipeDetailsActivityView;
 import com.moje.przepisy.mojeprzepisy.register.RegisterActivityView;
+import com.moje.przepisy.mojeprzepisy.search_options.SearchSwipeActivity;
+import com.moje.przepisy.mojeprzepisy.ui.MyCardViewAdapter.OnShareHeartClickedListener;
 import com.moje.przepisy.mojeprzepisy.ui.MyCardViewAdapter.OnShareStarsClickedListener;
 import java.util.List;
 
 public class MainCardsActivityView extends AppCompatActivity implements MainCardsContract.View,
-    View.OnClickListener,OnShareStarsClickedListener, MyCardViewAdapter.OnShareRecipeIdClickedListener {
+    View.OnClickListener,OnShareStarsClickedListener, OnShareHeartClickedListener,
+    MyCardViewAdapter.OnShareRecipeIdClickedListener{
   @BindView(R.id.my_fab) FloatingActionButton floatingActionButton;
   private MainCardsContract.Presenter presenter;
   private DrawerLayout drawerLayout;
@@ -75,6 +77,7 @@ public class MainCardsActivityView extends AppCompatActivity implements MainCard
     recyclerView.setAdapter(adapter);
     recyclerView.setLayoutManager(new LinearLayoutManager(this));
     adapter.setStarsOnShareClickedListener(this);
+    adapter.setHeartOnShareClickedListener(this);
     adapter.setCallbackRecipeIdOnShareClickedListener(this);
   }
 
@@ -263,6 +266,11 @@ public class MainCardsActivityView extends AppCompatActivity implements MainCard
   @Override
   public void shareStarsClicked(int recipeId, int starRate) {
     presenter.sentStars(recipeId, starRate);
+  }
+
+  @Override
+  public void shareHeartClicked(int recipeId, int favorite) {
+    presenter.sentHeart(recipeId, favorite);
   }
 
   @Override

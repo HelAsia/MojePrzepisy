@@ -1,11 +1,12 @@
-package com.moje.przepisy.mojeprzepisy;
+package com.moje.przepisy.mojeprzepisy.search_options;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import com.moje.przepisy.mojeprzepisy.R;
 
 public class SearchSwipeActivity extends AppCompatActivity {
   FragmentPagerAdapter adapterViewPager;

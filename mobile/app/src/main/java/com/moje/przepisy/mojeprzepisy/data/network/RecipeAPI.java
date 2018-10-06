@@ -75,7 +75,8 @@ public interface RecipeAPI {
   Call<Stars> getRecipeDetailsStars(@Path("recipeId") int recipeId);
 
   @POST("recipe/stars/{recipeId}/{columnName}/{columnValue}")
-  Call<Message> editStars(@Path("recipeId") int recipeId, @Path("columnName") String columnName, @Path("columnValue") int columnValue);
+  Call<Message> editStarsAndHeart(@Path("recipeId") int recipeId, @Path("columnName") String columnName, @Path("columnValue") int columnValue);
+ // Call<Message> editHeart(@Path("recipeId") int recipeId, @Path("columnName") String columnName, @Path("columnValue") Boolean columnValue);
 
   @PUT("recipe/stars")
   Call<Message> addStars(@Body Stars stars);

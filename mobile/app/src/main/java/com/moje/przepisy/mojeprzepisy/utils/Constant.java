@@ -2,7 +2,7 @@ package com.moje.przepisy.mojeprzepisy.utils;
 
 public class Constant {
 
-  /*public static final String BASE_URL = "http://127.0.0.1:5000/";*/
+//  public static final String BASE_URL = "http://127.0.0.1:5000/";
 
   //Local server version
   public static final String BASE_URL = "http://10.0.2.2:5000/";

@@ -8,7 +8,7 @@
   android:layout_height="match_parent"
   android:background="@color/primary_light"
   android:orientation="vertical"
-  tools:context="com.moje.przepisy.mojeprzepisy.SearchSwipeActivity">
+  tools:context="com.moje.przepisy.mojeprzepisy.search_options.SearchSwipeActivity">
 
   <FrameLayout
     android:id="@+id/content_frame"

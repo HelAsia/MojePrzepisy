@@ -1,4 +1,4 @@
-package com.moje.przepisy.mojeprzepisy;
+package com.moje.przepisy.mojeprzepisy.search_options;
 
 
 import android.os.Bundle;
@@ -6,15 +6,16 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import com.moje.przepisy.mojeprzepisy.R;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class CategorySearchFragment extends Fragment {
+public class ListSearchFragment extends Fragment {
 
 
-  public CategorySearchFragment() {
+  public ListSearchFragment() {
     // Required empty public constructor
   }
 
@@ -23,7 +24,7 @@ public class CategorySearchFragment extends Fragment {
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     // Inflate the layout for this fragment
-    return inflater.inflate(R.layout.fragment_category_search, container, false);
+    return inflater.inflate(R.layout.fragment_list_search, container, false);
   }
 
 }

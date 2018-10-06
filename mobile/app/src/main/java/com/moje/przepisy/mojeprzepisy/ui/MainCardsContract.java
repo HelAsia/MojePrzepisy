@@ -34,6 +34,8 @@ public interface MainCardsContract {
 
     void sentStars(int recipeId, int starRate);
 
+    void sentHeart(int recipeId, int favorite);
+
     void getAllCardsFromServer();
 
     void getAllCardsSortedAlphabeticallyFromServer();
