@@ -3,9 +3,7 @@ package com.moje.przepisy.mojeprzepisy.ui;
 import android.animation.Animator;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.Drawable.ConstantState;
 import android.os.Build.VERSION_CODES;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
@@ -115,38 +113,20 @@ public class MyCardViewAdapter extends RecyclerView.Adapter<MyCardViewAdapter.Vi
       public void onClick(View view) {
         Toast.makeText(context, "KLIKNĘTE", Toast.LENGTH_SHORT).show();
         int recipeId = (int)getItemId(position);
-        Drawable heartOnCard = viewHolder.heartImageView.getDrawable();
         Drawable heartBorder = context.getResources().getDrawable(R.mipmap.ic_favorite_border);
         Drawable heartSolid = context.getResources().getDrawable(R.mipmap.ic_favorite);
 
-        Bitmap heartOnCardB = ((BitmapDrawable) viewHolder.heartImageView.getDrawable()).getBitmap();
-        Bitmap heartBorderB = ((BitmapDrawable) context.getResources().getDrawable(R.mipmap.ic_favorite_border)).getBitmap();
-        Bitmap heartSolidB = ((BitmapDrawable) context.getResources().getDrawable(R.mipmap.ic_favorite)).getBitmap();
+        Boolean favorite = cardsList.get(position).getFavorite();
 
-        ConstantState constHeartOnCard = heartOnCard.getConstantState();
-        ConstantState constHeartBorder = heartBorder.getConstantState();
-        ConstantState constHeartSolid = heartSolid.getConstantState();
-
-        Boolean isPressed = viewHolder.heartImageView.isPressed();
-
-        if(isPressed){
+        if(!favorite){
           viewHolder.heartImageView.setImageDrawable(heartSolid);
           callbackHeart.shareHeartClicked(recipeId, 1);
         }else {
           viewHolder.heartImageView.setImageDrawable(heartBorder);
           callbackHeart.shareHeartClicked(recipeId, 0);
         }
-
-        /*if(constHeartOnCard.equals(constHeartBorder)){
-          viewHolder.heartImageView.setImageDrawable(heartSolid);
-          callbackHeart.shareHeartClicked(recipeId, false);
-        }else if(constHeartOnCard.equals(constHeartSolid)){
-          viewHolder.heartImageView.setImageDrawable(heartBorder);
-          callbackHeart.shareHeartClicked(recipeId, true);
-        }*/
       }
     });
-
   }
 
   @Override
@@ -202,6 +182,7 @@ public class MyCardViewAdapter extends RecyclerView.Adapter<MyCardViewAdapter.Vi
       int favoritesCount = card.getFavoritesCount();
       String starsCountString = String.valueOf(starsCount);
       String favoritesCountString = String.valueOf(favoritesCount);
+      Boolean favourite = card.getFavorite();
 
       recipeImageView.setImageBitmap(recipeMainPictureBitmap);
       recipeNameTextView.setText(recipeName);
@@ -210,6 +191,14 @@ public class MyCardViewAdapter extends RecyclerView.Adapter<MyCardViewAdapter.Vi
       ratingBarStars.setRating(starsCount);
       favoritesCountTextView.setText(favoritesCountString);
 
+      Drawable heartBorder = context.getResources().getDrawable(R.mipmap.ic_favorite_border);
+      Drawable heartSolid = context.getResources().getDrawable(R.mipmap.ic_favorite);
+
+      if(favourite){
+        heartImageView.setImageDrawable(heartSolid);
+      }else {
+        heartImageView.setImageDrawable(heartBorder);
+      }
     }
   }
 }

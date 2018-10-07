@@ -174,9 +174,12 @@ def getSearchedCards():
 @app.route('/cards/<string:sorted_method>', methods=['GET'])
 def getSortedCards(sorted_method):
     card = Cards(database)
+    userID = get_user_id()
+    if not userID:
+        userID = -1
 
     if sorted_method == 'default':
-        cards = card.getAllCards()
+        cards = card.getAllCards(userID)
     elif sorted_method == 'alphabetically':
         cards = card.getAllCardsSortedAlphabetically()
     elif sorted_method == 'lastAdded':
@@ -465,7 +468,7 @@ def addStars():
     })
 
 
-@app.route('/recipe/stars/<int:recipeId>/<string:columnName>/<string:columnValue>', methods=['POST'])
+@app.route('/recipe/stars/<int:recipeId>/<string:columnName>/<int:columnValue>', methods=['POST'])
 @authorized
 def editStars(recipeId, columnName, columnValue):
     star = Stars(database)

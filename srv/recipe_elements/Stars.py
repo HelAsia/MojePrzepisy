@@ -60,7 +60,7 @@ class Stars:
         if columnName == "favorite":
             if columnValue == 0:
                 columnValue = "false"
-            else:
+            elif columnValue == 1:
                 columnValue = "true"
         query = u"UPDATE users_recipes_stars " \
                 u"SET {} = {} " \
@@ -69,13 +69,16 @@ class Stars:
 
         queryResult, rows, msg = self.database.insert(query)
 
-        if rows >= 0:
+        if rows > 0:
             Logger.dbg(queryResult)
             return 200, u'Your changed {}={}'.format(columnName, columnValue)
- #       elif rows == 0:
- #           Logger.dbg(queryResult)
- #           self.addStars(userID, recipeId, columnValue, 0)
- #           return 200, u'Your changed {}={}'.format(columnName, columnValue)
+        elif rows == 0:
+            Logger.dbg(queryResult)
+            if columnName == "favorite":
+                self.addStars(userID, recipeId, 0, columnValue)
+            elif columnName == "stars":
+                self.addStars(userID, recipeId, columnValue, 0)
+            return 200, u'Your changed {}={}'.format(columnName, columnValue)
         else:
             Logger.dbg(queryResult)
             return 404, u'Forwarded data to check are not correct'

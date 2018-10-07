@@ -151,27 +151,6 @@ public class RecipeRepository implements RecipeRepositoryInterface{
     });
   }
 
-/*  @Override
-  public void editHeart(int recipeId, String columnName, Boolean columnValue, final OnHeartEditListener listener) {
-    Call<Message> resp = recipeAPI.editHeart(recipeId, columnName, columnValue);
-    resp.enqueue(new Callback<Message>() {
-      @Override
-      public void onResponse(Call<Message> call, Response<Message> response) {
-        Message message = response.body();
-        if(message.status == 200){
-          Log.i("Heart: ", "OK. Heart has been added");
-          listener.refreshCards();
-        }else if(message.status == 404){
-          Log.e("Heart: ", "NOT OK. Heart hasn't been added");
-        }
-      }
-      @Override
-      public void onFailure(Call<Message> call, Throwable t) {
-        Log.i("SERWER", t.getMessage());
-      }
-    });
-  }*/
-
   @Override
   public void getRecipe(int recipeId, final OnRecipeDisplayListener listener) {
     Call<Recipe> resp = recipeAPI.getRecipe(recipeId);
