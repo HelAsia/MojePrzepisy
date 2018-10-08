@@ -164,7 +164,11 @@ def getSearchedCards():
     params = request.get_json()
     searchedQuery = params.get('recipeName')
 
-    cards = card.getSearchedCardsSortedByDefault(searchedQuery)
+    userID = get_user_id()
+    if not userID:
+        userID = -1
+
+    cards = card.getSearchedCardsSortedByDefault(searchedQuery, userID)
 
     if not cards:
         Logger.fail("There were no cards returned!")
@@ -181,11 +185,11 @@ def getSortedCards(sorted_method):
     if sorted_method == 'default':
         cards = card.getAllCards(userID)
     elif sorted_method == 'alphabetically':
-        cards = card.getAllCardsSortedAlphabetically()
+        cards = card.getAllCardsSortedAlphabetically(userID)
     elif sorted_method == 'lastAdded':
-        cards = card.getAllCardsSortedByLastAdded()
+        cards = card.getAllCardsSortedByLastAdded(userID)
     elif sorted_method == 'highestRated':
-        cards = card.getAllCardsSortedByHighestRated()
+        cards = card.getAllCardsSortedByHighestRated(userID)
 
     if not cards:
         Logger.fail("There were no cards returned!")

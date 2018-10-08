@@ -16,35 +16,87 @@ class Cards:
     def setDatabase(self,database):
         self.database = database
 
-
-
     def getAllCards(self, userID):
         recipeQuery = u"SELECT recipe_id AS recipeId, recipe_name AS recipeName, user_id AS userId, "\
         u"recipe_main_picture as recipeMainPicture, recipe_created_date_time as Date "\
         u"FROM recipes; "
 
-        userQuery = u"SELECT user_id AS userId, user_login AS authorName "\
-        u"FROM users; "
+        return self.getAllCardsBasedMethod(userID,recipeQuery)
 
-        starsCountQuery = u"SELECT recipe_id AS recipeId, ROUND(avg(stars), 0) AS starsCount "\
-        u"FROM users_recipes_stars "\
-        u"WHERE stars > 0 "\
-        u"GROUP BY recipeId; "
 
-        favoriteCountQuery = u"SELECT recipe_id AS recipeId, count(favorite) AS favoritesCount "\
-        u"FROM users_recipes_stars "\
-        u"where favorite = true "\
-        u"GROUP BY recipeId; "
+    def getAllCardsSortedAlphabetically(self, userID):
+        recipeQuery = u"SELECT recipe_id AS recipeId, recipe_name AS recipeName, user_id AS userId, " \
+                      u"recipe_main_picture as recipeMainPicture, recipe_created_date_time as Date " \
+                      u"FROM recipes " \
+                      u"ORDER BY recipeName; "
 
-        favoriteQuery = u"SELECT recipe_id AS recipeId, favorite "\
-        u"FROM users_recipes_stars "\
-        u"where user_id = {}; ".format(userID)
+        return self.getAllCardsBasedMethod(userID,recipeQuery)
+
+    def getAllCardsSortedByLastAdded(self, userID):
+        recipeQuery = u"SELECT recipe_id AS recipeId, recipe_name AS recipeName, user_id AS userId, " \
+                      u"recipe_main_picture as recipeMainPicture, recipe_created_date_time as Date " \
+                      u"FROM recipes" \
+                      u"ORDER BY Date; "
+
+        return self.getAllCardsBasedMethod(userID,recipeQuery)
+
+    def getAllCardsSortedByHighestRated(self, userID):
+        recipeQuery = u"SELECT recipe_id AS recipeId, recipe_name AS recipeName, user_id AS userId, "\
+        u"recipe_main_picture as recipeMainPicture, recipe_created_date_time as Date "\
+        u"FROM recipes; "
+
+        result = self.getAllCardsBasedMethod(userID,recipeQuery)
+        newList = sorted(result, key=lambda k : k['starsCount'], reverse=True)
+        Logger.dbg(newList)
+
+        return newList
+
+    def getSearchedCardsSortedByDefault(self, searchedQuery, userID):
+        recipeQuery = u"SELECT recipe_id AS recipeId, recipe_name AS recipeName, user_id AS userId, " \
+                      u"recipe_main_picture as recipeMainPicture, recipe_created_date_time as Date " \
+                      u"FROM recipes" \
+                      u"WHERE R.recipe_name LIKE '%{}%'"\
+                      u"GROUP BY R.recipe_id; ".format(searchedQuery)
+
+        return self.getAllCardsBasedMethod(userID,recipeQuery)
+
+    def getAllCardsSortedByUser(self, userID):
+        recipeQuery = u"SELECT recipe_id AS recipeId, recipe_name AS recipeName, user_id AS userId, " \
+                      u"recipe_main_picture as recipeMainPicture, recipe_created_date_time as Date " \
+                      u"FROM recipes" \
+                      u"WHERE R.user_id LIKE '{}'" \
+                      u"GROUP BY R.recipe_id ".format(userID)
+        return self.getAllCardsBasedMethod(userID,recipeQuery)
+
+    def getAllCardsBasedMethod(self, userID, recipeQuery):
+        userQuery = u"SELECT user_id AS userId, user_login AS authorName " \
+                    u"FROM users; "
+
+        starsCountQuery = u"SELECT recipe_id AS recipeId, ROUND(avg(stars), 0) AS starsCount " \
+                          u"FROM users_recipes_stars " \
+                          u"WHERE stars > 0 " \
+                          u"GROUP BY recipeId; "
+
+        favoriteCountQuery = u"SELECT recipe_id AS recipeId, count(favorite) AS favoritesCount " \
+                             u"FROM users_recipes_stars " \
+                             u"where favorite = true " \
+                             u"GROUP BY recipeId; "
+
+        if not userID == -1:
+            favoriteQuery = u"SELECT recipe_id AS recipeId, favorite " \
+                            u"FROM users_recipes_stars " \
+                            u"where user_id = {}; ".format(userID)
+            favoriteQueryResult = self.database.query(favoriteQuery)
 
         recipeQueryResult = self.database.query(recipeQuery)
         userQueryResult = self.database.query(userQuery)
         starsCountQueryResult = self.database.query(starsCountQuery)
         favoriteCountQueryResult = self.database.query(favoriteCountQuery)
-        favoriteQueryResult = self.database.query(favoriteQuery)
+
+
+ #       mainQueryResult = list(recipeQueryResult[:])
+
+#        mainQueryResult = list(recipeQueryResult)[:]
 
         mainQueryResult = recipeQueryResult
 
@@ -76,112 +128,12 @@ class Cards:
                                 mainQueryRow['favorite'] = False
                             if mainQueryRow['favorite'] == 1:
                                 mainQueryRow['favorite'] = True
+
             else:
                 for mainQueryRow in mainQueryResult:
                     mainQueryRow['favorite'] = False
 
             Logger.dbg(mainQueryResult)
             return mainQueryResult
-        else:
-            return {}
-
-
-    def getAllCardsSortedAlphabetically(self):
-        query = u"SELECT R.recipe_id AS recipeId, R.recipe_name AS recipeName, U.user_login AS authorName, " \
-                u"count(URS.favorite) AS favoritesCount, ROUND(avg(URS.stars),0) AS starsCount, " \
-                u"R.recipe_main_picture as recipeMainPicture, R.recipe_created_date_time as Date "\
-                u"FROM recipes AS R "\
-                u"INNER JOIN users AS U "\
-                u"ON R.user_id = U.user_id "\
-                u"INNER JOIN users_recipes_stars AS URS "\
-                u"ON R.recipe_id = URS.recipe_id "\
-                u"GROUP BY R.recipe_id "\
-                u"ORDER BY R.recipe_name; "
-
-        queryResult = self.database.query(query)
-
-        if queryResult:
-            Logger.dbg(queryResult)
-            return queryResult
-        else:
-            return {}
-
-    def getAllCardsSortedByLastAdded(self):
-        query = u"SELECT R.recipe_id AS recipeId, R.recipe_name AS recipeName, U.user_login AS authorName, " \
-                u"count(URS.favorite) AS favoritesCount, ROUND(avg(URS.stars),0) AS starsCount, " \
-                u"R.recipe_main_picture as recipeMainPicture, R.recipe_created_date_time as Date "\
-                u"FROM recipes AS R "\
-                u"INNER JOIN users AS U "\
-                u"ON R.user_id = U.user_id "\
-                u"INNER JOIN users_recipes_stars AS URS "\
-                u"ON R.recipe_id = URS.recipe_id " \
-                u"GROUP BY R.recipe_id " \
-                u"ORDER BY R.date_time; "
-
-        queryResult = self.database.query(query)
-
-        if queryResult:
-            Logger.dbg(queryResult)
-            return queryResult
-        else:
-            return {}
-
-    def getAllCardsSortedByHighestRated(self):
-        query = u"SELECT R.recipe_id AS recipeId, R.recipe_name AS recipeName, U.user_login AS authorName, " \
-                u"count(URS.favorite) AS favoritesCount, ROUND(avg(URS.stars),0) AS starsCount, " \
-                u"R.recipe_main_picture as recipeMainPicture, R.recipe_created_date_time as Date "\
-                u"FROM recipes AS R "\
-                u"INNER JOIN users AS U "\
-                u"ON R.user_id = U.user_id "\
-                u"INNER JOIN users_recipes_stars AS URS "\
-                u"ON R.recipe_id = URS.recipe_id " \
-                u"GROUP BY R.recipe_id " \
-                u"ORDER BY ROUND(avg(URS.stars),0) DESC; "
-
-        queryResult = self.database.query(query)
-
-        if queryResult:
-            Logger.dbg(queryResult)
-            return queryResult
-        else:
-            return {}
-
-    def getSearchedCardsSortedByDefault(self, searchedQuery):
-        query = u"SELECT R.recipe_id AS recipeId, R.recipe_name AS recipeName, U.user_login AS authorName, " \
-                u"count(URS.favorite) AS favoritesCount, ROUND(avg(URS.stars),0) AS starsCount, " \
-                u"R.recipe_main_picture as recipeMainPicture, R.recipe_created_date_time as Date " \
-                u"FROM recipes AS R " \
-                u"INNER JOIN users AS U " \
-                u"ON R.user_id = U.user_id " \
-                u"INNER JOIN users_recipes_stars AS URS " \
-                u"ON R.recipe_id = URS.recipe_id " \
-                u"WHERE R.recipe_name LIKE '%{}%'"\
-                u"GROUP BY R.recipe_id; ".format(searchedQuery)
-
-        queryResult = self.database.query(query)
-
-        if queryResult:
-            Logger.dbg(queryResult)
-            return queryResult
-        else:
-            return {}
-
-    def getAllCardsSortedByUser(self, userId):
-        query = u"SELECT R.recipe_id AS recipeId, R.recipe_name AS recipeName, U.user_login AS authorName, " \
-                u"count(URS.favorite) AS favoritesCount, ROUND(avg(URS.stars),0) AS starsCount, " \
-                u"R.recipe_main_picture as recipeMainPicture, R.recipe_created_date_time as Date "\
-                u"FROM recipes AS R "\
-                u"INNER JOIN users AS U "\
-                u"ON R.user_id = U.user_id "\
-                u"INNER JOIN users_recipes_stars AS URS "\
-                u"ON R.recipe_id = URS.recipe_id " \
-                u"WHERE R.user_id LIKE '{}'" \
-                u"GROUP BY R.recipe_id ".format(userId)
-
-        queryResult = self.database.query(query)
-
-        if queryResult:
-            Logger.dbg(queryResult)
-            return queryResult
         else:
             return {}
