@@ -54,8 +54,8 @@ public class MainCardsActivityView extends AppCompatActivity implements MainCard
     presenter.getSortedMethod(context);
     setToolbar();
     presenter.setDrawerLayoutListener(getDrawerLayout());
-    presenter.setNavigationViewListener(getNavigationView(), getIfLoggedStatus());
-    presenter.setFloatingActionButton(getFloatingActionButton(), getIfLoggedStatus());
+    presenter.setNavigationViewListener(getNavigationView(), getIsLoggedStatus());
+    presenter.setFloatingActionButton(getFloatingActionButton(), getIsLoggedStatus());
 
     floatingActionButton.setOnClickListener(this);
 
@@ -107,9 +107,9 @@ public class MainCardsActivityView extends AppCompatActivity implements MainCard
     return navigationView;
   }
 
-  public boolean getIfLoggedStatus(){
-    boolean ifLogged = getIntent().getExtras().getBoolean("LOGGED");
-    return ifLogged;
+  public boolean getIsLoggedStatus(){
+    boolean isLogged = getIntent().getExtras().getBoolean("LOGGED");
+    return isLogged;
   }
 
   @Override

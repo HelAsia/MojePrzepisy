@@ -17,7 +17,6 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.RatingBar.OnRatingBarChangeListener;
 import android.widget.TextView;
-import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.moje.przepisy.mojeprzepisy.R;
@@ -87,46 +86,47 @@ public class MyCardViewAdapter extends RecyclerView.Adapter<MyCardViewAdapter.Vi
       }
     });
 
-    viewHolder.starImageView.setOnClickListener(new OnClickListener() {
-      @Override
-      public void onClick(View view) {
-        if(viewHolder.ratingBarStars.getVisibility() == View.INVISIBLE){
-          viewHolder.ratingBarStars.setVisibility(View.VISIBLE);
-        }else {
-          viewHolder.ratingBarStars.setVisibility(View.INVISIBLE);
+    Boolean isLogged =((MainCardsActivityView)context).getIsLoggedStatus();
+
+    if(isLogged){
+      viewHolder.starImageView.setOnClickListener(new OnClickListener() {
+        @Override
+        public void onClick(View view) {
+          if(viewHolder.ratingBarStars.getVisibility() == View.INVISIBLE){
+            viewHolder.ratingBarStars.setVisibility(View.VISIBLE);
+          }else {
+            viewHolder.ratingBarStars.setVisibility(View.INVISIBLE);
+          }
         }
+      });
 
-      }
-    });
-
-    viewHolder.ratingBarStars.setOnRatingBarChangeListener(new OnRatingBarChangeListener() {
-      @Override
-      public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
-        int recipeId = (int)getItemId(position);
-        int rate = (int)v;
-        callbackStars.shareStarsClicked(recipeId, rate);
-      }
-    });
-
-    viewHolder.heartImageView.setOnClickListener(new OnClickListener() {
-      @Override
-      public void onClick(View view) {
-        Toast.makeText(context, "KLIKNĘTE", Toast.LENGTH_SHORT).show();
-        int recipeId = (int)getItemId(position);
-        Drawable heartBorder = context.getResources().getDrawable(R.mipmap.ic_favorite_border);
-        Drawable heartSolid = context.getResources().getDrawable(R.mipmap.ic_favorite);
-
-        Boolean favorite = cardsList.get(position).getFavorite();
-
-        if(!favorite){
-          viewHolder.heartImageView.setImageDrawable(heartSolid);
-          callbackHeart.shareHeartClicked(recipeId, 1);
-        }else {
-          viewHolder.heartImageView.setImageDrawable(heartBorder);
-          callbackHeart.shareHeartClicked(recipeId, 0);
+      viewHolder.ratingBarStars.setOnRatingBarChangeListener(new OnRatingBarChangeListener() {
+        @Override
+        public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
+          int recipeId = (int)getItemId(position);
+          int rate = (int)v;
+          callbackStars.shareStarsClicked(recipeId, rate);
         }
-      }
-    });
+      });
+
+      viewHolder.heartImageView.setOnClickListener(new OnClickListener() {
+        @Override
+        public void onClick(View view) {
+          int recipeId = (int)getItemId(position);
+          Drawable heartBorder = context.getResources().getDrawable(R.mipmap.ic_favorite_border);
+          Drawable heartSolid = context.getResources().getDrawable(R.mipmap.ic_favorite);
+          Boolean favorite = cardsList.get(position).getFavorite();
+
+          if(!favorite){
+            viewHolder.heartImageView.setImageDrawable(heartSolid);
+            callbackHeart.shareHeartClicked(recipeId, 1);
+          }else {
+            viewHolder.heartImageView.setImageDrawable(heartBorder);
+            callbackHeart.shareHeartClicked(recipeId, 0);
+          }
+        }
+      });
+    }
   }
 
   @Override
