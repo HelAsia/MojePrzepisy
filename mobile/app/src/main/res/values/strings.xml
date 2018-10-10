@@ -101,6 +101,7 @@
   <string name="edit">Edytuj</string>
   <string name="set_url">Podaj adres URL zdjęcia</string>
   <string name="save">Zapisz</string>
+  <string name="cancel">Anuluj</string>
   <string name="url_address">Adres URL</string>
 
 </resources>

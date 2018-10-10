@@ -16,6 +16,9 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.moje.przepisy.mojeprzepisy.R;
+import com.moje.przepisy.mojeprzepisy.add_recipe.add_recipe.add_ingredients.AddIngredientsActivityView;
+import com.moje.przepisy.mojeprzepisy.add_recipe.add_recipe.add_main_recipe_page.AddRecipeActivityView;
+import com.moje.przepisy.mojeprzepisy.add_recipe.add_recipe.add_steps.AddStepsActivityView;
 import com.moje.przepisy.mojeprzepisy.data.model.Ingredient;
 import com.moje.przepisy.mojeprzepisy.data.model.Recipe;
 import com.moje.przepisy.mojeprzepisy.data.model.Step;
@@ -119,5 +122,21 @@ public class DisplayAllRecipeElementsActivityView extends AppCompatActivity impl
     startActivity(intent);
   }
 
+  @Override
+  public void navigateToEditRecipeInformation() {
+    Intent intent = new Intent(DisplayAllRecipeElementsActivityView.this, AddRecipeActivityView.class);
+    startActivity(intent);
+  }
 
+  @Override
+  public void navigateToEditIngredients() {
+    Intent intent = new Intent(DisplayAllRecipeElementsActivityView.this, AddIngredientsActivityView.class);
+    startActivity(intent);
+  }
+
+  @Override
+  public void navigateToEditSteps() {
+    Intent intent = new Intent(DisplayAllRecipeElementsActivityView.this, AddStepsActivityView.class);
+    startActivity(intent);
+  }
 }

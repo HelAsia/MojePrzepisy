@@ -49,20 +49,33 @@
       android:layout_below="@+id/second_space_layout"
       android:hint="@string/url_address"/>
 
-    <Button
-      android:id="@+id/set_url_button"
+    <TableRow
+      android:id="@+id/set_and_cancel_button_layout"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_below="@+id/setURL_EditText"
       android:layout_centerHorizontal="true"
-      android:background="@drawable/bright_buton_wuth_rounded_corners"
-      android:text="@string/save"/>
+      android:layout_below="@+id/setURL_EditText">
+
+      <Button
+        android:id="@+id/set_url_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bright_buton_wuth_rounded_corners"
+        android:text="@string/save"/>
+
+        <Button
+          android:id="@+id/set_url_cancel_button"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:background="@drawable/bright_buton_wuth_rounded_corners"
+          android:text="@string/cancel"/>
+    </TableRow>
 
     <LinearLayout
       android:id="@+id/third_space_layout"
       android:layout_width="match_parent"
       android:layout_height="@dimen/space_layout_size"
-      android:layout_below="@+id/set_time_button"
+      android:layout_below="@+id/set_and_cancel_button_layout"
       android:orientation="vertical">
     </LinearLayout>
   </RelativeLayout>

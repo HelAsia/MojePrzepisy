@@ -25,6 +25,12 @@ public interface DisplayAllRecipeElementsContract {
     TextView getInformationTextView();
 
     void navigateToMainCardsScreen();
+
+    void navigateToEditRecipeInformation();
+
+    void navigateToEditIngredients();
+
+    void navigateToEditSteps();
   }
 
   interface Presenter {

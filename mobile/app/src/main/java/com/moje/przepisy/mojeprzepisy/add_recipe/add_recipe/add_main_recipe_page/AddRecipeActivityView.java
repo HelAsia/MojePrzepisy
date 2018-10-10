@@ -112,6 +112,7 @@ public class AddRecipeActivityView extends AppCompatActivity implements AddRecip
 
   @Override
   public void setMainPhotoImageView(String bitmapString){
+    if (!bitmapString.isEmpty())
     mainPhotoImageView.setImageBitmap(converter.StringToBitMap(bitmapString));
   }
 

@@ -110,7 +110,6 @@ class Cards:
     def getStarsCountQueryResult(self):
         starsCountQuery = u"SELECT recipe_id AS recipeId, ROUND(avg(stars), 0) AS starsCount " \
                           u"FROM users_recipes_stars " \
-                          u"WHERE stars > 0 " \
                           u"GROUP BY recipeId; "
         starsCountQueryResult = self.database.query(starsCountQuery)
         return starsCountQueryResult
