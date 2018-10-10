@@ -24,6 +24,8 @@
     android:id="@+id/scrollViewLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginTop="0dp"
+    android:layout_alignParentStart="true"
     android:layout_below="@id/toolbar_display_recipe">
 
     <RelativeLayout
@@ -246,9 +248,9 @@
         android:id="@+id/commentEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:background="@color/creamy"
         android:layout_below="@+id/commentsDisplayRecyclerView"
+        android:background="@color/creamy"
+        android:ems="10"
         android:inputType="textMultiLine"/>
       <Button
         android:id="@+id/addCommentButton"
@@ -310,10 +312,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/starAndHeartLayout"
+        android:layout_centerHorizontal="true"
         android:scaleX="0.5"
         android:scaleY="0.5"
         android:stepSize="1"
-        android:layout_centerHorizontal="true"
         android:visibility="visible"/>
     </RelativeLayout>
   </ScrollView>

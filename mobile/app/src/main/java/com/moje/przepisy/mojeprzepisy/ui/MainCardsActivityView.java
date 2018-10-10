@@ -58,7 +58,6 @@ public class MainCardsActivityView extends AppCompatActivity implements MainCard
     presenter.setFloatingActionButton(getFloatingActionButton(), getIsLoggedStatus());
 
     floatingActionButton.setOnClickListener(this);
-
   }
 
   @Override
@@ -68,6 +67,16 @@ public class MainCardsActivityView extends AppCompatActivity implements MainCard
 
   public Context getContext() {
     return context;
+  }
+
+  @Override
+  protected void onRestart(){
+    super.onRestart();
+  }
+
+  @Override
+  protected void onResume(){
+    super.onResume();
   }
 
   @Override
@@ -135,7 +144,8 @@ public class MainCardsActivityView extends AppCompatActivity implements MainCard
             }else if (id == R.id.timer_nav){
 
             }else if (id == R.id.favorites_nav) {
-
+              presenter.setSortedMethod(context,"favorite");
+              presenter.getAllCardsSortedByFavoriteFromServer();
             }else if (id == R.id.licences_nav) {
               Intent intent = new Intent(MainCardsActivityView.this, LicensesActivity.class);
               startActivity(intent);
@@ -231,21 +241,18 @@ public class MainCardsActivityView extends AppCompatActivity implements MainCard
         presenter.setSortedMethod(context,"alphabetically");
         presenter.getAllCardsSortedAlphabeticallyFromServer();
         item.setChecked(true);
-        Toast.makeText(this, "Sortowanie 'Alfabetycznie'", Toast.LENGTH_SHORT).show();
         return true;
 
       case R.id.sort_last_add:
         presenter.setSortedMethod(context,"lastAdded");
         presenter.getAllCardsSortedByLastAddedFromServer();
         item.setChecked(true);
-        Toast.makeText(this, "Sortowanie 'Ostatnio dodane'", Toast.LENGTH_SHORT).show();
         return true;
 
       case R.id.sort_highest_rated:
         presenter.setSortedMethod(context,"highestRated");
         presenter.getAllCardsSortedByHighestRatedFromServer();
         item.setChecked(true);
-        Toast.makeText(this, "Sortowanie 'Najwyżej oceniane'", Toast.LENGTH_SHORT).show();
         return true;
 
       case android.R.id.home:

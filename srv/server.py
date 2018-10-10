@@ -190,6 +190,8 @@ def getSortedCards(sorted_method):
         cards = card.getAllCardsSortedByLastAdded(userID)
     elif sorted_method == 'highestRated':
         cards = card.getAllCardsSortedByHighestRated(userID)
+    elif sorted_method == 'favorite':
+        cards = card.getAllCardsSortedByFovorite(userID)
 
     if not cards:
         Logger.fail("There were no cards returned!")

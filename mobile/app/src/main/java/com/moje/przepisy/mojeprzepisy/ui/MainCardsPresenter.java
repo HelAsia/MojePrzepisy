@@ -42,6 +42,9 @@ public class MainCardsPresenter implements MainCardsContract.Presenter,
 
     }else if(sortedMethodPref.equals("highestRated")){
       getAllCardsSortedByHighestRatedFromServer();
+
+    }else if(sortedMethodPref.equals("favorite")) {
+      getAllCardsSortedByFavoriteFromServer();
     }
   }
 
@@ -80,6 +83,13 @@ public class MainCardsPresenter implements MainCardsContract.Presenter,
   public void getAllCardsSortedByHighestRatedFromServer() {
     if(cardsView != null) {
       operationsOnCardRepository.getCardsSortedByChoseMethod(this, "highestRated");
+    }
+  }
+
+  @Override
+  public void getAllCardsSortedByFavoriteFromServer() {
+    if(cardsView != null) {
+      operationsOnCardRepository.getCardsSortedByChoseMethod(this, "favorite");
     }
   }
 

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Build.VERSION_CODES;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v7.widget.RecyclerView;
@@ -22,6 +23,7 @@ import butterknife.ButterKnife;
 import com.moje.przepisy.mojeprzepisy.R;
 import com.moje.przepisy.mojeprzepisy.data.model.OneRecipeCard;
 import com.moje.przepisy.mojeprzepisy.utils.BitmapConverter;
+import com.moje.przepisy.mojeprzepisy.utils.Constant;
 import java.util.List;
 
 /**
@@ -87,8 +89,10 @@ public class MyCardViewAdapter extends RecyclerView.Adapter<MyCardViewAdapter.Vi
     });
 
     Boolean isLogged =((MainCardsActivityView)context).getIsLoggedStatus();
+    String sortedMethodPref = PreferenceManager.getDefaultSharedPreferences(context)
+        .getString(Constant.PREF_SORTED_METHOD,"default");
 
-    if(isLogged){
+    if(isLogged && !sortedMethodPref.equals("favorite")){
       viewHolder.starImageView.setOnClickListener(new OnClickListener() {
         @Override
         public void onClick(View view) {

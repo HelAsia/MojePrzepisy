@@ -35,7 +35,7 @@ class Cards:
     def getAllCardsSortedByLastAdded(self, userID):
         recipeQuery = u"SELECT recipe_id AS recipeId, recipe_name AS recipeName, user_id AS userId, " \
                       u"recipe_main_picture as recipeMainPicture, recipe_created_date_time as Date " \
-                      u"FROM recipes" \
+                      u"FROM recipes " \
                       u"ORDER BY Date; "
 
         return self.getAllCardsBasedMethod(userID,recipeQuery)
@@ -54,19 +54,27 @@ class Cards:
     def getSearchedCardsSortedByDefault(self, searchedQuery, userID):
         recipeQuery = u"SELECT recipe_id AS recipeId, recipe_name AS recipeName, user_id AS userId, " \
                       u"recipe_main_picture as recipeMainPicture, recipe_created_date_time as Date " \
-                      u"FROM recipes" \
-                      u"WHERE R.recipe_name LIKE '%{}%'"\
-                      u"GROUP BY R.recipe_id; ".format(searchedQuery)
+                      u"FROM recipes " \
+                      u"WHERE recipe_name LIKE '%{}%' "\
+                      u"GROUP BY recipe_id; ".format(searchedQuery)
 
         return self.getAllCardsBasedMethod(userID,recipeQuery)
 
     def getAllCardsSortedByUser(self, userID):
         recipeQuery = u"SELECT recipe_id AS recipeId, recipe_name AS recipeName, user_id AS userId, " \
                       u"recipe_main_picture as recipeMainPicture, recipe_created_date_time as Date " \
-                      u"FROM recipes" \
-                      u"WHERE R.user_id LIKE '{}'" \
+                      u"FROM recipes " \
+                      u"WHERE R.user_id LIKE '{}' " \
                       u"GROUP BY R.recipe_id ".format(userID)
         return self.getAllCardsBasedMethod(userID,recipeQuery)
+
+    def getAllCardsSortedByFovorite(self, userID):
+        recipeQuery = u"SELECT recipe_id AS recipeId, recipe_name AS recipeName, user_id AS userId, "\
+        u"recipe_main_picture as recipeMainPicture, recipe_created_date_time as Date "\
+        u"FROM recipes; "
+
+        MainQueryReult = self.getAllCardsBasedMethod(userID, recipeQuery)
+        return self.removeNotFavoriteCards(MainQueryReult, userID)
 
     def getAllCardsBasedMethod(self, userID, recipeQuery):
         recipeQueryResult = self.database.query(recipeQuery)
@@ -74,8 +82,12 @@ class Cards:
         userQueryResult = self.getUserQueryResult()
         starsCountQueryResult = self.getStarsCountQueryResult()
         favoriteCountQueryResult = self.getFavoriteCountQueryResult()
-        favoriteQueryResult = self.getFavoriteQueryResult(userID)
+        if not userID == -1:
+            favoriteQueryResult = self.getFavoriteQueryResult(userID)
+        else:
+            favoriteQueryResult = []
 
+        Logger.dbg(recipeQueryResult)
         mainQueryResult = list(recipeQueryResult[:])
 
         if mainQueryResult:
@@ -87,7 +99,7 @@ class Cards:
             Logger.dbg(mainQueryResultWithUserAndStarsAndFavoriteByUser)
             return mainQueryResultWithUserAndStarsAndFavoriteByUser
         else:
-            return [{}]
+            return []
 
     def getUserQueryResult(self):
         userQuery = u"SELECT user_id AS userId, user_login AS authorName " \
@@ -158,3 +170,12 @@ class Cards:
             for mainQueryRow in mainQueryResult:
                 mainQueryRow['favorite'] = False
             return mainQueryResult
+
+    def removeNotFavoriteCards(self, mainQueryResult, userID):
+        if not userID == -1:
+            for mainQueryRow in mainQueryResult:
+                if mainQueryRow['favorite'] == False:
+                    mainQueryResult.remove(mainQueryRow)
+            return mainQueryResult
+        else:
+            return []

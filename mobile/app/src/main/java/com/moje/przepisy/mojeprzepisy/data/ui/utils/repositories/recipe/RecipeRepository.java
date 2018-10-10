@@ -138,7 +138,7 @@ public class RecipeRepository implements RecipeRepositoryInterface{
       public void onResponse(Call<Message> call, Response<Message> response) {
         Message message = response.body();
         if(message.status == 200){
-          Log.i("Stars: ", "OK. Stars has been added");
+          Log.i("Stars: ", "OK. Stars has been edited");
           listener.refreshCards();
         }else if(message.status == 404){
           Log.e("Stars: ", "NOT OK. Stars hasn't been added");

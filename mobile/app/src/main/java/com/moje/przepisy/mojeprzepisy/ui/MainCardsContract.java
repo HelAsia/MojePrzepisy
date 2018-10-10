@@ -44,6 +44,8 @@ public interface MainCardsContract {
 
     void getAllCardsSortedByHighestRatedFromServer();
 
+    void getAllCardsSortedByFavoriteFromServer();
+
     void getSortedMethod(Context context);
 
     void setSortedMethod(Context context, String sortedMethod);

@@ -21,6 +21,9 @@ public interface CardAPI {
   @GET("/cards/highestRated")
   Call<List<OneRecipeCard>> getCardsSortedByHighestRated();
 
+  @GET("/cards/favorite")
+  Call<List<OneRecipeCard>> getCardsSortedByfavorite();
+
   @POST("cards/searchedCards")
   Call<List<OneRecipeCard>> getCardsSortedBySearchedQuery(@Body OneRecipeCard oneRecipeCard);
 
