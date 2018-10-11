@@ -51,6 +51,8 @@
     </activity>
     <activity android:name=".recipe_details.RecipeDetailsActivityView">
     </activity>
+    <activity android:name=".timer.TimerActivityView">
+    </activity>
   </application>
 
 </manifest>

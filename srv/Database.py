@@ -9,9 +9,20 @@ import datetime
 class Database:
     databaseConnection = None
     databaseCursor = None
+    lastUsedCredentials = {
+        'host': '',
+        'user': '',
+        'password': '',
+        'db': ''
+    }
 
     def __init__(self):
         pass
+
+    def __del__(self):
+        Logger.dbg("Closing database connection.")
+        self.databaseConnection.close()
+        self.databaseConnection = None
 
     def connection(self, host, user, password, db):
         try:
@@ -41,10 +52,18 @@ class Database:
 
             Logger.info("Database connection succeeded.")
 
+            self.lastUsedCredentials.update({
+                'host': host,
+                'user': user,
+                'password': password,
+                'db': db
+            })
+
             self.databaseCursor = self.databaseConnection.cursor()
             self.databaseCursor.execute('SET NAMES utf8;')
             self.databaseCursor.execute('SET CHARACTER SET utf8;')
             self.databaseCursor.execute('SET character_set_connection=utf8;')
+            self.databaseCursor.execute('SET GLOBAL connect_timeout=6000;')
 
             return True
 
@@ -52,7 +71,7 @@ class Database:
             Logger.err("Database connection failed: " + str(e))
             return False
 
-    def query(self, query):
+    def query(self, query, tryAgain = False):
         Logger.dbg(u'SQL query: "{}"'.format(query))
 
         try:
@@ -68,11 +87,37 @@ class Database:
             return result
 
         except (MySQLdb.Error, MySQLdb.Error) as e:
-            Logger.err(e)
+            if Database.checkIfReconnectionNeeded(e):
+                if tryAgain == False:
+                    Logger.err("Query ('{}') failed. Need to reconnect.".format(query))
+                    self.reconnect()
+                    return self.query(query, True)
 
+            Logger.err(e)
             return False
 
-    def insert(self, query):
+    @staticmethod
+    def checkIfReconnectionNeeded(error):
+        return ("MySQL server has gone away" in error[1])
+
+    def reconnect(self):
+        Logger.info("Trying to reconnect after failure...")
+        if self.databaseConnection != None:
+            try:
+                self.databaseConnection.close()
+            except:
+                pass
+            finally:
+                self.databaseConnection = None
+
+        self.connection(
+            self.lastUsedCredentials['host'],
+            self.lastUsedCredentials['user'],
+            self.lastUsedCredentials['password'],
+            self.lastUsedCredentials['db']
+        )
+
+    def insert(self, query, tryAgain = False):
         '''
             Executes SQL query that is an INSERT statement.
 
@@ -87,22 +132,31 @@ class Database:
                 AffectedRows    - number of affected rows or error code on failure
                 Message         - error message on failure, None otherwise
         '''
-
-        Logger.dbg(u'SQL query: "{}"'.format(query))
+        Logger.dbg(u'SQL INSERT query: "{}"'.format(query))
+        assert not query.lower().startswith('select '), "Method insert() must NOT be invoked with SELECT queries!"
 
         try:
-            res = self.databaseCursor.execute(query)
+            self.databaseCursor.execute(query)
 
             # Commit new records to the database
             result = self.databaseConnection.commit()
-            return True, res, None
+            return True, 1, None
 
         except (MySQLdb.Error, MySQLdb.Error) as e:
-            Logger.err(e)
+            try:
+                # Rollback introduced changes
+                self.databaseConnection.rollback()
+            except: pass
 
-            # Rollback introduced changes
-            self.databaseConnection.rollback()
+            if Database.checkIfReconnectionNeeded(e):
+                if tryAgain == False:
+                    Logger.err("Insert query ('{}') failed. Need to reconnect.".format(query))
+                    self.reconnect()
+                    return self.insert(query, True)
+
+            Logger.err(e)
             return False, e.args[0], e.args[1]
 
     def delete(self, query):
+        assert query.lower().startswith('delete '), "Method delete() must be invoked only with DELETE queries!"
         return self.insert(query)

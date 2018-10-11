@@ -81,6 +81,7 @@
   <string name="add_recipe_title_step_one">Krok 1: Główne informacje</string>
   <string name="add_recipe_title_step_two">Krok 2: Dodaj składniki</string>
   <string name="add_recipe_title_step_three">Krok 3: Dodaj kroki lub opis</string>
+  <string name="set_timer">Ustaw czasomierz</string>
 
   <string name="load_photo">Załaduj zdjęcie</string>
   <string name="choose_category">Wybierz kategorię przepisu</string>

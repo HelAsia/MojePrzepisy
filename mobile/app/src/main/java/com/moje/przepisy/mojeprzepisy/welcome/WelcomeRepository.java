@@ -27,11 +27,13 @@ public class WelcomeRepository implements WelcomeRepositoryInterface {
       @Override
       public void onResponse(Call<Message> call, Response<Message> response) {
         Message msg = response.body();
-        Log.i("SERVER", "Message: " + msg.message);
-        if(msg.status == 401){
-          loggedListener.onNotLogged();
-        }else{
-          loggedListener.onLogged();
+        if(msg != null) {
+          Log.i("SERVER", "Message: " + msg.message);
+          if (msg.status == 401) {
+            loggedListener.onNotLogged();
+          } else {
+            loggedListener.onLogged();
+          }
         }
       }
 

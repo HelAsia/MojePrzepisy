@@ -61,11 +61,13 @@ public class RecipeRepository implements RecipeRepositoryInterface{
         @Override
         public void onResponse(Call<Message> call, Response<Message> response) {
           Message message = response.body();
-          if(message.status == 200){
-            listener.onIngredientsAdded(true);
-          }else if(message.status == 404){
-            listener.onRecipeError();
-            listener.onIngredientsAdded(false);
+          if(message != null) {
+            if (message.status == 200) {
+              listener.onIngredientsAdded(true);
+            } else if (message.status == 404) {
+              listener.onRecipeError();
+              listener.onIngredientsAdded(false);
+            }
           }
         }
 

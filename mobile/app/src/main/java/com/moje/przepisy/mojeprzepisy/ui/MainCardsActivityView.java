@@ -32,6 +32,7 @@ import com.moje.przepisy.mojeprzepisy.log_out.LogoutActivityView;
 import com.moje.przepisy.mojeprzepisy.recipe_details.RecipeDetailsActivityView;
 import com.moje.przepisy.mojeprzepisy.register.RegisterActivityView;
 import com.moje.przepisy.mojeprzepisy.search_options.SearchSwipeActivity;
+import com.moje.przepisy.mojeprzepisy.timer.TimerActivityView;
 import com.moje.przepisy.mojeprzepisy.ui.MyCardViewAdapter.OnShareHeartClickedListener;
 import com.moje.przepisy.mojeprzepisy.ui.MyCardViewAdapter.OnShareStarsClickedListener;
 import java.util.List;
@@ -72,11 +73,13 @@ public class MainCardsActivityView extends AppCompatActivity implements MainCard
   @Override
   protected void onRestart(){
     super.onRestart();
+    presenter.setSortedMethod(context,"default");
   }
 
   @Override
   protected void onResume(){
     super.onResume();
+    presenter.setSortedMethod(context,"default");
   }
 
   @Override
@@ -136,13 +139,14 @@ public class MainCardsActivityView extends AppCompatActivity implements MainCard
             if (id == R.id.search_nav) {
               Intent intent = new Intent(MainCardsActivityView.this, SearchSwipeActivity.class);
               startActivity(intent);
-
             }else if (id == R.id.add_nav) {
-
+              Intent intent = new Intent(MainCardsActivityView.this, AddRecipeActivityView.class);
+              startActivity(intent);
             }else if (id == R.id.calculating_nav){
 
             }else if (id == R.id.timer_nav){
-
+              Intent intent = new Intent(MainCardsActivityView.this, TimerActivityView.class);
+              startActivity(intent);
             }else if (id == R.id.favorites_nav) {
               presenter.setSortedMethod(context,"favorite");
               presenter.getAllCardsSortedByFavoriteFromServer();
@@ -174,19 +178,17 @@ public class MainCardsActivityView extends AppCompatActivity implements MainCard
             if( id == R.id.register_nav){
               Intent intent = new Intent(MainCardsActivityView.this, RegisterActivityView.class);
               startActivity(intent);
-
             }else if( id == R.id.login_nav){
               Intent intent = new Intent(MainCardsActivityView.this, LoginActivityView.class);
               startActivity(intent);
-
             }else if (id == R.id.search_nav) {
               Intent intent = new Intent(MainCardsActivityView.this, SearchSwipeActivity.class);
               startActivity(intent);
-
             }else if (id == R.id.calculating_nav) {
 
             }else if (id == R.id.timer_nav) {
-
+              Intent intent = new Intent(MainCardsActivityView.this, TimerActivityView.class);
+              startActivity(intent);
             }else if (id == R.id.licences_nav) {
               Intent intent = new Intent(MainCardsActivityView.this, LicensesActivity.class);
               startActivity(intent);

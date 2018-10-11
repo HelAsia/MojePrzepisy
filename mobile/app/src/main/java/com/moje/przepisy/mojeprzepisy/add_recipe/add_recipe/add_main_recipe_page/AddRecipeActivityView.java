@@ -89,7 +89,6 @@ public class AddRecipeActivityView extends AppCompatActivity implements AddRecip
         presenter.setRecipeValueInPreferences();
         navigateToNextPage();
       }
-
     }else if(view.getId() == R.id.preparedTimeEditText){
       timeSetDialog.showDialog(AddRecipeActivityView.this, preparedTimeEditText);
     }else if(view.getId() == R.id.cookTimeEditText){
