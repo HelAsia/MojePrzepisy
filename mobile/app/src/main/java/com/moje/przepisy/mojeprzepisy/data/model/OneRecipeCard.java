@@ -25,6 +25,10 @@ public class OneRecipeCard {
     this.recipeName = recipeName;
   }
 
+  public OneRecipeCard(int recipeId){
+    this.recipeId = recipeId;
+  }
+
   public int getRecipeId() {
     return recipeId;
   }

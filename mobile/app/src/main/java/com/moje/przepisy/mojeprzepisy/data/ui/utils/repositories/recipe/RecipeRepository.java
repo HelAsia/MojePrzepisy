@@ -34,11 +34,11 @@ public class RecipeRepository implements RecipeRepositoryInterface{
       public void onResponse(Call<Message> call, Response<Message> response) {
         Message message = response.body();
         if(message.status == 200){
-          Log.i("Recipe: ", "OK. Recipe has been added");
+          Log.i("addRecipe.onResponse(): Recipe: ", "OK. Recipe has been added");
           listener.setRecipeId(message.message);
           listener.onRecipeAdded(true);
         }else if(message.status == 404){
-          Log.e("Recipe: ", "NOT OK. Recipe hasn't been added");
+          Log.e("addRecipe.onResponse(): Recipe: ", "NOT OK. Recipe hasn't been added");
           listener.onRecipeError();
           listener.onRecipeAdded(false);
         }
@@ -46,7 +46,7 @@ public class RecipeRepository implements RecipeRepositoryInterface{
 
       @Override
       public void onFailure(Call<Message> call, Throwable t) {
-        Log.i("SERWER", t.getMessage());
+        Log.i("addRecipe.onFailure(): SERWER", t.getMessage());
         listener.onRecipeError();
         listener.onRecipeAdded(false);
       }
@@ -73,7 +73,7 @@ public class RecipeRepository implements RecipeRepositoryInterface{
 
         @Override
         public void onFailure(Call<Message> call, Throwable t) {
-          Log.i("SERWER", t.getMessage());
+          Log.i("addIngredients.onFailure(): SERWER", t.getMessage());
           listener.onRecipeError();
           listener.onIngredientsAdded(false);
         }
@@ -84,14 +84,18 @@ public class RecipeRepository implements RecipeRepositoryInterface{
   @Override
   public void addStep(List<Step> stepList, final OnRecipeFinishedListener listener) {
     for(Step step : stepList){
+      Log.d("addStep()", "About to PUT /recipe/step: " + step.toString());
       Call<Message> resp = recipeAPI.addStep(step);
       resp.enqueue(new Callback<Message>() {
         @Override
         public void onResponse(Call<Message> call, Response<Message> response) {
           Message message = response.body();
+          Log.d("addStep.onResponse()", "Added step, got response");
           if(message.status == 200){
+            Log.d("addStep.onResponse()", "Success;");
             listener.onStepsAdded(true);
           }else if(message.status == 404){
+            Log.d("addStep.onResponse()", "Failure: 404;");
             listener.onRecipeError();
             listener.onStepsAdded(false);
           }
@@ -99,7 +103,7 @@ public class RecipeRepository implements RecipeRepositoryInterface{
 
         @Override
         public void onFailure(Call<Message> call, Throwable t) {
-          Log.i("SERWER", t.getMessage());
+          Log.i("addStep.onFailure(): SERWER", t.getMessage());
           listener.onRecipeError();
           listener.onStepsAdded(false);
         }
@@ -115,17 +119,17 @@ public class RecipeRepository implements RecipeRepositoryInterface{
       public void onResponse(Call<Message> call, Response<Message> response) {
         Message message = response.body();
         if(message.status == 200){
-          Log.i("Stars: ", "OK. Stars has been added");
+          Log.i("addFirstStars.onResponse(): Stars: ", "OK. Stars has been added");
           listener.onStarsAdded(true);
         }else if(message.status == 404){
-          Log.e("Stars: ", "NOT OK. Stars hasn't been added");
+          Log.e("addFirstStars.onResponse(): Stars: ", "NOT OK. Stars hasn't been added");
           listener.onStarsError();
           listener.onStarsAdded(false);
         }
       }
       @Override
       public void onFailure(Call<Message> call, Throwable t) {
-        Log.i("SERWER", t.getMessage());
+        Log.i("addFirstStars.onFailure(): SERWER", t.getMessage());
         listener.onStarsError();
         listener.onStarsAdded(false);
       }
@@ -133,22 +137,22 @@ public class RecipeRepository implements RecipeRepositoryInterface{
   }
 
   @Override
-  public void editStarsAndHeart(int recipeId, String columnName, int columnValue, final OnStarsEditListener listener) {
+  public void editStarsAndHeart(final int recipeId, String columnName, int columnValue, final OnStarsEditListener listener, final int position) {
     Call<Message> resp = recipeAPI.editStarsAndHeart(recipeId, columnName, columnValue);
     resp.enqueue(new Callback<Message>() {
       @Override
       public void onResponse(Call<Message> call, Response<Message> response) {
         Message message = response.body();
         if(message.status == 200){
-          Log.i("Stars: ", "OK. Stars has been edited");
-          listener.refreshCards();
+          Log.i("editStarsAndHeart.onResponse(): Stars: ", "OK. Stars has been edited");
+          listener.onUpdateStarsOrFavorite(recipeId, position);
         }else if(message.status == 404){
-          Log.e("Stars: ", "NOT OK. Stars hasn't been added");
+          Log.e("editStarsAndHeart.onResponse(): Stars: ", "NOT OK. Stars hasn't been added");
         }
       }
       @Override
       public void onFailure(Call<Message> call, Throwable t) {
-        Log.i("SERWER", t.getMessage());
+        Log.i("editStarsAndHeart.onFailure(): SERWER", t.getMessage());
       }
     });
   }
@@ -161,20 +165,20 @@ public class RecipeRepository implements RecipeRepositoryInterface{
       public void onResponse(Call<Recipe> call, Response<Recipe> response) {
         Recipe recipe = response.body();
         if(recipe != null){
-          Log.i("Recipe: ", "OK. Recipe has been downloaded");
+          Log.i("getRecipe.onResponse(): Recipe: ", "OK. Recipe has been downloaded");
           listener.setMainInfoRecipe(recipe);
         }else if(recipe == null){
-          Log.i("Recipe: ", "OK. Recipe has been downloaded but is empty");
+          Log.i("getRecipe.onResponse(): Recipe: ", "OK. Recipe has been downloaded but is empty");
           listener.setMainInfoRecipe(recipe);
         }
         else{
-          Log.e("Recipe: ", "NOT OK. Recipe hasn't been downloaded");
+          Log.e("getRecipe.onResponse(): Recipe: ", "NOT OK. Recipe hasn't been downloaded");
           listener.onRecipeError();
         }
       }
       @Override
       public void onFailure(Call<Recipe> call, Throwable t) {
-        Log.i("SERWER RECIPE: ", t.getMessage());
+        Log.i("getRecipe.onFailure(): SERWER RECIPE: ", t.getMessage());
         listener.onRecipeError();
       }
     });
@@ -188,19 +192,19 @@ public class RecipeRepository implements RecipeRepositoryInterface{
       public void onResponse(Call<List<Ingredient>> call, Response<List<Ingredient>> response) {
         List<Ingredient> ingredientList = response.body();
         if(ingredientList != null){
-          Log.i("Ingredients: ", "OK. Ingredient has been downloaded");
+          Log.i("getIngredients.onResponse(): Ingredients: ", "OK. Ingredient has been downloaded");
           listener.setIngredients(ingredientList);
         }else if(ingredientList == null){
-          Log.i("Ingredients: ", "OK. Ingredient has been downloaded but id empty");
+          Log.i("getIngredients.onResponse(): Ingredients: ", "OK. Ingredient has been downloaded but id empty");
           listener.setIngredients(ingredientList);
         }else{
-          Log.e("Ingredients: ", "NOT OK. Ingredient hasn't been downloaded");
+          Log.e("getIngredients.onResponse(): Ingredients: ", "NOT OK. Ingredient hasn't been downloaded");
           listener.onIngredientsError();
         }
       }
       @Override
       public void onFailure(Call<List<Ingredient>> call, Throwable t) {
-        Log.i("SERWER INGREDIENTS:", t.getMessage());
+        Log.i("getIngredients.onFailure(): SERWER INGREDIENTS:", t.getMessage());
         listener.onIngredientsError();
       }
     });
@@ -214,19 +218,19 @@ public class RecipeRepository implements RecipeRepositoryInterface{
       public void onResponse(Call<List<Step>> call, Response<List<Step>> response) {
         List<Step> stepList = response.body();
         if(stepList != null){
-          Log.i("Steps: ", "OK. Steps has been downloaded");
+          Log.i("getSteps.onResponse(): Steps: ", "OK. Steps has been downloaded");
           listener.setSteps(stepList);
         }else if(stepList == null){
-        Log.i("Ingredients: ", "OK. Ingredient has been downloaded but is empty");
+        Log.i("getSteps.onResponse(): Ingredients: ", "OK. Ingredient has been downloaded but is empty");
         listener.setSteps(stepList);
         }else{
-          Log.e("Steps: ", "NOT OK. Steps hasn't been downloaded");
+          Log.e("getSteps.onResponse(): Steps: ", "NOT OK. Steps hasn't been downloaded");
           listener.onStepsError();
         }
       }
       @Override
       public void onFailure(Call<List<Step>> call, Throwable t) {
-        Log.i("SERWER STEPS: ", t.getMessage());
+        Log.i("getSteps.onFailure(): SERWER STEPS: ", t.getMessage());
         listener.onStepsError();
       }
     });
@@ -240,17 +244,17 @@ public class RecipeRepository implements RecipeRepositoryInterface{
       public void onResponse(Call<List<Comment>> call, Response<List<Comment>> response) {
         List<Comment> commentList = response.body();
         if(commentList != null){
-          Log.i("Comments: ", "OK. Comments has been downloaded");
+          Log.i("getComments.onResponse(): Comments: ", "OK. Comments has been downloaded");
           listener.setComment(commentList);
         }else{
-          Log.e("Comments: ", "NOT OK. Comments hasn't been downloaded");
+          Log.e("getComments.onResponse(): Comments: ", "NOT OK. Comments hasn't been downloaded");
           listener.onCommentError();
         }
       }
       @Override
       public void onFailure(Call<List<Comment>> call, Throwable t) {
-        Log.i("SERWER COMMENT: ", t.getMessage());
-        Log.i("Comments: ", "OK. Comments has been downloaded but is empty");
+        Log.i("getComments.onFailure(): SERWER COMMENT: ", t.getMessage());
+        Log.i("getComments.onFailure(): Comments: ", "OK. Comments has been downloaded but is empty");
         List<Comment> commentList = new ArrayList<Comment>();
         commentList.add(new Comment("Użytkownik", "Data utworzenia", "Brak komentarzy!"));
         listener.setComment(commentList);
@@ -266,20 +270,20 @@ public class RecipeRepository implements RecipeRepositoryInterface{
       public void onResponse(Call<Stars> call, Response<Stars> response) {
         Stars stars = response.body();
         if(stars != null){
-          Log.i("Stars: ", "OK. Stars have been downloaded");
+          Log.i("getRecipeDetailsStars.onResponse(): Stars: ", "OK. Stars have been downloaded");
           listener.setStars(stars);
         }else if(stars == null){
-          Log.i("Stars: ", "OK. Stars have been downloaded but is empty");
+          Log.i("getRecipeDetailsStars.onResponse(): Stars: ", "OK. Stars have been downloaded but is empty");
           listener.setStars(stars);
         }
         else{
-          Log.e("Stars: ", "NOT OK. Stars haven't been downloaded");
+          Log.e("getRecipeDetailsStars.onResponse(): Stars: ", "NOT OK. Stars haven't been downloaded");
           listener.onStarsError();
         }
       }
       @Override
       public void onFailure(Call<Stars> call, Throwable t) {
-        Log.i("SERWER STARS: ", t.getMessage());
+        Log.i("getRecipeDetailsStars.onFailure(): SERWER STARS: ", t.getMessage());
         listener.onStarsError();
       }
     });

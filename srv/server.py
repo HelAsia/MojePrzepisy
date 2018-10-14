@@ -174,6 +174,19 @@ def getSearchedCards():
         Logger.fail("There were no cards returned!")
     return jsonify(cards)
 
+@app.route('/cards/<int:recipeId>', methods=['GET'])
+def getUpdatedCard(recipeId):
+    card = Cards(database)
+
+    userID = get_user_id()
+    if not userID:
+        userID = -1
+
+    cards = card.getUpdatedCard(userID, recipeId)
+
+    if not cards:
+        Logger.fail("There were no cards returned!")
+    return jsonify(cards)
 
 @app.route('/cards/<string:sorted_method>', methods=['GET'])
 def getSortedCards(sorted_method):

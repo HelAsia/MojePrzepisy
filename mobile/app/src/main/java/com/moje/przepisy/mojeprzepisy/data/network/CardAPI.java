@@ -6,6 +6,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 public interface CardAPI {
 
@@ -22,7 +23,7 @@ public interface CardAPI {
   Call<List<OneRecipeCard>> getCardsSortedByHighestRated();
 
   @GET("/cards/favorite")
-  Call<List<OneRecipeCard>> getCardsSortedByfavorite();
+  Call<List<OneRecipeCard>> getCardsSortedByFavorite();
 
   @POST("cards/searchedCards")
   Call<List<OneRecipeCard>> getCardsSortedBySearchedQuery(@Body OneRecipeCard oneRecipeCard);
@@ -30,4 +31,6 @@ public interface CardAPI {
   @GET("/cards/userCards")
   Call<List<OneRecipeCard>> getUserCards();
 
+  @GET("/cards/{recipeId}")
+  Call<List<OneRecipeCard>> getUpdatedCard(@Path("recipeId") int recipeId);
 }

@@ -9,10 +9,13 @@ public interface OperationsOnCardRepositoryInterface {
 
     void setRecipesList(List<OneRecipeCard> recipesList) ;
 
+    void setUpdatedCardFromServer(OneRecipeCard updatedCard, int position);
+
   }
 
   void getCardsSortedByChoseMethod(OnCardsListener cordsListener, String method);
 
   void getCardsSortedBySearchedQuery(OnCardsListener cardsListener, String recipeName);
 
+  void getUpdatedCard(OnCardsListener cardsListener, int recipeId, int position);
 }

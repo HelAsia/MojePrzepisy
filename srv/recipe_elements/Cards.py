@@ -68,6 +68,15 @@ class Cards:
                       u"GROUP BY R.recipe_id ".format(userID)
         return self.getAllCardsBasedMethod(userID,recipeQuery)
 
+    def getUpdatedCard(self, userID, recipeId):
+        recipeQuery = u"SELECT recipe_id AS recipeId, recipe_name AS recipeName, user_id AS userId, " \
+                      u"recipe_main_picture as recipeMainPicture, recipe_created_date_time as Date " \
+                      u"FROM recipes " \
+                      u"WHERE recipe_id = {} ; ".format(recipeId)
+
+        return self.getAllCardsBasedMethod(userID, recipeQuery)
+
+
     def getAllCardsSortedByFovorite(self, userID):
         recipeQuery = u"SELECT recipe_id AS recipeId, recipe_name AS recipeName, user_id AS userId, "\
         u"recipe_main_picture as recipeMainPicture, recipe_created_date_time as Date "\

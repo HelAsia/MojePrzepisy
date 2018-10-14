@@ -28,13 +28,15 @@ public interface MainCardsContract {
     void setNavigationViewListenerWithoutRegistration(NavigationView navigationView);
 
     void goToRecipeDetails(int recipeId);
+
+    void setUpdatedCard(OneRecipeCard oneRecipeCard, int position);
   }
 
   interface Presenter {
 
-    void sentStars(int recipeId, int starRate);
+    void sentStars(int recipeId, int starRate, int position);
 
-    void sentHeart(int recipeId, int favorite);
+    void sentHeart(int recipeId, int favorite, int position);
 
     void getAllCardsFromServer();
 
@@ -56,13 +58,10 @@ public interface MainCardsContract {
 
     void getSearchedCardsFromServer(String recipeName);
 
-    void setRecipesList(List<OneRecipeCard> cardList);
-
     void setNavigationViewListener(NavigationView navigationView, boolean ifLogged);
 
     void onDestroy();
 
     void refreshCardsAction();
   }
-
 }

@@ -31,8 +31,8 @@ public class UserRepository implements UserRepositoryInterface{
       @Override
       public void onResponse(Call<Message> call, Response<Message> response) {
         Message msg = response.body();
-        Log.i("SERVER", "Server return code: " + Integer.toString(msg.status));
-        Log.i("SERVER", "Message: " + msg.message);
+        Log.i("login.onResponse(): SERVER", "Server return code: " + Integer.toString(msg.status));
+        Log.i("login.onResponse(): SERVER", "Message: " + msg.message);
 
         if (msg.status == 200){
           listener.onSuccess();
@@ -43,7 +43,7 @@ public class UserRepository implements UserRepositoryInterface{
 
       @Override
       public void onFailure(Call<Message> call, Throwable t) {
-        Log.i("SERWER", t.getMessage());
+        Log.i("login.onFailure(): SERWER", t.getMessage());
         listener.onLoginAndPasswordError();
       }
     });
@@ -57,8 +57,8 @@ public class UserRepository implements UserRepositoryInterface{
       @Override
       public void onResponse(Call<Message> call, Response<Message> response) {
         Message msg = response.body();
-        Log.i("SERVER", "Server return code: " + Integer.toString(msg.status));
-        Log.i("SERVER", "Message: " + msg.message);
+        Log.i("logout.onResponse(): SERVER", "Server return code: " + Integer.toString(msg.status));
+        Log.i("logout.onResponse(): SERVER", "Message: " + msg.message);
 
         if (msg.status == 200){
           listener.onSuccess();
@@ -69,7 +69,7 @@ public class UserRepository implements UserRepositoryInterface{
 
       @Override
       public void onFailure(Call<Message> call, Throwable t) {
-        Log.i("SERWER", t.getMessage());
+        Log.i("logout.onFailure(): SERWER", t.getMessage());
         listener.onLogoutError(t.getMessage());
       }
     });
@@ -91,8 +91,8 @@ public class UserRepository implements UserRepositoryInterface{
             public void onResponse(Call<Message> call, Response<Message> response) {
               Message msg = response.body();
 
-              Log.i("SERVER", "Server return code: " + Integer.toString(msg.status));
-              Log.i("SERVER", "Message: " + msg.message);
+              Log.i("register.onResponse(): SERVER", "Server return code: " + Integer.toString(msg.status));
+              Log.i("register.onResponse(): SERVER", "Message: " + msg.message);
 
               if (msg.status == 200){
                 listener.onSuccess();
@@ -105,7 +105,7 @@ public class UserRepository implements UserRepositoryInterface{
 
             @Override
             public void onFailure(Call<Message> call, Throwable t) {
-              Log.i("SERWER", t.getMessage());
+              Log.i("register.onFailure(): SERWER", t.getMessage());
               listener.onLoginError();
             }
           });

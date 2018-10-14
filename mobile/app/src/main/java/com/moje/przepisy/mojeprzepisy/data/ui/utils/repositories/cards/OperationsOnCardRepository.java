@@ -33,7 +33,7 @@ public class OperationsOnCardRepository implements OperationsOnCardRepositoryInt
     }else if (method.equals("highestRated")){
       resp = cardAPI.getCardsSortedByHighestRated();
     }else if (method.equals("favorite")){
-      resp = cardAPI.getCardsSortedByfavorite();
+      resp = cardAPI.getCardsSortedByFavorite();
     }
     resp.enqueue(new Callback<List<OneRecipeCard>>() {
       @Override
@@ -42,17 +42,17 @@ public class OperationsOnCardRepository implements OperationsOnCardRepositoryInt
         cardsListener.setRecipesList(recipes);
 
        for (OneRecipeCard recipe : recipes) {
-          Log.i("SERWER", "Id: " + recipe.recipeId);
-          Log.i("SERWER", "Author: " + recipe.authorName);
-          Log.i("SERWER", "Favorite: " + recipe.favoritesCount);
-          Log.i("SERWER", "PhotoRecipe: " + recipe.recipeMainPicture);
-          Log.i("SERWER", "Recipe: " + recipe.recipeName);
-          Log.i("SERWER", "Stars: " + recipe.starsCount);
+          Log.i("getCardsSortedByChoseMethod.onResponse(): SERWER", "Id: " + recipe.recipeId);
+          Log.i("getCardsSortedByChoseMethod.onResponse(): SERWER", "Author: " + recipe.authorName);
+          Log.i("getCardsSortedByChoseMethod.onResponse(): SERWER", "Favorite: " + recipe.favoritesCount);
+          Log.i("getCardsSortedByChoseMethod.onResponse(): SERWER", "PhotoRecipe: " + recipe.recipeMainPicture);
+          Log.i("getCardsSortedByChoseMethod.onResponse(): SERWER", "Recipe: " + recipe.recipeName);
+          Log.i("getCardsSortedByChoseMethod.onResponse(): SERWER", "Stars: " + recipe.starsCount);
         }
       }
       @Override
       public void onFailure(Call<List<OneRecipeCard>> call, Throwable t) {
-        Log.i("SERWER", t.getMessage());
+        Log.i("getCardsSortedByChoseMethod.onFailure(): SERWER", t.getMessage());
       }
     });
   }
@@ -70,8 +70,26 @@ public class OperationsOnCardRepository implements OperationsOnCardRepositoryInt
       }
       @Override
       public void onFailure(Call<List<OneRecipeCard>> call, Throwable t) {
-        Log.i("SERWER", t.getMessage());
+        Log.i("getCardsSortedByChoseMethod.onFailure(): SERWER", t.getMessage());
       }
     });
   }
+
+  @Override
+  public void getUpdatedCard(final OnCardsListener cardsListener, int recipeId, final int position) {
+    Call<List<OneRecipeCard>> resp = cardAPI.getUpdatedCard(recipeId);
+
+    resp.enqueue(new Callback<List<OneRecipeCard>>() {
+      @Override
+      public void onResponse(Call<List<OneRecipeCard>> call, Response<List<OneRecipeCard>> response) {
+        List<OneRecipeCard> recipe = response.body();
+        cardsListener.setUpdatedCardFromServer(recipe.get(0), position);
+      }
+      @Override
+      public void onFailure(Call<List<OneRecipeCard>> call, Throwable t) {
+        Log.i("getUpdatedCard.onFailure(): SERWER", t.getMessage());
+      }
+    });
+  }
+
 }

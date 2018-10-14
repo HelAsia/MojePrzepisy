@@ -49,7 +49,7 @@ public class MyCardViewAdapter extends RecyclerView.Adapter<MyCardViewAdapter.Vi
   }
 
   public interface OnShareHeartClickedListener {
-    void shareHeartClicked(int recipeId, int favorite);
+    void shareHeartClicked(int recipeId, int favorite, int position);
   }
 
   public void setStarsOnShareClickedListener(OnShareStarsClickedListener callbackStars) {
@@ -57,7 +57,7 @@ public class MyCardViewAdapter extends RecyclerView.Adapter<MyCardViewAdapter.Vi
   }
 
   public interface OnShareStarsClickedListener {
-    void shareStarsClicked(int recipeId, int starRate);
+    void shareStarsClicked(int recipeId, int starRate, int position);
   }
 
   public void setCallbackRecipeIdOnShareClickedListener(OnShareRecipeIdClickedListener callbackRecipeId) {
@@ -109,7 +109,8 @@ public class MyCardViewAdapter extends RecyclerView.Adapter<MyCardViewAdapter.Vi
         public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
           int recipeId = (int)getItemId(position);
           int rate = (int)v;
-          callbackStars.shareStarsClicked(recipeId, rate);
+          callbackStars.shareStarsClicked(recipeId, rate, position);
+          viewHolder.ratingBarStars.setVisibility(View.INVISIBLE);
         }
       });
 
@@ -123,10 +124,10 @@ public class MyCardViewAdapter extends RecyclerView.Adapter<MyCardViewAdapter.Vi
 
           if(!favorite){
             viewHolder.heartImageView.setImageDrawable(heartSolid);
-            callbackHeart.shareHeartClicked(recipeId, 1);
+            callbackHeart.shareHeartClicked(recipeId, 1, position);
           }else {
             viewHolder.heartImageView.setImageDrawable(heartBorder);
-            callbackHeart.shareHeartClicked(recipeId, 0);
+            callbackHeart.shareHeartClicked(recipeId, 0, position);
           }
         }
       });
@@ -136,6 +137,13 @@ public class MyCardViewAdapter extends RecyclerView.Adapter<MyCardViewAdapter.Vi
   @Override
   public int getItemCount() {
       return cardsList.size();
+  }
+
+  public void updateFavoriteOnCard(OneRecipeCard updatedCard, int list_position) {
+    cardsList.get(list_position).setFavorite(updatedCard.getFavorite());
+    cardsList.get(list_position).setFavoritesCount(updatedCard.getFavoritesCount());
+    cardsList.get(list_position).setStarsCount(updatedCard.getStarsCount());
+    notifyItemChanged(list_position);
   }
 
   @RequiresApi(api = VERSION_CODES.LOLLIPOP)

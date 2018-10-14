@@ -15,8 +15,7 @@ import com.moje.przepisy.mojeprzepisy.utils.Constant;
 import java.util.List;
 
 public class MainCardsPresenter implements MainCardsContract.Presenter,
-    OperationsOnCardRepository.OnCardsListener, RecipeRepository.OnStarsEditListener,
-    RecipeRepository.OnHeartEditListener{
+    OperationsOnCardRepository.OnCardsListener, RecipeRepository.OnStarsEditListener{
   private OperationsOnCardRepository operationsOnCardRepository;
   private MainCardsContract.View cardsView;
   private RecipeRepository recipeRepository;
@@ -49,13 +48,13 @@ public class MainCardsPresenter implements MainCardsContract.Presenter,
   }
 
   @Override
-  public void sentStars(int recipeId, int starRate) {
-    recipeRepository.editStarsAndHeart(recipeId, "stars", starRate, this);
+  public void sentStars(int recipeId, int starRate, int position) {
+    recipeRepository.editStarsAndHeart(recipeId, "stars", starRate, this, position);
   }
 
   @Override
-  public void sentHeart(int recipeId, int favorite) {
-    recipeRepository.editStarsAndHeart(recipeId, "favorite", favorite, this);
+  public void sentHeart(int recipeId, int favorite, int position) {
+    recipeRepository.editStarsAndHeart(recipeId, "favorite", favorite, this, position);
   }
 
   @Override
@@ -161,7 +160,13 @@ public class MainCardsPresenter implements MainCardsContract.Presenter,
   }
 
   @Override
-  public void refreshCards() {
-    getSortedMethod(cardsView.getContext());
+  public void setUpdatedCardFromServer(OneRecipeCard updatedCard, int position) {
+    cardsView.setUpdatedCard(updatedCard, position);
+  }
+
+  @Override
+  public void onUpdateStarsOrFavorite(int recipeId, int position) {
+    operationsOnCardRepository.getUpdatedCard(this, recipeId, position);
   }
 }
+

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -185,8 +186,11 @@ RecipeRepository.OnRecipeFinishedListener{
 
   @Override
   public void addStepsToServer() {
+    Log.i("addStepsToServer", "Stage 1.");
     addRecipeIdToSteps();
+    Log.i("addStepsToServer", "Stage 2.");
     recipeRepository.addStep(stepListWithRecipeId, this);
+    Log.i("addStepsToServer", "Stage 3.");
   }
 
   @Override
@@ -209,27 +213,32 @@ RecipeRepository.OnRecipeFinishedListener{
     for(Step step : stepList){
       Step stepWithRecipeId = new Step(recipeId, step.getPhoto(),
           step.getStepNumber(), step.getStepDescription());
+      Log.d("addRecipeIdToSteps()", "Adding step: " + step.toString());
       stepListWithRecipeId.add(stepWithRecipeId);
     }
+    Log.d("addRecipeIdToSteps()", "Steps got added.");
   }
 
   @Override
   public void saved() {
+    Log.i("recipe saved()", "Stage 1. Adding Recipe.");
     addRecipeToServer();
     while (!getIfRecipeAdded()){
-
     }
+
+    Log.i("recipe saved()", "Stage 2. Adding ingredients.");
     addIngredientsToServer();
     while (!getIfIngredientsAdded()){
-
     }
+
+    Log.i("recipe saved()", "Stage 3. Adding recipe steps.");
     addStepsToServer();
     while (!getIfStepsAdded()){
-
     }
+
+    Log.i("recipe saved()", "Stage 4. Adding recipe stars.");
     addStarsToServer();
     while (!getIfStarsAdded()){
-
     }
     if(ifRecipeAdded && ifIngredientsAdded && ifStepsAdded && ifStarsAdded){
       deleteAllSharedPreferences();

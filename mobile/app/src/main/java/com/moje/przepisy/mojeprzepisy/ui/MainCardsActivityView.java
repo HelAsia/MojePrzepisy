@@ -43,7 +43,9 @@ public class MainCardsActivityView extends AppCompatActivity implements MainCard
   @BindView(R.id.my_fab) FloatingActionButton floatingActionButton;
   private MainCardsContract.Presenter presenter;
   private DrawerLayout drawerLayout;
+  OneRecipeCard updatedCard;
   Context context;
+  MyCardViewAdapter adapter;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +53,7 @@ public class MainCardsActivityView extends AppCompatActivity implements MainCard
     setContentView(R.layout.activity_main_cards);
     context = getApplicationContext();
 
-    presenter = new MainCardsPresenter(this,new OperationsOnCardRepository(context), new RecipeRepository(context));
+    presenter = new MainCardsPresenter(this, new OperationsOnCardRepository(context), new RecipeRepository(context));
     presenter.getSortedMethod(context);
     setToolbar();
     presenter.setDrawerLayoutListener(getDrawerLayout());
@@ -84,13 +86,22 @@ public class MainCardsActivityView extends AppCompatActivity implements MainCard
 
   @Override
   public void setRecyclerView(List<OneRecipeCard> cardList){
-    MyCardViewAdapter adapter = new MyCardViewAdapter(this, cardList);
     RecyclerView recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
+    setAdapter(cardList);
+    MyCardViewAdapter adapter = getAdapter();
     recyclerView.setAdapter(adapter);
     recyclerView.setLayoutManager(new LinearLayoutManager(this));
     adapter.setStarsOnShareClickedListener(this);
     adapter.setHeartOnShareClickedListener(this);
     adapter.setCallbackRecipeIdOnShareClickedListener(this);
+  }
+
+  public void setAdapter(List<OneRecipeCard> cardList){
+    this.adapter = new MyCardViewAdapter(this, cardList);
+  }
+
+  public MyCardViewAdapter getAdapter(){
+    return adapter;
   }
 
   @Override
@@ -273,13 +284,13 @@ public class MainCardsActivityView extends AppCompatActivity implements MainCard
   }
 
   @Override
-  public void shareStarsClicked(int recipeId, int starRate) {
-    presenter.sentStars(recipeId, starRate);
+  public void shareStarsClicked(int recipeId, int starRate, int position) {
+    presenter.sentStars(recipeId, starRate, position);
   }
 
   @Override
-  public void shareHeartClicked(int recipeId, int favorite) {
-    presenter.sentHeart(recipeId, favorite);
+  public void shareHeartClicked(int recipeId, int favorite, int position) {
+    presenter.sentHeart(recipeId, favorite, position);
   }
 
   @Override
@@ -287,6 +298,11 @@ public class MainCardsActivityView extends AppCompatActivity implements MainCard
     Intent intent = new Intent(MainCardsActivityView.this, RecipeDetailsActivityView.class);
     intent.putExtra("recipeId", recipeId);
     startActivity(intent);
+  }
+
+  @Override
+  public void setUpdatedCard(OneRecipeCard oneRecipeCard, int position){
+    getAdapter().updateFavoriteOnCard(oneRecipeCard, position);
   }
 }
 

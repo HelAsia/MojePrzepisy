@@ -54,3 +54,5 @@ mobile/.externalNativeBuild
 
 srv/*.pyc
 /srv/*.pyc
+srv/Constans.py
+/srv/Constans.py

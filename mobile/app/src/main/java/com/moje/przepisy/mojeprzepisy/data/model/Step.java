@@ -63,4 +63,12 @@ public class Step {
   public void setStepDescription(String stepDescription) {
     this.stepDescription = stepDescription;
   }
+
+  public String toString() {
+    return String.format("Step(%d,  %d, '%s')",
+        recipeId,
+        stepNumber,
+        stepDescription
+    );
+  }
 }

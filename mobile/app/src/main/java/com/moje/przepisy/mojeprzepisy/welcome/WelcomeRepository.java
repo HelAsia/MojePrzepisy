@@ -28,7 +28,7 @@ public class WelcomeRepository implements WelcomeRepositoryInterface {
       public void onResponse(Call<Message> call, Response<Message> response) {
         Message msg = response.body();
         if(msg != null) {
-          Log.i("SERVER", "Message: " + msg.message);
+          Log.i("checkUser.onResponse(): SERVER", "Message: " + msg.message);
           if (msg.status == 401) {
             loggedListener.onNotLogged();
           } else {
@@ -39,7 +39,7 @@ public class WelcomeRepository implements WelcomeRepositoryInterface {
 
       @Override
       public void onFailure(Call<Message> call, Throwable t) {
-        Log.i("SERWER", t.getMessage());
+        Log.i("checkUser.onFailure(): SERWER", t.getMessage());
         loggedListener.showErrorMessage();
       }
     });

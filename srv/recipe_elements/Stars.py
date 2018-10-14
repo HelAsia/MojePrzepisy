@@ -41,7 +41,6 @@ class Stars:
             return {}
 
     def addStars(self, userID, recipeId, starsCount, favoritesCount):
-
         query = u"INSERT INTO users_recipes_stars " \
                 u"(user_id, recipe_id, favorite, stars) " \
                 u"values ({}, {}, {}, {} )" .format(userID, recipeId, favoritesCount, starsCount)

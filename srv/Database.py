@@ -82,7 +82,7 @@ class Database:
             for row in result:
                 num += 1
                 if num > 5: break
-                Logger.dbg(u'Row {}.: '.format(num) + str(row))
+                Logger.dbg(u'Query ("{}") results:\nRow {}.: '.format(unicode(query), num) + str(row))
 
             return result
 
@@ -93,7 +93,7 @@ class Database:
                     self.reconnect()
                     return self.query(query, True)
 
-            Logger.err(e)
+            Logger.err("Query ('{}') failed: ".format(query) + str(e))
             return False
 
     @staticmethod
@@ -154,7 +154,7 @@ class Database:
                     self.reconnect()
                     return self.insert(query, True)
 
-            Logger.err(e)
+            Logger.err("Insert Query ('{}') failed: ".format(query) + str(e))
             return False, e.args[0], e.args[1]
 
     def delete(self, query):
