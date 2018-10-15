@@ -36,11 +36,12 @@ CREATE TABLE recipes (
     recipe_prepare_time time DEFAULT NULL,
     recipe_cook_time time DEFAULT NULL,
     recipe_bake_time time DEFAULT NULL,
-    recipe_main_picture longblob DEFAULT NULL,
+    photo_id int(11),
     recipe_category varchar(80) NOT NULL,
     recipe_created_date_time datetime,
     PRIMARY KEY (recipe_id),
     FOREIGN KEY (user_id) REFERENCES users(user_id)
+    FOREIGN KEY (photo_id) REFERENCES photos(photo_id)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 CREATE TABLE steps (
@@ -82,6 +83,12 @@ CREATE TABLE users_recipes_stars (
     FOREIGN KEY (user_id) REFERENCES users(user_id),
     FOREIGN KEY (recipe_id) REFERENCES recipes(recipe_id)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE photos (
+    photo_id int(11) NOT NULL AUTO_INCREMENT,
+    photo longblob DEFAULT NULL,
+    PRIMARY KEY (photo_id)
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- TODO: Przykladowe rekordy - NIE WRZUCAC NA GITHUBA!
 

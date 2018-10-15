@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.widget.TextView;
 import com.moje.przepisy.mojeprzepisy.data.model.Ingredient;
+import com.moje.przepisy.mojeprzepisy.data.model.Photo;
 import com.moje.przepisy.mojeprzepisy.data.model.Recipe;
 import com.moje.przepisy.mojeprzepisy.data.model.Step;
 import java.util.List;
@@ -38,6 +39,10 @@ public interface DisplayAllRecipeElementsContract {
     List<Recipe> getRecipeList();
 
     void setRecipeList(List<Recipe> recipeList);
+
+    List<Photo> getPhotoList();
+
+    void setPhotoList(List<Photo> photoList);
 
     List<Ingredient> getIngredientList();
 

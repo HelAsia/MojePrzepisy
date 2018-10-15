@@ -5,6 +5,7 @@ import android.util.Log;
 import com.moje.przepisy.mojeprzepisy.data.model.Comment;
 import com.moje.przepisy.mojeprzepisy.data.model.Ingredient;
 import com.moje.przepisy.mojeprzepisy.data.model.Message;
+import com.moje.przepisy.mojeprzepisy.data.model.Photo;
 import com.moje.przepisy.mojeprzepisy.data.model.Recipe;
 import com.moje.przepisy.mojeprzepisy.data.model.Stars;
 import com.moje.przepisy.mojeprzepisy.data.model.Step;
@@ -49,6 +50,33 @@ public class RecipeRepository implements RecipeRepositoryInterface{
         Log.i("addRecipe.onFailure(): SERWER", t.getMessage());
         listener.onRecipeError();
         listener.onRecipeAdded(false);
+      }
+    });
+  }
+
+  @Override
+  public void addPhoto(List<Photo> photoList,final OnPhotoFinishedListener listener) {
+    Call<Message> resp = recipeAPI.addPhoto(photoList.get(0));
+    resp.enqueue(new Callback<Message>() {
+      @Override
+      public void onResponse(Call<Message> call, Response<Message> response) {
+        Message message = response.body();
+        if(message.status == 200){
+          Log.i("addPhoto.onResponse(): Photo: ", "OK. Photo has been added");
+          listener.setPhotoId(message.message);
+          listener.onPhotoAdded(true);
+        }else if(message.status == 404){
+          Log.e("addPhoto.onResponse(): Photo: ", "NOT OK. Photo hasn't been added");
+          listener.onPhotoError();
+          listener.onPhotoAdded(false);
+        }
+      }
+
+      @Override
+      public void onFailure(Call<Message> call, Throwable t) {
+        Log.i("addPhoto.onFailure(): SERWER", t.getMessage());
+        listener.onPhotoError();
+        listener.onPhotoAdded(false);
       }
     });
   }
@@ -185,6 +213,33 @@ public class RecipeRepository implements RecipeRepositoryInterface{
   }
 
   @Override
+  public void getPhoto(int photoId, final OnPhotoDisplayListener listener) {
+    Call<Photo> resp = recipeAPI.getPhoto(photoId);
+    resp.enqueue(new Callback<Photo>() {
+      @Override
+      public void onResponse(Call<Photo> call, Response<Photo> response) {
+        Photo photo = response.body();
+        if(photo != null){
+          Log.i("getPhoto.onResponse(): Photo: ", "OK. Photo has been downloaded");
+          listener.setPhoto(photo);
+        }else if(photo == null){
+          Log.i("getPhoto.onResponse(): Photo: ", "OK. Photo has been downloaded but is empty");
+          listener.setPhoto(photo);
+        }
+        else{
+          Log.e("getPhoto.onResponse(): Photo: ", "NOT OK. Photo hasn't been downloaded");
+          listener.onPhotoError();
+        }
+      }
+      @Override
+      public void onFailure(Call<Photo> call, Throwable t) {
+        Log.i("getPhoto.onFailure(): SERWER PHOTO: ", t.getMessage());
+        listener.onPhotoError();
+      }
+    });
+  }
+
+  @Override
   public void getIngredients(int recipeId, final OnRecipeDisplayListener listener) {
     Call<List<Ingredient>> resp = recipeAPI.getIngredient(recipeId);
     resp.enqueue(new Callback<List<Ingredient>>() {
@@ -288,4 +343,6 @@ public class RecipeRepository implements RecipeRepositoryInterface{
       }
     });
   }
+
+
 }

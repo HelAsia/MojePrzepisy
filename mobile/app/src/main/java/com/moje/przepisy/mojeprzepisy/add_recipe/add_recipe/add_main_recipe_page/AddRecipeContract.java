@@ -1,10 +1,12 @@
 package com.moje.przepisy.mojeprzepisy.add_recipe.add_recipe.add_main_recipe_page;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import com.moje.przepisy.mojeprzepisy.data.model.Photo;
 import com.moje.przepisy.mojeprzepisy.data.model.Recipe;
 import java.util.List;
 
@@ -18,7 +20,9 @@ public interface AddRecipeContract {
 
     void setRecipeNameEditText(String recipeName);
 
-    void setMainPhotoImageView(String bitmapString);
+ //   void setMainPhotoImageView(String bitmapString);
+
+    void setMainPhotoImageView(Drawable photo);
 
     void setCategoryChooseSpinner(String category);
 
@@ -55,6 +59,10 @@ public interface AddRecipeContract {
 
     void setRecipe(List<Recipe> recipeList);
 
+    List<Photo> getPhotoRecipeList();
+
+    void setPhotoRecipe(List<Photo> photoList);
+
     String convertPojoToJsonString(List<Recipe> recipeList);
 
     void addPojoToPreferences(String json, Context context);
@@ -71,6 +79,19 @@ public interface AddRecipeContract {
 
     Boolean checkIfValueIsEmpty();
 
+    String convertPhotoPojoToJsonString(List<Photo> photoList);
+
+    void addPhotoPojoToPreferences(String json, Context context);
+
+    String getPhotoPojoListFromPreferences(Context context);
+
+    List<Photo> getPhotoRecipeAfterChangeScreen(String jsonList);
+
+    void setPhotoRecipeValueOnScreen();
+
+    void setPhotoRecipeValueInPreferences();
+
+    void setPhotoFirstScreen();
   }
 
 }

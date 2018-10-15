@@ -3,6 +3,7 @@ package com.moje.przepisy.mojeprzepisy.data.network;
 import com.moje.przepisy.mojeprzepisy.data.model.Comment;
 import com.moje.przepisy.mojeprzepisy.data.model.Ingredient;
 import com.moje.przepisy.mojeprzepisy.data.model.Message;
+import com.moje.przepisy.mojeprzepisy.data.model.Photo;
 import com.moje.przepisy.mojeprzepisy.data.model.Recipe;
 import com.moje.przepisy.mojeprzepisy.data.model.Stars;
 import com.moje.przepisy.mojeprzepisy.data.model.Step;
@@ -28,6 +29,19 @@ public interface RecipeAPI {
 
   @DELETE("recipe/{recipeId}")
   Call<List<Recipe>> deleteRecipe(@Path("recipeId") int recipeId, @Body Recipe recipe);
+
+
+  @GET("recipe/photo/{photoId}")
+  Call<Photo> getPhoto(@Path("photoId") int photoId);
+
+  @POST("recipe/photo/{photoId}")
+  Call<List<Photo>> editPhoto(@Path("photoId") int photoId, @Body Photo photo);
+
+  @PUT("recipe")
+  Call<Message> addPhoto(@Body Photo photo);
+
+  @DELETE("recipe/{recipeId}")
+  Call<List<Photo>> deletePhoto(@Path("photoId") int photoId, @Body Photo photo);
 
 
   @GET("recipe/step/{recipeId}")

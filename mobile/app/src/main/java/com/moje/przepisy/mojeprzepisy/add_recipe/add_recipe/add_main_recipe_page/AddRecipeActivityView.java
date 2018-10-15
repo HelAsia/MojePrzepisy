@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
@@ -73,6 +74,7 @@ public class AddRecipeActivityView extends AppCompatActivity implements AddRecip
     setToolbar();
 
     presenter.setFirstScreen();
+    presenter.setPhotoFirstScreen();
   }
 
   public Context getContext(){
@@ -87,6 +89,7 @@ public class AddRecipeActivityView extends AppCompatActivity implements AddRecip
     }else if(view.getId() == R.id.nextActionFab){
       if(!presenter.checkIfValueIsEmpty()){
         presenter.setRecipeValueInPreferences();
+        presenter.setPhotoRecipeValueInPreferences();
         navigateToNextPage();
       }
     }else if(view.getId() == R.id.preparedTimeEditText){
@@ -109,10 +112,15 @@ public class AddRecipeActivityView extends AppCompatActivity implements AddRecip
     recipeNameEditText.setText(recipeName);
   }
 
-  @Override
+/*  @Override
   public void setMainPhotoImageView(String bitmapString){
     if (!bitmapString.isEmpty())
     mainPhotoImageView.setImageBitmap(converter.StringToBitMap(bitmapString));
+  }*/
+
+  @Override
+  public void setMainPhotoImageView(Drawable photo){
+    mainPhotoImageView.setImageDrawable(photo);
   }
 
   @Override
