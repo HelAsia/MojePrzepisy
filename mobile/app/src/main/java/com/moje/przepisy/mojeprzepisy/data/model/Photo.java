@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable;
 public class Photo {
   private int photoId;
   private Drawable photo;
+  private String photoString;
 
   public Photo(int photoId, Drawable photo) {
     this.photoId = photoId;
@@ -13,6 +14,14 @@ public class Photo {
 
   public Photo(Drawable photo) {
     this.photo = photo;
+  }
+
+  public Photo(String photoString) {
+    this.photoString = photoString;
+  }
+
+  public Photo(int photoId) {
+    this.photoId = photoId;
   }
 
   public int getPhotoId() {
@@ -29,5 +38,13 @@ public class Photo {
 
   public void setPhoto(Drawable photo) {
     this.photo = photo;
+  }
+
+  public String getPhotoString() {
+    return photoString;
+  }
+
+  public void setPhotoString(String photoString) {
+    this.photoString = photoString;
   }
 }

@@ -21,7 +21,7 @@ public class Recipe {
     this.recipeBakeTime = recipeBakeTime;
   }
 
-  public Recipe(String recipeName,String recipeMainPicture, String recipeCategory, String recipePrepareTime, String recipeCookTime,
+  public Recipe(String recipeName, String recipeMainPicture, String recipeCategory, String recipePrepareTime, String recipeCookTime,
       String recipeBakeTime) {
     this.recipeName = recipeName;
     this.recipeMainPicture = recipeMainPicture;
