@@ -21,13 +21,16 @@ class Photo:
                 u"WHERE photo_id = {}; ".format(photoId)
 
         queryResult = self.database.query(query)
+        photoList = list(queryResult[:])
+        photoString = photoList[0]['photo']
 
-        photo = open("imageToSave.png", "wb")
-        photo.write(queryResult[0]['photo'].decode('base64'))
+        photo = open("imageToSave.jpg", "wb")
+        photo.write(photoString.decode('base64'))
+        photo = open("imageToSave.jpg", "r")
+
 
         if queryResult:
-            Logger.dbg(queryResult)
-            return photo
+            return photo.read()
         else:
             return {}
 

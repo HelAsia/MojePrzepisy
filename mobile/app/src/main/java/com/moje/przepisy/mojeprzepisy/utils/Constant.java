@@ -19,8 +19,5 @@ public class Constant {
  public static final String PREF_STEP = "PREF_STEP";
 
  public static final String PREF_RECIPE = "PREF_RECIPE";
-
- public static final String PREF_PHOTO_RECIPE = "PREF_PHOTO_RECIPE";
-
 }
 

@@ -43,7 +43,6 @@ public class MainCardsActivityView extends AppCompatActivity implements MainCard
   @BindView(R.id.my_fab) FloatingActionButton floatingActionButton;
   private MainCardsContract.Presenter presenter;
   private DrawerLayout drawerLayout;
-  OneRecipeCard updatedCard;
   Context context;
   MyCardViewAdapter adapter;
 

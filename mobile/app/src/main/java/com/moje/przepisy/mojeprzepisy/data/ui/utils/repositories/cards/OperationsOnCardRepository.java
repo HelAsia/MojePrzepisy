@@ -45,7 +45,7 @@ public class OperationsOnCardRepository implements OperationsOnCardRepositoryInt
           Log.i("getCardsSortedByChoseMethod.onResponse(): SERWER", "Id: " + recipe.recipeId);
           Log.i("getCardsSortedByChoseMethod.onResponse(): SERWER", "Author: " + recipe.authorName);
           Log.i("getCardsSortedByChoseMethod.onResponse(): SERWER", "Favorite: " + recipe.favoritesCount);
-          Log.i("getCardsSortedByChoseMethod.onResponse(): SERWER", "PhotoRecipe: " + recipe.recipeMainPicture);
+          Log.i("getCardsSortedByChoseMethod.onResponse(): SERWER", "PhotoRecipe: " + recipe.recipeMainPictureNumber);
           Log.i("getCardsSortedByChoseMethod.onResponse(): SERWER", "Recipe: " + recipe.recipeName);
           Log.i("getCardsSortedByChoseMethod.onResponse(): SERWER", "Stars: " + recipe.starsCount);
         }

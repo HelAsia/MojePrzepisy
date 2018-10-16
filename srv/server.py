@@ -269,7 +269,7 @@ def getPhoto(photoId):
 
     if not photos:
         Logger.fail("There was no photo returned!")
-    return jsonify(photos)
+    return photos
 
 
 @app.route('/recipe/photo', methods=['PUT'])

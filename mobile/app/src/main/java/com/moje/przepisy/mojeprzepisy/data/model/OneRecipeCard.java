@@ -14,6 +14,7 @@ public class OneRecipeCard {
   public String recipeName;
   public String authorName;
   public String recipeMainPicture;
+  public int recipeMainPictureNumber;
   public Timestamp date;
   public Boolean favorite;
 
@@ -53,6 +54,10 @@ public class OneRecipeCard {
     return recipeMainPicture;
   }
 
+  public int getRecipeMainPictureNumber() {
+    return recipeMainPictureNumber;
+  }
+
   public Timestamp getDate() {
     return date;
   }
@@ -81,6 +86,10 @@ public class OneRecipeCard {
     this.recipeMainPicture = recipeMainPicture;
   }
 
+  public void setRecipeMainPictureNumber(int recipeMainPictureNumber) {
+    this.recipeMainPictureNumber = recipeMainPictureNumber;
+  }
+
   public Boolean getFavorite() {
     return favorite;
   }
@@ -88,4 +97,6 @@ public class OneRecipeCard {
   public void setFavorite(Boolean favorite) {
     this.favorite = favorite;
   }
+
+
 }

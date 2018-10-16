@@ -1,8 +1,9 @@
 package com.moje.przepisy.mojeprzepisy.ui;
 
+import static com.moje.przepisy.mojeprzepisy.utils.Constant.BASE_URL;
+
 import android.animation.Animator;
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Build.VERSION_CODES;
 import android.preference.PreferenceManager;
@@ -22,8 +23,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.moje.przepisy.mojeprzepisy.R;
 import com.moje.przepisy.mojeprzepisy.data.model.OneRecipeCard;
-import com.moje.przepisy.mojeprzepisy.utils.BitmapConverter;
 import com.moje.przepisy.mojeprzepisy.utils.Constant;
+import com.squareup.picasso.Picasso;
 import java.util.List;
 
 /**
@@ -36,8 +37,7 @@ public class MyCardViewAdapter extends RecyclerView.Adapter<MyCardViewAdapter.Vi
   private OnShareStarsClickedListener callbackStars;
   private OnShareHeartClickedListener callbackHeart;
   private OnShareRecipeIdClickedListener callbackRecipeId;
-  private BitmapConverter converter = new BitmapConverter();
-
+  
   MyCardViewAdapter(Context context, List<OneRecipeCard> cardsList) {
     this.context = context;
     this.cardsList = cardsList;
@@ -186,8 +186,7 @@ public class MyCardViewAdapter extends RecyclerView.Adapter<MyCardViewAdapter.Vi
     }
 
     void bind(OneRecipeCard card) {
-      String recipeMainPicture = card.getRecipeMainPicture();
-      Bitmap recipeMainPictureBitmap = converter.StringToBitMap(recipeMainPicture);
+      int recipeMainPictureNumber = card.getRecipeMainPictureNumber();
       String recipeName = card.getRecipeName();
       String recipeAuthor = card.getAuthorName();
       int starsCount = card.getStarsCount();
@@ -196,7 +195,7 @@ public class MyCardViewAdapter extends RecyclerView.Adapter<MyCardViewAdapter.Vi
       String favoritesCountString = String.valueOf(favoritesCount);
       Boolean favourite = card.getFavorite();
 
-      recipeImageView.setImageBitmap(recipeMainPictureBitmap);
+      Picasso.get().load(BASE_URL + "recipe/photo/" + recipeMainPictureNumber).into(recipeImageView);
       recipeNameTextView.setText(recipeName);
       recipeAuthorTextView.setText(recipeAuthor);
       starsCountTextView.setText(starsCountString);
