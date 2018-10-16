@@ -235,7 +235,7 @@ def addRecipe():
     recipePrepareTime = params.get('recipePrepareTime')
     recipeCookTime = params.get('recipeCookTime')
     recipeBakeTime = params.get('recipeBakeTime')
-    recipeMainPicture = params.get('recipeMainPicture')
+    recipeMainPicture = params.get('recipeMainPictureNumber')
     recipeCategory = params.get('recipeCategory')
 
 
@@ -279,7 +279,7 @@ def addPhoto():
 
     params = request.get_json()
 
-    photos = params.get('photo')
+    photos = params.get('photoString')
 
     status, message = photo.addPhoto(photos)
 

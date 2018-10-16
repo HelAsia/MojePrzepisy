@@ -45,7 +45,7 @@ class Recipes:
 
         query = u"INSERT INTO recipes " \
                 u"(user_id, recipe_name, recipe_prepare_time, recipe_cook_time, " \
-                u"recipe_bake_time, recipe_main_picture, recipe_category, recipe_created_date_time) " \
+                u"recipe_bake_time, photo_id, recipe_category, recipe_created_date_time) " \
                 u"values ({}, '{}', '{}', '{}', '{}', '{}', " \
                 u"'{}', NOW())".format(userId, recipeName, normalizeTime(recipePrepareTime),
                                         normalizeTime(recipeCookTime),normalizeTime(recipeBakeTime),

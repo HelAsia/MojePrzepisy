@@ -1,18 +1,18 @@
 package com.moje.przepisy.mojeprzepisy.data.model;
 
-import android.graphics.drawable.Drawable;
+import android.graphics.Bitmap;
 
 public class Photo {
   private int photoId;
-  private Drawable photo;
+  private Bitmap photo;
   private String photoString;
 
-  public Photo(int photoId, Drawable photo) {
+  public Photo(int photoId, Bitmap photo) {
     this.photoId = photoId;
     this.photo = photo;
   }
 
-  public Photo(Drawable photo) {
+  public Photo(Bitmap photo) {
     this.photo = photo;
   }
 
@@ -32,11 +32,11 @@ public class Photo {
     this.photoId = photoId;
   }
 
-  public Drawable getPhoto() {
+  public Bitmap getPhoto() {
     return photo;
   }
 
-  public void setPhoto(Drawable photo) {
+  public void setPhoto(Bitmap photo) {
     this.photo = photo;
   }
 

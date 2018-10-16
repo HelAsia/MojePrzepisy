@@ -55,7 +55,7 @@ public class RecipeRepository implements RecipeRepositoryInterface{
   }
 
   @Override
-  public void addPhoto(List<Photo> photoList,final OnPhotoFinishedListener listener) {
+  public void addPhoto(List<Photo> photoList, final OnPhotoFinishedListener listener) {
     Call<Message> resp = recipeAPI.addPhoto(photoList.get(0));
     resp.enqueue(new Callback<Message>() {
       @Override

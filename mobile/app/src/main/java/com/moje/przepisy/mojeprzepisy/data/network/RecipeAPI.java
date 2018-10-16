@@ -37,10 +37,10 @@ public interface RecipeAPI {
   @POST("recipe/photo/{photoId}")
   Call<List<Photo>> editPhoto(@Path("photoId") int photoId, @Body Photo photo);
 
-  @PUT("recipe")
+  @PUT("recipe/photo")
   Call<Message> addPhoto(@Body Photo photo);
 
-  @DELETE("recipe/{recipeId}")
+  @DELETE("recipe/photo/{photoId}")
   Call<List<Photo>> deletePhoto(@Path("photoId") int photoId, @Body Photo photo);
 
 

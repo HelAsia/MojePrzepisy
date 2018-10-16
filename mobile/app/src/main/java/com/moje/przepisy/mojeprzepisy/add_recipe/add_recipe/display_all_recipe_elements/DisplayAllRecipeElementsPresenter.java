@@ -132,6 +132,14 @@ RecipeRepository.OnRecipeFinishedListener, RecipeRepository.OnPhotoFinishedListe
   }
 
   @Override
+  public List<Photo> getPhotoListFromRecipeList() {
+    Photo photoString = new Photo(recipeList.get(0).getRecipeMainPicture());
+    photoList.add(photoString);
+    return photoList;
+  }
+
+
+  @Override
   public String getStepsPojoListFromPreferences(Context context) {
     return PreferenceManager
         .getDefaultSharedPreferences(context).getString(Constant.PREF_STEP, null);
@@ -194,7 +202,13 @@ RecipeRepository.OnRecipeFinishedListener, RecipeRepository.OnPhotoFinishedListe
 
   @Override
   public void addRecipeToServer() {
-    recipeRepository.addRecipe(recipeList,this);
+    addPhotoIdToRecipe();
+    recipeRepository.addRecipe(recipeListWithPhotoId,this);
+  }
+
+  @Override
+  public void addPhotoToServer() {
+    recipeRepository.addPhoto(getPhotoListFromRecipeList(),this);
   }
 
   @Override
@@ -228,6 +242,16 @@ RecipeRepository.OnRecipeFinishedListener, RecipeRepository.OnPhotoFinishedListe
   }
 
   @Override
+  public void addPhotoIdToRecipe() {
+    for(Recipe recipe : recipeList){
+      Recipe recipeWithPhotoId = new Recipe(recipeId, recipe.getRecipeName(),
+          photoId, recipe.getRecipeCategory(), recipe.getRecipePrepareTime(), recipe.getRecipeCookTime(),
+          recipe.getRecipeBakeTime());
+      recipeListWithPhotoId.add(recipeWithPhotoId);
+    }
+  }
+
+  @Override
   public void addRecipeIdToSteps() {
     for(Step step : stepList){
       Step stepWithRecipeId = new Step(recipeId, step.getPhoto(),
@@ -240,6 +264,11 @@ RecipeRepository.OnRecipeFinishedListener, RecipeRepository.OnPhotoFinishedListe
 
   @Override
   public void saved() {
+    Log.i("photo saved()", "Stage 1. Adding Photo.");
+    addPhotoToServer();
+    while (!getIfPhotoAdded()){
+    }
+
     Log.i("recipe saved()", "Stage 1. Adding Recipe.");
     addRecipeToServer();
     while (!getIfRecipeAdded()){

@@ -31,8 +31,8 @@ class Photo:
         else:
             return {}
 
-    def addPhoto(self, photo):
-        photoString = base64.b16encode(photo)
+    def addPhoto(self, photoString):
+     #   photoString = base64.b16encode(photo)
 
         query = u"INSERT INTO photos " \
                 u"(photo) " \
@@ -55,8 +55,8 @@ class Photo:
             Logger.fail("NOT OK. Photo hasn't been added")
             return 404, u'Forwarded data are not correct'
 
-    def editIngredient(self, photoId, photo):
-        photoString = base64.b16encode(photo)
+    def editPhoto(self, photoId, photoString):
+     #   photoString = base64.b16encode(photo)
         query = u"UPDATE photos " \
                 u"SET photo = '{}'" \
                 u"WHERE photo_id = {}".format(photoString, photoId)

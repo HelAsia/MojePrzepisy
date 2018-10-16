@@ -18,7 +18,7 @@ class Cards:
 
     def getAllCards(self, userID):
         recipeQuery = u"SELECT recipe_id AS recipeId, recipe_name AS recipeName, user_id AS userId, "\
-        u"recipe_main_picture as recipeMainPicture, recipe_created_date_time as Date "\
+        u"photo_id as recipeMainPictureNumber, recipe_created_date_time as Date "\
         u"FROM recipes; "
 
         return self.getAllCardsBasedMethod(userID,recipeQuery)
@@ -26,7 +26,7 @@ class Cards:
 
     def getAllCardsSortedAlphabetically(self, userID):
         recipeQuery = u"SELECT recipe_id AS recipeId, recipe_name AS recipeName, user_id AS userId, " \
-                      u"recipe_main_picture as recipeMainPicture, recipe_created_date_time as Date " \
+                      u"photo_id as recipeMainPictureNumber, recipe_created_date_time as Date " \
                       u"FROM recipes " \
                       u"ORDER BY recipeName; "
 
@@ -34,7 +34,7 @@ class Cards:
 
     def getAllCardsSortedByLastAdded(self, userID):
         recipeQuery = u"SELECT recipe_id AS recipeId, recipe_name AS recipeName, user_id AS userId, " \
-                      u"recipe_main_picture as recipeMainPicture, recipe_created_date_time as Date " \
+                      u"photo_id as recipeMainPictureNumber, recipe_created_date_time as Date " \
                       u"FROM recipes " \
                       u"ORDER BY Date; "
 
@@ -42,7 +42,7 @@ class Cards:
 
     def getAllCardsSortedByHighestRated(self, userID):
         recipeQuery = u"SELECT recipe_id AS recipeId, recipe_name AS recipeName, user_id AS userId, "\
-        u"recipe_main_picture as recipeMainPicture, recipe_created_date_time as Date "\
+        u"photo_id as recipeMainPictureNumber, recipe_created_date_time as Date "\
         u"FROM recipes; "
 
         result = self.getAllCardsBasedMethod(userID,recipeQuery)
@@ -53,7 +53,7 @@ class Cards:
 
     def getSearchedCardsSortedByDefault(self, searchedQuery, userID):
         recipeQuery = u"SELECT recipe_id AS recipeId, recipe_name AS recipeName, user_id AS userId, " \
-                      u"recipe_main_picture as recipeMainPicture, recipe_created_date_time as Date " \
+                      u"photo_id as recipeMainPictureNumber, recipe_created_date_time as Date " \
                       u"FROM recipes " \
                       u"WHERE recipe_name LIKE '%{}%' "\
                       u"GROUP BY recipe_id; ".format(searchedQuery)
@@ -62,7 +62,7 @@ class Cards:
 
     def getAllCardsSortedByUser(self, userID):
         recipeQuery = u"SELECT recipe_id AS recipeId, recipe_name AS recipeName, user_id AS userId, " \
-                      u"recipe_main_picture as recipeMainPicture, recipe_created_date_time as Date " \
+                      u"photo_id as recipeMainPictureNumber, recipe_created_date_time as Date " \
                       u"FROM recipes " \
                       u"WHERE R.user_id LIKE '{}' " \
                       u"GROUP BY R.recipe_id ".format(userID)
@@ -70,7 +70,7 @@ class Cards:
 
     def getUpdatedCard(self, userID, recipeId):
         recipeQuery = u"SELECT recipe_id AS recipeId, recipe_name AS recipeName, user_id AS userId, " \
-                      u"recipe_main_picture as recipeMainPicture, recipe_created_date_time as Date " \
+                      u"photo_id as recipeMainPictureNumber, recipe_created_date_time as Date " \
                       u"FROM recipes " \
                       u"WHERE recipe_id = {} ; ".format(recipeId)
 
@@ -79,7 +79,7 @@ class Cards:
 
     def getAllCardsSortedByFovorite(self, userID):
         recipeQuery = u"SELECT recipe_id AS recipeId, recipe_name AS recipeName, user_id AS userId, "\
-        u"recipe_main_picture as recipeMainPicture, recipe_created_date_time as Date "\
+        u"photo_id as recipeMainPictureNumber, recipe_created_date_time as Date "\
         u"FROM recipes; "
 
         MainQueryReult = self.getAllCardsBasedMethod(userID, recipeQuery)

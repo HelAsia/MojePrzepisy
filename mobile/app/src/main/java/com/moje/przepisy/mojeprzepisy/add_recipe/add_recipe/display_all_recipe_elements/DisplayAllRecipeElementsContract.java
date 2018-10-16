@@ -60,6 +60,8 @@ public interface DisplayAllRecipeElementsContract {
 
     List<Recipe> getRecipeListAfterChangeScreen(String jsonList);
 
+    List<Photo> getPhotoListFromRecipeList();
+
     String getStepsPojoListFromPreferences(Context context);
 
     List<Step> getStepListAfterChangeScreen(String jsonList);
@@ -74,6 +76,8 @@ public interface DisplayAllRecipeElementsContract {
 
     void addRecipeToServer();
 
+    void addPhotoToServer();
+
     void addIngredientsToServer();
 
     void addStepsToServer();
@@ -81,6 +85,8 @@ public interface DisplayAllRecipeElementsContract {
     void addStarsToServer();
 
     void addRecipeIdToIngredients();
+
+    void addPhotoIdToRecipe();
 
     void addRecipeIdToSteps();
 

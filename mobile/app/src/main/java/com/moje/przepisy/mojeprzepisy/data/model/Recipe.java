@@ -4,6 +4,7 @@ public class Recipe {
   private int recipeId;
   private String recipeName;
   private String recipeMainPicture;
+  private int recipeMainPictureNumber;
   private String recipeCategory;
   private String recipePrepareTime;
   private String recipeCookTime;
@@ -42,6 +43,18 @@ public class Recipe {
 
   public Recipe(){
 
+  }
+
+  public Recipe(int recipeId, String recipeName, int recipeMainPictureNumber,
+      String recipeCategory, String recipePrepareTime, String recipeCookTime,
+      String recipeBakeTime) {
+    this.recipeId = recipeId;
+    this.recipeName = recipeName;
+    this.recipeMainPictureNumber = recipeMainPictureNumber;
+    this.recipeCategory = recipeCategory;
+    this.recipePrepareTime = recipePrepareTime;
+    this.recipeCookTime = recipeCookTime;
+    this.recipeBakeTime = recipeBakeTime;
   }
 
   public int getRecipeId() {
