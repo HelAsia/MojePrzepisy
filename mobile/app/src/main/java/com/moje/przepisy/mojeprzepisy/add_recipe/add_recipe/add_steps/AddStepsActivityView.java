@@ -124,7 +124,7 @@ public class AddStepsActivityView extends AppCompatActivity implements AddStepCo
     }else {
       Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
       startActivityForResult(cameraIntent, CAMERA_REQUEST);
-      onActivityResult(CAMERA_REQUEST, Activity.RESULT_OK, cameraIntent);
+ //     onActivityResult(CAMERA_REQUEST, Activity.RESULT_OK, cameraIntent);
     }
   }
 
@@ -146,7 +146,7 @@ public class AddStepsActivityView extends AppCompatActivity implements AddStepCo
     Intent galleryIntent = new Intent(Intent.ACTION_PICK,
         Media.EXTERNAL_CONTENT_URI);
       startActivityForResult(galleryIntent, GALLERY_REQUEST);
-      onActivityResult(GALLERY_REQUEST, Activity.RESULT_OK, galleryIntent);
+ //     onActivityResult(GALLERY_REQUEST, Activity.RESULT_OK, galleryIntent);
   }
 
   @Override

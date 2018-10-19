@@ -75,53 +75,21 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> 
     viewHolder.galleryImageView.setOnClickListener(new OnClickListener() {
       @Override
       public void onClick(View view) {
-        callbackGallery.ShareGalleryClicked("Gallery");
-
-        Bitmap picture =((AddStepsActivityView)context).getPicture();
-        viewHolder.mainPhotoImageView.setVisibility(View.VISIBLE);
-
-        while (picture == null){
-
-        }
-        Toast.makeText(context, "TEST", Toast.LENGTH_SHORT).show();
-        viewHolder.mainPhotoImageView.setImageBitmap(picture);
-
-        Step updatedStep = stepList.get(position);
-        updatedStep.setPhoto(converter.BitMapToString(picture));
-
-        String pojoJson = convertPojoToJsonString(stepList);
-        addPojoListToPreferences(pojoJson, context);
-
-        ((AddStepsActivityView)context).setPicture(null);
+        new BackgroundGalleryAction(((AddStepsActivityView)context), viewHolder.mainPhotoImageView, position).execute();
       }
     });
 
     viewHolder.cameraImageView.setOnClickListener(new OnClickListener() {
       @Override
       public void onClick(View view) {
-        callbackCamera.ShareCameraClicked("Camera");
-        Bitmap picture =((AddStepsActivityView)context).getPicture();
-        viewHolder.mainPhotoImageView.setVisibility(View.VISIBLE);
-
-        while (picture == null){
-
-        }
-        Toast.makeText(context, "TEST", Toast.LENGTH_SHORT).show();
-        viewHolder.mainPhotoImageView.setImageBitmap(picture);
-
-        stepList.get(position).setPhoto(converter.BitMapToString(picture));
-
-        String pojoJson = convertPojoToJsonString(stepList);
-        addPojoListToPreferences(pojoJson, context);
-
-        ((AddStepsActivityView)context).setPicture(null);
+        new BackgroundCameraAction(((AddStepsActivityView)context), viewHolder.mainPhotoImageView, position).execute();
       }
     });
 
     viewHolder.URLImageView.setOnClickListener(new OnClickListener() {
       @Override
       public void onClick(View view) {
-        new BackgroundActions(((AddStepsActivityView)context), viewHolder.mainPhotoImageView, position).execute();
+        new BackgroundUrlImageAction(((AddStepsActivityView)context), viewHolder.mainPhotoImageView, position).execute();
       }
     });
   }
@@ -227,14 +195,14 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> 
     editor.commit();
   }
 
-  private class BackgroundActions extends AsyncTask<ImageView, Void, Void> {
+  private class BackgroundUrlImageAction extends AsyncTask<Void, Void, Void> {
     private Activity activity;
     private ImageView imageView;
-    int position;
+    private int position;
     private URLDialog urlDialog = new URLDialog();
 
 
-    public BackgroundActions(Activity activity, ImageView imageView, int position) {
+    public BackgroundUrlImageAction(Activity activity, ImageView imageView, int position) {
       this.activity = activity;
       this.imageView = imageView;
       this.position = position;
@@ -246,7 +214,7 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> 
     }
 
     @Override
-    protected Void doInBackground(ImageView... arg0) {
+    protected Void doInBackground(Void... arg0) {
       try {
 
         while (imageView.getVisibility()!= View.VISIBLE){
@@ -263,6 +231,108 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> 
 
     @Override
     protected void onPostExecute(Void result) {
+      BitmapDrawable drawable = (BitmapDrawable) imageView.getDrawable();
+      Bitmap picture = drawable.getBitmap();
+
+      stepList.get(position).setPhoto(converter.BitMapToString(picture));
+
+      String pojoJson = convertPojoToJsonString(stepList);
+      addPojoListToPreferences(pojoJson, context);
+
+      Toast.makeText(activity, "DODANE", Toast.LENGTH_SHORT).show();
+    }
+  }
+
+  private class BackgroundGalleryAction extends AsyncTask<Void, Void, Void> {
+    private Activity activity;
+    private ImageView imageView;
+    int position;
+
+
+    public BackgroundGalleryAction(Activity activity, ImageView imageView, int position) {
+      this.activity = activity;
+      this.imageView = imageView;
+      this.position = position;
+    }
+
+    @Override
+    protected void onPreExecute() {
+      callbackGallery.ShareGalleryClicked("Gallery");
+    }
+
+    @Override
+    protected Void doInBackground(Void... arg0) {
+      try {
+
+        while (((AddStepsActivityView)context).getPicture() == null){
+
+        }
+
+        Thread.sleep(1000);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+      return null;
+
+    }
+
+    @Override
+    protected void onPostExecute(Void result) {
+      Bitmap pictureFromActivity =((AddStepsActivityView)context).getPicture();
+      imageView.setImageBitmap(pictureFromActivity);
+      imageView.setVisibility(View.VISIBLE);
+
+      BitmapDrawable drawable = (BitmapDrawable) imageView.getDrawable();
+      Bitmap picture = drawable.getBitmap();
+
+      stepList.get(position).setPhoto(converter.BitMapToString(picture));
+
+      String pojoJson = convertPojoToJsonString(stepList);
+      addPojoListToPreferences(pojoJson, context);
+
+      Toast.makeText(activity, "DODANE", Toast.LENGTH_SHORT).show();
+    }
+  }
+
+  private class BackgroundCameraAction extends AsyncTask<Void, Void, Void> {
+    private Activity activity;
+    private ImageView imageView;
+    int position;
+
+
+    public BackgroundCameraAction(Activity activity, ImageView imageView, int position) {
+      this.activity = activity;
+      this.imageView = imageView;
+      this.position = position;
+    }
+
+    @Override
+    protected void onPreExecute() {
+      callbackCamera.ShareCameraClicked("Camera");
+    }
+
+    @Override
+    protected Void doInBackground(Void... arg0) {
+      try {
+
+        while (((AddStepsActivityView)context).getPicture() == null){
+
+        }
+
+        Thread.sleep(1000);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+      return null;
+
+    }
+
+    @Override
+    protected void onPostExecute(Void result) {
+      Bitmap pictureFromActivity =((AddStepsActivityView)context).getPicture();
+      imageView.setImageBitmap(pictureFromActivity);
+      imageView.setVisibility(View.VISIBLE);
+
       BitmapDrawable drawable = (BitmapDrawable) imageView.getDrawable();
       Bitmap picture = drawable.getBitmap();
 
