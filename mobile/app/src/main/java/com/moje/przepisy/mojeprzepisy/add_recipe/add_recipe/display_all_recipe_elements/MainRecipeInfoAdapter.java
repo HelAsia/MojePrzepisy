@@ -13,7 +13,6 @@ import butterknife.ButterKnife;
 import com.moje.przepisy.mojeprzepisy.R;
 import com.moje.przepisy.mojeprzepisy.data.model.Recipe;
 import com.moje.przepisy.mojeprzepisy.utils.BitmapConverter;
-import java.sql.Time;
 import java.util.List;
 
 public class MainRecipeInfoAdapter extends RecyclerView.Adapter<MainRecipeInfoAdapter.ViewHolder>{
@@ -70,7 +69,6 @@ public class MainRecipeInfoAdapter extends RecyclerView.Adapter<MainRecipeInfoAd
       String recipeCookTime = recipe.getRecipeCookTime();
       String recipeBakeTime = recipe.getRecipeBakeTime();
       String recipeMainPicture = recipe.getRecipeMainPicture();
-
 
       recipeNameTextView.setText(recipeName);
       recipeCategoryTextView.setText(recipeCategory);

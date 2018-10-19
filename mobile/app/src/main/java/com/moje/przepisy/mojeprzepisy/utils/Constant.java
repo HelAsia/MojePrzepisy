@@ -1,6 +1,7 @@
 package com.moje.przepisy.mojeprzepisy.utils;
 
 public class Constant {
+  // BASE_URL need to have trailing slash
   //Local server version
   public static final String BASE_URL = "http://10.0.2.2:5000/";
 

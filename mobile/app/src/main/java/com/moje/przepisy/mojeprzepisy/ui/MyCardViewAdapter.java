@@ -37,7 +37,7 @@ public class MyCardViewAdapter extends RecyclerView.Adapter<MyCardViewAdapter.Vi
   private OnShareStarsClickedListener callbackStars;
   private OnShareHeartClickedListener callbackHeart;
   private OnShareRecipeIdClickedListener callbackRecipeId;
-  
+
   MyCardViewAdapter(Context context, List<OneRecipeCard> cardsList) {
     this.context = context;
     this.cardsList = cardsList;

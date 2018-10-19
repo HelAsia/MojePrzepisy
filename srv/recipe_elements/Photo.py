@@ -16,23 +16,21 @@ class Photo:
         self.database = database
 
     def getPhoto(self, photoId):
+        if not checkIsInteger(photoId):
+            return 500
+
         query = u"SELECT photo_id AS photoId, photo " \
-                u"FROM photos "\
-                u"WHERE photo_id = {}; ".format(photoId)
+                u"FROM photos " \
+                u"WHERE photo_id = {}; ".format(int(photoId))
 
         queryResult = self.database.query(query)
         photoList = list(queryResult[:])
         photoString = photoList[0]['photo']
 
-        photo = open("imageToSave.jpg", "wb")
-        photo.write(photoString.decode('base64'))
-        photo = open("imageToSave.jpg", "r")
-
-
         if queryResult:
-            return photo.read()
+            return photoString.decode('base64')
         else:
-            return {}
+            return ''
 
     def addPhoto(self, photoString):
      #   photoString = base64.b16encode(photo)

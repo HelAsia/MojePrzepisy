@@ -113,4 +113,11 @@ public class Recipe {
     this.recipeCategory = recipeCategory;
   }
 
+  public int getRecipeMainPictureNumber() {
+    return recipeMainPictureNumber;
+  }
+
+  public void setRecipeMainPictureNumber(int recipeMainPictureNumber) {
+    this.recipeMainPictureNumber = recipeMainPictureNumber;
+  }
 }

@@ -11,6 +11,11 @@ public class Step {
 
   }
 
+  public Step(int stepNumber, String stepDescription) {
+    this.stepNumber = stepNumber;
+    this.stepDescription = stepDescription;
+  }
+
   public Step(String photo, int stepNumber, String stepDescription){
     this.photo = photo;
     this.stepNumber = stepNumber;

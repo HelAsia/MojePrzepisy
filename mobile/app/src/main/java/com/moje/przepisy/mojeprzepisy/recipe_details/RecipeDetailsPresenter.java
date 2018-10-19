@@ -1,15 +1,16 @@
 package com.moje.przepisy.mojeprzepisy.recipe_details;
 
+import static com.moje.przepisy.mojeprzepisy.utils.Constant.BASE_URL;
+
 import android.widget.Toast;
-import com.moje.przepisy.mojeprzepisy.R;
 import com.moje.przepisy.mojeprzepisy.data.model.Comment;
 import com.moje.przepisy.mojeprzepisy.data.model.Ingredient;
 import com.moje.przepisy.mojeprzepisy.data.model.Recipe;
 import com.moje.przepisy.mojeprzepisy.data.model.Stars;
 import com.moje.przepisy.mojeprzepisy.data.model.Step;
-import com.squareup.picasso.Picasso;
 import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.recipe.RecipeRepository;
 import com.moje.przepisy.mojeprzepisy.utils.BitmapConverter;
+import com.squareup.picasso.Picasso;
 import java.util.List;
 
 public class RecipeDetailsPresenter implements RecipeDetailsContract.Presenter,
@@ -41,8 +42,7 @@ public class RecipeDetailsPresenter implements RecipeDetailsContract.Presenter,
         recipeDisplayView.getRecipeNameTextView().setText("Brak nazwy przepisu");
       }
       if (recipeDisplayView.getRecipeImageView() != null) {
-        recipeDisplayView.getRecipeImageView().
-            setImageBitmap(converter.StringToBitMap(recipe.getRecipeMainPicture()));
+        Picasso.get().load(BASE_URL + "recipe/photo/" + recipe.getRecipeMainPictureNumber()).into(recipeDisplayView.getRecipeImageView());
       } else {
         Picasso.get()
             .load("https://img.freepik.com/free-icon/gallery_318-131678.jpg?size=338c&ext=jpg")

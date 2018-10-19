@@ -30,6 +30,7 @@ import com.moje.przepisy.mojeprzepisy.add_recipe.add_recipe.add_ingredients.AddI
 import com.moje.przepisy.mojeprzepisy.add_recipe.add_recipe.display_all_recipe_elements.DisplayAllRecipeElementsActivityView;
 import com.moje.przepisy.mojeprzepisy.data.model.Step;
 import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.recipe.RecipeRepository;
+import com.moje.przepisy.mojeprzepisy.utils.BitmapConverter;
 import java.util.List;
 
 public class AddStepsActivityView extends AppCompatActivity implements AddStepContract.View,
@@ -41,10 +42,11 @@ public class AddStepsActivityView extends AppCompatActivity implements AddStepCo
   @BindView(R.id.previousActionFab) FloatingActionButton previousActionFab;
   @BindView(R.id.nextActionFab) FloatingActionButton nextActionFab;
   private AddStepContract.Presenter presenter;
-  public Bitmap testBitmap;
   String imgDecodableString;
   StepsAdapter mainAdapter;
   Context context;
+  public Bitmap picture = null;
+  private BitmapConverter converter = new BitmapConverter();
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +86,14 @@ public class AddStepsActivityView extends AppCompatActivity implements AddStepCo
   @Override
   public Context getContext() {
     return context;
+  }
+
+  public Bitmap getPicture() {
+    return picture;
+  }
+
+  public void setPicture(Bitmap picture) {
+    this.picture = picture;
   }
 
   @Override
@@ -136,7 +146,7 @@ public class AddStepsActivityView extends AppCompatActivity implements AddStepCo
     Intent galleryIntent = new Intent(Intent.ACTION_PICK,
         Media.EXTERNAL_CONTENT_URI);
       startActivityForResult(galleryIntent, GALLERY_REQUEST);
-  //    onActivityResult(GALLERY_REQUEST, Activity.RESULT_OK, galleryIntent);
+      onActivityResult(GALLERY_REQUEST, Activity.RESULT_OK, galleryIntent);
   }
 
   @Override
@@ -156,15 +166,10 @@ public class AddStepsActivityView extends AppCompatActivity implements AddStepCo
         int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
         imgDecodableString = cursor.getString(columnIndex);
         cursor.close();
-
-        testBitmap = BitmapFactory.decodeFile(imgDecodableString);
-
-        getMainAdapter().setBitmap(testBitmap);
+        picture = BitmapFactory.decodeFile(imgDecodableString);
 
       }else if(requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
-        testBitmap = (Bitmap) data.getExtras().get("data");
-        getMainAdapter().setBitmap(testBitmap);
-        getMainAdapter().setState(true);
+        picture = (Bitmap) data.getExtras().get("data");
 
       }else {
         Toast.makeText(this, "Zdjęcie nie zostało wybrane.", Toast.LENGTH_LONG).show();

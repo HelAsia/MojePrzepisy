@@ -1,4 +1,4 @@
-package com.moje.przepisy.mojeprzepisy.add_recipe.add_recipe.add_main_recipe_page;
+package com.moje.przepisy.mojeprzepisy.utils;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -38,7 +38,8 @@ public class URLDialog {
 
         if(!urlStringValue.isEmpty())
         Picasso.get().load(urlStringValue).into(imageView);
-          dialog.dismiss();
+        imageView.setVisibility(View.VISIBLE);
+        dialog.dismiss();
       }
     });
     dialog.show();

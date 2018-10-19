@@ -17,11 +17,11 @@ class Recipes:
 
     def getRecipe(self, recipeID):
         query = u"SELECT R.recipe_id AS recipeId, U.user_login AS authorName, " \
-                u"R.recipe_main_picture AS recipeMainPicture, " \
+                u"R.photo_id AS recipeMainPictureNumber, " \
                 u"R.recipe_name AS recipeName, " \
                 u"R.recipe_prepare_time AS prepareTime, R.recipe_cook_time AS cookTime, " \
-                u"R.recipe_bake_time AS bakeTime, R.recipe_main_picture AS recipeMainPicture, " \
-                u"R.recipe_category AS category, R.recipe_created_date_time AS createdTime " \
+                u"R.recipe_bake_time AS bakeTime, " \
+                u"R.recipe_category AS recipeCategory, R.recipe_created_date_time AS createdTime " \
                 u"FROM recipes AS R " \
                 u"INNER JOIN users AS U " \
                 u"ON R.user_id = U.user_id " \

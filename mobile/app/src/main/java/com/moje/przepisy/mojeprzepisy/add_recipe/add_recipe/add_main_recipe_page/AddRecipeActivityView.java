@@ -34,6 +34,7 @@ import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.recipe.RecipeRe
 import com.moje.przepisy.mojeprzepisy.ui.MainCardsActivityView;
 import com.moje.przepisy.mojeprzepisy.utils.BitmapConverter;
 import com.moje.przepisy.mojeprzepisy.utils.TimeSetDialog;
+import com.moje.przepisy.mojeprzepisy.utils.URLDialog;
 
 public class AddRecipeActivityView extends AppCompatActivity implements AddRecipeContract.View,
     View.OnClickListener {

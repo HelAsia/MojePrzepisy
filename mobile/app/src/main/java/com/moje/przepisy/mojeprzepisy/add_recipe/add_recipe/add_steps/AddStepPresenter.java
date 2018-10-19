@@ -57,6 +57,11 @@ public class AddStepPresenter implements AddStepContract.Presenter {
   public void setFirstScreen() {
     List<Step> stepFirstList = getStepListAfterChangeScreen(getPojoListFromPreferences(stepsView.getContext()));
     if(stepFirstList != null){
+/*      for(Step oneStep : stepFirstList){
+        if(oneStep.getPhoto() == null){
+          oneStep.setPhoto("https://img.freepik.com/free-icon/gallery_318-131678.jpg?size=338c&ext=jpg");
+        }
+      }*/
       stepList = stepFirstList;
       setStepList(stepList);
       stepsView.setRecyclerView(stepList);
@@ -71,8 +76,9 @@ public class AddStepPresenter implements AddStepContract.Presenter {
   @Override
   public void setNextStep() {
     this.stepNumber = stepNumber + 1;
-    Step emptyStep = new Step("https://img.freepik.com/free-icon/gallery_318-131678.jpg?size=338c&ext=jpg", stepNumber, "Opis kroku");
+    Step emptyStep = new Step(stepNumber, "Opis kroku");
 
+    stepList = getStepListAfterChangeScreen(getPojoListFromPreferences(stepsView.getContext()));
     stepList.add(emptyStep);
     setStepList(stepList);
     stepsView.setRecyclerView(stepList);
