@@ -6,22 +6,19 @@ import android.preference.PreferenceManager;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.moje.przepisy.mojeprzepisy.data.model.Step;
-import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.recipe.RecipeRepository;
 import com.moje.przepisy.mojeprzepisy.utils.Constant;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
 public class AddStepPresenter implements AddStepContract.Presenter {
-  private RecipeRepository recipeRepository;
   private AddStepContract.View stepsView;
   private List<Step> stepList = new ArrayList<>();
   private Gson gson = new Gson();
   private int stepNumber = -1;
 
-  AddStepPresenter(AddStepContract.View stepsView, RecipeRepository recipeRepository){
+  AddStepPresenter(AddStepContract.View stepsView){
     this.stepsView = stepsView;
-    this.recipeRepository = recipeRepository;
   }
 
   @Override
@@ -57,16 +54,11 @@ public class AddStepPresenter implements AddStepContract.Presenter {
   public void setFirstScreen() {
     List<Step> stepFirstList = getStepListAfterChangeScreen(getPojoListFromPreferences(stepsView.getContext()));
     if(stepFirstList != null){
-/*      for(Step oneStep : stepFirstList){
-        if(oneStep.getPhoto() == null){
-          oneStep.setPhoto("https://img.freepik.com/free-icon/gallery_318-131678.jpg?size=338c&ext=jpg");
-        }
-      }*/
       stepList = stepFirstList;
       setStepList(stepList);
       stepsView.setRecyclerView(stepList);
     }else {
-      Step emptyStep = new Step("https://img.freepik.com/free-icon/gallery_318-131678.jpg?size=338c&ext=jpg", -1, "Opis kroku");
+      Step emptyStep = new Step( -1, "Opis kroku");
       stepList.add(emptyStep);
       setStepList(stepList);
       stepsView.setRecyclerView(stepList);

@@ -29,8 +29,6 @@ import com.moje.przepisy.mojeprzepisy.R;
 import com.moje.przepisy.mojeprzepisy.add_recipe.add_recipe.add_ingredients.AddIngredientsActivityView;
 import com.moje.przepisy.mojeprzepisy.add_recipe.add_recipe.display_all_recipe_elements.DisplayAllRecipeElementsActivityView;
 import com.moje.przepisy.mojeprzepisy.data.model.Step;
-import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.recipe.RecipeRepository;
-import com.moje.przepisy.mojeprzepisy.utils.BitmapConverter;
 import java.util.List;
 
 public class AddStepsActivityView extends AppCompatActivity implements AddStepContract.View,
@@ -43,10 +41,8 @@ public class AddStepsActivityView extends AppCompatActivity implements AddStepCo
   @BindView(R.id.nextActionFab) FloatingActionButton nextActionFab;
   private AddStepContract.Presenter presenter;
   String imgDecodableString;
-  StepsAdapter mainAdapter;
   Context context;
   public Bitmap picture = null;
-  private BitmapConverter converter = new BitmapConverter();
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -55,12 +51,10 @@ public class AddStepsActivityView extends AppCompatActivity implements AddStepCo
     context = getApplicationContext();
     ButterKnife.bind(this);
 
-    presenter = new AddStepPresenter(this, new RecipeRepository(context));
+    presenter = new AddStepPresenter(this);
 
     setListeners();
-
     setToolbar();
-
     presenter.setFirstScreen();
   }
 
@@ -71,16 +65,7 @@ public class AddStepsActivityView extends AppCompatActivity implements AddStepCo
     adapter.setGalleryOnShareClickedListener(this);
     adapter.setCameraOnShareClickedListener(this);
     recyclerView.setAdapter(adapter);
-    setMainAdapter(adapter);
     recyclerView.setLayoutManager(new LinearLayoutManager(this));
-  }
-
-  public void setMainAdapter(StepsAdapter adapter){
-    this.mainAdapter = adapter;
-  }
-
-  public StepsAdapter getMainAdapter() {
-    return mainAdapter;
   }
 
   @Override
@@ -124,7 +109,6 @@ public class AddStepsActivityView extends AppCompatActivity implements AddStepCo
     }else {
       Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
       startActivityForResult(cameraIntent, CAMERA_REQUEST);
- //     onActivityResult(CAMERA_REQUEST, Activity.RESULT_OK, cameraIntent);
     }
   }
 
@@ -146,7 +130,6 @@ public class AddStepsActivityView extends AppCompatActivity implements AddStepCo
     Intent galleryIntent = new Intent(Intent.ACTION_PICK,
         Media.EXTERNAL_CONTENT_URI);
       startActivityForResult(galleryIntent, GALLERY_REQUEST);
- //     onActivityResult(GALLERY_REQUEST, Activity.RESULT_OK, galleryIntent);
   }
 
   @Override

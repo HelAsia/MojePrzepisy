@@ -290,6 +290,8 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> 
       String pojoJson = convertPojoToJsonString(stepList);
       addPojoListToPreferences(pojoJson, context);
 
+      ((AddStepsActivityView)context).setPicture(null);
+
       Toast.makeText(activity, "DODANE", Toast.LENGTH_SHORT).show();
     }
   }
@@ -340,6 +342,8 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> 
 
       String pojoJson = convertPojoToJsonString(stepList);
       addPojoListToPreferences(pojoJson, context);
+
+      ((AddStepsActivityView)context).setPicture(null);
 
       Toast.makeText(activity, "DODANE", Toast.LENGTH_SHORT).show();
     }
