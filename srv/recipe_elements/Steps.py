@@ -1,4 +1,5 @@
 from Logger import *
+from Photo import *
 
 
 class Steps:
@@ -15,7 +16,7 @@ class Steps:
 
     def getStep(self, recipeID):
         query = u"SELECT recipe_id AS recipeId, step_id AS stepId, " \
-                u"photo_image AS photo, step_number AS stepNumber, " \
+                u"photo_id AS photoNumber, step_number AS stepNumber, " \
                 u"step_description AS stepDescription " \
                 u"FROM steps "\
                 u"WHERE recipe_id = {}; ".format(recipeID)
@@ -30,9 +31,13 @@ class Steps:
 
     def addStep(self, recipeId, photoImage, stepNumber,
                 stepDescription):
+
+        photo = Photo(self.database)
+        state, PhotoMsg = photo.addPhoto(photoImage)
+
         query = u"INSERT INTO steps " \
-                u"(recipe_id, photo_image, step_number, step_description) " \
-                u"values ({}, '{}', {}, '{}' )".format(recipeId, photoImage, int(stepNumber), stepDescription)
+                u"(recipe_id, photo_id, step_number, step_description) " \
+                u"values ({}, '{}', {}, '{}' )".format(recipeId, int(PhotoMsg), int(stepNumber), stepDescription)
 
         queryResult, rows, msg = self.database.insert(query)
 

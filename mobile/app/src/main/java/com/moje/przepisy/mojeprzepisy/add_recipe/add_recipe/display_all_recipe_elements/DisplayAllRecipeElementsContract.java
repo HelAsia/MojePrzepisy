@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.widget.TextView;
 import com.moje.przepisy.mojeprzepisy.data.model.Ingredient;
-import com.moje.przepisy.mojeprzepisy.data.model.Photo;
 import com.moje.przepisy.mojeprzepisy.data.model.Recipe;
 import com.moje.przepisy.mojeprzepisy.data.model.Step;
 import java.util.List;
@@ -35,14 +34,13 @@ public interface DisplayAllRecipeElementsContract {
   }
 
   interface Presenter {
-
     List<Recipe> getRecipeList();
 
     void setRecipeList(List<Recipe> recipeList);
 
-    List<Photo> getPhotoList();
+ //   List<Photo> getPhotoList();
 
-    void setPhotoList(List<Photo> photoList);
+ //   void setPhotoList(List<Photo> photoList);
 
     List<Ingredient> getIngredientList();
 
@@ -60,7 +58,9 @@ public interface DisplayAllRecipeElementsContract {
 
     List<Recipe> getRecipeListAfterChangeScreen(String jsonList);
 
-    List<Photo> getPhotoListFromRecipeList();
+ //   List<Photo> getPhotoListFromRecipeList();
+
+ //   List<Photo> getStepPhotoListFromStepList();
 
     String getStepsPojoListFromPreferences(Context context);
 
@@ -76,7 +76,9 @@ public interface DisplayAllRecipeElementsContract {
 
     void addRecipeToServer();
 
-    void addPhotoToServer();
+ //   void addPhotoToServer();
+
+  //  void addStepPhotoToServer();
 
     void addIngredientsToServer();
 
@@ -86,9 +88,11 @@ public interface DisplayAllRecipeElementsContract {
 
     void addRecipeIdToIngredients();
 
-    void addPhotoIdToRecipe();
+//    void addPhotoIdToRecipe();
 
     void addRecipeIdToSteps();
+
+//    void addStepPhotoIdToStep();
 
     void saved();
 
@@ -99,7 +103,5 @@ public interface DisplayAllRecipeElementsContract {
     Boolean getIfStepsAdded();
 
     void startBackgroundActions(Activity activity);
-
   }
-
 }

@@ -48,7 +48,7 @@ CREATE TABLE recipes (
 CREATE TABLE steps (
     step_id int(11) NOT NULL AUTO_INCREMENT,
     recipe_id int(11),
-    photo_image blob,
+    photo_id int(11),
     step_number int(11) NOT NULL,
     step_description varchar(5000),
     PRIMARY KEY (step_id),

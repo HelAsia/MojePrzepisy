@@ -4,6 +4,7 @@ public class Step {
   private int stepId;
   private int recipeId;
   private String photo;
+  private int photoNumber;
   private int stepNumber;
   private String stepDescription;
 
@@ -25,6 +26,13 @@ public class Step {
   public Step(int recipeId, String photo, int stepNumber, String stepDescription) {
     this.recipeId = recipeId;
     this.photo = photo;
+    this.stepNumber = stepNumber;
+    this.stepDescription = stepDescription;
+  }
+
+  public Step(int recipeId, int photoNumber, int stepNumber, String stepDescription) {
+    this.recipeId = recipeId;
+    this.photoNumber = photoNumber;
     this.stepNumber = stepNumber;
     this.stepDescription = stepDescription;
   }

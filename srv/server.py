@@ -235,7 +235,7 @@ def addRecipe():
     recipePrepareTime = params.get('recipePrepareTime')
     recipeCookTime = params.get('recipeCookTime')
     recipeBakeTime = params.get('recipeBakeTime')
-    recipeMainPicture = params.get('recipeMainPictureNumber')
+    recipeMainPicture = params.get('recipeMainPicture')
     recipeCategory = params.get('recipeCategory')
 
 
@@ -352,8 +352,9 @@ def addStep():
     photoId = params.get('photoId')
     stepNumber = params.get('stepNumber')
     stepDescription = params.get('stepDescription')
+    photo = params.get('photo')
 
-    status, message = step.addStep(recipeId, photoId, stepNumber,
+    status, message = step.addStep(recipeId, photo, stepNumber,
                   stepDescription)
 
     return jsonify({

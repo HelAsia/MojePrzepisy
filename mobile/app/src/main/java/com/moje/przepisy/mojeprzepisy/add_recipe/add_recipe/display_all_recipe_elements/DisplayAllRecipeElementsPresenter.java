@@ -10,7 +10,6 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.moje.przepisy.mojeprzepisy.data.model.Ingredient;
-import com.moje.przepisy.mojeprzepisy.data.model.Photo;
 import com.moje.przepisy.mojeprzepisy.data.model.Recipe;
 import com.moje.przepisy.mojeprzepisy.data.model.Stars;
 import com.moje.przepisy.mojeprzepisy.data.model.Step;
@@ -21,25 +20,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DisplayAllRecipeElementsPresenter implements DisplayAllRecipeElementsContract.Presenter,
-RecipeRepository.OnRecipeFinishedListener, RecipeRepository.OnPhotoFinishedListener{
+RecipeRepository.OnRecipeFinishedListener{
   private RecipeRepository recipeRepository;
   private DisplayAllRecipeElementsContract.View recipeElementsView;
   private List<Ingredient> ingredientList = new ArrayList<>();
   private List<Ingredient> ingredientListWithRecipeId = new ArrayList<>();
   private List<Recipe> recipeList = new ArrayList<>();
-  private List<Recipe> recipeListWithPhotoId = new ArrayList<>();
   private List<Step> stepList = new ArrayList<>();
   private List<Step> stepListWithRecipeId = new ArrayList<>();
-  private List<Photo> photoList = new ArrayList<>();
   private Gson gson = new Gson();
   private Boolean ifRecipeAdded = false;
-  private Boolean ifPhotoAdded = false;
   private Boolean ifIngredientsAdded = false;
   private Boolean ifStepsAdded = false;
   private Boolean ifStarsAdded = false;
   private int recipeId;
-  private int photoId;
-
 
   public DisplayAllRecipeElementsPresenter(DisplayAllRecipeElementsContract.View recipeElementsView, RecipeRepository recipeRepository){
     this.recipeElementsView = recipeElementsView;
@@ -48,10 +42,6 @@ RecipeRepository.OnRecipeFinishedListener, RecipeRepository.OnPhotoFinishedListe
 
   public Boolean getIfRecipeAdded() {
     return ifRecipeAdded;
-  }
-
-  public Boolean getIfPhotoAdded() {
-    return ifPhotoAdded;
   }
 
   public Boolean getIfIngredientsAdded() {
@@ -74,16 +64,6 @@ RecipeRepository.OnRecipeFinishedListener, RecipeRepository.OnPhotoFinishedListe
   @Override
   public void setRecipeList(List<Recipe> recipeList) {
     this.recipeList = recipeList;
-  }
-
-  @Override
-  public List<Photo> getPhotoList() {
-    return photoList;
-  }
-
-  @Override
-  public void setPhotoList(List<Photo> photoList) {
-    this.photoList = photoList;
   }
 
   @Override
@@ -130,14 +110,6 @@ RecipeRepository.OnRecipeFinishedListener, RecipeRepository.OnPhotoFinishedListe
     Type type = new TypeToken<List<Recipe>>() {}.getType();
     return gson.fromJson(jsonList, type);
   }
-
-  @Override
-  public List<Photo> getPhotoListFromRecipeList() {
-    Photo photoString = new Photo(recipeList.get(0).getRecipeMainPicture());
-    photoList.add(photoString);
-    return photoList;
-  }
-
 
   @Override
   public String getStepsPojoListFromPreferences(Context context) {
@@ -202,13 +174,7 @@ RecipeRepository.OnRecipeFinishedListener, RecipeRepository.OnPhotoFinishedListe
 
   @Override
   public void addRecipeToServer() {
-    addPhotoIdToRecipe();
-    recipeRepository.addRecipe(recipeListWithPhotoId,this);
-  }
-
-  @Override
-  public void addPhotoToServer() {
-    recipeRepository.addPhoto(getPhotoListFromRecipeList(),this);
+    recipeRepository.addRecipe(recipeList,this);
   }
 
   @Override
@@ -219,11 +185,8 @@ RecipeRepository.OnRecipeFinishedListener, RecipeRepository.OnPhotoFinishedListe
 
   @Override
   public void addStepsToServer() {
-    Log.i("addStepsToServer", "Stage 1.");
     addRecipeIdToSteps();
-    Log.i("addStepsToServer", "Stage 2.");
     recipeRepository.addStep(stepListWithRecipeId, this);
-    Log.i("addStepsToServer", "Stage 3.");
   }
 
   @Override
@@ -242,16 +205,6 @@ RecipeRepository.OnRecipeFinishedListener, RecipeRepository.OnPhotoFinishedListe
   }
 
   @Override
-  public void addPhotoIdToRecipe() {
-    for(Recipe recipe : recipeList){
-      Recipe recipeWithPhotoId = new Recipe(recipeId, recipe.getRecipeName(),
-          photoId, recipe.getRecipeCategory(), recipe.getRecipePrepareTime(), recipe.getRecipeCookTime(),
-          recipe.getRecipeBakeTime());
-      recipeListWithPhotoId.add(recipeWithPhotoId);
-    }
-  }
-
-  @Override
   public void addRecipeIdToSteps() {
     for(Step step : stepList){
       Step stepWithRecipeId = new Step(recipeId, step.getPhoto(),
@@ -264,27 +217,22 @@ RecipeRepository.OnRecipeFinishedListener, RecipeRepository.OnPhotoFinishedListe
 
   @Override
   public void saved() {
-    Log.i("photo saved()", "Stage 1. Adding Photo.");
-    addPhotoToServer();
-    while (!getIfPhotoAdded()){
-    }
-
-    Log.i("recipe saved()", "Stage 1. Adding Recipe.");
+    Log.i("recipe saved()", "Stage 2. Adding Recipe.");
     addRecipeToServer();
     while (!getIfRecipeAdded()){
     }
 
-    Log.i("recipe saved()", "Stage 2. Adding ingredients.");
+    Log.i("ingredients saved()", "Stage 3. Adding ingredients.");
     addIngredientsToServer();
     while (!getIfIngredientsAdded()){
     }
 
-    Log.i("recipe saved()", "Stage 3. Adding recipe steps.");
+    Log.i("steps saved()", "Stage 5. Adding recipe steps.");
     addStepsToServer();
     while (!getIfStepsAdded()){
     }
 
-    Log.i("recipe saved()", "Stage 4. Adding recipe stars.");
+    Log.i("stars saved()", "Stage 6. Adding recipe stars.");
     addStarsToServer();
     while (!getIfStarsAdded()){
     }
@@ -340,27 +288,8 @@ RecipeRepository.OnRecipeFinishedListener, RecipeRepository.OnPhotoFinishedListe
     new BackgroundActions(activity).execute();
   }
 
-  @Override
-  public void onPhotoError() {
-    if(recipeElementsView != null){
-      recipeElementsView.getInformationTextView().setText("Wystąpił błąd podczas dodawania zdjęcia. Spróbuj ponownie.");
-    }
-  }
-
-  @Override
-  public void onPhotoAdded(Boolean ifAdded) {
-    ifPhotoAdded = ifAdded;
-  }
-
-  @Override
-  public void setPhotoId(String message) {
-    photoId = Integer.parseInt(message);
-  }
-
   private class BackgroundActions extends AsyncTask<Void, Void, Void> {
-
     private Activity activity;
-
 
     public BackgroundActions(Activity activity) {
       this.activity = activity;
@@ -370,7 +299,6 @@ RecipeRepository.OnRecipeFinishedListener, RecipeRepository.OnPhotoFinishedListe
     protected void onPreExecute() {
       activity.showDialog(DisplayAllRecipeElementsActivityView.PLEASE_WAIT_DIALOG);
     }
-
     @Override
     protected Void doInBackground(Void... arg0) {
       try {
@@ -380,14 +308,11 @@ RecipeRepository.OnRecipeFinishedListener, RecipeRepository.OnPhotoFinishedListe
         e.printStackTrace();
       }
       return null;
-
     }
-
     @Override
     protected void onPostExecute(Void result) {
       activity.removeDialog(DisplayAllRecipeElementsActivityView.PLEASE_WAIT_DIALOG);
       Toast.makeText(activity, "Zapisano!", Toast.LENGTH_SHORT).show();
     }
-
   }
 }

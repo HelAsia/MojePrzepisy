@@ -1,5 +1,6 @@
 from Logger import *
 from utils import *
+from Photo import *
 import datetime
 
 
@@ -41,7 +42,11 @@ class Recipes:
 
     def addRecipe(self, userId, recipeName,
                   recipePrepareTime, recipeCookTime, recipeBakeTime,
-                  recipeMainPictureId, recipeCategory):
+                  recipeMainPicture, recipeCategory):
+
+        photo = Photo(self.database)
+        state, photoMsg = photo.addPhoto(recipeMainPicture)
+
 
         query = u"INSERT INTO recipes " \
                 u"(user_id, recipe_name, recipe_prepare_time, recipe_cook_time, " \
@@ -49,7 +54,7 @@ class Recipes:
                 u"values ({}, '{}', '{}', '{}', '{}', '{}', " \
                 u"'{}', NOW())".format(userId, recipeName, normalizeTime(recipePrepareTime),
                                         normalizeTime(recipeCookTime),normalizeTime(recipeBakeTime),
-                                       recipeMainPictureId, recipeCategory)
+                                       int(photoMsg), recipeCategory)
 
         queryResult, rows, msg = self.database.insert(query)
 

@@ -63,7 +63,9 @@ class Database:
             self.databaseCursor.execute('SET NAMES utf8;')
             self.databaseCursor.execute('SET CHARACTER SET utf8;')
             self.databaseCursor.execute('SET character_set_connection=utf8;')
-            self.databaseCursor.execute('SET GLOBAL connect_timeout=6000;')
+            self.databaseCursor.execute('SET GLOBAL connect_timeout=28800;')
+            self.databaseCursor.execute('SET GLOBAL wait_timeout=28800;')
+            self.databaseCursor.execute('SET GLOBAL interactive_timeout=28800;')
 
             return True
 

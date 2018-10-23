@@ -2,6 +2,7 @@ package com.moje.przepisy.mojeprzepisy.data.network;
 
 import android.content.Context;
 import com.moje.przepisy.mojeprzepisy.utils.Constant;
+import java.util.concurrent.TimeUnit;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -15,7 +16,9 @@ public class RetrofitSingleton {
     if(retrofit == null){
 
       OkHttpClient client;
-      OkHttpClient.Builder builder = new OkHttpClient.Builder();
+      OkHttpClient.Builder builder = new OkHttpClient.Builder()
+          .readTimeout(60, TimeUnit.SECONDS)
+          .connectTimeout(60, TimeUnit.SECONDS);
 
       builder.addInterceptor(new AddCookiesInterceptor(context));
       builder.addInterceptor(new ReceivedCookiesInterceptor(context));

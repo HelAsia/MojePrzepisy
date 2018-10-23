@@ -55,33 +55,6 @@ public class RecipeRepository implements RecipeRepositoryInterface{
   }
 
   @Override
-  public void addPhoto(List<Photo> photoList, final OnPhotoFinishedListener listener) {
-    Call<Message> resp = recipeAPI.addPhoto(photoList.get(0));
-    resp.enqueue(new Callback<Message>() {
-      @Override
-      public void onResponse(Call<Message> call, Response<Message> response) {
-        Message message = response.body();
-        if(message.status == 200){
-          Log.i("addPhoto.onResponse(): Photo: ", "OK. Photo has been added");
-          listener.setPhotoId(message.message);
-          listener.onPhotoAdded(true);
-        }else if(message.status == 404){
-          Log.e("addPhoto.onResponse(): Photo: ", "NOT OK. Photo hasn't been added");
-          listener.onPhotoError();
-          listener.onPhotoAdded(false);
-        }
-      }
-
-      @Override
-      public void onFailure(Call<Message> call, Throwable t) {
-        Log.i("addPhoto.onFailure(): SERWER", t.getMessage());
-        listener.onPhotoError();
-        listener.onPhotoAdded(false);
-      }
-    });
-  }
-
-  @Override
   public void addIngredients(List<Ingredient> ingredientList, final OnRecipeFinishedListener listener) {
     for(Ingredient ingredient : ingredientList){
       Call<Message> resp = recipeAPI.addIngredient(ingredient);
@@ -91,14 +64,13 @@ public class RecipeRepository implements RecipeRepositoryInterface{
           Message message = response.body();
           if(message != null) {
             if (message.status == 200) {
-              listener.onIngredientsAdded(true);
+              Log.d("addIngredients.onResponse()", "Added ingredient, got response");
             } else if (message.status == 404) {
               listener.onRecipeError();
               listener.onIngredientsAdded(false);
             }
           }
         }
-
         @Override
         public void onFailure(Call<Message> call, Throwable t) {
           Log.i("addIngredients.onFailure(): SERWER", t.getMessage());
@@ -107,6 +79,7 @@ public class RecipeRepository implements RecipeRepositoryInterface{
         }
       });
     }
+    listener.onIngredientsAdded(true);
   }
 
   @Override
@@ -121,7 +94,6 @@ public class RecipeRepository implements RecipeRepositoryInterface{
           Log.d("addStep.onResponse()", "Added step, got response");
           if(message.status == 200){
             Log.d("addStep.onResponse()", "Success;");
-            listener.onStepsAdded(true);
           }else if(message.status == 404){
             Log.d("addStep.onResponse()", "Failure: 404;");
             listener.onRecipeError();
@@ -137,6 +109,7 @@ public class RecipeRepository implements RecipeRepositoryInterface{
         }
       });
     }
+    listener.onStepsAdded(true);
   }
 
   @Override
@@ -208,33 +181,6 @@ public class RecipeRepository implements RecipeRepositoryInterface{
       public void onFailure(Call<Recipe> call, Throwable t) {
         Log.i("getRecipe.onFailure(): SERWER RECIPE: ", t.getMessage());
         listener.onRecipeError();
-      }
-    });
-  }
-
-  @Override
-  public void getPhoto(int photoId, final OnPhotoDisplayListener listener) {
-    Call<Photo> resp = recipeAPI.getPhoto(photoId);
-    resp.enqueue(new Callback<Photo>() {
-      @Override
-      public void onResponse(Call<Photo> call, Response<Photo> response) {
-        Photo photo = response.body();
-        if(photo != null){
-          Log.i("getPhoto.onResponse(): Photo: ", "OK. Photo has been downloaded");
-          listener.setPhoto(photo);
-        }else if(photo == null){
-          Log.i("getPhoto.onResponse(): Photo: ", "OK. Photo has been downloaded but is empty");
-          listener.setPhoto(photo);
-        }
-        else{
-          Log.e("getPhoto.onResponse(): Photo: ", "NOT OK. Photo hasn't been downloaded");
-          listener.onPhotoError();
-        }
-      }
-      @Override
-      public void onFailure(Call<Photo> call, Throwable t) {
-        Log.i("getPhoto.onFailure(): SERWER PHOTO: ", t.getMessage());
-        listener.onPhotoError();
       }
     });
   }
