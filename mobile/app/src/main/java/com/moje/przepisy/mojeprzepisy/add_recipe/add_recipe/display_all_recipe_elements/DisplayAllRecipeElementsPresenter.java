@@ -52,13 +52,23 @@ RecipeRepository.OnRecipeFinishedListener{
     return ifStepsAdded;
   }
 
-  public Boolean getIfStarsAdded() {
-    return ifStarsAdded;
+  @Override
+  public void setEditRecipeIconAction() {
+    recipeElementsView.navigateToEditRecipeInformation();
   }
 
   @Override
-  public List<Recipe> getRecipeList() {
-    return recipeList;
+  public void setEditIngredientsIconAction() {
+    recipeElementsView.navigateToEditIngredients();
+  }
+
+  @Override
+  public void setEditStepsIconAction() {
+    recipeElementsView.navigateToEditSteps();
+  }
+
+  public Boolean getIfStarsAdded() {
+    return ifStarsAdded;
   }
 
   @Override

@@ -27,10 +27,13 @@ import com.moje.przepisy.mojeprzepisy.ui.MainCardsActivityView;
 import java.util.List;
 
 public class DisplayAllRecipeElementsActivityView extends AppCompatActivity implements
-    DisplayAllRecipeElementsContract.View{
+    DisplayAllRecipeElementsContract.View, OnClickListener{
   public static final int PLEASE_WAIT_DIALOG = 1;
   @BindView(R.id.saveRecipeImageView)ImageView saveRecipeImageView;
   @BindView(R.id.informationTextView)TextView informationTextView;
+  @BindView(R.id.recipeEditImageView) ImageView recipeEditImageView;
+  @BindView(R.id.ingredientsEditImageView) ImageView ingredientsEditImageView;
+  @BindView(R.id.stepsEditImageView) ImageView stepsEditImageView;
   private DisplayAllRecipeElementsContract.Presenter presenter;
   Context context;
 
@@ -72,6 +75,24 @@ public class DisplayAllRecipeElementsActivityView extends AppCompatActivity impl
         break;
     }
     return null;
+  }
+
+  @Override
+  public void setOnClickListeners() {
+    recipeEditImageView.setOnClickListener(this);
+    ingredientsEditImageView.setOnClickListener(this);
+    stepsEditImageView.setOnClickListener(this);
+  }
+
+  @Override
+  public void onClick(View view) {
+    if(view.getId() == R.id.recipeEditImageView){
+      presenter.setEditRecipeIconAction();
+    }else if(view.getId() == R.id.ingredientsEditImageView){
+      presenter.setEditIngredientsIconAction();
+    }else if(view.getId() == R.id.stepsEditImageView){
+      presenter.setEditStepsIconAction();
+    }
   }
 
   @Override
