@@ -154,12 +154,17 @@ public class MainCardsActivityView extends AppCompatActivity implements MainCard
               startActivity(intent);
             }else if (id == R.id.calculating_nav){
 
-            }else if (id == R.id.timer_nav){
+            }else if (id == R.id.timer_nav) {
               Intent intent = new Intent(MainCardsActivityView.this, TimerActivityView.class);
               startActivity(intent);
+            }else if(id == R.id.my_profile_nav){
+
+            }else if (id == R.id.my_recipe_nav) {
+              presenter.setSortedMethod(context,"myRecipe");
+              presenter.getAllCardsSortedFromServer("myRecipe");
             }else if (id == R.id.favorites_nav) {
               presenter.setSortedMethod(context,"favorite");
-              presenter.getAllCardsSortedByFavoriteFromServer();
+              presenter.getAllCardsSortedFromServer("favorite");
             }else if (id == R.id.licences_nav) {
               Intent intent = new Intent(MainCardsActivityView.this, LicensesActivity.class);
               startActivity(intent);
@@ -245,25 +250,25 @@ public class MainCardsActivityView extends AppCompatActivity implements MainCard
     switch (item.getItemId()) {
       case R.id.sort_default:
         presenter.setSortedMethod(context,"default");
-        presenter.getAllCardsFromServer();
+        presenter.getAllCardsSortedFromServer("default");
         item.setChecked(true);
         return true;
 
       case R.id.sort_alphabetic:
         presenter.setSortedMethod(context,"alphabetically");
-        presenter.getAllCardsSortedAlphabeticallyFromServer();
+        presenter.getAllCardsSortedFromServer("alphabetically");
         item.setChecked(true);
         return true;
 
       case R.id.sort_last_add:
         presenter.setSortedMethod(context,"lastAdded");
-        presenter.getAllCardsSortedByLastAddedFromServer();
+        presenter.getAllCardsSortedFromServer("lastAdded");
         item.setChecked(true);
         return true;
 
       case R.id.sort_highest_rated:
         presenter.setSortedMethod(context,"highestRated");
-        presenter.getAllCardsSortedByHighestRatedFromServer();
+        presenter.getAllCardsSortedFromServer("highestRated");
         item.setChecked(true);
         return true;
 

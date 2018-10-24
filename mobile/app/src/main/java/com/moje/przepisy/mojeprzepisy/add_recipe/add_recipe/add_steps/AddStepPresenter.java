@@ -22,11 +22,6 @@ public class AddStepPresenter implements AddStepContract.Presenter {
   }
 
   @Override
-  public void setStepList(List<Step> stepList) {
-    this.stepList = stepList;
-  }
-
-  @Override
   public String convertPojoToJsonString(List<Step> step) {
     Type type = new TypeToken<List<Step>>(){}.getType();
     return gson.toJson(step, type);
@@ -55,24 +50,25 @@ public class AddStepPresenter implements AddStepContract.Presenter {
     List<Step> stepFirstList = getStepListAfterChangeScreen(getPojoListFromPreferences(stepsView.getContext()));
     if(stepFirstList != null){
       stepList = stepFirstList;
-      setStepList(stepList);
       stepsView.setRecyclerView(stepList);
     }else {
       Step emptyStep = new Step( -1, "Opis kroku");
       stepList.add(emptyStep);
-      setStepList(stepList);
       stepsView.setRecyclerView(stepList);
     }
   }
 
   @Override
   public void setNextStep() {
-    this.stepNumber = stepNumber + 1;
+    for (Step step : stepList){
+      if(step.getStepNumber() > stepNumber){
+        stepNumber = step.getStepNumber();
+      }
+    }
     Step emptyStep = new Step(stepNumber, "Opis kroku");
 
     stepList = getStepListAfterChangeScreen(getPojoListFromPreferences(stepsView.getContext()));
     stepList.add(emptyStep);
-    setStepList(stepList);
     stepsView.setRecyclerView(stepList);
 
     String pojoToJson = convertPojoToJsonString(stepList);

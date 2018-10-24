@@ -64,9 +64,9 @@ class Cards:
         recipeQuery = u"SELECT recipe_id AS recipeId, recipe_name AS recipeName, user_id AS userId, " \
                       u"photo_id as recipeMainPictureNumber, recipe_created_date_time as Date " \
                       u"FROM recipes " \
-                      u"WHERE R.user_id LIKE '{}' " \
-                      u"GROUP BY R.recipe_id ".format(userID)
-        return self.getAllCardsBasedMethod(userID,recipeQuery)
+                      u"WHERE user_id LIKE '{}' " \
+                      u"GROUP BY recipe_id ".format(userID)
+        return self.getAllCardsBasedMethod(userID, recipeQuery)
 
     def getUpdatedCard(self, userID, recipeId):
         recipeQuery = u"SELECT recipe_id AS recipeId, recipe_name AS recipeName, user_id AS userId, " \

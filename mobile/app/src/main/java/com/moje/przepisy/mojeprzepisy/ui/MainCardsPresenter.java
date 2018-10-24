@@ -31,19 +31,17 @@ public class MainCardsPresenter implements MainCardsContract.Presenter,
     String sortedMethodPref = PreferenceManager.getDefaultSharedPreferences(context)
         .getString(Constant.PREF_SORTED_METHOD,"default");
     if(sortedMethodPref.equals("default")){
-      getAllCardsFromServer();
-
+      getAllCardsSortedFromServer("default");
     }else if(sortedMethodPref.equals("alphabetically")){
-      getAllCardsSortedAlphabeticallyFromServer();
-
+      getAllCardsSortedFromServer("alphabetically");
     }else if(sortedMethodPref.equals("lastAdded")){
-      getAllCardsSortedByLastAddedFromServer();
-
+      getAllCardsSortedFromServer("lastAdded");
     }else if(sortedMethodPref.equals("highestRated")){
-      getAllCardsSortedByHighestRatedFromServer();
-
+      getAllCardsSortedFromServer("highestRated");
     }else if(sortedMethodPref.equals("favorite")) {
-      getAllCardsSortedByFavoriteFromServer();
+      getAllCardsSortedFromServer("favorite");
+    }else if (sortedMethodPref.equals("myRecipe")){
+      getAllCardsSortedFromServer("myRecipe");
     }
   }
 
@@ -58,37 +56,21 @@ public class MainCardsPresenter implements MainCardsContract.Presenter,
   }
 
   @Override
-  public void getAllCardsFromServer() {
+  public void getAllCardsSortedFromServer(String method) {
     if(cardsView != null) {
-      operationsOnCardRepository.getCardsSortedByChoseMethod(this, "default");
-    }
-  }
-
-  @Override
-  public void getAllCardsSortedAlphabeticallyFromServer() {
-    if(cardsView != null) {
-      operationsOnCardRepository.getCardsSortedByChoseMethod(this, "alphabetically");
-    }
-  }
-
-  @Override
-  public void getAllCardsSortedByLastAddedFromServer() {
-    if(cardsView != null) {
-      operationsOnCardRepository.getCardsSortedByChoseMethod(this, "lastAdded");
-    }
-  }
-
-  @Override
-  public void getAllCardsSortedByHighestRatedFromServer() {
-    if(cardsView != null) {
-      operationsOnCardRepository.getCardsSortedByChoseMethod(this, "highestRated");
-    }
-  }
-
-  @Override
-  public void getAllCardsSortedByFavoriteFromServer() {
-    if(cardsView != null) {
-      operationsOnCardRepository.getCardsSortedByChoseMethod(this, "favorite");
+      if(method.equals("default")){
+        operationsOnCardRepository.getCardsSortedByChoseMethod(this, "default");
+      }else if(method.equals("alphabetically")){
+        operationsOnCardRepository.getCardsSortedByChoseMethod(this, "alphabetically");
+      }else if(method.equals("lastAdded")){
+        operationsOnCardRepository.getCardsSortedByChoseMethod(this, "lastAdded");
+      }else if(method.equals("highestRated")){
+        operationsOnCardRepository.getCardsSortedByChoseMethod(this, "highestRated");
+      }else if(method.equals("favorite")){
+        operationsOnCardRepository.getCardsSortedByChoseMethod(this, "favorite");
+      }else if(method.equals("myRecipe")){
+        operationsOnCardRepository.getCardsSortedByChoseMethod(this, "myRecipe");
+      }
     }
   }
 

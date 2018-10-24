@@ -17,26 +17,25 @@ class Recipes:
         self.database = database
 
     def getRecipe(self, recipeID):
-        query = u"SELECT R.recipe_id AS recipeId, U.user_login AS authorName, " \
-                u"R.photo_id AS recipeMainPictureNumber, " \
-                u"R.recipe_name AS recipeName, " \
-                u"R.recipe_prepare_time AS prepareTime, R.recipe_cook_time AS cookTime, " \
-                u"R.recipe_bake_time AS bakeTime, " \
-                u"R.recipe_category AS recipeCategory, R.recipe_created_date_time AS createdTime " \
-                u"FROM recipes AS R " \
-                u"INNER JOIN users AS U " \
-                u"ON R.user_id = U.user_id " \
-                u"WHERE R.recipe_id = {}; ".format(recipeID)
+        query = u'SELECT R.recipe_id AS recipeId, U.user_login AS authorName, ' \
+                u'R.photo_id AS recipeMainPictureNumber, ' \
+                u'R.recipe_name AS recipeName, ' \
+                u'TIME_FORMAT(R.recipe_prepare_time, "%h %i %s") AS recipePrepareTime, ' \
+                u'TIME_FORMAT(R.recipe_cook_time, "%h %i %s") AS recipeCookTime, ' \
+                u'TIME_FORMAT(R.recipe_bake_time, "%h %i %s") AS recipeBakeTime, ' \
+                u'R.recipe_category AS recipeCategory, R.recipe_created_date_time AS createdTime ' \
+                u'FROM recipes AS R ' \
+                u'INNER JOIN users AS U ' \
+                u'ON R.user_id = U.user_id ' \
+                u'WHERE R.recipe_id = {}; '.format(recipeID)
 
         queryResult = self.database.query(query)
 
         if queryResult:
-            queryResultTime = queryResult[0]
-            queryResultTime['prepareTime'] = str((datetime.datetime.min + queryResultTime['prepareTime']).time())
-            queryResultTime['cookTime'] = str((datetime.datetime.min + queryResultTime['cookTime']).time())
-            queryResultTime['bakeTime'] = str((datetime.datetime.min + queryResultTime['bakeTime']).time())
-            Logger.dbg(queryResultTime)
-            return queryResultTime
+            queryResult[0]['recipePrepareTime'] = (str(queryResult[0]['recipePrepareTime'])).replace(' ', ':')
+            queryResult[0]['recipeCookTime'] = (str(queryResult[0]['recipePrepareTime'])).replace(' ', ':')
+            queryResult[0]['recipeBakeTime'] = (str(queryResult[0]['recipePrepareTime'])).replace(' ', ':')
+            return queryResult[0]
         else:
             return {}
 
@@ -46,7 +45,6 @@ class Recipes:
 
         photo = Photo(self.database)
         state, photoMsg = photo.addPhoto(recipeMainPicture)
-
 
         query = u"INSERT INTO recipes " \
                 u"(user_id, recipe_name, recipe_prepare_time, recipe_cook_time, " \

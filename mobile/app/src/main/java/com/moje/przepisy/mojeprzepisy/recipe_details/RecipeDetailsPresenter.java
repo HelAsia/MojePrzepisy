@@ -43,10 +43,6 @@ public class RecipeDetailsPresenter implements RecipeDetailsContract.Presenter,
       }
       if (recipeDisplayView.getRecipeImageView() != null) {
         Picasso.get().load(BASE_URL + "recipe/photo/" + recipe.getRecipeMainPictureNumber()).into(recipeDisplayView.getRecipeImageView());
-      } else {
-        Picasso.get()
-            .load("https://img.freepik.com/free-icon/gallery_318-131678.jpg?size=338c&ext=jpg")
-            .into(recipeDisplayView.getRecipeImageView());
       }
       if (recipeDisplayView.getRecipeCategoryTextView() != null) {
         recipeDisplayView.getRecipeCategoryTextView().setText(recipe.getRecipeCategory());

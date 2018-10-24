@@ -28,6 +28,7 @@
   <string name="highest_rated">Najwyżej oceniane</string>
   <string name="default_sorting">Domyślnie</string>
   <string name="favorites">Ulubione</string>
+  <string name="my_recipe">Moje przepisy</string>
 
   <string name="searching">Wyszukaj przepis</string>
   <string name="adding">Dodaj przepis</string>

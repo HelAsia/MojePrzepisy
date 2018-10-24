@@ -34,6 +34,8 @@ public class OperationsOnCardRepository implements OperationsOnCardRepositoryInt
       resp = cardAPI.getCardsSortedByHighestRated();
     }else if (method.equals("favorite")){
       resp = cardAPI.getCardsSortedByFavorite();
+    }else if (method.equals("myRecipe")){
+      resp = cardAPI.getUserCards();
     }
     resp.enqueue(new Callback<List<OneRecipeCard>>() {
       @Override

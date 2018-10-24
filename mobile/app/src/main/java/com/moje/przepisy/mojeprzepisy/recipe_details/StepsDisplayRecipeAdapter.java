@@ -1,6 +1,7 @@
 package com.moje.przepisy.mojeprzepisy.recipe_details;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -62,7 +63,7 @@ public class StepsDisplayRecipeAdapter extends RecyclerView.Adapter<StepsDisplay
     void bind(Step step) {
       int stepNumber = step.getStepNumber();
       String stepDescription = step.getStepDescription();
-      String photoId = step.getPhoto();
+      String photo = step.getPhoto();
 
       if (stepNumber != 0) {
         stepNumberTextView.setText(Integer.toString(stepNumber));
@@ -74,10 +75,12 @@ public class StepsDisplayRecipeAdapter extends RecyclerView.Adapter<StepsDisplay
       }else{
         stepDescriptionTextView.setText("Brak opisu");
       }
-      if(photoId == null || photoId.equals("https://img.freepik.com/free-icon/gallery_318-131678.jpg?size=338c&ext=jpg")){
+      if(photo == null){
         stepImageView.setVisibility(View.GONE);
       }else {
-        stepImageView.setImageBitmap(converter.StringToBitMap(photoId));
+        stepImageView.setVisibility(View.VISIBLE);
+        Bitmap photoAfterConversion = converter.StringToBitMap(photo);
+        stepImageView.setImageBitmap(photoAfterConversion);
       }
     }
   }

@@ -74,7 +74,8 @@ class Database:
             return False
 
     def query(self, query, tryAgain = False):
-        Logger.dbg(u'SQL query: "{}"'.format(query))
+        if len(query)< 100:
+            Logger.dbg(u'SQL query: "{}"'.format(query))
 
         try:
             self.databaseCursor.execute(query)
@@ -84,7 +85,8 @@ class Database:
             for row in result:
                 num += 1
                 if num > 5: break
-                Logger.dbg(u'Query ("{}") results:\nRow {}.: '.format(unicode(query), num) + str(row))
+                if len(result) < 100:
+                    Logger.dbg(u'Query ("{}") results:\nRow {}.: '.format(unicode(query), num) + str(row))
 
             return result
 
@@ -134,7 +136,8 @@ class Database:
                 AffectedRows    - number of affected rows or error code on failure
                 Message         - error message on failure, None otherwise
         '''
-        Logger.dbg(u'SQL INSERT query: "{}"'.format(query))
+        if len(query)< 100:
+            Logger.dbg(u'SQL INSERT query: "{}"'.format(query))
         assert not query.lower().startswith('select '), "Method insert() must NOT be invoked with SELECT queries!"
 
         try:

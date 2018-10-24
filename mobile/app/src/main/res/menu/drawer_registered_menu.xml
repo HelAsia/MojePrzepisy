@@ -35,6 +35,10 @@
             android:id="@+id/my_profile_nav"
             android:title="@string/my_profile"
             android:icon="@mipmap/ic_account_circle"/>
+        <item
+          android:id="@+id/my_recipe_nav"
+          android:icon="@mipmap/cook_icon"
+          android:title="@string/my_recipe"/>
           <item
             android:id="@+id/favorites_nav"
             android:icon="@mipmap/ic_favorite"

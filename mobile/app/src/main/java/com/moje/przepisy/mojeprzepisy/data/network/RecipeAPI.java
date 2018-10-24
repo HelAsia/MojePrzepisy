@@ -17,7 +17,6 @@ import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface RecipeAPI {
-
   @GET("recipe/{recipeId}")
   Call<Recipe> getRecipe(@Path("recipeId") int recipeId);
 
@@ -31,14 +30,8 @@ public interface RecipeAPI {
   Call<List<Recipe>> deleteRecipe(@Path("recipeId") int recipeId, @Body Recipe recipe);
 
 
-  @GET("recipe/photo/{photoId}")
-  Call<Photo> getPhoto(@Path("photoId") int photoId);
-
   @POST("recipe/photo/{photoId}")
   Call<List<Photo>> editPhoto(@Path("photoId") int photoId, @Body Photo photo);
-
-  @PUT("recipe/photo")
-  Call<Message> addPhoto(@Body Photo photo);
 
   @DELETE("recipe/photo/{photoId}")
   Call<List<Photo>> deletePhoto(@Path("photoId") int photoId, @Body Photo photo);
@@ -82,8 +75,6 @@ public interface RecipeAPI {
   @DELETE("recipe/comment/{commentId}")
   Call<List<Comment>> deleteComment(@Path("commentId") int commentId, @Body Comment comment);
 
-  @GET("recipe/stars/{recipeId}")
-  Call<Stars> getStars(@Path("recipeId") int recipeId);
 
   @GET("recipe/stars/detail/{recipeId}")
   Call<Stars> getRecipeDetailsStars(@Path("recipeId") int recipeId);

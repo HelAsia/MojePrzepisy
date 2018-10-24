@@ -11,52 +11,28 @@ import com.moje.przepisy.mojeprzepisy.data.model.Step;
 import java.util.List;
 
 public interface RecipeDetailsContract {
-
   interface View{
-
     Context getContext();
-
     void setToolbar();
-
     void setListeners();
-
-
     int getRecipeId();
-
     void setIngredientsRecyclerView(List<Ingredient> ingredientList);
-
     void setStepsRecyclerView(List<Step> stepList);
-
     void setCommentsRecyclerView(List<Comment> commentList);
-
     TextView getRecipeNameTextView();
-
     ImageView getRecipeImageView();
-
     TextView getRecipeCategoryTextView();
-
     TextView getPreparedTimeTextView();
-
     TextView getCookTimeTextView();
-
     TextView getBakeTimeTextView();
-
     EditText getCommentEditText();
-
     Button getAddCommentButton();
-
     ImageView getStarImageView();
-
     TextView getStarCountTextView();
-
     ImageView getFavoritesImageView();
-
     TextView getFavoritesCountTextView();
-
   }
-
   interface Presenter{
     void setWholeRecipeElements();
   }
-
 }

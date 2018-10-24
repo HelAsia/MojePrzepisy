@@ -23,7 +23,6 @@ public class WelcomeView extends AppCompatActivity implements WelcomeContract.Vi
       @Override
       public void run() {
         presenter.validateCredentialsBeforeMainMenu();
-
       }
     }, SPLASH_DISPLAY_LENGTH);
 

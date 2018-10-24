@@ -206,6 +206,8 @@ def getSortedCards(sorted_method):
         cards = card.getAllCardsSortedByHighestRated(userID)
     elif sorted_method == 'favorite':
         cards = card.getAllCardsSortedByFovorite(userID)
+    elif sorted_method == 'userCards':
+        cards = card.getAllCardsSortedByUser(userID)
 
     if not cards:
         Logger.fail("There were no cards returned!")
@@ -271,24 +273,6 @@ def getPhoto(photoId):
         Logger.fail("There was no photo returned!")
     return photos
 
-
-@app.route('/recipe/photo', methods=['PUT'])
-@authorized
-def addPhoto():
-    photo = Photo(database)
-
-    params = request.get_json()
-
-    photos = params.get('photoString')
-
-    status, message = photo.addPhoto(photos)
-
-    return jsonify({
-        'status': status,
-        'message': message
-    })
-
-
 @app.route('/recipe/photo/<int:photoId>/', methods=['POST'])
 @authorized
 def editPhoto(photoId):
@@ -349,10 +333,9 @@ def addStep():
     params = request.get_json()
 
     recipeId = params.get('recipeId')
-    photoId = params.get('photoId')
+    photo = params.get('photo')
     stepNumber = params.get('stepNumber')
     stepDescription = params.get('stepDescription')
-    photo = params.get('photo')
 
     status, message = step.addStep(recipeId, photo, stepNumber,
                   stepDescription)

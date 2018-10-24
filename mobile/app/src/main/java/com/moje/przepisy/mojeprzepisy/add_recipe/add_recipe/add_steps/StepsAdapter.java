@@ -92,6 +92,51 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> 
         new BackgroundUrlImageAction(((AddStepsActivityView)context), viewHolder.mainPhotoImageView, position).execute();
       }
     });
+
+    viewHolder.stepNumberSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+      @Override
+      public void onItemSelected(AdapterView<?> adapterView, View view, int positionInSpinner, long id) {
+        stepList.get(position).setStepNumber(position + 1);
+
+        String pojoJson = convertPojoToJsonString(stepList);
+        addPojoListToPreferences(pojoJson, context);
+      }
+
+      @Override
+      public void onNothingSelected(AdapterView<?> adapterView) {
+        String pojoJson = convertPojoToJsonString(stepList);
+        addPojoListToPreferences(pojoJson, context);
+      }
+    });
+
+    viewHolder.deleteImageView.setOnClickListener(new OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        stepList.remove(position);
+        notifyItemRemoved(position);
+        String pojoJson = convertPojoToJsonString(stepList);
+        addPojoListToPreferences(pojoJson, context);
+      }
+    });
+
+    viewHolder.stepEditText.addTextChangedListener(new TextWatcher() {
+      @Override
+      public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+      }
+      @Override
+      public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        String stepDescription = viewHolder.stepEditText.getText().toString();
+
+        Step updatedStep = stepList.get(position);
+        updatedStep.setStepDescription(stepDescription);
+
+        String pojoJson = convertPojoToJsonString(stepList);
+        addPojoListToPreferences(pojoJson, context);
+      }
+      @Override
+      public void afterTextChanged(Editable editable) {
+      }
+    });
   }
 
   @Override
@@ -116,61 +161,12 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> 
     ViewHolder(View v) {
       super(v);
       ButterKnife.bind(this, v);
-
-      deleteImageView.setOnClickListener(new OnClickListener() {
-        @Override
-        public void onClick(View view) {
-          stepList.remove(getAdapterPosition());
-          notifyItemRemoved(getAdapterPosition());
-          String pojoJson = convertPojoToJsonString(stepList);
-          addPojoListToPreferences(pojoJson, context);
-        }
-      });
-
-
-      stepNumberSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
-        @Override
-        public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
-          int stepNumber = (int) adapterView.getSelectedItemId();
-
-          Step updatedStep = stepList.get(getAdapterPosition());
-          updatedStep.setStepId(stepNumber + 1);
-
-          String pojoJson = convertPojoToJsonString(stepList);
-          addPojoListToPreferences(pojoJson, context);
-        }
-
-        @Override
-        public void onNothingSelected(AdapterView<?> adapterView) {
-
-        }
-      });
-
-      stepEditText.addTextChangedListener(new TextWatcher() {
-        @Override
-        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-        }
-        @Override
-        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-          String stepDescription = stepEditText.getText().toString();
-
-          Step updatedStep = stepList.get(getAdapterPosition());
-          updatedStep.setStepDescription(stepDescription);
-
-          String pojoJson = convertPojoToJsonString(stepList);
-          addPojoListToPreferences(pojoJson, context);
-        }
-        @Override
-        public void afterTextChanged(Editable editable) {
-        }
-      });
     }
 
     void bind(Step step) {
       int stepNumber = step.getStepNumber();
       String stepDescription = step.getStepDescription();
       String mainPhoto = step.getPhoto();
-
 
       if(mainPhoto == null){
         mainPhotoImageView.setVisibility(View.GONE);
@@ -216,9 +212,7 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> 
     @Override
     protected Void doInBackground(Void... arg0) {
       try {
-
         while (imageView.getVisibility()!= View.VISIBLE){
-
         }
 
         Thread.sleep(5000);

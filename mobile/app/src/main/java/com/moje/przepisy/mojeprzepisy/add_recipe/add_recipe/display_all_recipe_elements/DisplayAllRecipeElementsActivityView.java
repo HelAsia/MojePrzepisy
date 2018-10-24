@@ -47,14 +47,7 @@ public class DisplayAllRecipeElementsActivityView extends AppCompatActivity impl
     presenter = new DisplayAllRecipeElementsPresenter(this, new RecipeRepository(context));
 
     setToolbar();
-
-    saveRecipeImageView.setOnClickListener(new OnClickListener() {
-      @Override
-      public void onClick(View view) {
-        presenter.startBackgroundActions(DisplayAllRecipeElementsActivityView.this);
-
-      }
-    });
+    setOnClickListeners();
     presenter.setRecipeDetailsScreen();
     presenter.setIngredientsDetailScreen();
     presenter.setStepsDetailsScreen();
@@ -62,7 +55,6 @@ public class DisplayAllRecipeElementsActivityView extends AppCompatActivity impl
 
   @Override
   public Dialog onCreateDialog(int dialogId) {
-
     switch (dialogId) {
       case PLEASE_WAIT_DIALOG:
         ProgressDialog dialog = new ProgressDialog(this);
@@ -79,6 +71,7 @@ public class DisplayAllRecipeElementsActivityView extends AppCompatActivity impl
 
   @Override
   public void setOnClickListeners() {
+    saveRecipeImageView.setOnClickListener(this);
     recipeEditImageView.setOnClickListener(this);
     ingredientsEditImageView.setOnClickListener(this);
     stepsEditImageView.setOnClickListener(this);
@@ -86,7 +79,9 @@ public class DisplayAllRecipeElementsActivityView extends AppCompatActivity impl
 
   @Override
   public void onClick(View view) {
-    if(view.getId() == R.id.recipeEditImageView){
+    if(view.getId() == R.id.saveRecipeImageView){
+      presenter.startBackgroundActions(DisplayAllRecipeElementsActivityView.this);
+    }else if(view.getId() == R.id.recipeEditImageView){
       presenter.setEditRecipeIconAction();
     }else if(view.getId() == R.id.ingredientsEditImageView){
       presenter.setEditIngredientsIconAction();

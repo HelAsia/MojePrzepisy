@@ -2,7 +2,6 @@ package com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.recipe;
 
 import com.moje.przepisy.mojeprzepisy.data.model.Comment;
 import com.moje.przepisy.mojeprzepisy.data.model.Ingredient;
-import com.moje.przepisy.mojeprzepisy.data.model.Photo;
 import com.moje.przepisy.mojeprzepisy.data.model.Recipe;
 import com.moje.przepisy.mojeprzepisy.data.model.Stars;
 import com.moje.przepisy.mojeprzepisy.data.model.Step;
@@ -35,16 +34,6 @@ public interface RecipeRepositoryInterface {
     void onStepsError();
     void onCommentError();
     void onStarsError();
-  }
-
-  interface OnPhotoDisplayListener{
-    void setPhoto(Photo photo);
-    void onPhotoError();
-  }
-
-  interface OnStepPhotoDisplayListener{
-    void setStepPhoto(Photo photo);
-    void onStepPhotoError();
   }
 
   void addRecipe(List<Recipe> recipeList, OnRecipeFinishedListener listener);
