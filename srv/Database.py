@@ -85,8 +85,10 @@ class Database:
             for row in result:
                 num += 1
                 if num > 5: break
-                if len(result) < 100:
+                if len(str(row)) < 100:
                     Logger.dbg(u'Query ("{}") results:\nRow {}.: '.format(unicode(query), num) + str(row))
+                else:
+                    Logger.dbg(u'Query is too long')
 
             return result
 
@@ -138,6 +140,8 @@ class Database:
         '''
         if len(query)< 100:
             Logger.dbg(u'SQL INSERT query: "{}"'.format(query))
+        else:
+            Logger.dbg(u'Query is too long')
         assert not query.lower().startswith('select '), "Method insert() must NOT be invoked with SELECT queries!"
 
         try:

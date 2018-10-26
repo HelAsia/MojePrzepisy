@@ -88,4 +88,7 @@ public interface RecipeAPI {
   @DELETE("recipe/stars{recipeId}")
   Call<Message> deleteStars(@Path("recipeId") int recipeId);
 
+  @GET("recipe/favorite/{recipeId}")
+  Call<Stars> getFavorite(@Path("recipeId") int recipeId);
+
 }

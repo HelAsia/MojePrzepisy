@@ -5,7 +5,6 @@ import android.util.Log;
 import com.moje.przepisy.mojeprzepisy.data.model.Comment;
 import com.moje.przepisy.mojeprzepisy.data.model.Ingredient;
 import com.moje.przepisy.mojeprzepisy.data.model.Message;
-import com.moje.przepisy.mojeprzepisy.data.model.Photo;
 import com.moje.przepisy.mojeprzepisy.data.model.Recipe;
 import com.moje.przepisy.mojeprzepisy.data.model.Stars;
 import com.moje.przepisy.mojeprzepisy.data.model.Step;
@@ -159,6 +158,28 @@ public class RecipeRepository implements RecipeRepositoryInterface{
   }
 
   @Override
+  public void editStarsAndHeartInRecipe(final int recipeId, String columnName, int columnValue,
+      final OnStarsEditInRecipeListener listener) {
+    Call<Message> resp = recipeAPI.editStarsAndHeart(recipeId, columnName, columnValue);
+    resp.enqueue(new Callback<Message>() {
+      @Override
+      public void onResponse(Call<Message> call, Response<Message> response) {
+        Message message = response.body();
+        if(message.status == 200){
+          Log.i("editStarsAndHeartInRecipe.onResponse(): Stars: ", "OK. Stars has been edited");
+          listener.onUpdateStarsOrFavoriteInRecipe(recipeId);
+        }else if(message.status == 404){
+          Log.e("editStarsAndHeartInRecipe.onResponse(): Stars: ", "NOT OK. Stars hasn't been added");
+        }
+      }
+      @Override
+      public void onFailure(Call<Message> call, Throwable t) {
+        Log.i("editStarsAndHeart.onFailure(): SERWER", t.getMessage());
+      }
+    });
+  }
+
+  @Override
   public void getRecipe(int recipeId, final OnRecipeDisplayListener listener) {
     Call<Recipe> resp = recipeAPI.getRecipe(recipeId);
     resp.enqueue(new Callback<Recipe>() {
@@ -286,6 +307,31 @@ public class RecipeRepository implements RecipeRepositoryInterface{
       public void onFailure(Call<Stars> call, Throwable t) {
         Log.i("getRecipeDetailsStars.onFailure(): SERWER STARS: ", t.getMessage());
         listener.onStarsError();
+      }
+    });
+  }
+
+  @Override
+  public void getFavorite(int recipeId, final OnFavoriteListener listener) {
+    Call<Stars> resp = recipeAPI.getFavorite(recipeId);
+    resp.enqueue(new Callback<Stars>() {
+      @Override
+      public void onResponse(Call<Stars> call, Response<Stars> response) {
+        Stars stars = response.body();
+        if(stars != null){
+          Log.i("getFavorite.onResponse(): Favorite: ", "OK. Favorite has been downloaded");
+          listener.onUpdateFavoriteState(stars.getFavorites());
+        }else if(stars == null){
+          Log.i("getFavorite.onResponse(): Favorite: ", "OK. Favorite has been downloaded but is empty");
+          listener.onUpdateFavoriteState(false);
+        }
+        else{
+          Log.e("getRecipeDetailsStars.onResponse(): Favorite: ", "NOT OK. Favorite hasn't been downloaded");
+        }
+      }
+      @Override
+      public void onFailure(Call<Stars> call, Throwable t) {
+        Log.i("getFavorite.onFailure(): SERWER STARS: ", t.getMessage());
       }
     });
   }

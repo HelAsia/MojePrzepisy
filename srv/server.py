@@ -482,6 +482,17 @@ def getStars(recipeId):
     return jsonify(stars)
 
 
+@app.route('/recipe/favorite/<int:recipeId>', methods=['GET'])
+def getFavorite(recipeId):
+    star = Stars(database)
+    userID = get_user_id()
+
+    favorite = star.getFavorite(recipeId, userID)
+
+    if not favorite:
+        Logger.fail("There was no stars returned!")
+    return jsonify(favorite)
+
 @app.route('/recipe/stars/detail/<int:recipeId>', methods=['GET'])
 def getRecipeDetailsStars(recipeId):
     star = Stars(database)

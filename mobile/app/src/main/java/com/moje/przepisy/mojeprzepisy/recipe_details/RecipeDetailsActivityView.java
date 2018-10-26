@@ -11,6 +11,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import butterknife.BindView;
 import com.moje.przepisy.mojeprzepisy.R;
@@ -35,8 +36,10 @@ public class RecipeDetailsActivityView extends AppCompatActivity implements Reci
   @BindView(R.id.text_view_star_count) TextView starCountTextView;
   @BindView(R.id.heart_image_view) ImageView favoritesImageView;
   @BindView(R.id.text_view_favorites_count) TextView favoritesCountTextView;
+  @BindView(R.id.ratingBarStars) RatingBar ratingBarStars;
   private RecipeDetailsContract.Presenter presenter;
   private int recipeId;
+  private Boolean isLogged;
   Context context;
 
   @Override
@@ -44,12 +47,16 @@ public class RecipeDetailsActivityView extends AppCompatActivity implements Reci
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_recipe_details_view);
     ButterKnife.bind(this);
+    context = getApplicationContext();
 
     presenter = new RecipeDetailsPresenter(this, new RecipeRepository(context));
 
+    getRecipeId();
+    getIsLogged();
     setToolbar();
-    setListeners();
     presenter.setWholeRecipeElements();
+    setListeners();
+//    presenter.setRatingBarStarsVisibility();
   }
 
   @Override
@@ -59,9 +66,9 @@ public class RecipeDetailsActivityView extends AppCompatActivity implements Reci
     }else if (view.getId() == R.id.addCommentButton){
 
     }else if(view.getId() == R.id.starImageView){
-
+      presenter.setRatingBarStarsVisibility();
     }else if(view.getId() == R.id.heart_image_view){
-
+      presenter.setFavoriteImageAndGetFavoriteState();
     }
   }
 
@@ -73,15 +80,23 @@ public class RecipeDetailsActivityView extends AppCompatActivity implements Reci
 
   @Override
   public void setListeners(){
-    addCommentButton.setOnClickListener(this);
-    starImageView.setOnClickListener(this);
-    favoritesImageView.setOnClickListener(this);
+    if(isLogged){
+      addCommentButton.setOnClickListener(this);
+      starImageView.setOnClickListener(this);
+      favoritesImageView.setOnClickListener(this);
+    }
   }
 
   @Override
   public int getRecipeId() {
     this.recipeId = getIntent().getExtras().getInt("recipeId");
     return recipeId;
+  }
+
+  @Override
+  public Boolean getIsLogged() {
+    this.isLogged = getIntent().getExtras().getBoolean("isLogged");
+    return isLogged;
   }
 
   @Override
@@ -171,5 +186,10 @@ public class RecipeDetailsActivityView extends AppCompatActivity implements Reci
   @Override
   public TextView getFavoritesCountTextView() {
     return favoritesCountTextView;
+  }
+
+  @Override
+  public RatingBar getRatingBarStars() {
+    return ratingBarStars;
   }
 }

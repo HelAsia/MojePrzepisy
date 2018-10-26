@@ -27,10 +27,32 @@ class Stars:
         else:
             return {}
 
+    def getFavorite(self, recipeID, userId):
+        query = u"SELECT favorite AS favorites " \
+                u"FROM users_recipes_stars " \
+                u"WHERE recipe_id LIKE {} AND user_id LIKE {}; ".format(recipeID, userId)
+
+        queryResult = self.database.query(query)
+
+        if not userId == -1:
+            for queryRow in queryResult:
+                if queryRow['favorites'] is None:
+                    queryRow['favorites'] = False
+                if queryRow['favorites'] == 0:
+                    queryRow['favorites'] = False
+                if queryRow['favorites'] == 1:
+                    queryRow['favorites'] = True
+            return queryResult[0]
+        else:
+            for queryRow in queryResult:
+                queryRow['favorite'] = False
+            return queryResult[0]
+
+
     def getRecipeDetailsStars(self, recipeID):
         query = u"SELECT count(favorite) AS favoritesCount, ROUND(avg(stars),0) AS starsCount " \
                 u"FROM users_recipes_stars " \
-                u"WHERE recipe_id = {}; ".format(recipeID)
+                u"WHERE recipe_id = {} AND favorite = true; ".format(recipeID)
 
         queryResult = self.database.query(query)
 

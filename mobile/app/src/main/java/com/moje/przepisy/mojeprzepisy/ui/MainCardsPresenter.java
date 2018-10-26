@@ -39,9 +39,9 @@ public class MainCardsPresenter implements MainCardsContract.Presenter,
     }else if(sortedMethodPref.equals("highestRated")){
       getAllCardsSortedFromServer("highestRated");
     }else if(sortedMethodPref.equals("favorite")) {
-      getAllCardsSortedFromServer("favorite");
+      getAllCardsSortedFromServer("default");
     }else if (sortedMethodPref.equals("myRecipe")){
-      getAllCardsSortedFromServer("myRecipe");
+      getAllCardsSortedFromServer("default");
     }
   }
 

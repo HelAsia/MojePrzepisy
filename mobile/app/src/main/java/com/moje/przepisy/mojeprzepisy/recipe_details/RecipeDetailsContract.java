@@ -4,6 +4,7 @@ import android.content.Context;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import com.moje.przepisy.mojeprzepisy.data.model.Comment;
 import com.moje.przepisy.mojeprzepisy.data.model.Ingredient;
@@ -16,6 +17,7 @@ public interface RecipeDetailsContract {
     void setToolbar();
     void setListeners();
     int getRecipeId();
+    Boolean getIsLogged();
     void setIngredientsRecyclerView(List<Ingredient> ingredientList);
     void setStepsRecyclerView(List<Step> stepList);
     void setCommentsRecyclerView(List<Comment> commentList);
@@ -31,8 +33,15 @@ public interface RecipeDetailsContract {
     TextView getStarCountTextView();
     ImageView getFavoritesImageView();
     TextView getFavoritesCountTextView();
+    RatingBar getRatingBarStars();
   }
   interface Presenter{
     void setWholeRecipeElements();
+    void setRatingBarStarsVisibility();
+    void getRatingAndSetVisibility();
+    void setFavoriteImageAndGetFavoriteState();
+    void sendStarsToServer(int rate);
+    void sendFavouriteToServer(int favorite);
+    void getFavoriteFromServer();
   }
 }

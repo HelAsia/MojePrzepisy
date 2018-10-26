@@ -1,7 +1,8 @@
 package com.moje.przepisy.mojeprzepisy.recipe_details;
 
+import static com.moje.przepisy.mojeprzepisy.utils.Constant.BASE_URL;
+
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import butterknife.ButterKnife;
 import com.moje.przepisy.mojeprzepisy.R;
 import com.moje.przepisy.mojeprzepisy.data.model.Step;
 import com.moje.przepisy.mojeprzepisy.utils.BitmapConverter;
+import com.squareup.picasso.Picasso;
 import java.util.List;
 
 public class StepsDisplayRecipeAdapter extends RecyclerView.Adapter<StepsDisplayRecipeAdapter.ViewHolder> {
@@ -63,7 +65,7 @@ public class StepsDisplayRecipeAdapter extends RecyclerView.Adapter<StepsDisplay
     void bind(Step step) {
       int stepNumber = step.getStepNumber();
       String stepDescription = step.getStepDescription();
-      String photo = step.getPhoto();
+      int photo = step.getPhotoNumber();
 
       if (stepNumber != 0) {
         stepNumberTextView.setText(Integer.toString(stepNumber));
@@ -75,12 +77,11 @@ public class StepsDisplayRecipeAdapter extends RecyclerView.Adapter<StepsDisplay
       }else{
         stepDescriptionTextView.setText("Brak opisu");
       }
-      if(photo == null){
+      if(photo == 0){
         stepImageView.setVisibility(View.GONE);
       }else {
         stepImageView.setVisibility(View.VISIBLE);
-        Bitmap photoAfterConversion = converter.StringToBitMap(photo);
-        stepImageView.setImageBitmap(photoAfterConversion);
+        Picasso.get().load(BASE_URL + "recipe/photo/" + photo).into(stepImageView);
       }
     }
   }

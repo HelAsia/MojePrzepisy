@@ -300,7 +300,10 @@ public class MainCardsActivityView extends AppCompatActivity implements MainCard
   @Override
   public void goToRecipeDetails(int recipeId){
     Intent intent = new Intent(MainCardsActivityView.this, RecipeDetailsActivityView.class);
-    intent.putExtra("recipeId", recipeId);
+    Bundle extras = new Bundle();
+    extras.putInt("recipeId", recipeId);
+    extras.putBoolean("isLogged", getIsLoggedStatus());
+    intent.putExtras(extras);
     startActivity(intent);
   }
 

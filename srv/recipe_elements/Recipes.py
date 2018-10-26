@@ -33,8 +33,8 @@ class Recipes:
 
         if queryResult:
             queryResult[0]['recipePrepareTime'] = (str(queryResult[0]['recipePrepareTime'])).replace(' ', ':')
-            queryResult[0]['recipeCookTime'] = (str(queryResult[0]['recipePrepareTime'])).replace(' ', ':')
-            queryResult[0]['recipeBakeTime'] = (str(queryResult[0]['recipePrepareTime'])).replace(' ', ':')
+            queryResult[0]['recipeCookTime'] = (str(queryResult[0]['recipeCookTime'])).replace(' ', ':')
+            queryResult[0]['recipeBakeTime'] = (str(queryResult[0]['recipeBakeTime'])).replace(' ', ':')
             return queryResult[0]
         else:
             return {}

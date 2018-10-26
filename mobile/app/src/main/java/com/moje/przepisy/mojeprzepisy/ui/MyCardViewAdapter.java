@@ -68,7 +68,6 @@ public class MyCardViewAdapter extends RecyclerView.Adapter<MyCardViewAdapter.Vi
     void shareRecipeIdClicked(int recipeId);
   }
 
-
   @Override
   public MyCardViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
     LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());

@@ -77,6 +77,14 @@ public class Step {
     this.stepDescription = stepDescription;
   }
 
+  public int getPhotoNumber() {
+    return photoNumber;
+  }
+
+  public void setPhotoNumber(int photoNumber) {
+    this.photoNumber = photoNumber;
+  }
+
   public String toString() {
     return String.format("Step(%d,  %d, '%s')",
         recipeId,
