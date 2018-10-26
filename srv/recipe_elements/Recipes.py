@@ -23,8 +23,7 @@ class Recipes:
                 u'TIME_FORMAT(R.recipe_prepare_time, "%h %i %s") AS recipePrepareTime, ' \
                 u'TIME_FORMAT(R.recipe_cook_time, "%h %i %s") AS recipeCookTime, ' \
                 u'TIME_FORMAT(R.recipe_bake_time, "%h %i %s") AS recipeBakeTime, ' \
-                u'R.recipe_category AS recipeCategory, R.recipe_created_date_time AS creat' \
-                u'edTime ' \
+                u'R.recipe_category AS recipeCategory, R.recipe_created_date_time AS createdTime ' \
                 u'FROM recipes AS R ' \
                 u'INNER JOIN users AS U ' \
                 u'ON R.user_id = U.user_id ' \
