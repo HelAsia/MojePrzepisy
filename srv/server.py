@@ -422,7 +422,7 @@ def editIngredient(ingredientId, columnName, columnValue):
 def getComment(recipeId):
     comment = Comments(database)
 
-    comments = comment.getComment(recipeId)
+    comments = comment.getComments(recipeId)
 
     return jsonify(comments)
 
@@ -442,15 +442,15 @@ def deleteComment(commentId):
 
 @app.route('/recipe/comment', methods=['PUT'])
 @authorized
-def addCommentt():
+def addComment():
     comment = Comments(database)
 
     params = request.get_json()
 
     recipeId = params.get('recipeId')
-    comment = params.get('comment')
+    commentText = params.get('comment')
 
-    status, message = comment.addComment(recipeId, get_user_id(), comment)
+    status, message = comment.addComment(recipeId, get_user_id(), commentText)
 
     return jsonify({
         'status': status,

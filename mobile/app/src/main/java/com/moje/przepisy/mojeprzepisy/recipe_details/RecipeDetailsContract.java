@@ -42,6 +42,9 @@ public interface RecipeDetailsContract {
     void setFavoriteImageAndGetFavoriteState();
     void sendStarsToServer(int rate);
     void sendFavouriteToServer(int favorite);
+    void sendCommentToServer();
     void getFavoriteFromServer();
+    String getCommentText();
+    Comment getCommentObjectToAdd();
   }
 }

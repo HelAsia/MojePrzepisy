@@ -99,7 +99,6 @@ public class RecipeRepository implements RecipeRepositoryInterface{
             listener.onStepsAdded(false);
           }
         }
-
         @Override
         public void onFailure(Call<Message> call, Throwable t) {
           Log.i("addStep.onFailure(): SERWER", t.getMessage());
@@ -109,6 +108,29 @@ public class RecipeRepository implements RecipeRepositoryInterface{
       });
     }
     listener.onStepsAdded(true);
+  }
+
+  @Override
+  public void addComment(Comment comment, final OnRecipeDisplayListener listener) {
+    Call<Message> resp = recipeAPI.addComment(comment);
+    resp.enqueue(new Callback<Message>() {
+      @Override
+      public void onResponse(Call<Message> call, Response<Message> response) {
+        Message message = response.body();
+        if(message.status == 200){
+          Log.i("addComment.onResponse(): Stars: ", "OK. Comment has been added");
+          listener.setCommentId(message.message);
+        }else if(message.status == 404){
+          Log.e("addComment.onResponse(): Stars: ", "NOT OK. Comment hasn't been added");
+          listener.onCommentError();
+        }
+      }
+      @Override
+      public void onFailure(Call<Message> call, Throwable t) {
+        Log.i("addFirstStars.onFailure(): SERWER", t.getMessage());
+        listener.onCommentError();
+      }
+    });
   }
 
   @Override
@@ -335,6 +357,4 @@ public class RecipeRepository implements RecipeRepositoryInterface{
       }
     });
   }
-
-
 }

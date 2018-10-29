@@ -17,6 +17,11 @@ public class Comment {
     this.comment = comment;
   }
 
+  public Comment(int recipeId, String comment) {
+    this.recipeId = recipeId;
+    this.comment = comment;
+  }
+
   public int getCommentId() {
     return commentId;
   }

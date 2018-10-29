@@ -1,5 +1,6 @@
 from Logger import *
 import time
+import datetime
 
 
 class Comments:
@@ -14,7 +15,7 @@ class Comments:
     def setDatabase(self,database):
         self.database = database
 
-    def getComment(self, recipeID):
+    def getComments(self, recipeID):
         query = u"SELECT C.recipe_id AS recipeId, U.user_login AS authorName, " \
                 u"C.comment_id AS commentId, C.comment AS comment, C.created_date AS createdDate " \
                 u"FROM comments AS C " \
@@ -24,10 +25,13 @@ class Comments:
 
         queryResult = self.database.query(query)
 
+        f = '%Y-%m-%d %H:%M:%S'
+
         if queryResult:
             for queryResultTime in queryResult:
-                queryResultTimeCreatedDate = str(time.mktime(queryResultTime['createdDate'].timetuple()))
-                queryResultTime['createdDate'] = queryResultTimeCreatedDate
+      #          queryResultTimeCreatedDate = str(time.mktime(queryResultTime['createdDate'].timetuple()))
+                queryResultTime['createdDate'] = datetime.datetime.now().strftime(f)
+
             Logger.dbg(queryResult)
             return queryResult
         else:
@@ -37,22 +41,24 @@ class Comments:
     def addComment(self, recipeId, userId, comment):
         query = u"INSERT INTO comments " \
                 u"(recipe_id, user_id, comment, created_date) " \
-                u"values ({}, {}, '{}', now() ".format(recipeId, userId, comment)
+                u"values ({}, {}, '{}', now());".format(recipeId, userId, comment)
 
         queryResult, rows, msg = self.database.insert(query)
 
-        queryCommentId = u"SELECT comment_id " \
-                         u"FROM comments " \
-                         u"WHERE " \
-                         u"recipe_id = {} AND user_id = {} AND " \
-                         u"comment = '{}' ".format(recipeId, userId, comment)
-
-        queryCommentIdResult = self.database.query(queryCommentId)
         if queryResult:
             Logger.dbg(queryResult)
-            return queryCommentIdResult
+            Logger.ok("OK. Comment has been added")
+            queryCommentId = u"SELECT MAX(comment_id) AS commentId FROM comments; "
+            comment_id = self.database.query(queryCommentId)
+            if comment_id and len(comment_id) >= 1:
+                message = comment_id[0]['commentId']
+                return 200, unicode(message)
+            else:
+                message = 'Could not return commentId'
+                return 404, unicode(message)
         else:
-            return {}
+            Logger.fail("NOT OK. Comment hasn't been added")
+            return 404, u'Forwarded data are not correct'
 
     def editComment(self, columnName, columnValue, commentId):
         query = u"UPDATE comments " \
@@ -76,3 +82,4 @@ class Comments:
             return 200, u'Your deleted comment_id = {}'.format(commentId)
         else:
             return 404, u'Forwarded data to check are not correct'
+

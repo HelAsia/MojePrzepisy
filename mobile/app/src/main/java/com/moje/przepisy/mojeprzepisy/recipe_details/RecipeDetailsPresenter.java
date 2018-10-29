@@ -24,6 +24,7 @@ public class RecipeDetailsPresenter implements RecipeDetailsContract.Presenter,
   private RecipeRepository recipeRepository;
   private RecipeDetailsContract.View recipeDisplayView;
   private Boolean favorite = null;
+  int commentId;
 
   public RecipeDetailsPresenter(RecipeDetailsContract.View recipeDisplayView, RecipeRepository recipeRepository){
     this.recipeDisplayView = recipeDisplayView;
@@ -62,6 +63,10 @@ public class RecipeDetailsPresenter implements RecipeDetailsContract.Presenter,
         recipeDisplayView.getBakeTimeTextView().setText("Brak czasu pieczenia");
       }
     }
+  }
+
+  public void setCommentId(String message) {
+    this.commentId = Integer.parseInt(message);
   }
 
   @Override
@@ -191,14 +196,28 @@ public class RecipeDetailsPresenter implements RecipeDetailsContract.Presenter,
   }
 
   @Override
+  public void sendCommentToServer() {
+    recipeRepository.addComment(getCommentObjectToAdd(), this);
+    recipeRepository.getComments(recipeDisplayView.getRecipeId(),this);
+  }
+
+  @Override
   public void getFavoriteFromServer() {
     recipeRepository.getFavorite(recipeDisplayView.getRecipeId(), this);
+  }
+
+  @Override
+  public String getCommentText() {
+    return recipeDisplayView.getCommentEditText().getText().toString();
+  }
+
+  @Override
+  public Comment getCommentObjectToAdd() {
+    return new Comment(recipeDisplayView.getRecipeId(), getCommentText());
   }
 
   @Override
   public void onUpdateFavoriteState(Boolean favoriteState) {
     this.favorite = favoriteState;
   }
-
-
 }

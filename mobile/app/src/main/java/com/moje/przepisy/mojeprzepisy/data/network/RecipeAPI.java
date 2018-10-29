@@ -70,7 +70,7 @@ public interface RecipeAPI {
   Call<List<Comment>> editComment(@Path("commentId") int commentId, @Path("columnName") String columnName, @Path("columnValue") String columnValue);
 
   @PUT("recipe/comment")
-  Call<List<Comment>> addComment(@Body Comment comment);
+  Call<Message> addComment(@Body Comment comment);
 
   @DELETE("recipe/comment/{commentId}")
   Call<List<Comment>> deleteComment(@Path("commentId") int commentId, @Body Comment comment);

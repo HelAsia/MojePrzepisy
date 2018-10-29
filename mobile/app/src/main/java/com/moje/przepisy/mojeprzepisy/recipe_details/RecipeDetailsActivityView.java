@@ -14,13 +14,13 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import com.moje.przepisy.mojeprzepisy.R;
 import com.moje.przepisy.mojeprzepisy.data.model.Comment;
 import com.moje.przepisy.mojeprzepisy.data.model.Ingredient;
 import com.moje.przepisy.mojeprzepisy.data.model.Step;
 import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.recipe.RecipeRepository;
 import java.util.List;
-import butterknife.ButterKnife;
 
 public class RecipeDetailsActivityView extends AppCompatActivity implements RecipeDetailsContract.View,
     OnClickListener{
@@ -56,15 +56,12 @@ public class RecipeDetailsActivityView extends AppCompatActivity implements Reci
     setToolbar();
     presenter.setWholeRecipeElements();
     setListeners();
-//    presenter.setRatingBarStarsVisibility();
   }
 
   @Override
   public void onClick(View view) {
-    if(view.getId() == R.id.commentEditText){
-
-    }else if (view.getId() == R.id.addCommentButton){
-
+    if (view.getId() == R.id.addCommentButton){
+      presenter.sendCommentToServer();
     }else if(view.getId() == R.id.starImageView){
       presenter.setRatingBarStarsVisibility();
     }else if(view.getId() == R.id.heart_image_view){

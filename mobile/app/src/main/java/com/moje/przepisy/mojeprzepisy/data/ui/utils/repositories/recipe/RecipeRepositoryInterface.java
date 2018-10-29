@@ -42,11 +42,13 @@ public interface RecipeRepositoryInterface {
     void onStepsError();
     void onCommentError();
     void onStarsError();
+    void setCommentId(String message);
   }
 
   void addRecipe(List<Recipe> recipeList, OnRecipeFinishedListener listener);
   void addIngredients(List<Ingredient> ingredientList, OnRecipeFinishedListener listener);
   void addStep(List<Step> stepList, OnRecipeFinishedListener listener);
+  void addComment(Comment comment, OnRecipeDisplayListener listener);
   void addFirstStars(Stars stars, OnRecipeFinishedListener listener);
   void editStarsAndHeart(int recipeId, String columnName, int columnValue, OnStarsEditListener listener, int position);
   void editStarsAndHeartInRecipe(final int recipeId, String columnName, int columnValue, OnStarsEditInRecipeListener listener);
