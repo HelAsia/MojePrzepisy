@@ -23,6 +23,7 @@ import android.widget.Toast;
 import butterknife.BindView;
 import com.moje.przepisy.mojeprzepisy.R;
 import com.moje.przepisy.mojeprzepisy.add_recipe.add_recipe.add_main_recipe_page.AddRecipeActivityView;
+import com.moje.przepisy.mojeprzepisy.category_search.CategorySearchActivity;
 import com.moje.przepisy.mojeprzepisy.data.model.OneRecipeCard;
 import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.cards.OperationsOnCardRepository;
 import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.recipe.RecipeRepository;
@@ -149,6 +150,9 @@ public class MainCardsActivityView extends AppCompatActivity implements MainCard
             if (id == R.id.search_nav) {
               Intent intent = new Intent(MainCardsActivityView.this, SearchSwipeActivity.class);
               startActivity(intent);
+            }else if(id == R.id.category_nav){
+              Intent intent = new Intent(MainCardsActivityView.this, CategorySearchActivity.class);
+              startActivity(intent);
             }else if (id == R.id.add_nav) {
               Intent intent = new Intent(MainCardsActivityView.this, AddRecipeActivityView.class);
               startActivity(intent);
@@ -198,6 +202,9 @@ public class MainCardsActivityView extends AppCompatActivity implements MainCard
               startActivity(intent);
             }else if (id == R.id.search_nav) {
               Intent intent = new Intent(MainCardsActivityView.this, SearchSwipeActivity.class);
+              startActivity(intent);
+            }else if(id == R.id.category_nav){
+              Intent intent = new Intent(MainCardsActivityView.this, CategorySearchActivity.class);
               startActivity(intent);
             }else if (id == R.id.calculating_nav) {
 

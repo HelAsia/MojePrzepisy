@@ -35,6 +35,7 @@
   <string name="calculating">Przelicz składniki</string>
   <string name="timer">Timer</string>
   <string name="logout">Wyloguj</string>
+  <string name="category">Kategorie</string>
 
   <string name="something">PRÓBA</string>
   <string name="licences">Licencje</string>
@@ -46,13 +47,6 @@
 
   <!-- TODO: Remove or change this placeholder text -->
   <string name="hello_blank_fragment">Hello blank fragment</string>
-
-  <string name="tomato_soup_URL">https://nutriliving-images.imgix.net/images/2014/330/2593/40050259-2275-E411-8F70-02AF76A30124.jpg</string>
-  <string name="chitterlings_URL">https://www.przyslijprzepis.pl/media/cache/gallery_view/uploads/media/recipe/0001/23/3fe59f355f8f1a3bf199d5a9d991746a33cb0c18.jpeg</string>
-  <string name="cheesecake_URL">https://akademiasmaku.pl/upload/vademecums/197/big/idealny-sernik-197.jpg</string>
-  <string name="coffee_URL">http://bonavita.pl/data/2015/10/kawa-870x400.jpg</string>
-  <string name="pork_chop_URL">http://karczmazabidwor.pl/files/page/zdjecia/potrawy/kotlet-%20schabowy.jpg</string>
-  <string name="ebony_cake_URL">https://static.smaker.pl/photos/d/1/d/d1dcfbf9ba4aef5303a5c707445a9813_359664_53c796b99161d_wm.jpg</string>
 
   <string name="login_password_error_message">Podany login lub hasło są błędne</string>
   <string name="logout_error_message">Błąd wylogowania</string>
@@ -73,15 +67,32 @@
   <string name="choose_category_text_view">Wybierz kategorię przepisu</string>
   <string name="ingredients_title">Dodawanie składników</string>
 
-  <string name="snacks">Przekąski</string>
+  <string name="snacks_and_starters">Przekąski i przystawki</string>
   <string name="soups">Zupy</string>
-  <string name="starters">Przystawki</string>
-  <string name="desserts">Deser</string>
-  <string name="cakes">Ciasta</string>
+  <string name="pasta">Makarony</string>
+  <string name="pastes">Pasty</string>
+  <string name="chicken_dishes">Dania z kurczakiem</string>
+  <string name="beef_dishes">Dania z wołowiną</string>
+  <string name="pork_dishes">Dania z wieprzowiną</string>
+  <string name="turkey_dishes">Dania z indykiem</string>
+  <string name="fish_dishes">Dania z rybą</string>
+  <string name="seafood_dishes">Dania z owocami morza</string>
+  <string name="other_dinner_dishes">Inne dania obiadowe</string>
+  <string name="casserolles">Zapiekanki</string>
+  <string name="salads">Sałatki</string>
+  <string name="vegetarian">Wegetariańskie</string>
+  <string name="cakes_and_cookies">Ciasta i cistka</string>
+  <string name="desserts">Desery</string>
+  <string name="grilled">Grillowane</string>
+  <string name="pizza">Pizza</string>
+  <string name="drinks">Napoje i drinki</string>
+  <string name="sauces_and_dip">Sosy i dipy</string>
+  <string name="other_dishes">Inne</string>
 
   <string name="add_recipe_title_step_one">Krok 1: Główne informacje</string>
   <string name="add_recipe_title_step_two">Krok 2: Dodaj składniki</string>
   <string name="add_recipe_title_step_three">Krok 3: Dodaj kroki lub opis</string>
+  <string name="category_search_title">Kateorie przepisów</string>
   <string name="set_timer">Ustaw czasomierz</string>
 
   <string name="load_photo">Załaduj zdjęcie</string>

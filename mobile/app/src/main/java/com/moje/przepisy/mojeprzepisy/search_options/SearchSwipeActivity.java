@@ -32,18 +32,15 @@ public class SearchSwipeActivity extends AppCompatActivity {
     public Fragment getItem(int position) {
       switch (position) {
         case 0:
-          CategorySearchFragment search1 = new CategorySearchFragment();
-          return search1;
-        case 1:
           IngredientsSearchFragment search2 = new IngredientsSearchFragment();
           return search2;
-        case 2:
+        case 1:
           DurationSearchFragment search3 = new DurationSearchFragment();
           return search3;
-        case 3:
+        case 2:
           AdditionalSearchFragment search4 = new AdditionalSearchFragment();
           return search4;
-        case 4:
+        case 3:
           ListSearchFragment search5 = new ListSearchFragment();
           return search5;
         default:

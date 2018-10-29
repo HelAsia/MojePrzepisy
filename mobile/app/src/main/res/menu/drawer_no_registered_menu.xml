@@ -18,6 +18,10 @@
           android:icon="@mipmap/ic_search"
           android:title="@string/searching"/>
         <item
+          android:id="@+id/category_nav"
+          android:icon="@mipmap/ic_insert_drive_file_black_24dp"
+          android:title="@string/category"/>
+        <item
           android:id="@+id/calculating_nav"
           android:icon="@mipmap/ic_assessment_black_18dp"
           android:title="@string/calculating"/>

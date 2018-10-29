@@ -18,9 +18,9 @@
 
   <application
     android:allowBackup="true"
+    android:hardwareAccelerated="false"
     android:icon="@drawable/logo"
     android:label="@string/app_name"
-    android:hardwareAccelerated="false"
     android:largeHeap="true"
     android:supportsRtl="true"
     android:theme="@style/MyAppTheme">
@@ -54,6 +54,8 @@
     <activity android:name=".recipe_details.RecipeDetailsActivityView">
     </activity>
     <activity android:name=".timer.TimerActivityView">
+    </activity>
+    <activity android:name=".category_search.CategorySearchActivity">
     </activity>
   </application>
 

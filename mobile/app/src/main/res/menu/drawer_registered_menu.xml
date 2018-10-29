@@ -11,6 +11,10 @@
           android:icon="@mipmap/ic_search"
           android:title="@string/searching"/>
         <item
+          android:id="@+id/category_nav"
+          android:icon="@mipmap/ic_insert_drive_file_black_24dp"
+          android:title="@string/category"/>
+        <item
           android:id="@+id/add_nav"
           android:icon="@mipmap/ic_add_circle"
           android:title="@string/adding"/>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/activity_category_search"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:focusable="true"
+  android:focusableInTouchMode="true"
+  android:background="@color/primary_light"
+  tools:context=".category_search.CategorySearchActivity">
+
+  <android.support.v7.widget.Toolbar
+    android:id="@+id/toolbar_category_name"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/primary"
+    android:minHeight="?attr/actionBarSize"
+    app:titleTextColor="@android:color/black">
+  </android.support.v7.widget.Toolbar>
+
+  <ScrollView
+    android:id="@+id/scrollViewLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@id/toolbar_category_name">
+
+    <android.support.v7.widget.RecyclerView
+      android:id="@+id/addCategoryNamesRecyclerView"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:scrollbars="vertical"/>
+
+  </ScrollView>
+</RelativeLayout>

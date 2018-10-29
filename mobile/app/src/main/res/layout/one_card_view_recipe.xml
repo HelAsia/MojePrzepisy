@@ -12,7 +12,7 @@
   android:foreground="?android:attr/selectableItemBackground"
   android:orientation="vertical"
   card_view:cardBackgroundColor="@color/white"
-  card_view:cardCornerRadius="0dp"
+  card_view:cardCornerRadius="30dp"
   card_view:cardElevation="50dp">
 
   <RelativeLayout
