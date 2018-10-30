@@ -61,7 +61,7 @@ public class OperationsOnCardRepository implements OperationsOnCardRepositoryInt
 
   @Override
   public void getCardsSortedBySearchedQuery(final OnCardsListener cardsListener, String recipeName) {
-    OneRecipeCard oneRecipeCard = new OneRecipeCard(recipeName);
+    OneRecipeCard oneRecipeCard = new OneRecipeCard(recipeName, 1);
     Call<List<OneRecipeCard>> resp = cardAPI.getCardsSortedBySearchedQuery(oneRecipeCard);
 
     resp.enqueue(new Callback<List<OneRecipeCard>>() {
@@ -73,6 +73,24 @@ public class OperationsOnCardRepository implements OperationsOnCardRepositoryInt
       @Override
       public void onFailure(Call<List<OneRecipeCard>> call, Throwable t) {
         Log.i("getCardsSortedByChoseMethod.onFailure(): SERWER", t.getMessage());
+      }
+    });
+  }
+
+  @Override
+  public void getCardsSortedByCategoryQuery(final OnCardsListener cardsListener, String recipeCategory) {
+    OneRecipeCard oneRecipeCard = new OneRecipeCard(recipeCategory, 2);
+    Call<List<OneRecipeCard>> resp = cardAPI.getCardsSortedByCategoryQuery(oneRecipeCard);
+
+    resp.enqueue(new Callback<List<OneRecipeCard>>() {
+      @Override
+      public void onResponse(Call<List<OneRecipeCard>> call, Response<List<OneRecipeCard>> response) {
+        List<OneRecipeCard> recipes = response.body();
+        cardsListener.setRecipesList(recipes);
+      }
+      @Override
+      public void onFailure(Call<List<OneRecipeCard>> call, Throwable t) {
+        Log.i("getCardsSortedByCategoryQuery.onFailure(): SERWER", t.getMessage());
       }
     });
   }

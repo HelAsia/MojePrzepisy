@@ -11,6 +11,7 @@ public class OneRecipeCard {
   public int recipeId;
   public int starsCount;
   public int favoritesCount;
+  public String recipeCategory;
   public String recipeName;
   public String authorName;
   public String recipeMainPicture;
@@ -22,8 +23,12 @@ public class OneRecipeCard {
 
   }
 
-  public OneRecipeCard(String recipeName){
-    this.recipeName = recipeName;
+  public OneRecipeCard(String info, int option){
+    if(option == 1){
+      this.recipeName = info;
+    }else if(option == 2){
+      this.recipeCategory = info;
+    }
   }
 
   public OneRecipeCard(int recipeId){

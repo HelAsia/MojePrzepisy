@@ -102,11 +102,11 @@ values
 insert into recipes
 (recipe_id, user_id, recipe_name, recipe_prepare_time, recipe_cook_time, recipe_bake_time, photo_id, recipe_category, recipe_created_date_time)
 values
-(1, 1, 'Ogórkowa', '00:30:00', '00:30:00', '00:30:00', '20' ,'zupa', NOW()),
-(2, 3, 'Pomidorowa', '00:30:00', '00:20:00', '00:30:00', '20', 'zupa', NOW()),
-(3, 2, 'Murzynek', '00:30:00', '00:10:00', '00:20:00', '20' , 'ciasto', NOW()),
-(4, 2, 'Sernik', '00:40:00', '00:10:00', '00:30:00', '20' , 'ciasto', NOW()),
-(5, 3, 'Mleko', '00:40:00', '00:10:00', '00:30:00', '20' , 'ciasto', NOW());
+(1, 1, 'Ogórkowa', '00:30:00', '00:30:00', '00:30:00', '20' ,'Zupy', NOW()),
+(2, 3, 'Pomidorowa', '00:30:00', '00:20:00', '00:30:00', '20', 'Zupy', NOW()),
+(3, 2, 'Murzynek', '00:30:00', '00:10:00', '00:20:00', '20' , 'Ciasta i cistka', NOW()),
+(4, 2, 'Sernik', '00:40:00', '00:10:00', '00:30:00', '20' , 'Ciasta i cistka', NOW()),
+(5, 3, 'Mleko', '00:40:00', '00:10:00', '00:30:00', '20' , 'Ciasta i cistka', NOW());
 
 insert into users_recipes_stars
 (user_id, recipe_id, favorite, stars)

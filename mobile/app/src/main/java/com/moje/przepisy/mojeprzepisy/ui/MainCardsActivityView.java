@@ -152,6 +152,7 @@ public class MainCardsActivityView extends AppCompatActivity implements MainCard
               startActivity(intent);
             }else if(id == R.id.category_nav){
               Intent intent = new Intent(MainCardsActivityView.this, CategorySearchActivity.class);
+              intent.putExtra("LOGGED",true);
               startActivity(intent);
             }else if (id == R.id.add_nav) {
               Intent intent = new Intent(MainCardsActivityView.this, AddRecipeActivityView.class);
@@ -205,6 +206,7 @@ public class MainCardsActivityView extends AppCompatActivity implements MainCard
               startActivity(intent);
             }else if(id == R.id.category_nav){
               Intent intent = new Intent(MainCardsActivityView.this, CategorySearchActivity.class);
+              intent.putExtra("LOGGED",false);
               startActivity(intent);
             }else if (id == R.id.calculating_nav) {
 

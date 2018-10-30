@@ -3,6 +3,8 @@ package com.moje.przepisy.mojeprzepisy.category_search;
 import static com.moje.przepisy.mojeprzepisy.utils.Constant.BASE_URL;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -15,17 +17,27 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.moje.przepisy.mojeprzepisy.R;
+import com.moje.przepisy.mojeprzepisy.utils.Constant;
 import com.squareup.picasso.Picasso;
 import java.util.List;
 
-public class CategorySearchAdapter extends RecyclerView.Adapter<CategorySearchAdapter.ViewHolder> {
+public class CategorySearchAdapter extends RecyclerView.Adapter<CategorySearchAdapter.ViewHolder>{
   public Context context;
   private List<String> categoryNameList;
+  private OnShareClickedListener callbackCategory;
 
   CategorySearchAdapter(Context context, List<String> categoryNameList){
     this.context = context;
     this.categoryNameList = categoryNameList;
     setHasStableIds(true);
+  }
+
+  public void setCategoryOnShareClickedListener(CategorySearchAdapter.OnShareClickedListener callbackCategory) {
+    this.callbackCategory = callbackCategory;
+  }
+
+  public interface OnShareClickedListener {
+    void ShareCategoryClicked();
   }
 
   @NonNull
@@ -43,8 +55,8 @@ public class CategorySearchAdapter extends RecyclerView.Adapter<CategorySearchAd
     viewHolder.categoryImage.setOnClickListener(new OnClickListener() {
       @Override
       public void onClick(View view) {
-        String category = categoryNameList.get(position);
-
+        setSortedMethod(categoryNameList.get(position));
+        callbackCategory.ShareCategoryClicked();
       }
     });
   }
@@ -57,6 +69,12 @@ public class CategorySearchAdapter extends RecyclerView.Adapter<CategorySearchAd
   @Override
   public long getItemId(int position) {
     return position;
+  }
+
+  public void setSortedMethod(String sortedMethod){
+    SharedPreferences.Editor sortingSetting = PreferenceManager.getDefaultSharedPreferences(context).edit();
+    sortingSetting.putString(Constant.PREF_SORTED_METHOD, sortedMethod).apply();
+    sortingSetting.commit();
   }
 
   public class ViewHolder extends RecyclerView.ViewHolder {
@@ -73,7 +91,7 @@ public class CategorySearchAdapter extends RecyclerView.Adapter<CategorySearchAd
       categoryName.setText(oneCategoryName);
       int photoNumber = (int)getItemId()+ 1;
       Picasso.get().load(BASE_URL + "recipe/photo/" + photoNumber).into(categoryImage);
-
     }
   }
+
 }

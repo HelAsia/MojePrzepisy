@@ -58,7 +58,18 @@ class Cards:
                       u"WHERE recipe_name LIKE '%{}%' "\
                       u"GROUP BY recipe_id; ".format(searchedQuery)
 
-        return self.getAllCardsBasedMethod(userID,recipeQuery)
+        return self.getAllCardsBasedMethod(userID, recipeQuery)
+
+    def getCategoryCardsSortedByDefault(self, category, userID):
+        recipeQuery = u"SELECT recipe_id AS recipeId, recipe_name AS recipeName, user_id AS userId, " \
+                      u"photo_id as recipeMainPictureNumber, recipe_created_date_time as Date " \
+                      u"FROM recipes " \
+                      u"WHERE recipe_category LIKE '{}' "\
+                      u"GROUP BY recipe_id; ".format(category)
+
+        Logger.dbg(recipeQuery)
+
+        return self.getAllCardsBasedMethod(userID, recipeQuery)
 
     def getAllCardsSortedByUser(self, userID):
         recipeQuery = u"SELECT recipe_id AS recipeId, recipe_name AS recipeName, user_id AS userId, " \

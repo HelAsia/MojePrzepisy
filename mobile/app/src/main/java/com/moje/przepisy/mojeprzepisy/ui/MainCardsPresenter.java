@@ -42,6 +42,8 @@ public class MainCardsPresenter implements MainCardsContract.Presenter,
       getAllCardsSortedFromServer("default");
     }else if (sortedMethodPref.equals("myRecipe")){
       getAllCardsSortedFromServer("default");
+    }else {
+      operationsOnCardRepository.getCardsSortedByCategoryQuery(this, sortedMethodPref);
     }
   }
 
