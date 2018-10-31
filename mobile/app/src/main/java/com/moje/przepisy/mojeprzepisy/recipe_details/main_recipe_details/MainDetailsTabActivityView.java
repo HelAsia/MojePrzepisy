@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import com.moje.przepisy.mojeprzepisy.R;
 
 public class MainDetailsTabActivityView extends AppCompatActivity implements MainDetailsDisplayContract.View {
@@ -23,6 +24,7 @@ public class MainDetailsTabActivityView extends AppCompatActivity implements Mai
 
     presenter.setViewPager();
     presenter.setTabLayout();
+    setToolbar();
   }
 
   @Override
@@ -56,5 +58,11 @@ public class MainDetailsTabActivityView extends AppCompatActivity implements Mai
   public Boolean getIsLogged() {
     this.isLogged = getIntent().getExtras().getBoolean("isLogged");
     return isLogged;
+  }
+
+  public void setToolbar() {
+    Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_recipe_details_tab);
+    toolbar.setSubtitle(R.string.recipe_details);
+    setSupportActionBar(toolbar);
   }
 }

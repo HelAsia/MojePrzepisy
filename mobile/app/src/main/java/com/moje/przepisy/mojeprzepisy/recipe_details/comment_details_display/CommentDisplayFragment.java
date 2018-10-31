@@ -65,7 +65,7 @@ public class CommentDisplayFragment extends Fragment implements CommentDisplayCo
   public void onClick(View view) {
     if (view.getId() == R.id.addCommentButton) {
       presenter.sendCommentToServer();
-
+      presenter.setEditTextAfterAdded();
     }
   }
 

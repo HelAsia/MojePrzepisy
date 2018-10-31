@@ -61,6 +61,7 @@
   <string name="add_main_photo">Dodaj zdjęcie główne</string>
   <string name="add_photo">Dodaj zdjęcie</string>
   <string name="add_group">Dodaj nazwę grupy składników</string>
+  <string name="recipe_details">Szczegóły przepisu</string>
 
   <string name="recipe_name">Nazwa przepisu</string>
   <string name="recipe_category">Kategoria przepisu</string>

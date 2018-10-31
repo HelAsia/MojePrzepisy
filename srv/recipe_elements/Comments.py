@@ -30,7 +30,7 @@ class Comments:
         if queryResult:
             for queryResultTime in queryResult:
       #          queryResultTimeCreatedDate = str(time.mktime(queryResultTime['createdDate'].timetuple()))
-                queryResultTime['createdDate'] = datetime.datetime.now().strftime(f)
+                queryResultTime['createdDate'] = queryResultTime['createdDate'].strftime(f)
 
             Logger.dbg(queryResult)
             return queryResult

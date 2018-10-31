@@ -5,8 +5,8 @@
   android:id="@+id/ingredient_display_my_card_view_layout"
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
-  android:layout_margin="0dp"
-  android:background="@color/white"
+  android:layout_margin="5dp"
+  android:background="@color/creamy"
   android:clickable="true"
   android:focusable="true"
   android:foreground="?android:attr/selectableItemBackground"
@@ -39,6 +39,7 @@
       android:id="@+id/commentTextView"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
+      android:textColor="@color/primary_text"
       android:layout_below="@+id/commentIconImageView"
       android:text="TextView"/>
   </RelativeLayout>

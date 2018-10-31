@@ -29,11 +29,13 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_weight="0.33"
+        android:textColor="@color/primary_text"
         android:text="Krok: "/>
       <TextView
         android:id="@+id/stepNumberTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/primary_text"
         android:layout_weight="1"
         android:text="TextView"/>
     </LinearLayout>
@@ -41,7 +43,8 @@
       android:id="@+id/stepDescriptionTextView"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:minLines="6"
+      android:textColor="@color/primary_text"
+      android:minLines="1"
       android:lines="8"
       android:gravity="top|left"
       android:maxLines="10"

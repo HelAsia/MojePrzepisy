@@ -42,8 +42,10 @@ public class CommentDisplayPresenter implements CommentDisplayContract.Presenter
 
   @Override
   public void sendCommentToServer() {
-    recipeRepository.addComment(getCommentObjectToAdd(), this);
-    recipeRepository.getComments(commentsDisplayView.getRecipeId(),this);
+    if(!commentsDisplayView.getCommentEditText().getText().toString().equals("")){
+      recipeRepository.addComment(getCommentObjectToAdd(), this);
+      recipeRepository.getComments(commentsDisplayView.getRecipeId(),this);
+    }
   }
 
   @Override
