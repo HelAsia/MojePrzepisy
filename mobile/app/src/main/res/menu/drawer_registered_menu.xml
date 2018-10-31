@@ -7,10 +7,6 @@
         android:id="@+id/menu_group_one"
         android:checkableBehavior="single">
         <item
-          android:id="@+id/search_nav"
-          android:icon="@mipmap/ic_search"
-          android:title="@string/searching"/>
-        <item
           android:id="@+id/category_nav"
           android:icon="@mipmap/ic_insert_drive_file_black_24dp"
           android:title="@string/category"/>
@@ -18,10 +14,6 @@
           android:id="@+id/add_nav"
           android:icon="@mipmap/ic_add_circle"
           android:title="@string/adding"/>
-        <item
-          android:id="@+id/calculating_nav"
-          android:icon="@mipmap/ic_assessment_black_18dp"
-          android:title="@string/calculating"/>
         <item
           android:id="@+id/timer_nav"
           android:icon="@mipmap/ic_access_alarm"

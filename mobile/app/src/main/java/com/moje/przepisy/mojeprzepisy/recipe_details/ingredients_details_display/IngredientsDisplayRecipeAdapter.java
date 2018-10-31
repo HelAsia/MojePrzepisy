@@ -1,4 +1,4 @@
-package com.moje.przepisy.mojeprzepisy.recipe_details;
+package com.moje.przepisy.mojeprzepisy.recipe_details.ingredients_details_display;
 
 import android.content.Context;
 import android.support.annotation.NonNull;

@@ -3,16 +3,13 @@
   xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
-  android:id="@+id/activity_category_search"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  android:focusable="true"
-  android:focusableInTouchMode="true"
   android:background="@color/primary_light"
-  tools:context=".category_search.CategorySearchActivity">
+  tools:context=".recipe_details.main_recipe_details.MainDetailsTabActivityView">
 
   <android.support.v7.widget.Toolbar
-    android:id="@+id/toolbar_category_name"
+    android:id="@+id/toolbar_recipe_details_tab"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/primary"
@@ -26,17 +23,23 @@
       android:paddingLeft="@dimen/activity_horizontal_margin"/>
   </android.support.v7.widget.Toolbar>
 
-  <ScrollView
-    android:id="@+id/scrollViewLayout"
+  <android.support.design.widget.TabLayout
+    android:id="@+id/sliding_tabs"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_below="@id/toolbar_category_name">
+    android:background="@color/lime_transparent"
+    android:minHeight="?actionBarSize"
+    app:tabGravity="fill"
+    app:tabIndicatorColor="@color/red_dark"
+    app:tabIndicatorHeight="4dp"
+    app:tabMode="fixed"
+    android:layout_below="@+id/toolbar_recipe_details_tab"/>
 
-    <android.support.v7.widget.RecyclerView
-      android:id="@+id/addCategoryNamesRecyclerView"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:scrollbars="vertical"/>
-
-  </ScrollView>
+  <android.support.v4.view.ViewPager
+    android:id="@+id/viewpager"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/primary_light"
+    android:layout_below="@+id/sliding_tabs">
+  </android.support.v4.view.ViewPager>
 </RelativeLayout>

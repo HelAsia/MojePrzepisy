@@ -18,6 +18,12 @@
     android:background="@color/primary"
     android:minHeight="?attr/actionBarSize"
     app:titleTextColor="@android:color/black">
+
+    <ImageView
+      android:layout_width="120dp"
+      android:layout_height="60dp"
+      android:src="@drawable/logo"
+      android:paddingLeft="@dimen/activity_horizontal_margin"/>
   </android.support.v7.widget.Toolbar>
 
   <RelativeLayout

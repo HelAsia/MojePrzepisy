@@ -30,9 +30,8 @@ import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.recipe.RecipeRe
 import com.moje.przepisy.mojeprzepisy.licenses.LicensesActivity;
 import com.moje.przepisy.mojeprzepisy.log_in.LoginActivityView;
 import com.moje.przepisy.mojeprzepisy.log_out.LogoutActivityView;
-import com.moje.przepisy.mojeprzepisy.recipe_details.RecipeDetailsActivityView;
+import com.moje.przepisy.mojeprzepisy.recipe_details.main_recipe_details.MainDetailsTabActivityView;
 import com.moje.przepisy.mojeprzepisy.register.RegisterActivityView;
-import com.moje.przepisy.mojeprzepisy.search_options.SearchSwipeActivity;
 import com.moje.przepisy.mojeprzepisy.timer.TimerActivityView;
 import com.moje.przepisy.mojeprzepisy.ui.MyCardViewAdapter.OnShareHeartClickedListener;
 import com.moje.przepisy.mojeprzepisy.ui.MyCardViewAdapter.OnShareStarsClickedListener;
@@ -147,18 +146,13 @@ public class MainCardsActivityView extends AppCompatActivity implements MainCard
             drawerLayout.closeDrawers();
             int id = menuItem.getItemId();
 
-            if (id == R.id.search_nav) {
-              Intent intent = new Intent(MainCardsActivityView.this, SearchSwipeActivity.class);
-              startActivity(intent);
-            }else if(id == R.id.category_nav){
+            if (id == R.id.category_nav){
               Intent intent = new Intent(MainCardsActivityView.this, CategorySearchActivity.class);
               intent.putExtra("LOGGED",true);
               startActivity(intent);
             }else if (id == R.id.add_nav) {
               Intent intent = new Intent(MainCardsActivityView.this, AddRecipeActivityView.class);
               startActivity(intent);
-            }else if (id == R.id.calculating_nav){
-
             }else if (id == R.id.timer_nav) {
               Intent intent = new Intent(MainCardsActivityView.this, TimerActivityView.class);
               startActivity(intent);
@@ -201,15 +195,10 @@ public class MainCardsActivityView extends AppCompatActivity implements MainCard
             }else if( id == R.id.login_nav){
               Intent intent = new Intent(MainCardsActivityView.this, LoginActivityView.class);
               startActivity(intent);
-            }else if (id == R.id.search_nav) {
-              Intent intent = new Intent(MainCardsActivityView.this, SearchSwipeActivity.class);
-              startActivity(intent);
             }else if(id == R.id.category_nav){
               Intent intent = new Intent(MainCardsActivityView.this, CategorySearchActivity.class);
               intent.putExtra("LOGGED",false);
               startActivity(intent);
-            }else if (id == R.id.calculating_nav) {
-
             }else if (id == R.id.timer_nav) {
               Intent intent = new Intent(MainCardsActivityView.this, TimerActivityView.class);
               startActivity(intent);
@@ -308,7 +297,7 @@ public class MainCardsActivityView extends AppCompatActivity implements MainCard
 
   @Override
   public void goToRecipeDetails(int recipeId){
-    Intent intent = new Intent(MainCardsActivityView.this, RecipeDetailsActivityView.class);
+    Intent intent = new Intent(MainCardsActivityView.this, MainDetailsTabActivityView.class);
     Bundle extras = new Bundle();
     extras.putInt("recipeId", recipeId);
     extras.putBoolean("isLogged", getIsLoggedStatus());

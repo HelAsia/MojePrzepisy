@@ -1,4 +1,4 @@
-package com.moje.przepisy.mojeprzepisy.recipe_details;
+package com.moje.przepisy.mojeprzepisy.recipe_details.steps_details_display;
 
 import static com.moje.przepisy.mojeprzepisy.utils.Constant.BASE_URL;
 

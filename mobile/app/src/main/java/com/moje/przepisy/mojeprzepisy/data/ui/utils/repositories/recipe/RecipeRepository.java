@@ -111,7 +111,7 @@ public class RecipeRepository implements RecipeRepositoryInterface{
   }
 
   @Override
-  public void addComment(Comment comment, final OnRecipeDisplayListener listener) {
+  public void addComment(Comment comment, final OnCommentsDetailsDisplayListener listener) {
     Call<Message> resp = recipeAPI.addComment(comment);
     resp.enqueue(new Callback<Message>() {
       @Override
@@ -202,7 +202,7 @@ public class RecipeRepository implements RecipeRepositoryInterface{
   }
 
   @Override
-  public void getRecipe(int recipeId, final OnRecipeDisplayListener listener) {
+  public void getRecipe(int recipeId, final OnMainInfoDetailsDisplayListener listener) {
     Call<Recipe> resp = recipeAPI.getRecipe(recipeId);
     resp.enqueue(new Callback<Recipe>() {
       @Override
@@ -229,7 +229,7 @@ public class RecipeRepository implements RecipeRepositoryInterface{
   }
 
   @Override
-  public void getIngredients(int recipeId, final OnRecipeDisplayListener listener) {
+  public void getIngredients(int recipeId, final OnIngredientsDetailsDisplayListener listener) {
     Call<List<Ingredient>> resp = recipeAPI.getIngredient(recipeId);
     resp.enqueue(new Callback<List<Ingredient>>() {
       @Override
@@ -255,7 +255,7 @@ public class RecipeRepository implements RecipeRepositoryInterface{
   }
 
   @Override
-  public void getSteps(int recipeId, final OnRecipeDisplayListener listener) {
+  public void getSteps(int recipeId, final OnStepsDetailsDisplayListener listener) {
     Call<List<Step>> resp = recipeAPI.getStep(recipeId);
     resp.enqueue(new Callback<List<Step>>() {
       @Override
@@ -281,7 +281,7 @@ public class RecipeRepository implements RecipeRepositoryInterface{
   }
 
   @Override
-  public void getComments(int recipeId, final OnRecipeDisplayListener listener) {
+  public void getComments(int recipeId, final OnCommentsDetailsDisplayListener listener) {
     Call<List<Comment>> resp = recipeAPI.getComment(recipeId);
     resp.enqueue(new Callback<List<Comment>>() {
       @Override
@@ -307,7 +307,7 @@ public class RecipeRepository implements RecipeRepositoryInterface{
   }
 
   @Override
-  public void getRecipeDetailsStars(int recipeId, final OnRecipeDisplayListener listener) {
+  public void getRecipeDetailsStars(int recipeId, final OnMainInfoDetailsDisplayListener listener) {
     Call<Stars> resp = recipeAPI.getRecipeDetailsStars(recipeId);
     resp.enqueue(new Callback<Stars>() {
       @Override

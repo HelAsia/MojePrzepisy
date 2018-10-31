@@ -42,6 +42,8 @@ public class TimerActivityView extends AppCompatActivity implements TimerContrac
 
     presenter = new TimerPresenter(this);
 
+    setToolbar();
+
     presenter.setFirstIconEnabledStatus();
     presenter.setMinAndMaxHourValueAndWheelSelector();
     presenter.setMinAndMaxMinuteValueAndWheelSelector();

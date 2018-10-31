@@ -6,10 +6,8 @@
     android:name="android.hardware.camera"
     android:required="true"/>
 
-  <uses-permission android:name="android.permission.SEND_SMS"/>
   <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
   <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-  <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
   <uses-permission android:name="android.permission.INTERNET"/>
   <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
   <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
@@ -51,11 +49,13 @@
     </activity>
     <activity android:name=".add_recipe.add_recipe.display_all_recipe_elements.DisplayAllRecipeElementsActivityView">
     </activity>
-    <activity android:name=".recipe_details.RecipeDetailsActivityView">
-    </activity>
     <activity android:name=".timer.TimerActivityView">
     </activity>
     <activity android:name=".category_search.CategorySearchActivity">
+    </activity>
+    <activity android:name=".licenses.LicensesActivity">
+    </activity>
+    <activity android:name=".recipe_details.main_recipe_details.MainDetailsTabActivityView">
     </activity>
   </application>
 

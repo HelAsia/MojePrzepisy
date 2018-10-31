@@ -1,4 +1,4 @@
-package com.moje.przepisy.mojeprzepisy.recipe_details;
+package com.moje.przepisy.mojeprzepisy.recipe_details.comment_details_display;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -11,7 +11,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.moje.przepisy.mojeprzepisy.R;
 import com.moje.przepisy.mojeprzepisy.data.model.Comment;
-import java.sql.Timestamp;
 import java.util.List;
 
 public class CommentDisplayRecipeAdapter extends RecyclerView.Adapter<CommentDisplayRecipeAdapter.ViewHolder> {
