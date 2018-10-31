@@ -71,3 +71,14 @@ class Steps:
             return 200, u'Your deleted step_id = {}'.format(stepId)
         else:
             return 404, u'Forwarded data to check are not correct'
+
+    def deleteAllStep(self, recipeId):
+        query = u"DELETE FROM steps " \
+                u"WHERE recipe_id = {}".format(recipeId)
+        queryResult, rows, msg = self.database.delete(query)
+
+        if queryResult:
+            Logger.dbg(queryResult)
+            return 200, u'Your deleted recipe_id = {}'.format(recipeId)
+        else:
+            return 404, u'Forwarded data to check are not correct'

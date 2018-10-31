@@ -86,7 +86,7 @@ class Stars:
         query = u"UPDATE users_recipes_stars " \
                 u"SET {} = {} " \
                 u"WHERE recipe_id = {} " \
-                u"AND user_id = {}".format(columnName, columnValue, recipeId, userID)
+                u"AND user_id = {};".format(columnName, columnValue, recipeId, userID)
 
         queryResult, rows, msg = self.database.insert(query)
 
@@ -107,7 +107,19 @@ class Stars:
     def deleteStars(self, recipeId, userID):
         query = u"DELETE FROM users_recipes_stars " \
                 u"WHERE recipe_id = {}" \
-                u"AND user_id = {})".format(recipeId, userID)
+                u"AND user_id = {};".format(recipeId, userID)
+
+        queryResult = self.database.delete(query)
+
+        if queryResult:
+            Logger.dbg(str(tuple(queryResult)))
+            return 200, u'Your deleted recipe_id = {}'.format(recipeId)
+        else:
+            return 404, u'Forwarded data to check are not correct'
+
+    def deleteAllStars(self, recipeId):
+        query = u"DELETE FROM users_recipes_stars " \
+                u"WHERE recipe_id = {};".format(recipeId)
 
         queryResult = self.database.delete(query)
 

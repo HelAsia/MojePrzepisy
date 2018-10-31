@@ -71,7 +71,7 @@ class Users:
 
 
     def getUser(self, userID):
-        query = u"SELECT user_login, first_name, last_name, email " \
+        query = u"SELECT user_login AS login, user_password AS password, first_name AS firstNme, last_name AS lastName, email, photo_id AS photoId " \
                 u"FROM users " \
                 u"WHERE user_id = '{}'".format(userID)
         queryResult = self.database.query(query)
@@ -105,3 +105,4 @@ class Users:
             return 200, u'Your changed {}={}'.format(columnName, columnValue)
         else:
             return 404, u'Forwarded data to check are not correct'
+

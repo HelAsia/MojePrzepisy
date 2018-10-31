@@ -279,6 +279,18 @@ def editRecipe(recipeId, columnName, columnValue):
         'message': message
     })
 
+@app.route('/recipe/<int:recipeId>', methods=['DELETE'])
+@authorized
+def deleteRecipePhoto(recipeId):
+    recipe = Recipes(database)
+
+    status, message = recipe.deletePhoto(recipeId)
+
+    return jsonify({
+        'status': status,
+        'message': message
+    })
+
 @app.route('/recipe/photo/<int:photoId>', methods=['GET'])
 def getPhoto(photoId):
     photo = Photo(database)
@@ -340,6 +352,17 @@ def deleteStep(stepId):
         'message': message
     })
 
+@app.route('/recipe/step/all/<int:recipeId>', methods=['DELETE'])
+@authorized
+def deleteAllSteps(recipeId):
+    step = Steps(database)
+
+    status, message = step.deleteAllStep(recipeId)
+
+    return jsonify({
+        'status': status,
+        'message': message
+    })
 
 @app.route('/recipe/step', methods=['PUT'])
 @authorized
@@ -398,6 +421,17 @@ def deleteIngredient(ingredientId):
         'message': message
     })
 
+@app.route('/recipe/ingredient/all/<int:recipeId>', methods=['DELETE'])
+@authorized
+def deleteAllIngredients(recipeId):
+    ingredient = Ingredients(database)
+
+    status, message = ingredient.deleteAllIngredient(recipeId)
+
+    return jsonify({
+        'status': status,
+        'message': message
+    })
 
 @app.route('/recipe/ingredient', methods=['PUT'])
 @authorized
@@ -455,6 +489,17 @@ def deleteComment(commentId):
         'message': message
     })
 
+@app.route('/recipe/comment/all/<int:recipeId>', methods=['DELETE'])
+@authorized
+def deleteAllComments(recipeId):
+    comment = Comments(database)
+
+    status, message = comment.deleteAllComment(recipeId)
+
+    return jsonify({
+        'status': status,
+        'message': message
+    })
 
 @app.route('/recipe/comment', methods=['PUT'])
 @authorized
@@ -533,6 +578,18 @@ def deleteStars(recipeId):
         'message': message
     })
 
+
+@app.route('/recipe/stars/all/<int:recipeId>', methods=['DELETE'])
+@authorized
+def deleteAllStars(recipeId):
+    star = Stars(database)
+
+    status, message = star.deleteAllStars(recipeId)
+
+    return jsonify({
+        'status': status,
+        'message': message
+    })
 
 @app.route('/recipe/stars', methods=['PUT'])
 @authorized

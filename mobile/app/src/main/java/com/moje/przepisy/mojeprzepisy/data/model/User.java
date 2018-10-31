@@ -8,6 +8,7 @@ public class User {
   private String password;
   private String email;
   private String userID;
+  private int photoId;
 
   public User(String login, String password){
     this.login = login;
@@ -29,6 +30,16 @@ public class User {
     this.login = login;
     this.password = password;
     this.email = email;
+  }
+
+  public User(String firstName, String lastName, String login, String password,
+      String email, int photoId) {
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.login = login;
+    this.password = password;
+    this.email = email;
+    this.photoId = photoId;
   }
 
   public String getName(){

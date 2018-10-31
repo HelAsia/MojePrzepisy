@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/activity_home_page"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  tools:context=".user_profile.UserProfileActivityView"
+  android:background="@color/primary_light">
+
+  <android.support.v7.widget.Toolbar
+    android:id="@+id/toolbar_user_profile"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/primary"
+    android:minHeight="?attr/actionBarSize"
+    app:titleTextColor="@android:color/black">
+  </android.support.v7.widget.Toolbar>
+
+  <ScrollView
+    android:id="@+id/scrollViewLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@+id/toolbar_user_profile"
+    android:layout_marginTop="0dp">
+
+    <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
+
+      <LinearLayout
+        android:id="@+id/loadPhotoLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <ImageView
+          android:id="@+id/mainPhotoImageView"
+          android:layout_width="200dp"
+          android:layout_height="200dp"
+          android:layout_gravity="center"
+          app:srcCompat="@android:drawable/ic_menu_gallery"/>
+        <TextView
+          android:id="@+id/loadPictureTextView"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:gravity="center"
+          android:text="@string/load_photo"
+          android:background="@color/blue_transparent"
+          android:textColor="@color/primary_text"
+          android:textSize="@dimen/edit_text_size"/>
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="60dp"
+          android:orientation="horizontal">
+
+          <ImageView
+            android:id="@+id/galleryImageView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@mipmap/ic_image"/>
+
+          <ImageView
+            android:id="@+id/cameraImageView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@mipmap/ic_camera_alt"/>
+
+          <ImageView
+            android:id="@+id/URLImageView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@mipmap/ic_find_in_page"/>
+        </LinearLayout>
+        <TextView
+          android:id="@+id/savePictureTextView"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:gravity="center"
+          android:text="@string/save_photo"
+          android:background="@color/blue_transparent"
+          android:textColor="@color/primary_text"
+          android:textSize="@dimen/edit_text_size"/>
+        <ImageView
+          android:id="@+id/savePictureImageView"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="30dp"
+          android:layout_gravity="center"
+          app:srcCompat="@android:drawable/ic_menu_save"/>
+      </LinearLayout>
+
+      <LinearLayout
+        android:id="@+id/editLoginLinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/loadPhotoLayout">
+
+        <EditText
+          android:id="@+id/editLoginEditText"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:ems="10"
+          android:inputType="textPersonName"
+          android:text="Name"/>
+
+        <ImageView
+          android:id="@+id/saveLoginImageView"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          app:srcCompat="@android:drawable/ic_menu_save"/>
+      </LinearLayout>
+
+      <LinearLayout
+        android:id="@+id/editNameLinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editLoginLinearLayout">
+
+        <EditText
+          android:id="@+id/editNameEditText"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:ems="10"
+          android:inputType="textPersonName"
+          android:text="Name"/>
+
+        <ImageView
+          android:id="@+id/saveNameImageView"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          app:srcCompat="@android:drawable/ic_menu_save"/>
+      </LinearLayout>
+
+      <LinearLayout
+        android:id="@+id/editLastNameLinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editNameLinearLayout">
+
+        <EditText
+          android:id="@+id/editLastNameEditText"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:ems="10"
+          android:inputType="textPersonName"
+          android:text="Name"/>
+
+        <ImageView
+          android:id="@+id/saveLastNameImageView"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          app:srcCompat="@android:drawable/ic_menu_save"/>
+      </LinearLayout>
+
+      <LinearLayout
+        android:id="@+id/editEmailLinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editLastNameLinearLayout">
+
+        <EditText
+          android:id="@+id/editEmailEditText"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:ems="10"
+          android:inputType="textEmailAddress"
+          android:text="Name"/>
+
+        <ImageView
+          android:id="@+id/saveEmailImageView"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          app:srcCompat="@android:drawable/ic_menu_save"/>
+      </LinearLayout>
+
+      <LinearLayout
+        android:id="@+id/editPasswordLinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editEmailLinearLayout">
+
+        <EditText
+          android:id="@+id/editPasswordEditText"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:ems="10"
+          android:inputType="textPassword"
+          android:text="Name"/>
+
+        <ImageView
+          android:id="@+id/editPasswordImageView"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:src="@android:drawable/ic_menu_edit"/>
+      </LinearLayout>
+
+      <LinearLayout
+        android:id="@+id/editRepeatPasswordLinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_below="@+id/editPasswordLinearLayout">
+
+        <EditText
+          android:id="@+id/editRepeatPasswordEditText"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:ems="10"
+          android:inputType="textPassword"
+          android:text="Name"/>
+
+        <ImageView
+          android:id="@+id/savePasswordImageView"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:src="@android:drawable/ic_menu_save"/>
+      </LinearLayout>
+    </RelativeLayout>
+  </ScrollView>
+</RelativeLayout>

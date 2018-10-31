@@ -22,7 +22,7 @@ public interface UserAPI {
   Call<Message> register(@Body User user);
 
   @GET("/user")
-  Call<Message> getUser();
+  Call<User> getUser();
 
   @POST("/user/{columnName}/{columnValue}")
   Call<Message> editUser(@Path("columnName") String columnName, @Path("columnValue") String columnValue);

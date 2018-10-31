@@ -29,7 +29,6 @@ class Comments:
 
         if queryResult:
             for queryResultTime in queryResult:
-      #          queryResultTimeCreatedDate = str(time.mktime(queryResultTime['createdDate'].timetuple()))
                 queryResultTime['createdDate'] = queryResultTime['createdDate'].strftime(f)
 
             Logger.dbg(queryResult)
@@ -80,6 +79,17 @@ class Comments:
         if queryResult:
             Logger.dbg(str(tuple(queryResult)))
             return 200, u'Your deleted comment_id = {}'.format(commentId)
+        else:
+            return 404, u'Forwarded data to check are not correct'
+
+    def deleteAllComment(self, recipeId):
+        query = u"DELETE FROM comments " \
+                u"WHERE recipe_id = {}".format(recipeId)
+        queryResult = self.database.query(query)
+
+        if queryResult:
+            Logger.dbg(str(tuple(queryResult)))
+            return 200, u'Your deleted recipe_id = {}'.format(recipeId)
         else:
             return 404, u'Forwarded data to check are not correct'
 

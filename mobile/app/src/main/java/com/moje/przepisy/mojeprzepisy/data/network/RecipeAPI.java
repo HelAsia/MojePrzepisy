@@ -47,8 +47,10 @@ public interface RecipeAPI {
   Call<Message> addStep(@Body Step step);
 
   @DELETE("recipe/step/{stepId}")
-  Call<List<Step>> deleteStep(@Path("stepId") int stepId, @Body Step step);
+  Call<Message> deleteStep(@Path("stepId") int stepId, @Body Step step);
 
+  @DELETE("recipe/step/all/{recipeId}")
+  Call<Message> deleteAllStepa(@Path("recipeId") int recipeId);
 
   @GET("recipe/ingredient/{recipeId}")
   Call<List<Ingredient>> getIngredient(@Path("recipeId") int recipeId);
@@ -60,7 +62,10 @@ public interface RecipeAPI {
   Call<Message> addIngredient(@Body Ingredient ingredient);
 
   @DELETE("recipe/ingredient/{ingredientId}")
-  Call<List<Ingredient>> deleteIngredient(@Path("ingredientId") int ingredientId, @Body Ingredient ingredient);
+  Call<Message> deleteIngredient(@Path("ingredientId") int ingredientId, @Body Ingredient ingredient);
+
+  @DELETE("recipe/ingredient/all/{recipeId}")
+  Call<Message> deleteAllIngredients(@Path("recipeId") int recipeId);
 
 
   @GET("recipe/comment/{recipeId}")
@@ -73,8 +78,10 @@ public interface RecipeAPI {
   Call<Message> addComment(@Body Comment comment);
 
   @DELETE("recipe/comment/{commentId}")
-  Call<List<Comment>> deleteComment(@Path("commentId") int commentId, @Body Comment comment);
+  Call<Message> deleteComment(@Path("commentId") int commentId, @Body Comment comment);
 
+  @DELETE("recipe/comment/all/{recipeId}")
+  Call<Message> deleteAllComments(@Path("recipeId") int recipeId);
 
   @GET("recipe/stars/detail/{recipeId}")
   Call<Stars> getRecipeDetailsStars(@Path("recipeId") int recipeId);
@@ -85,8 +92,11 @@ public interface RecipeAPI {
   @PUT("recipe/stars")
   Call<Message> addStars(@Body Stars stars);
 
-  @DELETE("recipe/stars{recipeId}")
+  @DELETE("recipe/stars/{recipeId}")
   Call<Message> deleteStars(@Path("recipeId") int recipeId);
+
+  @DELETE("recipe/stars/all/{recipeId}")
+  Call<Message> deleteAllStars(@Path("recipeId") int recipeId);
 
   @GET("recipe/favorite/{recipeId}")
   Call<Stars> getFavorite(@Path("recipeId") int recipeId);

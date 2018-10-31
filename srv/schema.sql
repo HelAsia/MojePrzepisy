@@ -22,11 +22,12 @@ CREATE TABLE sessions (
 
 CREATE TABLE users (
     user_id int(11) NOT NULL AUTO_INCREMENT,
-    user_login varchar(80) unique DEFAULT NULL,
-    user_password varchar(80) DEFAULT NULL,
+    user_login varchar(80) unique NOT NULL,
+    user_password varchar(80) NOT NULL,
     first_name varchar(50) DEFAULT NULL,
     last_name varchar(50) DEFAULT NULL,
     email varchar(80) NOT NULL,
+    photo_id int(11) DEFAULT NULL,
     PRIMARY KEY (user_id)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 

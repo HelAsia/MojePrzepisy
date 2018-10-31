@@ -70,3 +70,14 @@ class Ingredients:
             return 200, u'Your deleted ingredient_id = {}'.format(ingredientId)
         else:
             return 404, u'Forwarded data to check are not correct'
+
+    def deleteAllIngredient(self, recipeId):
+        query = u"DELETE FROM ingredients " \
+                u"WHERE recipe_id = {}".format(recipeId)
+        queryResult = self.database.query(query)
+
+        if queryResult:
+            Logger.dbg(str(tuple(queryResult)))
+            return 200, u'Your deleted recipe_id = {}'.format(recipeId)
+        else:
+            return 404, u'Forwarded data to check are not correct'

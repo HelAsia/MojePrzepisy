@@ -113,4 +113,14 @@ public class UserRepository implements UserRepositoryInterface{
       }
     }
   }
+
+  @Override
+  public void editUser(String columnName, String columnValue, OnEditUserFinishedListener listener) {
+
+  }
+
+  @Override
+  public void getUser() {
+
+  }
 }

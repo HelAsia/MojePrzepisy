@@ -3,6 +3,7 @@ package com.moje.przepisy.mojeprzepisy.welcome;
 import android.content.Context;
 import android.util.Log;
 import com.moje.przepisy.mojeprzepisy.data.model.Message;
+import com.moje.przepisy.mojeprzepisy.data.model.User;
 import com.moje.przepisy.mojeprzepisy.data.network.RetrofitSingleton;
 import com.moje.przepisy.mojeprzepisy.data.network.UserAPI;
 import retrofit2.Call;
@@ -22,22 +23,20 @@ public class WelcomeRepository implements WelcomeRepositoryInterface {
 
   @Override
   public void checkUser(final OnLoggedListener loggedListener) {
-    Call<Message> resp = userAPI.getUser();
-    resp.enqueue(new Callback<Message>() {
+    Call<User> resp = userAPI.getUser();
+    resp.enqueue(new Callback<User>() {
       @Override
-      public void onResponse(Call<Message> call, Response<Message> response) {
-        Message msg = response.body();
-        if(msg != null) {
-          Log.i("checkUser.onResponse(): SERVER", "Message: " + msg.message);
-          if (msg.status == 401) {
-            loggedListener.onNotLogged();
-          } else {
+      public void onResponse(Call<User> call, Response<User> response) {
+        User user = response.body();
+        if(user != null) {
+          Log.i("checkUser.onResponse(): SERVER", "User: " + user.getLogin());
             loggedListener.onLogged();
+        } else {
+            loggedListener.onNotLogged();
           }
         }
-      }
       @Override
-      public void onFailure(Call<Message> call, Throwable t) {
+      public void onFailure(Call<User> call, Throwable t) {
         Log.i("checkUser.onFailure(): SERWER", t.getMessage());
         loggedListener.showErrorMessage();
       }
