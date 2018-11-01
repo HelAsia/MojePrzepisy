@@ -120,6 +120,7 @@ public class RecipeRepository implements RecipeRepositoryInterface{
         if(message.status == 200){
           Log.i("addComment.onResponse(): Stars: ", "OK. Comment has been added");
           listener.setCommentId(message.message);
+          listener.setCommentAddedState(true);
         }else if(message.status == 404){
           Log.e("addComment.onResponse(): Stars: ", "NOT OK. Comment hasn't been added");
           listener.onCommentError();

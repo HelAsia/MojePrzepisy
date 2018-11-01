@@ -13,6 +13,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import com.moje.przepisy.mojeprzepisy.R;
 import com.moje.przepisy.mojeprzepisy.data.model.Comment;
 import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.recipe.RecipeRepository;
@@ -25,6 +26,7 @@ public class CommentDisplayFragment extends Fragment implements CommentDisplayCo
     OnClickListener {
   private CommentDisplayContract.Presenter presenter;
   Context context;
+  int commentQty;
   int recipeId;
   Boolean isLogged;
   View view;
@@ -42,7 +44,7 @@ public class CommentDisplayFragment extends Fragment implements CommentDisplayCo
     setView(view);
 
     presenter = new CommentDisplayPresenter(this, new RecipeRepository(context));
-    presenter.setWholeRecipeElements();
+    presenter.setWholeCommentsElements();
 
     getRecipeId();
     getIsLogged();
@@ -73,6 +75,8 @@ public class CommentDisplayFragment extends Fragment implements CommentDisplayCo
   public void setCommentListeners() {
     if(isLogged){
       getAddCommentButton().setOnClickListener(this);
+    }else {
+      presenter.setAddCommentButtonAndEditCommentVisibility();
     }
   }
 
@@ -93,6 +97,7 @@ public class CommentDisplayFragment extends Fragment implements CommentDisplayCo
     CommentDisplayRecipeAdapter adapter = new CommentDisplayRecipeAdapter(context, commentList);
     RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.commentsDisplayRecyclerView);
     recyclerView.setAdapter(adapter);
+    setCommentQty(adapter.getItemCount());
     recyclerView.setLayoutManager(new LinearLayoutManager(context));
   }
 
@@ -104,5 +109,20 @@ public class CommentDisplayFragment extends Fragment implements CommentDisplayCo
   @Override
   public Button getAddCommentButton() {
     return (Button)getView().findViewById(R.id.addCommentButton);
+  }
+
+  @Override
+  public TextView getCommentQtyTextView() {
+    return (TextView) getView().findViewById(R.id.commentQtyTextView);
+  }
+
+  @Override
+  public void setCommentQty(int commentQty) {
+    this.commentQty = commentQty;
+  }
+
+  @Override
+  public int getCommentQty() {
+    return commentQty;
   }
 }

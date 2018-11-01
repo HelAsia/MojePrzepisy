@@ -1,5 +1,8 @@
 package com.moje.przepisy.mojeprzepisy.recipe_details.comment_details_display;
 
+import android.app.Activity;
+import android.os.AsyncTask;
+import android.view.View;
 import android.widget.Toast;
 import com.moje.przepisy.mojeprzepisy.data.model.Comment;
 import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.recipe.RecipeRepository;
@@ -10,6 +13,7 @@ public class CommentDisplayPresenter implements CommentDisplayContract.Presenter
   private RecipeRepository recipeRepository;
   private CommentDisplayContract.View commentsDisplayView;
   int commentId;
+  private Boolean commentAddedState = false;
 
   public CommentDisplayPresenter(CommentDisplayContract.View commentsDisplayView,
       RecipeRepository recipeRepository){
@@ -36,15 +40,22 @@ public class CommentDisplayPresenter implements CommentDisplayContract.Presenter
   }
 
   @Override
-  public void setWholeRecipeElements() {
+  public void setCommentAddedState(Boolean state) {
+    this.commentAddedState = state;
+  }
+
+  @Override
+  public void setWholeCommentsElements() {
     recipeRepository.getComments(commentsDisplayView.getRecipeId(), this);
+    setCommentQtyOnScreen();
   }
 
   @Override
   public void sendCommentToServer() {
     if(!commentsDisplayView.getCommentEditText().getText().toString().equals("")){
-      recipeRepository.addComment(getCommentObjectToAdd(), this);
-      recipeRepository.getComments(commentsDisplayView.getRecipeId(),this);
+ //     recipeRepository.addComment(getCommentObjectToAdd(), this);
+ //     setWholeCommentsElements();
+      new BackgroundAddCommentAction((Activity)commentsDisplayView.getContext(), this).execute();
     }
   }
 
@@ -62,5 +73,51 @@ public class CommentDisplayPresenter implements CommentDisplayContract.Presenter
   public void setEditTextAfterAdded() {
     commentsDisplayView.getCommentEditText().setText("");
     commentsDisplayView.getCommentEditText().setHint("Dodaj komentarz...");
+  }
+
+  @Override
+  public void setAddCommentButtonAndEditCommentVisibility() {
+    commentsDisplayView.getAddCommentButton().setVisibility(View.GONE);
+    commentsDisplayView.getCommentEditText().setVisibility(View.GONE);
+  }
+
+  @Override
+  public void setCommentQtyOnScreen() {
+    commentsDisplayView.getCommentQtyTextView().setText((commentsDisplayView.getCommentQty() + " komentarz(y)"));
+  }
+
+  private class BackgroundAddCommentAction extends AsyncTask<Void, Void, Void> {
+    RecipeRepository.OnCommentsDetailsDisplayListener listener;
+    private Activity activity;
+
+    public BackgroundAddCommentAction(Activity activity, RecipeRepository.OnCommentsDetailsDisplayListener listener) {
+      this.activity = activity;
+      this.listener = listener;
+    }
+
+    @Override
+    protected void onPreExecute() {
+      recipeRepository.addComment(getCommentObjectToAdd(), listener);
+    }
+
+    @Override
+    protected Void doInBackground(Void... arg0) {
+      try {
+        while (!commentAddedState){
+
+        }
+
+        Thread.sleep(1000);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+      return null;
+    }
+    @Override
+    protected void onPostExecute(Void result) {
+      setWholeCommentsElements();
+      commentAddedState = false;
+      Toast.makeText(activity, "Komentarz dodany", Toast.LENGTH_SHORT).show();
+    }
   }
 }

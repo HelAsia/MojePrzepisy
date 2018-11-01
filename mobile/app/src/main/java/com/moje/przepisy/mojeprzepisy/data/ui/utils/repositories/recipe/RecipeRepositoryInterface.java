@@ -31,20 +31,6 @@ public interface RecipeRepositoryInterface {
     void onUpdateFavoriteState(Boolean favoriteState);
   }
 
-  interface OnRecipeDisplayListener{
-//    void setMainInfoRecipe(Recipe recipe);
-//    void setIngredients(List<Ingredient> ingredientList);
-//    void setSteps(List<Step> stepList);
-//    void setComment(List<Comment> commentList);
-//    void setStars(Stars stars);
-//    void onRecipeError();
-//    void onIngredientsError();
-//    void onStepsError();
-//    void onCommentError();
-//    void onStarsError();
-//    void setCommentId(String message);
-  }
-
   interface OnMainInfoDetailsDisplayListener{
     void setMainInfoRecipe(Recipe recipe);
     void setStars(Stars stars);
@@ -66,6 +52,7 @@ public interface RecipeRepositoryInterface {
     void setComment(List<Comment> commentList);
     void onCommentError();
     void setCommentId(String message);
+    void setCommentAddedState(Boolean state);
   }
 
   void addRecipe(List<Recipe> recipeList, OnRecipeFinishedListener listener);
