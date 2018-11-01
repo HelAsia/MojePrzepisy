@@ -1,7 +1,6 @@
 package com.moje.przepisy.mojeprzepisy.data.model;
 
 public class User {
-
   private String firstName;
   private String lastName;
   private String login;
@@ -9,19 +8,38 @@ public class User {
   private String email;
   private String userID;
   private int photoId;
+  private String userPhoto;
+  public int status;
 
-  public User(String login, String password){
-    this.login = login;
-    this.password = password;
+  public User(String login, String password, String dataType){
+    if(dataType.equals("loginData")){
+      this.login = login;
+      this.password = password;
+    }
   }
 
   public User(){
 
   }
 
+  public User(String data, String dataType){
+    if(dataType.equals("userId")){
+      this.userID = data;
+    }else if(dataType.equals("userPhoto")){
+      this.userPhoto = data;
+    }
+  }
+
+  public User(int status) {
+    this.status = status;
+  }
+
+
   public User(String userID){
     this.userID = userID;
   }
+
+
 
   public User(String firstName, String lastName, String login, String password,
       String email){
@@ -42,14 +60,13 @@ public class User {
     this.photoId = photoId;
   }
 
-  public String getName(){
+  public String getFirstName() {
     return firstName;
   }
 
-  public void setName(String name){
-    this.firstName = name;
+  public void setFirstName(String firstName) {
+    this.firstName = firstName;
   }
-
   public String getLastName(){
     return lastName;
   }
@@ -88,5 +105,21 @@ public class User {
 
   public void setUserID(String userID){
     this.userID = userID;
+  }
+
+  public int getPhotoId() {
+    return photoId;
+  }
+
+  public void setPhotoId(int photoId) {
+    this.photoId = photoId;
+  }
+
+  public int getStatus() {
+    return status;
+  }
+
+  public void setStatus(int status) {
+    this.status = status;
   }
 }

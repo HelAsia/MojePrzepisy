@@ -24,7 +24,7 @@ public class UserRepository implements UserRepositoryInterface{
   @Override
   public void login(final String login, final String password, final OnLoginFinishedListener listener) {
 
-    User user = new User(login, password);
+    User user = new User(login, password, "loginData");
     Call<Message> resp = userAPI.login(user);
 
     resp.enqueue(new Callback<Message>() {
@@ -115,12 +115,71 @@ public class UserRepository implements UserRepositoryInterface{
   }
 
   @Override
-  public void editUser(String columnName, String columnValue, OnEditUserFinishedListener listener) {
-
+  public void editUser(String columnName, String columnValue, final OnEditUserFinishedListener listener) {
+    Call<Message> resp = userAPI.editUser(columnName, columnValue);
+    resp.enqueue(new Callback<Message>() {
+      @Override
+      public void onResponse(Call<Message> call, Response<Message> response) {
+        Message message = response.body();
+        if(message.status == 200){
+          Log.i("editUser.onResponse(): Stars: ", "OK. User data has been edited");
+          listener.onSuccess();
+        }else if(message.status == 404){
+          Log.e("editUser.onResponse(): Stars: ", "NOT OK. User data hasn't been added");
+          listener.onEditAndSendDataError();
+        }
+      }
+      @Override
+      public void onFailure(Call<Message> call, Throwable t) {
+        Log.i("editUser.onFailure(): SERWER", t.getMessage());
+        listener.onEditAndSendDataError();
+      }
+    });
   }
 
   @Override
-  public void getUser() {
+  public void editPhotoUser(String photoUser, final OnEditPhotoUserFinishedListener listener) {
+    User user = new User(photoUser, "userPhoto");
+    Call<Message> resp = userAPI.editPhotoUser(user);
+    resp.enqueue(new Callback<Message>() {
+      @Override
+      public void onResponse(Call<Message> call, Response<Message> response) {
+        Message message = response.body();
+        if(message.status == 200){
+          Log.i("editPhotoUser.onResponse(): UserPhoto ", "OK. User data has been edited");
+          listener.onPhotoSuccess();
+        }else if(message.status == 404){
+          Log.e("editPhotoUser.onResponse(): UserPhoto ", "NOT OK. User data hasn't been added");
+          listener.onEditAndSendPhotoError();
+        }
+      }
+      @Override
+      public void onFailure(Call<Message> call, Throwable t) {
+        Log.i("editPhotoUser.onFailure(): SERWER", t.getMessage());
+        listener.onEditAndSendPhotoError();
+      }
+    });
+  }
 
+  @Override
+  public void getUser(final OnGetUserFinishedListener listener) {
+    Call<User> resp = userAPI.getUser();
+    resp.enqueue(new Callback<User>() {
+      @Override
+      public void onResponse(Call<User> call, Response<User> response) {
+        User user = response.body();
+        if(user.getStatus() == 401) {
+          Log.i("checkUser.onResponse(): SERVER", "User: " + user.getLogin());
+          listener.onGetUserError();
+        } else {
+          listener.setUserValue(user);
+        }
+      }
+      @Override
+      public void onFailure(Call<User> call, Throwable t) {
+        Log.i("checkUser.onFailure(): SERWER", t.getMessage());
+        listener.onGetUserError();
+      }
+    });
   }
 }

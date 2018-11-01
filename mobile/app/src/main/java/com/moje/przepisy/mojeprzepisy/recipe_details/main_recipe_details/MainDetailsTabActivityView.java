@@ -62,7 +62,7 @@ public class MainDetailsTabActivityView extends AppCompatActivity implements Mai
 
   public void setToolbar() {
     Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_recipe_details_tab);
-    toolbar.setSubtitle(R.string.recipe_details);
+    toolbar.setSubtitle(R.string.user_profile);
     setSupportActionBar(toolbar);
   }
 }

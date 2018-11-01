@@ -35,6 +35,7 @@ import com.moje.przepisy.mojeprzepisy.register.RegisterActivityView;
 import com.moje.przepisy.mojeprzepisy.timer.TimerActivityView;
 import com.moje.przepisy.mojeprzepisy.ui.MyCardViewAdapter.OnShareHeartClickedListener;
 import com.moje.przepisy.mojeprzepisy.ui.MyCardViewAdapter.OnShareStarsClickedListener;
+import com.moje.przepisy.mojeprzepisy.user_profile.UserProfileActivityView;
 import java.util.List;
 
 public class MainCardsActivityView extends AppCompatActivity implements MainCardsContract.View,
@@ -157,7 +158,8 @@ public class MainCardsActivityView extends AppCompatActivity implements MainCard
               Intent intent = new Intent(MainCardsActivityView.this, TimerActivityView.class);
               startActivity(intent);
             }else if(id == R.id.my_profile_nav){
-
+              Intent intent = new Intent(MainCardsActivityView.this, UserProfileActivityView.class);
+              startActivity(intent);
             }else if (id == R.id.my_recipe_nav) {
               presenter.setSortedMethod(context,"myRecipe");
               presenter.getAllCardsSortedFromServer("myRecipe");

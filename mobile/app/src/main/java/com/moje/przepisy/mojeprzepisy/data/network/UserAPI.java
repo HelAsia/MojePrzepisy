@@ -27,6 +27,9 @@ public interface UserAPI {
   @POST("/user/{columnName}/{columnValue}")
   Call<Message> editUser(@Path("columnName") String columnName, @Path("columnValue") String columnValue);
 
+  @POST("/user/photo")
+  Call<Message> editPhotoUser(@Body User user);
+
   @DELETE("/user")
   Call<Message> deleteUser();
 

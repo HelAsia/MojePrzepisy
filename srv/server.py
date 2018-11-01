@@ -158,6 +158,21 @@ def editUser(columnName, columnValue):
         'message': message
     })
 
+@app.route('/user/photo', methods=['POST'])
+@authorized
+def editUserPhoto():
+    user = Users(database)
+
+    params = request.get_json()
+    userPhoto = params.get('userPhoto')
+
+    status, message = user.editUserPhoto(userPhoto, get_user_id())
+
+    return jsonify({
+        'status': status,
+        'message': message
+    })
+
 
 @app.route('/cards/searchedCards', methods=['POST'])
 def getSearchedCards():

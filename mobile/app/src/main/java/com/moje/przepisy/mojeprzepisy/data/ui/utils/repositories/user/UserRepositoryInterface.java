@@ -31,14 +31,23 @@ public interface UserRepositoryInterface {
   interface OnEditUserFinishedListener{
     void onEditAndSendDataError();
     void onSuccess();
+    boolean onPasswordError();
+    boolean onValidatePasswordError(String password);
+    boolean onValidateEmailError(String email);
   }
 
   void editUser(String columnName, String columnValue, OnEditUserFinishedListener listener);
+
+  interface OnEditPhotoUserFinishedListener{
+    void onEditAndSendPhotoError();
+    void onPhotoSuccess();
+  }
+  void editPhotoUser(String photoData, OnEditPhotoUserFinishedListener listener);
 
   interface OnGetUserFinishedListener{
     void onGetUserError();
     void setUserValue(User user);
   }
 
-  void getUser();
+  void getUser(OnGetUserFinishedListener listener);
 }

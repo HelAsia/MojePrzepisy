@@ -16,6 +16,12 @@
     android:background="@color/primary"
     android:minHeight="?attr/actionBarSize"
     app:titleTextColor="@android:color/black">
+
+    <ImageView
+      android:layout_width="120dp"
+      android:layout_height="60dp"
+      android:src="@drawable/logo"
+      android:paddingLeft="@dimen/activity_horizontal_margin"/>
   </android.support.v7.widget.Toolbar>
 
   <ScrollView
@@ -35,7 +41,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
         <ImageView
-          android:id="@+id/mainPhotoImageView"
+          android:id="@+id/mainUserPhotoImageView"
           android:layout_width="200dp"
           android:layout_height="200dp"
           android:layout_gravity="center"
@@ -85,12 +91,17 @@
           android:textColor="@color/primary_text"
           android:textSize="@dimen/edit_text_size"/>
         <ImageView
-          android:id="@+id/savePictureImageView"
+          android:id="@+id/saveUserPictureImageView"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:layout_marginBottom="30dp"
+          android:layout_marginBottom="20dp"
           android:layout_gravity="center"
           app:srcCompat="@android:drawable/ic_menu_save"/>
+        <TextView
+          android:id="@+id/anyErrorMessageTextView"
+          android:layout_width="match_parent"
+          android:textColor="@color/red"
+          android:layout_height="wrap_content"/>
       </LinearLayout>
 
       <LinearLayout
@@ -99,19 +110,30 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/loadPhotoLayout">
 
-        <EditText
-          android:id="@+id/editLoginEditText"
+        <TextView
+          android:id="@+id/LoginDataNameTextView"
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:layout_weight="2"
+          android:layout_marginBottom="4dp"
+          android:layout_marginLeft="4dp"
+          android:background="@color/yellow"
+          android:ems="10"
+          android:gravity="center"
+          android:text="@string/user_login"
+          android:textColor="@color/primary_text"
+          android:textSize="14sp"/>
+
+        <TextView
+          android:id="@+id/editLoginTextView"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:ems="10"
-          android:inputType="textPersonName"
-          android:text="Name"/>
-
-        <ImageView
-          android:id="@+id/saveLoginImageView"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          app:srcCompat="@android:drawable/ic_menu_save"/>
+          android:layout_marginBottom="4dp"
+          android:gravity="center"
+          android:textColor="@color/primary_text"
+          android:text="Name"
+          android:textSize="18sp"/>
       </LinearLayout>
 
       <LinearLayout
@@ -120,11 +142,26 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/editLoginLinearLayout">
 
+        <TextView
+          android:id="@+id/NameDataNameTextView"
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:layout_weight="1"
+          android:layout_marginBottom="4dp"
+          android:layout_marginLeft="4dp"
+          android:background="@color/yellow"
+          android:ems="10"
+          android:gravity="center"
+          android:text="@string/user_first_name"
+          android:textColor="@color/primary_text"
+          android:textSize="14sp"/>
+
         <EditText
           android:id="@+id/editNameEditText"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:ems="10"
+          android:gravity="center"
           android:inputType="textPersonName"
           android:text="Name"/>
 
@@ -141,11 +178,26 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/editNameLinearLayout">
 
+        <TextView
+          android:id="@+id/lastNameDataNameTextView"
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:layout_weight="1"
+          android:layout_marginBottom="4dp"
+          android:layout_marginLeft="4dp"
+          android:background="@color/yellow"
+          android:ems="10"
+          android:gravity="center"
+          android:text="@string/user_last_name"
+          android:textColor="@color/primary_text"
+          android:textSize="14sp"/>
+
         <EditText
           android:id="@+id/editLastNameEditText"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:ems="10"
+          android:gravity="center"
           android:inputType="textPersonName"
           android:text="Name"/>
 
@@ -162,11 +214,26 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/editLastNameLinearLayout">
 
+        <TextView
+          android:id="@+id/emailDataNameTextView"
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:layout_weight="1"
+          android:layout_marginBottom="4dp"
+          android:layout_marginLeft="4dp"
+          android:background="@color/yellow"
+          android:ems="10"
+          android:gravity="center"
+          android:text="@string/user_email"
+          android:textColor="@color/primary_text"
+          android:textSize="14sp"/>
+
         <EditText
           android:id="@+id/editEmailEditText"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:ems="10"
+          android:gravity="center"
           android:inputType="textEmailAddress"
           android:text="Name"/>
 
@@ -183,11 +250,26 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/editEmailLinearLayout">
 
+        <TextView
+          android:id="@+id/passwordDataNameTextView"
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:layout_weight="1"
+          android:layout_marginBottom="4dp"
+          android:layout_marginLeft="4dp"
+          android:background="@color/yellow"
+          android:ems="10"
+          android:gravity="center"
+          android:text="@string/user_password"
+          android:textColor="@color/primary_text"
+          android:textSize="14sp"/>
+
         <EditText
           android:id="@+id/editPasswordEditText"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:ems="10"
+          android:gravity="center"
           android:inputType="textPassword"
           android:text="Name"/>
 
@@ -205,11 +287,26 @@
         android:visibility="gone"
         android:layout_below="@+id/editPasswordLinearLayout">
 
+        <TextView
+          android:id="@+id/repeatPasswordDataNameTextView"
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:gravity="center"
+          android:layout_weight="1"
+          android:layout_marginBottom="4dp"
+          android:layout_marginLeft="4dp"
+          android:background="@color/yellow"
+          android:ems="10"
+          android:text="@string/user_repeat_password"
+          android:textColor="@color/primary_text"
+          android:textSize="14sp"/>
+
         <EditText
           android:id="@+id/editRepeatPasswordEditText"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:ems="10"
+          android:gravity="center"
           android:inputType="textPassword"
           android:text="Name"/>
 

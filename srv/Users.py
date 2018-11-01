@@ -1,4 +1,5 @@
 from Logger import *
+from recipe_elements.Photo import *
 import json
 from decimal import Decimal as D
 import re
@@ -71,7 +72,7 @@ class Users:
 
 
     def getUser(self, userID):
-        query = u"SELECT user_login AS login, user_password AS password, first_name AS firstNme, last_name AS lastName, email, photo_id AS photoId " \
+        query = u"SELECT user_login AS login, user_password AS password, first_name AS firstName, last_name AS lastName, email, photo_id AS photoId " \
                 u"FROM users " \
                 u"WHERE user_id = '{}'".format(userID)
         queryResult = self.database.query(query)
@@ -79,7 +80,7 @@ class Users:
         if queryResult:
             return queryResult[0]
         else:
-            return {}
+            return {'userID': "-1"}
 
 
     def deleteUser(self, userID):
@@ -95,14 +96,41 @@ class Users:
 
 
     def editUser(self, columnName, columnValue, userID):
-        query = u"UPDATE users " \
-                u"SET {} = '{}'" \
-                u"WHERE user_id = {}".format(columnName, columnValue, userID)
-        queryResult = self.database.query(query)
+        if columnName == 'photo_id':
+            photo = Photo(self.database)
+            state, photoMsg = photo.addPhoto(columnValue)
 
-        if queryResult:
-            Logger.dbg(str(tuple(queryResult)))
+            query = u"UPDATE users " \
+                    u"SET {} = '{}'" \
+                    u"WHERE user_id = {}".format(columnName, photoMsg, userID)
+            queryResult, rows, msg = self.database.insert(query)
+
+        else:
+            query = u"UPDATE users " \
+                    u"SET {} = '{}'" \
+                    u"WHERE user_id = {}".format(columnName, columnValue, userID)
+            queryResult, rows, msg = self.database.insert(query)
+
+        if rows > 0:
+            Logger.dbg(queryResult)
             return 200, u'Your changed {}={}'.format(columnName, columnValue)
         else:
+            Logger.dbg(queryResult)
+            return 404, u'Forwarded data to check are not correct'
+
+    def editUserPhoto(self, photoString, userID):
+        photo = Photo(self.database)
+        state, photoMsg = photo.addPhoto(photoString)
+
+        query = u"UPDATE users " \
+                u"SET photo_id = '{}'" \
+                u"WHERE user_id = {}".format(photoMsg, userID)
+        queryResult, rows, msg = self.database.insert(query)
+
+        if rows > 0:
+            Logger.dbg(queryResult)
+            return 200, u'Your changed photo_id = {}'.format(photoMsg)
+        else:
+            Logger.dbg(queryResult)
             return 404, u'Forwarded data to check are not correct'
 

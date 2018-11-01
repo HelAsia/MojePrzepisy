@@ -95,6 +95,7 @@
   <string name="add_recipe_title_step_three">Krok 3: Dodaj kroki lub opis</string>
   <string name="category_search_title">Kategorie przepisów</string>
   <string name="set_timer">Ustaw czasomierz</string>
+  <string name="user_profile">Dane użytkownika</string>
 
   <string name="load_photo">Załaduj zdjęcie</string>
   <string name="choose_category">Wybierz kategorię przepisu</string>
@@ -123,5 +124,12 @@
   <string name="ingredients">Składniki</string>
   <string name="steps">Kroki</string>
   <string name="comments">Komentarze</string>
+
+  <string name="user_login">"Twój login:"</string>
+  <string name="user_first_name">"Twoje imię:"</string>
+  <string name="user_last_name">"Twoje nazwisko:"</string>
+  <string name="user_email">"Twój email:"</string>
+  <string name="user_password">"Twoje hasło:"</string>
+  <string name="user_repeat_password">Powtórzone hasło</string>
 
 </resources>

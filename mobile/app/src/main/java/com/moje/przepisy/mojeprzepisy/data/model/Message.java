@@ -1,7 +1,6 @@
 package com.moje.przepisy.mojeprzepisy.data.model;
 
 public class Message {
-
   public int status;
   public String message;
 

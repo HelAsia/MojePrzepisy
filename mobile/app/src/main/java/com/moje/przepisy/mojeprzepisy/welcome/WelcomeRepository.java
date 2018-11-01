@@ -28,11 +28,11 @@ public class WelcomeRepository implements WelcomeRepositoryInterface {
       @Override
       public void onResponse(Call<User> call, Response<User> response) {
         User user = response.body();
-        if(user != null) {
+        if(user.getStatus() == 401) {
           Log.i("checkUser.onResponse(): SERVER", "User: " + user.getLogin());
-            loggedListener.onLogged();
-        } else {
             loggedListener.onNotLogged();
+        } else {
+            loggedListener.onLogged();
           }
         }
       @Override

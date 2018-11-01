@@ -3,30 +3,39 @@ package com.moje.przepisy.mojeprzepisy.user_profile;
 import android.content.Context;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 public interface UserProfileContract {
   interface View{
     Context getContext();
+    void setOnClickListeners();
     ImageView getMainUserPhotoImageView();
-    ImageView getLoadFromGalleryImageView();
-    ImageView getLoadFromCameraImageView();
-    ImageView getLoadFromUrlImageView();
-    EditText getLoginEditText();
-    ImageView getSaveLoginImageView();
+    TextView getLoginTextView();
     EditText getNameEditText();
     ImageView getSaveNameImageView();
     EditText getLastNameEditText();
     ImageView getSaveLastNameImageView();
     EditText getEmailEditText();
-    ImageView getEmailtNameImageView();
+    ImageView getEmailNameImageView();
     EditText getPasswordEditText();
     ImageView getSavePasswordImageView();
     EditText getRepeatPasswordEditText();
-    ImageView getRepeatPasswordImageView();
+    ImageView getEditPasswordImageView();
+    TextView getErrorMessageTextView();
+    LinearLayout getEditRepeatPasswordLinearLayout();
+    void loadImageFromCamera();
+    void loadImageFromGallery();
   }
 
   interface Presenter{
-    void sendEditDataToServer(EditText editTextIcon);
+    void getUserData();
+    void sendEditDataToServer(String columnName, EditText columnValueEditText);
     void sendImageDataToServer(ImageView image);
+    void showLoginError();
+    void showPasswordError();
+    void showValidatePasswordError();
+    void showValidateEmailError();
+    void showRepeatPassword(LinearLayout layout);
   }
 }
