@@ -101,6 +101,7 @@
           android:id="@+id/anyErrorMessageTextView"
           android:layout_width="match_parent"
           android:textColor="@color/red"
+          android:gravity="center"
           android:layout_height="wrap_content"/>
       </LinearLayout>
 

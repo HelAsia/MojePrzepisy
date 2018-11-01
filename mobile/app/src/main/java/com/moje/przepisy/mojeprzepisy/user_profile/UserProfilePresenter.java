@@ -35,7 +35,17 @@ public class UserProfilePresenter implements UserProfileContract.Presenter, User
   @Override
   public void sendEditDataToServer(String columnName, EditText columnValueEditText) {
     String dataToChange = columnValueEditText.getText().toString();
-    userRepository.editUser(columnName, dataToChange, this);
+    if(columnValueEditText == userView.getEmailEditText()){
+      if(onValidateEmailError(dataToChange)){
+        userRepository.editUser(columnName, dataToChange, this);
+      }
+    }else if(columnValueEditText == userView.getPasswordEditText()){
+      if(onPasswordError() && onValidatePasswordError(dataToChange)){
+        userRepository.editUser(columnName, dataToChange, this);
+      }
+    }else {
+      userRepository.editUser(columnName, dataToChange, this);
+    }
   }
 
   @Override
