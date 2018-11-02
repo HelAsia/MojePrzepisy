@@ -26,12 +26,7 @@ The application is not finished yet. It is still being developed.
  - category
  - favourites count
 11. Show recipe:
- - main infos
- *- photo*
- *- category*
- *- prepare time*
- *- bake time*
- *- cook time*
+ - main infos *(photo, category, prepare time, bake time, cook time)*
  - recipe's ingredients
  - steps
  - comments
