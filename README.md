@@ -8,11 +8,6 @@ The application is not finished yet. It is still being developed.
 
 ---
 
-**Table of Contents**
-
-[TOC]
-
----
 
 ## Working Features
 1. Users registration
@@ -32,11 +27,11 @@ The application is not finished yet. It is still being developed.
  - favourites count
 11. Show recipe:
  - main infos
- *- photo*
- *- category*
- *- prepare time*
- *- bake time*
- *- cook time*
+ - *photo*
+ - *category*
+ - *prepare time*
+ - *bake time*
+ - *cook time*
  - recipe's ingredients
  - steps
  - comments
