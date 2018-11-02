@@ -2,6 +2,7 @@
 
 from functools import wraps
 from flask import Flask, jsonify, request, session
+from flask_gzip import Gzip
 
 import os
 
@@ -20,6 +21,7 @@ from recipe_elements.Photo import *
 
 # Global definitions
 app = Flask(__name__)
+gzip = Gzip(app)
 database = None
 
 

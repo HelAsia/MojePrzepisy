@@ -35,8 +35,6 @@
     </activity>
     <activity android:name=".log_in.LoginActivityView">
     </activity>
-    <activity android:name=".search_options.SearchSwipeActivity">
-    </activity>
     <activity android:name=".ui.MainCardsActivityView">
     </activity>
     <activity android:name=".log_out.LogoutActivityView">

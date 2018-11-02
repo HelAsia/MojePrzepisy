@@ -1,6 +1,7 @@
 package com.moje.przepisy.mojeprzepisy.add_recipe.add_recipe.add_steps;
 
 import android.Manifest;
+import android.Manifest.permission;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -123,13 +124,27 @@ public class AddStepsActivityView extends AppCompatActivity implements AddStepCo
       } else {
         Toast.makeText(this, "Brak pozwolenia na użycie aparatu.", Toast.LENGTH_LONG).show();
       }
+    }else if(requestCode == GALLERY_REQUEST){
+      if (grantResults[0] == PackageManager.PERMISSION_GRANTED){
+        Intent galleryIntent = new Intent(Intent.ACTION_PICK,
+            Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(galleryIntent, GALLERY_REQUEST);
+      }else {
+        Toast.makeText(this, "Brak pozwolenia na użycie galerii.", Toast.LENGTH_LONG).show();
+      }
     }
   }
 
+  @RequiresApi(api = VERSION_CODES.M)
+  @Override
   public void loadImageFromGallery() {
-    Intent galleryIntent = new Intent(Intent.ACTION_PICK,
-        Media.EXTERNAL_CONTENT_URI);
+    if(ContextCompat.checkSelfPermission(context, permission.READ_CONTACTS)!= PackageManager.PERMISSION_GRANTED){
+      requestPermissions(new String[]{permission.READ_EXTERNAL_STORAGE}, GALLERY_REQUEST);
+    }else {
+      Intent galleryIntent = new Intent(Intent.ACTION_PICK,
+          Media.EXTERNAL_CONTENT_URI);
       startActivityForResult(galleryIntent, GALLERY_REQUEST);
+    }
   }
 
   @Override

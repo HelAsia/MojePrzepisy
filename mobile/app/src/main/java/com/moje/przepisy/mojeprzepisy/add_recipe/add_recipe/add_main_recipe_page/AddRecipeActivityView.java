@@ -1,6 +1,7 @@
 package com.moje.przepisy.mojeprzepisy.add_recipe.add_recipe.add_main_recipe_page;
 
 import android.Manifest;
+import android.Manifest.permission;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -40,7 +41,7 @@ public class AddRecipeActivityView extends AppCompatActivity implements AddRecip
     View.OnClickListener {
   private static final int MY_CAMERA_PERMISSION_CODE = 100;
   private static final int CAMERA_REQUEST = 1888;
-  private static int RESULT_LOAD_IMG = 1;
+  private static int GALLERY_REQUEST = 1;
   @BindView(R.id.previousActionFab) FloatingActionButton previousActionFab;
   @BindView(R.id.nextActionFab) FloatingActionButton nextActionFab;
   @BindView(R.id.recipeNameEditText) EditText recipeNameEditText;
@@ -191,21 +192,34 @@ public class AddRecipeActivityView extends AppCompatActivity implements AddRecip
       } else {
         Toast.makeText(this, "Brak pozwolenia na użycie aparatu.", Toast.LENGTH_LONG).show();
       }
+    }else if(requestCode == GALLERY_REQUEST){
+      if (grantResults[0] == PackageManager.PERMISSION_GRANTED){
+        Intent galleryIntent = new Intent(Intent.ACTION_PICK,
+            Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(galleryIntent, GALLERY_REQUEST);
+      }else {
+        Toast.makeText(this, "Brak pozwolenia na użycie galerii.", Toast.LENGTH_LONG).show();
+      }
     }
   }
 
+  @RequiresApi(api = VERSION_CODES.M)
   @Override
   public void loadImageFromGallery() {
-    Intent galleryIntent = new Intent(Intent.ACTION_PICK,
-        Media.EXTERNAL_CONTENT_URI);
-    startActivityForResult(galleryIntent, RESULT_LOAD_IMG);
+    if(ContextCompat.checkSelfPermission(context, permission.READ_CONTACTS)!= PackageManager.PERMISSION_GRANTED){
+      requestPermissions(new String[]{permission.READ_EXTERNAL_STORAGE}, GALLERY_REQUEST);
+    }else {
+      Intent galleryIntent = new Intent(Intent.ACTION_PICK,
+          Media.EXTERNAL_CONTENT_URI);
+      startActivityForResult(galleryIntent, GALLERY_REQUEST);
+    }
   }
 
   @Override
   public void onActivityResult(int requestCode, int resultCode, Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
     try{
-      if(requestCode == RESULT_LOAD_IMG && resultCode == RESULT_OK
+      if(requestCode == GALLERY_REQUEST && resultCode == RESULT_OK
           && null != data){
         Uri selectedImage = data.getData();
         String[] filePathColumn = {MediaStore.Images.Media.DATA};
