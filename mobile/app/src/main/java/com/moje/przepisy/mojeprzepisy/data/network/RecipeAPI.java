@@ -84,7 +84,7 @@ public interface RecipeAPI {
   Call<Message> deleteAllComments(@Path("recipeId") int recipeId);
 
   @GET("recipe/stars/detail/{recipeId}")
-  Call<Stars> getRecipeDetailsStars(@Path("recipeId") int recipeId);
+  Call<List<Stars>> getRecipeDetailsStars(@Path("recipeId") int recipeId);
 
   @POST("recipe/stars/{recipeId}/{columnName}/{columnValue}")
   Call<Message> editStarsAndHeart(@Path("recipeId") int recipeId, @Path("columnName") String columnName, @Path("columnValue") int columnValue);

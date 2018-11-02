@@ -76,7 +76,8 @@ public class MainInfoDetailsDisplayPresenter implements MainInfoDetailsDisplayCo
     if(mainInfoDetailsDisplayView != null){
       mainInfoDetailsDisplayView.getStarCountTextView().setText(String.valueOf(stars.getStarsCount()));
       mainInfoDetailsDisplayView.getFavoritesCountTextView().setText(String.valueOf(stars.getFavoritesCount()));
-      recipeRepository.getFavorite(mainInfoDetailsDisplayView.getRecipeId(), this);
+      setFavoriteImage(stars.getFavorites());
+  //    recipeRepository.getFavorite(mainInfoDetailsDisplayView.getRecipeId(), this);
     }
   }
 
@@ -96,7 +97,6 @@ public class MainInfoDetailsDisplayPresenter implements MainInfoDetailsDisplayCo
   public void setWholeRecipeElements() {
     recipeRepository.getRecipe(mainInfoDetailsDisplayView.getRecipeId(), this);
     recipeRepository.getRecipeDetailsStars(mainInfoDetailsDisplayView.getRecipeId(), this);
-    recipeRepository.getFavorite(mainInfoDetailsDisplayView.getRecipeId(), this);
   }
 
   @Override
@@ -132,11 +132,25 @@ public class MainInfoDetailsDisplayPresenter implements MainInfoDetailsDisplayCo
     Drawable heartSolid =  mainInfoDetailsDisplayView.getContext().getResources().getDrawable(R.mipmap.ic_favorite);
 
     if(!favorite){
-      mainInfoDetailsDisplayView.getFavoritesImageView().setImageDrawable(heartSolid);
+      mainInfoDetailsDisplayView.getFavoritesImageView().setImageDrawable(heartBorder);
       sendFavouriteToServer(1);
     }else {
-      mainInfoDetailsDisplayView.getFavoritesImageView().setImageDrawable(heartBorder);
+      mainInfoDetailsDisplayView.getFavoritesImageView().setImageDrawable(heartSolid);
       sendFavouriteToServer(0);
+    }
+  }
+
+  @Override
+  public void setFavoriteImage(Boolean favorites) {
+    Drawable heartBorder = mainInfoDetailsDisplayView.getContext().getResources().getDrawable(R.mipmap.ic_favorite_border);
+    Drawable heartSolid =  mainInfoDetailsDisplayView.getContext().getResources().getDrawable(R.mipmap.ic_favorite);
+
+    if(!favorites){
+      mainInfoDetailsDisplayView.getFavoritesImageView().setImageDrawable(heartBorder);
+      favorite = favorites;
+    }else {
+      mainInfoDetailsDisplayView.getFavoritesImageView().setImageDrawable(heartSolid);
+      favorite = favorites;
     }
   }
 

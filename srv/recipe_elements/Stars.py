@@ -48,20 +48,6 @@ class Stars:
                 queryRow['favorite'] = False
             return queryResult[0]
 
-
-    def getRecipeDetailsStars(self, recipeID):
-        query = u"SELECT count(favorite) AS favoritesCount, ROUND(avg(stars),0) AS starsCount " \
-                u"FROM users_recipes_stars " \
-                u"WHERE recipe_id = {} AND favorite = true; ".format(recipeID)
-
-        queryResult = self.database.query(query)
-
-        if queryResult:
-            Logger.dbg(queryResult)
-            return queryResult[0]
-        else:
-            return {}
-
     def addStars(self, userID, recipeId, starsCount, favoritesCount):
         query = u"INSERT INTO users_recipes_stars " \
                 u"(user_id, recipe_id, favorite, stars) " \
@@ -128,3 +114,118 @@ class Stars:
             return 200, u'Your deleted recipe_id = {}'.format(recipeId)
         else:
             return 404, u'Forwarded data to check are not correct'
+
+
+    def getRecipeDetailsStars(self, userID, recipeID):
+        recipeQuery = u"SELECT recipe_id AS recipeId, user_id AS userId " \
+                      u"FROM recipes " \
+                      u"WHERE recipe_id = {} ; ".format(recipeID)
+
+        return self.getAllUpadtedStarsAndFavoritesBasedMethod(userID, recipeQuery)
+
+
+
+    def getAllUpadtedStarsAndFavoritesBasedMethod(self, userID, recipeQuery):
+        recipeQueryResult = self.database.query(recipeQuery)
+
+        userQueryResult = self.getUserQueryResult()
+        starsCountQueryResult = self.getStarsCountQueryResult()
+        favoriteCountQueryResult = self.getFavoriteCountQueryResult()
+        if not userID == -1:
+            favoriteQueryResult = self.getFavoriteQueryResult(userID)
+        else:
+            favoriteQueryResult = []
+
+        Logger.dbg(recipeQueryResult)
+        mainQueryResult = list(recipeQueryResult[:])
+
+        if mainQueryResult:
+            mainQueryResultWithUser = self.addUserToMainQueryResult(mainQueryResult, userQueryResult)
+            mainQueryResultWithUserAndStars = self.addStarsCountToMainQueryResult(mainQueryResultWithUser,
+                                                                                  starsCountQueryResult)
+            mainQueryResultWithUserAndStarsAndFavorite = self.addfavoriteCountToMainQueryResult(
+                mainQueryResultWithUserAndStars, favoriteCountQueryResult)
+            mainQueryResultWithUserAndStarsAndFavoriteByUser = self.addFavoriteToMainQueryResult(
+                mainQueryResultWithUserAndStarsAndFavorite, favoriteQueryResult, userID)
+
+            Logger.dbg(mainQueryResultWithUserAndStarsAndFavoriteByUser)
+            return mainQueryResultWithUserAndStarsAndFavoriteByUser
+        else:
+            return []
+
+
+    def getUserQueryResult(self):
+        userQuery = u"SELECT user_id AS userId, user_login AS authorName " \
+                    u"FROM users; "
+        userQueryResult = self.database.query(userQuery)
+        return userQueryResult
+
+
+    def getStarsCountQueryResult(self):
+        starsCountQuery = u"SELECT recipe_id AS recipeId, ROUND(avg(stars), 0) AS starsCount " \
+                          u"FROM users_recipes_stars " \
+                          u"GROUP BY recipeId; "
+        starsCountQueryResult = self.database.query(starsCountQuery)
+        return starsCountQueryResult
+
+
+    def getFavoriteCountQueryResult(self):
+        favoriteCountQuery = u"SELECT recipe_id AS recipeId, count(favorite) AS favoritesCount " \
+                             u"FROM users_recipes_stars " \
+                             u"where favorite = true " \
+                             u"GROUP BY recipeId; "
+        favoriteCountQueryResult = self.database.query(favoriteCountQuery)
+        return favoriteCountQueryResult
+
+
+    def getFavoriteQueryResult(self, userID):
+        favoriteQuery = u"SELECT recipe_id AS recipeId, favorite AS favorites " \
+                        u"FROM users_recipes_stars " \
+                        u"where user_id = {}; ".format(userID)
+        favoriteQueryResult = self.database.query(favoriteQuery)
+        return favoriteQueryResult
+
+
+    def addUserToMainQueryResult(self, mainQueryResult, userQueryResult):
+        for mainQueryRow in mainQueryResult:
+            for userQueryRow in userQueryResult:
+                if mainQueryRow['userId'] == userQueryRow['userId']:
+                    mainQueryRow['authorName'] = userQueryRow['authorName']
+        return mainQueryResult
+
+
+    def addStarsCountToMainQueryResult(self, mainQueryResult, starsCountQueryResult):
+        for mainQueryRow in mainQueryResult:
+            for starsQueryRow in starsCountQueryResult:
+                if mainQueryRow['recipeId'] == starsQueryRow['recipeId']:
+                    mainQueryRow['starsCount'] = starsQueryRow['starsCount']
+        return mainQueryResult
+
+
+    def addfavoriteCountToMainQueryResult(self, mainQueryResult, favoriteCountQueryResult):
+        for mainQueryRow in mainQueryResult:
+            for favoriteCountQueryRow in favoriteCountQueryResult:
+                if mainQueryRow['recipeId'] == favoriteCountQueryRow['recipeId']:
+                    mainQueryRow['favoritesCount'] = favoriteCountQueryRow['favoritesCount']
+        return mainQueryResult
+
+
+    def addFavoriteToMainQueryResult(self, mainQueryResult, favoriteQueryResult, userID):
+        if not userID == -1:
+            for mainQueryRow in mainQueryResult:
+                mainQueryRow['favorites'] = False
+                for favoriteQueryRow in favoriteQueryResult:
+                    if mainQueryRow['recipeId'] == favoriteQueryRow['recipeId']:
+                        mainQueryRow['favorites'] = favoriteQueryRow['favorites']
+                        if mainQueryRow['favorites'] is None:
+                            mainQueryRow['favorites'] = False
+                        if mainQueryRow['favorites'] == 0:
+                            mainQueryRow['favorites'] = False
+                        if mainQueryRow['favorites'] == 1:
+                            mainQueryRow['favorites'] = True
+            return mainQueryResult
+
+        else:
+            for mainQueryRow in mainQueryResult:
+                mainQueryRow['favorite'] = False
+            return mainQueryResult

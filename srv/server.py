@@ -575,7 +575,11 @@ def getFavorite(recipeId):
 def getRecipeDetailsStars(recipeId):
     star = Stars(database)
 
-    stars = star.getRecipeDetailsStars(recipeId)
+    userID = get_user_id()
+    if not userID:
+        userID = -1
+
+    stars = star.getRecipeDetailsStars(userID, recipeId)
 
     if not stars:
         Logger.fail("There was no stars returned!")

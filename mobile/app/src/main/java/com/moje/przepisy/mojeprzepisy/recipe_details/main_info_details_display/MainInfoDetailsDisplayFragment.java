@@ -43,8 +43,8 @@ public class MainInfoDetailsDisplayFragment extends Fragment implements MainInfo
     getRecipeId();
     getIsLogged();
     presenter.setWholeRecipeElements();
-
     setRecipeListeners();
+
     return view;
   }
 

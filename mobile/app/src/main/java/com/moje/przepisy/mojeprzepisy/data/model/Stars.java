@@ -3,6 +3,7 @@ package com.moje.przepisy.mojeprzepisy.data.model;
 public class Stars {
   private int recipeId;
   private int userId;
+  private String authorName;
   private int starsCount;
   private int favoritesCount;
   private Boolean favorites;
@@ -20,6 +21,16 @@ public class Stars {
 
   public Stars(int recipeId, Boolean favorites) {
     this.recipeId = recipeId;
+    this.favorites = favorites;
+  }
+
+  public Stars(int recipeId, int userId, String authorName, int starsCount, int favoritesCount,
+      Boolean favorites) {
+    this.recipeId = recipeId;
+    this.userId = userId;
+    this.authorName = authorName;
+    this.starsCount = starsCount;
+    this.favoritesCount = favoritesCount;
     this.favorites = favorites;
   }
 
@@ -61,5 +72,13 @@ public class Stars {
 
   public void setFavorites(Boolean favorites) {
     this.favorites = favorites;
+  }
+
+  public String getAuthorName() {
+    return authorName;
+  }
+
+  public void setAuthorName(String authorName) {
+    this.authorName = authorName;
   }
 }

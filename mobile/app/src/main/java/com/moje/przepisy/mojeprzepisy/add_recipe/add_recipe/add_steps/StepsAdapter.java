@@ -242,7 +242,6 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> 
     private ImageView imageView;
     int position;
 
-
     public BackgroundGalleryAction(Activity activity, ImageView imageView, int position) {
       this.activity = activity;
       this.imageView = imageView;
@@ -257,7 +256,6 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> 
     @Override
     protected Void doInBackground(Void... arg0) {
       try {
-
         while (((AddStepsActivityView)context).getPicture() == null){
 
         }
@@ -267,7 +265,6 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> 
         e.printStackTrace();
       }
       return null;
-
     }
 
     @Override
@@ -310,9 +307,7 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> 
     @Override
     protected Void doInBackground(Void... arg0) {
       try {
-
         while (((AddStepsActivityView)context).getPicture() == null){
-
         }
 
         Thread.sleep(1000);
@@ -320,7 +315,6 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> 
         e.printStackTrace();
       }
       return null;
-
     }
 
     @Override

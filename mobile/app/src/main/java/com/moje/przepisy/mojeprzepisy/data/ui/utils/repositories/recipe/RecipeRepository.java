@@ -309,17 +309,17 @@ public class RecipeRepository implements RecipeRepositoryInterface{
 
   @Override
   public void getRecipeDetailsStars(int recipeId, final OnMainInfoDetailsDisplayListener listener) {
-    Call<Stars> resp = recipeAPI.getRecipeDetailsStars(recipeId);
-    resp.enqueue(new Callback<Stars>() {
+    Call<List<Stars>> resp = recipeAPI.getRecipeDetailsStars(recipeId);
+    resp.enqueue(new Callback<List<Stars>>() {
       @Override
-      public void onResponse(Call<Stars> call, Response<Stars> response) {
-        Stars stars = response.body();
-        if(stars != null){
+      public void onResponse(Call<List<Stars>> call, Response<List<Stars>> response) {
+        List<Stars> starsList = response.body();
+        if(starsList.get(0) != null){
           Log.i("getRecipeDetailsStars.onResponse(): Stars: ", "OK. Stars have been downloaded");
-          listener.setStars(stars);
-        }else if(stars == null){
+          listener.setStars(starsList.get(0));
+        }else if(starsList.get(0) == null){
           Log.i("getRecipeDetailsStars.onResponse(): Stars: ", "OK. Stars have been downloaded but is empty");
-          listener.setStars(stars);
+          listener.setStars(starsList.get(0));
         }
         else{
           Log.e("getRecipeDetailsStars.onResponse(): Stars: ", "NOT OK. Stars haven't been downloaded");
@@ -327,7 +327,7 @@ public class RecipeRepository implements RecipeRepositoryInterface{
         }
       }
       @Override
-      public void onFailure(Call<Stars> call, Throwable t) {
+      public void onFailure(Call<List<Stars>> call, Throwable t) {
         Log.i("getRecipeDetailsStars.onFailure(): SERWER STARS: ", t.getMessage());
         listener.onStarsError();
       }

@@ -31,5 +31,6 @@ public interface MainInfoDetailsDisplayContract {
     void setFavoriteImageAndGetFavoriteState();
     void sendStarsToServer(int rate);
     void sendFavouriteToServer(int favorite);
+    void setFavoriteImage(Boolean favorites);
   }
 }
