@@ -26,13 +26,11 @@ public class CommentDisplayFragment extends Fragment implements CommentDisplayCo
     OnClickListener {
   private CommentDisplayContract.Presenter presenter;
   Context context;
-  int commentQty;
   int recipeId;
   Boolean isLogged;
   View view;
 
   public CommentDisplayFragment() {
-    // Required empty public constructor
   }
 
   @Override
@@ -93,12 +91,12 @@ public class CommentDisplayFragment extends Fragment implements CommentDisplayCo
   }
 
   @Override
-  public void setCommentsRecyclerView(List<Comment> commentList) {
+  public void setCommentsRecyclerViewAndCommentNumber(List<Comment> commentList) {
     CommentDisplayRecipeAdapter adapter = new CommentDisplayRecipeAdapter(context, commentList);
     RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.commentsDisplayRecyclerView);
     recyclerView.setAdapter(adapter);
-    setCommentQty(adapter.getItemCount());
     recyclerView.setLayoutManager(new LinearLayoutManager(context));
+    presenter.setCommentNumberOnScreen(adapter.getItemCount());
   }
 
   @Override
@@ -112,17 +110,7 @@ public class CommentDisplayFragment extends Fragment implements CommentDisplayCo
   }
 
   @Override
-  public TextView getCommentQtyTextView() {
+  public TextView getCommentNumberTextView() {
     return (TextView) getView().findViewById(R.id.commentQtyTextView);
-  }
-
-  @Override
-  public void setCommentQty(int commentQty) {
-    this.commentQty = commentQty;
-  }
-
-  @Override
-  public int getCommentQty() {
-    return commentQty;
   }
 }

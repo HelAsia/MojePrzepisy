@@ -24,7 +24,7 @@ public class CommentDisplayPresenter implements CommentDisplayContract.Presenter
   @Override
   public void setComment(List<Comment> commentList) {
     if(commentsDisplayView != null){
-      commentsDisplayView.setCommentsRecyclerView(commentList);
+      commentsDisplayView.setCommentsRecyclerViewAndCommentNumber(commentList);
     }
   }
 
@@ -47,7 +47,6 @@ public class CommentDisplayPresenter implements CommentDisplayContract.Presenter
   @Override
   public void setWholeCommentsElements() {
     recipeRepository.getComments(commentsDisplayView.getRecipeId(), this);
-    setCommentQtyOnScreen();
   }
 
   @Override
@@ -80,8 +79,8 @@ public class CommentDisplayPresenter implements CommentDisplayContract.Presenter
   }
 
   @Override
-  public void setCommentQtyOnScreen() {
-    commentsDisplayView.getCommentQtyTextView().setText((commentsDisplayView.getCommentQty() + " komentarz(y)"));
+  public void setCommentNumberOnScreen(int commentNumber) {
+    commentsDisplayView.getCommentNumberTextView().setText((commentNumber + " komentarz(y)"));
   }
 
   private class BackgroundAddCommentAction extends AsyncTask<Void, Void, Void> {

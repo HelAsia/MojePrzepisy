@@ -13,12 +13,10 @@ public interface CommentDisplayContract {
     void setCommentListeners();
     int getRecipeId();
     Boolean getIsLogged();
-    void setCommentsRecyclerView(List<Comment> commentList);
+    void setCommentsRecyclerViewAndCommentNumber(List<Comment> commentList);
     EditText getCommentEditText();
     Button getAddCommentButton();
-    TextView getCommentQtyTextView();
-    void setCommentQty(int commentQty);
-    int getCommentQty();
+    TextView getCommentNumberTextView();
   }
   interface Presenter{
     void setWholeCommentsElements();
@@ -27,6 +25,6 @@ public interface CommentDisplayContract {
     Comment getCommentObjectToAdd();
     void setEditTextAfterAdded();
     void setAddCommentButtonAndEditCommentVisibility();
-    void setCommentQtyOnScreen();
+    void setCommentNumberOnScreen(int commentNumber);
   }
 }
