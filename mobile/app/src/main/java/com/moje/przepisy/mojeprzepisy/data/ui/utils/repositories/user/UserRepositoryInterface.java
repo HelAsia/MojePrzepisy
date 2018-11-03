@@ -3,9 +3,10 @@ package com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.user;
 import com.moje.przepisy.mojeprzepisy.data.model.User;
 
 public interface UserRepositoryInterface {
+
   interface OnLoginFinishedListener {
     void onLoginAndPasswordError();
-    void onSuccess();
+    void onSuccess(int userId);
   }
 
   void login(String login, String password, OnLoginFinishedListener listener);
@@ -22,7 +23,7 @@ public interface UserRepositoryInterface {
     boolean onPasswordOrEmailError();
     boolean onValidatePasswordError(String password);
     boolean onValidateEmailError(String email);
-    void onSuccess();
+    void onSuccess(int userId);
     void onOtherError(String message);
   }
 

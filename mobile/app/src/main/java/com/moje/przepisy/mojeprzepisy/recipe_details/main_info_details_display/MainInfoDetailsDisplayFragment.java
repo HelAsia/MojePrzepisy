@@ -11,6 +11,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.moje.przepisy.mojeprzepisy.R;
 import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.recipe.RecipeRepository;
@@ -21,7 +22,7 @@ import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.recipe.RecipeRe
 public class MainInfoDetailsDisplayFragment extends Fragment implements MainInfoDetailsDisplayContract.View,
     OnClickListener {
   private MainInfoDetailsDisplayContract.Presenter presenter;
-  private int recipeId;
+  private int recipeId = 0;
   private Boolean isLogged;
   Context context;
   View view;
@@ -40,7 +41,9 @@ public class MainInfoDetailsDisplayFragment extends Fragment implements MainInfo
 
     presenter = new MainInfoDetailsDisplayPresenter(this, new RecipeRepository(context));
 
-    getRecipeId();
+    if(getRecipeId() == 0){
+      setRecipeId();
+    }
     getIsLogged();
     presenter.setWholeRecipeElements();
     setRecipeListeners();
@@ -82,8 +85,11 @@ public class MainInfoDetailsDisplayFragment extends Fragment implements MainInfo
 
   @Override
   public int getRecipeId() {
-    this.recipeId = getArguments().getInt("recipeId");
     return recipeId;
+  }
+
+  public void setRecipeId() {
+    this.recipeId = getArguments().getInt("recipeId");
   }
 
   @Override
@@ -145,5 +151,20 @@ public class MainInfoDetailsDisplayFragment extends Fragment implements MainInfo
   @Override
   public RatingBar getRatingBarStars() {
     return (RatingBar)getView().findViewById(R.id.ratingBarStars);
+  }
+
+  @Override
+  public RelativeLayout getEditAndDeleteRecipeRelativeLayout() {
+    return (RelativeLayout)getView().findViewById(R.id.editAndDeleteRecipeRelativeLayout);
+  }
+
+  @Override
+  public ImageView getEditRecipeImageView() {
+    return (ImageView)getView().findViewById(R.id.editUserRecipeImageView);
+  }
+
+  @Override
+  public ImageView getDeleteRecipeImageView() {
+    return (ImageView)getView().findViewById(R.id.deleteUserRecipeImageView);
   }
 }

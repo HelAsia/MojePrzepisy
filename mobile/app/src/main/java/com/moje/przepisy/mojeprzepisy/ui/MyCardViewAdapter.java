@@ -82,7 +82,7 @@ public class MyCardViewAdapter extends RecyclerView.Adapter<MyCardViewAdapter.Vi
     viewHolder.recipeImageView.setOnClickListener(new OnClickListener() {
       @Override
       public void onClick(View view) {
-        int recipeId = (int)getItemId(position);
+        int recipeId = cardsList.get(position).getRecipeId();
         callbackRecipeId.shareRecipeIdClicked(recipeId);
       }
     });

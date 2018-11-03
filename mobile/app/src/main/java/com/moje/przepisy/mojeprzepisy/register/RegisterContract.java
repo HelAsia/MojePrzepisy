@@ -1,5 +1,7 @@
 package com.moje.przepisy.mojeprzepisy.register;
 
+import android.content.Context;
+
 public interface RegisterContract {
   interface View {
     void navigateToMainRegisteredActivity();
@@ -10,6 +12,7 @@ public interface RegisterContract {
     String getRepeatedPassword();
     String getEmail();
     String getRepeatedEmail();
+    Context getContext();
     void showLoginError();
     void showEmailError();
     void showPasswordError();

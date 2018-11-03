@@ -1,11 +1,14 @@
 package com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.user;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import com.moje.przepisy.mojeprzepisy.data.model.Message;
 import com.moje.przepisy.mojeprzepisy.data.model.User;
 import com.moje.przepisy.mojeprzepisy.data.network.RetrofitSingleton;
 import com.moje.przepisy.mojeprzepisy.data.network.UserAPI;
+import com.moje.przepisy.mojeprzepisy.utils.Constant;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -35,7 +38,7 @@ public class UserRepository implements UserRepositoryInterface{
         Log.i("login.onResponse(): SERVER", "Message: " + msg.message);
 
         if (msg.status == 200){
-          listener.onSuccess();
+          listener.onSuccess(Integer.parseInt(msg.message));
         }else if (msg.status == 404){
           listener.onLoginAndPasswordError();
         }
@@ -95,7 +98,7 @@ public class UserRepository implements UserRepositoryInterface{
               Log.i("register.onResponse(): SERVER", "Message: " + msg.message);
 
               if (msg.status == 200){
-                listener.onSuccess();
+                listener.onSuccess(Integer.parseInt(msg.message));
               }else if (msg.status == 404){
                 listener.onLoginError();
               }else if (msg.status == 500){
@@ -183,3 +186,4 @@ public class UserRepository implements UserRepositoryInterface{
     });
   }
 }
+

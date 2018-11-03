@@ -3,6 +3,7 @@ package com.moje.przepisy.mojeprzepisy.recipe_details.main_info_details_display;
 import static com.moje.przepisy.mojeprzepisy.utils.Constant.BASE_URL;
 
 import android.graphics.drawable.Drawable;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.RatingBar;
@@ -12,6 +13,7 @@ import com.moje.przepisy.mojeprzepisy.R;
 import com.moje.przepisy.mojeprzepisy.data.model.Recipe;
 import com.moje.przepisy.mojeprzepisy.data.model.Stars;
 import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.recipe.RecipeRepository;
+import com.moje.przepisy.mojeprzepisy.utils.Constant;
 import com.squareup.picasso.Picasso;
 
 public class MainInfoDetailsDisplayPresenter implements MainInfoDetailsDisplayContract.Presenter,
@@ -39,6 +41,15 @@ public class MainInfoDetailsDisplayPresenter implements MainInfoDetailsDisplayCo
   @Override
   public void setMainInfoRecipe(Recipe recipe) {
     if(mainInfoDetailsDisplayView != null) {
+      int userId = PreferenceManager
+          .getDefaultSharedPreferences(mainInfoDetailsDisplayView.getContext()).getInt(Constant.PREF_USER_ID, 0);
+      if(userId != 0){
+        if(userId == recipe.getUserId()){
+          mainInfoDetailsDisplayView.getEditAndDeleteRecipeRelativeLayout().setVisibility(View.VISIBLE);
+        }else {
+          mainInfoDetailsDisplayView.getEditAndDeleteRecipeRelativeLayout().setVisibility(View.GONE);
+        }
+      }
       if (mainInfoDetailsDisplayView.getRecipeNameTextView() != null) {
         mainInfoDetailsDisplayView.getRecipeNameTextView().setText(recipe.getRecipeName());
       } else {
@@ -77,7 +88,6 @@ public class MainInfoDetailsDisplayPresenter implements MainInfoDetailsDisplayCo
       mainInfoDetailsDisplayView.getStarCountTextView().setText(String.valueOf(stars.getStarsCount()));
       mainInfoDetailsDisplayView.getFavoritesCountTextView().setText(String.valueOf(stars.getFavoritesCount()));
       setFavoriteImage(stars.getFavorites());
-  //    recipeRepository.getFavorite(mainInfoDetailsDisplayView.getRecipeId(), this);
     }
   }
 

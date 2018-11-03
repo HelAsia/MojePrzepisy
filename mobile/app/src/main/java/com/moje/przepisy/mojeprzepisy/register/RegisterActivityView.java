@@ -1,5 +1,6 @@
 package com.moje.przepisy.mojeprzepisy.register;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,7 +15,6 @@ import com.moje.przepisy.mojeprzepisy.R;
 import com.moje.przepisy.mojeprzepisy.ui.MainCardsActivityView;
 
 public class RegisterActivityView extends AppCompatActivity implements RegisterContract.View, View.OnClickListener {
-
   private RegisterContract.Presenter presenter;
   @BindView(R.id.errorMessageTextView)TextView errorMessageTextView;
   @BindView(R.id.register_action_button) Button registerButton;
@@ -25,11 +25,13 @@ public class RegisterActivityView extends AppCompatActivity implements RegisterC
   @BindView(R.id.repeated_password_editText) EditText repeatedPasswordEditText;
   @BindView(R.id.email_editText) EditText emailEditText;
   @BindView(R.id.repeated_email_editText) EditText repeatedEmailEditText;
+  Context context;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_register);
+    context = getApplicationContext();
 
     ButterKnife.bind(this);
 
@@ -55,6 +57,11 @@ public class RegisterActivityView extends AppCompatActivity implements RegisterC
     startActivity(intent);
     RegisterActivityView.this.finish();
 
+  }
+
+  @Override
+  public Context getContext() {
+    return context;
   }
 
   @Override

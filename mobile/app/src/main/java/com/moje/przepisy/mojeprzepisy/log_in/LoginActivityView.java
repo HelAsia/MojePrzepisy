@@ -1,5 +1,6 @@
 package com.moje.przepisy.mojeprzepisy.log_in;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -9,22 +10,23 @@ import android.widget.EditText;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.user.UserRepository;
 import com.moje.przepisy.mojeprzepisy.R;
+import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.user.UserRepository;
 import com.moje.przepisy.mojeprzepisy.ui.MainCardsActivityView;
 
 public class LoginActivityView extends AppCompatActivity implements LoginContract.View, View.OnClickListener{
-
   private LoginContract.Presenter presenter;
   @BindView(R.id.errorMessageTextView)TextView errorMessageTextView;
   @BindView(R.id.login_action_button) Button loginButton;
   @BindView(R.id.login_editText) EditText loginEditText;
   @BindView(R.id.password_editText) EditText passwordEditText;
+  Context context;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_login);
+    context = getApplicationContext();
 
     ButterKnife.bind(this);
 
@@ -47,6 +49,11 @@ public class LoginActivityView extends AppCompatActivity implements LoginContrac
   @Override
   public void showLoginAndPasswordError() {
     errorMessageTextView.setText(getString(R.string.login_password_error_message));
+  }
+
+  @Override
+  public Context getContext() {
+    return context;
   }
 
   @Override

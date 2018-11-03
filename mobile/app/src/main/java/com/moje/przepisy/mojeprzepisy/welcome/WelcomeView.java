@@ -1,5 +1,6 @@
 package com.moje.przepisy.mojeprzepisy.welcome;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -13,11 +14,13 @@ import com.moje.przepisy.mojeprzepisy.ui.MainCardsActivityView;
 public class WelcomeView extends AppCompatActivity implements WelcomeContract.View {
   private final int SPLASH_DISPLAY_LENGTH = 1500;
   private WelcomeContract.Presenter presenter;
+  Context context;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_welcome_page);
+    context = getApplicationContext();
 
     new Handler().postDelayed(new Runnable() {
       @Override
@@ -50,10 +53,14 @@ public class WelcomeView extends AppCompatActivity implements WelcomeContract.Vi
   }
 
   @Override
+  public Context getContext() {
+    return context;
+  }
+
+  @Override
   public void errorMessage() {
     TextView errorTextView = (TextView) findViewById(R.id.errorTextView);
     errorTextView.setText("Błąd połączenia z serwerem!");
     errorTextView.setVisibility(View.VISIBLE);
   }
-
 }

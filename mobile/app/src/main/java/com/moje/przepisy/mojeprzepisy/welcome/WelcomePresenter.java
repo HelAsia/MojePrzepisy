@@ -1,5 +1,9 @@
 package com.moje.przepisy.mojeprzepisy.welcome;
 
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+import com.moje.przepisy.mojeprzepisy.utils.Constant;
+
 public class WelcomePresenter implements WelcomeContract.Presenter, WelcomeRepository.OnLoggedListener {
   private WelcomeRepository welcomeRepository;
   private WelcomeContract.View welcomeView;
@@ -37,7 +41,14 @@ public class WelcomePresenter implements WelcomeContract.Presenter, WelcomeRepos
   @Override
   public void onNotLogged() {
     if(welcomeView != null){
+      deleteUserIdFromPreferences();
       welcomeView.navigateToHomePage();
     }
+  }
+
+  public void deleteUserIdFromPreferences(){
+    SharedPreferences.Editor ingredientsEditor = PreferenceManager.getDefaultSharedPreferences(welcomeView.getContext()).edit();
+    ingredientsEditor.remove(Constant.PREF_USER_ID);
+    ingredientsEditor.apply();
   }
 }

@@ -1,6 +1,9 @@
 package com.moje.przepisy.mojeprzepisy.register;
 
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.user.UserRepository;
+import com.moje.przepisy.mojeprzepisy.utils.Constant;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -87,8 +90,9 @@ public class RegisterPresenter implements RegisterContract.Presenter, UserReposi
   }
 
   @Override
-  public void onSuccess() {
+  public void onSuccess(int userId) {
     if(registerView != null) {
+      saveUserIdInPreferences(userId);
       registerView.navigateToMainRegisteredActivity();
     }
   }
@@ -98,5 +102,11 @@ public class RegisterPresenter implements RegisterContract.Presenter, UserReposi
     if(registerView != null) {
       registerView.showOtherError(message);
     }
+  }
+
+  public void saveUserIdInPreferences(int userId){
+    SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(registerView.getContext()).edit();
+    editor.putInt(Constant.PREF_USER_ID, userId).apply();
+    editor.commit();
   }
 }

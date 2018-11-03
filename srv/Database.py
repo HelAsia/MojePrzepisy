@@ -16,10 +16,14 @@ class Database:
         'db': ''
     }
 
-    def __init__(self):
+    def __init__(self, initialId = 1000):
+        self.queryId = initialId
         pass
 
     def __del__(self):
+        self.close()
+
+    def close(self):
         Logger.dbg("Closing database connection.")
         self.databaseConnection.close()
         self.databaseConnection = None
@@ -66,6 +70,7 @@ class Database:
             self.databaseCursor.execute('SET GLOBAL connect_timeout=28800;')
             self.databaseCursor.execute('SET GLOBAL wait_timeout=28800;')
             self.databaseCursor.execute('SET GLOBAL interactive_timeout=28800;')
+            self.databaseCursor.execute('SET GLOBAL max_allowed_packet=1073741824;')
 
             return True
 
@@ -74,8 +79,11 @@ class Database:
             return False
 
     def query(self, query, tryAgain = False):
+        self.queryId += 1
         if len(query)< 100:
-            Logger.dbg(u'SQL query: "{}"'.format(query))
+            Logger.dbg(u'SQL query (id: {}): "{}"'.format(self.queryId, query))
+        else:
+            Logger.dbg(u'SQL query (id: {}): "{}...{}"'.format(self.queryId, query[:80], query[-80:]))
 
         try:
             self.databaseCursor.execute(query)
@@ -86,20 +94,20 @@ class Database:
                 num += 1
                 if num > 5: break
                 if len(str(row)) < 100:
-                    Logger.dbg(u'Query ("{}") results:\nRow {}.: '.format(unicode(query), num) + str(row))
+                    Logger.dbg(u'Query (ID: {}) ("{}") results:\nRow {}.: '.format(self.queryId, unicode(query), num) + str(row))
                 else:
-                    Logger.dbg(u'Query is too long')
+                    Logger.dbg(u'Query (ID: {}) is too long'.format(self.queryId))
 
             return result
 
         except (MySQLdb.Error, MySQLdb.Error) as e:
             if Database.checkIfReconnectionNeeded(e):
                 if tryAgain == False:
-                    Logger.err("Query ('{}') failed. Need to reconnect.".format(query))
+                    Logger.err("Query (ID: {}) ('{}') failed. Need to reconnect.".format(self.queryId, query))
                     self.reconnect()
                     return self.query(query, True)
 
-            Logger.err("Query ('{}') failed: ".format(query) + str(e))
+            Logger.err("Query (ID: {}) ('{}') failed: ".format(self.queryId, query) + str(e))
             return False
 
     @staticmethod
@@ -107,7 +115,7 @@ class Database:
         return ("MySQL server has gone away" in error[1])
 
     def reconnect(self):
-        Logger.info("Trying to reconnect after failure...")
+        Logger.info("Trying to reconnect after failure (last query: {})...".format(self.queryId))
         if self.databaseConnection != None:
             try:
                 self.databaseConnection.close()
@@ -138,10 +146,12 @@ class Database:
                 AffectedRows    - number of affected rows or error code on failure
                 Message         - error message on failure, None otherwise
         '''
+        self.queryId += 1
         if len(query)< 100:
-            Logger.dbg(u'SQL INSERT query: "{}"'.format(query))
+            Logger.dbg(u'SQL INSERT query (id: {}): "{}"'.format(self.queryId, query))
         else:
-            Logger.dbg(u'Query is too long')
+            Logger.dbg(u'SQL INSERT query (id: {}): "{}...{}"'.format(self.queryId, query[:80], query[-80:]))
+
         assert not query.lower().startswith('select '), "Method insert() must NOT be invoked with SELECT queries!"
 
         try:
@@ -160,11 +170,11 @@ class Database:
 
             if Database.checkIfReconnectionNeeded(e):
                 if tryAgain == False:
-                    Logger.err("Insert query ('{}') failed. Need to reconnect.".format(query))
+                    Logger.err("Insert query (ID: {}) ('{}') failed. Need to reconnect.".format(self.queryId, query))
                     self.reconnect()
                     return self.insert(query, True)
 
-            Logger.err("Insert Query ('{}') failed: ".format(query) + str(e))
+            Logger.err("Insert Query (ID: {}) ('{}') failed: ".format(self.queryId, query) + str(e))
             return False, e.args[0], e.args[1]
 
     def delete(self, query):

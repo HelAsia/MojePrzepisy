@@ -46,7 +46,10 @@ class Stars:
         else:
             for queryRow in queryResult:
                 queryRow['favorite'] = False
-            return queryResult[0]
+
+            if queryResult != None:
+                return queryResult[0]
+            return False
 
     def addStars(self, userID, recipeId, starsCount, favoritesCount):
         query = u"INSERT INTO users_recipes_stars " \
@@ -120,11 +123,9 @@ class Stars:
     def getRecipeDetailsStars(self, userID, recipeID):
         recipeQuery = u"SELECT recipe_id AS recipeId, user_id AS userId " \
                       u"FROM recipes " \
-                      u"WHERE recipe_id = {} ; ".format(recipeID)
+                      u"WHERE recipe_id = {} ; ".format(int(recipeID))
 
         return self.getAllUpadtedStarsAndFavoritesBasedMethod(userID, recipeQuery)
-
-
 
     def getAllUpadtedStarsAndFavoritesBasedMethod(self, userID, recipeQuery):
         recipeQueryResult = self.database.query(recipeQuery)
@@ -158,6 +159,7 @@ class Stars:
     def getUserQueryResult(self):
         userQuery = u"SELECT user_id AS userId, user_login AS authorName " \
                     u"FROM users; "
+        Logger.dbg("getUserQueryResult():")
         userQueryResult = self.database.query(userQuery)
         return userQueryResult
 
@@ -166,6 +168,7 @@ class Stars:
         starsCountQuery = u"SELECT recipe_id AS recipeId, ROUND(avg(stars), 0) AS starsCount " \
                           u"FROM users_recipes_stars " \
                           u"GROUP BY recipeId; "
+        Logger.dbg("getStarsCountQueryResult():")
         starsCountQueryResult = self.database.query(starsCountQuery)
         return starsCountQueryResult
 
@@ -175,6 +178,7 @@ class Stars:
                              u"FROM users_recipes_stars " \
                              u"where favorite = true " \
                              u"GROUP BY recipeId; "
+        Logger.dbg("getFavoriteCountQueryResult():")
         favoriteCountQueryResult = self.database.query(favoriteCountQuery)
         return favoriteCountQueryResult
 
@@ -183,6 +187,7 @@ class Stars:
         favoriteQuery = u"SELECT recipe_id AS recipeId, favorite AS favorites " \
                         u"FROM users_recipes_stars " \
                         u"where user_id = {}; ".format(userID)
+        Logger.dbg("getFavoriteQueryResult():")
         favoriteQueryResult = self.database.query(favoriteQuery)
         return favoriteQueryResult
 
@@ -228,5 +233,5 @@ class Stars:
 
         else:
             for mainQueryRow in mainQueryResult:
-                mainQueryRow['favorite'] = False
+                mainQueryRow['favorites'] = False
             return mainQueryResult

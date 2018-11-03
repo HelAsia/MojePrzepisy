@@ -1,16 +1,20 @@
 package com.moje.przepisy.mojeprzepisy.recipe_details.comment_details_display;
 
 import android.content.Context;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.moje.przepisy.mojeprzepisy.R;
 import com.moje.przepisy.mojeprzepisy.data.model.Comment;
+import com.moje.przepisy.mojeprzepisy.utils.Constant;
 import java.util.List;
 
 public class CommentDisplayRecipeAdapter extends RecyclerView.Adapter<CommentDisplayRecipeAdapter.ViewHolder> {
@@ -51,6 +55,9 @@ public class CommentDisplayRecipeAdapter extends RecyclerView.Adapter<CommentDis
     @BindView(R.id.userNameTextView) TextView userNameTextView;
     @BindView(R.id.createTimeTextView) TextView createTimeTextView;
     @BindView(R.id.commentTextView) TextView commentTextView;
+    @BindView(R.id.editAndDeleteRecipeRelativeLayout) RelativeLayout editAndDeleteRecipeRelativeLayout;
+    @BindView(R.id.editUserRecipeImageView) ImageView editUserRecipeImageView;
+    @BindView(R.id.deleteUserRecipeImageView) ImageView deleteUserRecipeImageView;
 
     ViewHolder(View v) {
       super(v);
@@ -61,6 +68,16 @@ public class CommentDisplayRecipeAdapter extends RecyclerView.Adapter<CommentDis
       String authorName = comment.getAuthorName();
       String createTime = comment.getCreatedDate();
       String commentText = comment.getComment();
+      int userId = comment.getUserId();
+
+      int userIdFromPreferences = PreferenceManager
+          .getDefaultSharedPreferences(context).getInt(Constant.PREF_USER_ID, 0);
+
+      if(userId == userIdFromPreferences){
+        editAndDeleteRecipeRelativeLayout.setVisibility(View.VISIBLE);
+      }else {
+        editAndDeleteRecipeRelativeLayout.setVisibility(View.GONE);
+      }
 
       if (authorName != null) {
         userNameTextView.setText(authorName);

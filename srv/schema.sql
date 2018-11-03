@@ -97,29 +97,29 @@ CREATE TABLE photos (
 insert into users (user_id, user_login, user_password, first_name, last_name, email)
 values
 (1, 'query', 'Query123!!', 'Ania', 'Zowal', 'anna@example.com'),
-(2, 'helcia0412', 'Asia1hel!!', 'Asia', 'Heluszka', 'asia@example.com'),
-(3, 'tita', 'Tita0522!', 'Agnieszka', 'Heluszka', 'aga@example.com');
+(2, 'annaNowak', 'annaNowak123!', 'Anna', 'Nowak', 'asia@example.com'),
+(3, 'OlaKowalska', 'OlaKowalska12!', 'Ola', 'Kowalska', 'aga@example.com');
 
 insert into recipes
 (recipe_id, user_id, recipe_name, recipe_prepare_time, recipe_cook_time, recipe_bake_time, photo_id, recipe_category, recipe_created_date_time)
 values
 (1, 1, 'Ogórkowa', '00:30:00', '00:30:00', '00:30:00', '20' ,'Zupy', NOW()),
-(2, 3, 'Pomidorowa', '00:30:00', '00:20:00', '00:30:00', '20', 'Zupy', NOW()),
-(3, 2, 'Murzynek', '00:30:00', '00:10:00', '00:20:00', '20' , 'Ciasta i cistka', NOW()),
-(4, 2, 'Sernik', '00:40:00', '00:10:00', '00:30:00', '20' , 'Ciasta i cistka', NOW()),
-(5, 3, 'Mleko', '00:40:00', '00:10:00', '00:30:00', '20' , 'Ciasta i cistka', NOW());
+(2, 3, 'Pomidorowa', '00:30:00', '00:20:00', '00:30:00', '20', 'Zupy', NOW());
+-- (3, 2, 'Murzynek', '00:30:00', '00:10:00', '00:20:00', '20' , 'Ciasta i cistka', NOW()),
+-- (4, 2, 'Sernik', '00:40:00', '00:10:00', '00:30:00', '20' , 'Ciasta i cistka', NOW()),
+-- (5, 3, 'Mleko', '00:40:00', '00:10:00', '00:30:00', '20' , 'Ciasta i cistka', NOW());
 
 insert into users_recipes_stars
 (user_id, recipe_id, favorite, stars)
 values
 (1, 1, true, 1),
-(3, 2, true, 2),
-(2, 3, false, 2),
-(1, 2, true, 4),
-(3, 4, true, 2),
-(2, 4, false, 5),
-(2, 5, false, 5),
-(1, 5, true, 5);
+(3, 2, true, 2);
+-- (2, 3, false, 2),
+-- (1, 2, true, 4),
+-- (3, 4, true, 2),
+-- (2, 4, false, 5),
+-- (2, 5, false, 5),
+-- (1, 5, true, 5);
 
 insert into photos
 (photo_id, photo)
@@ -152,19 +152,20 @@ values
 (1, 1, 4, 'dag', 'mąka'),
 (2, 1, 2, 'kg', 'cukier'),
 (3, 2, 4, 'dag', 'mąka'),
-(4, 2, 2, 'kg', 'cukier'),
-(5, 3, 4, 'dag', 'mąka'),
-(6, 3, 2, 'kg', 'cukier'),
-(7, 4, 4, 'dag', 'mąka'),
-(8, 4, 2, 'kg', 'cukier'),
-(9, 5, 4, 'dag', 'mąka'),
-(10, 5, 2, 'kg', 'cukier');
+(4, 2, 2, 'kg', 'cukier');
+-- (5, 3, 4, 'dag', 'mąka'),
+-- (6, 3, 2, 'kg', 'cukier'),
+-- (7, 4, 4, 'dag', 'mąka'),
+-- (8, 4, 2, 'kg', 'cukier'),
+-- (9, 5, 4, 'dag', 'mąka'),
+-- (10, 5, 2, 'kg', 'cukier');
 
 insert into steps
 (step_id, recipe_id, photo_id, step_number, step_description)
 values
 (1, 1, 1, 1, 'Test1'),
-(2, 2, 1, 1, 'Test2'),
-(3, 3, 1, 1, 'Test3'),
-(4, 4, 1, 1, 'Test4'),
-(5, 5, 1, 1, 'Test5');
+(2, 2, 1, 1, 'Test2');
+
+-- (3, 3, 1, 1, 'Test3'),
+-- (4, 4, 1, 1, 'Test4'),
+-- (5, 5, 1, 1, 'Test5');

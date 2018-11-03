@@ -2,6 +2,7 @@ package com.moje.przepisy.mojeprzepisy.data.model;
 
 public class Recipe {
   private int recipeId;
+  private int userId;
   private String recipeName;
   private String recipeMainPicture;
   private int recipeMainPictureNumber;
@@ -43,6 +44,19 @@ public class Recipe {
 
   public Recipe(){
 
+  }
+
+  public Recipe(int recipeId, int userId, String recipeName, int recipeMainPictureNumber,
+      String recipeCategory, String recipePrepareTime, String recipeCookTime,
+      String recipeBakeTime) {
+    this.recipeId = recipeId;
+    this.userId = userId;
+    this.recipeName = recipeName;
+    this.recipeMainPictureNumber = recipeMainPictureNumber;
+    this.recipeCategory = recipeCategory;
+    this.recipePrepareTime = recipePrepareTime;
+    this.recipeCookTime = recipeCookTime;
+    this.recipeBakeTime = recipeBakeTime;
   }
 
   public Recipe(int recipeId, String recipeName, int recipeMainPictureNumber,
@@ -119,5 +133,13 @@ public class Recipe {
 
   public void setRecipeMainPictureNumber(int recipeMainPictureNumber) {
     this.recipeMainPictureNumber = recipeMainPictureNumber;
+  }
+
+  public int getUserId() {
+    return userId;
+  }
+
+  public void setUserId(int userId) {
+    this.userId = userId;
   }
 }

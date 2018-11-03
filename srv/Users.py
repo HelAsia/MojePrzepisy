@@ -29,14 +29,14 @@ class Users:
         if len(login) == 0:
             return 500, u'Passed login was empty', None
 
-        query = u"SELECT user_id " \
+        query = u"SELECT user_id AS userId " \
                 u"FROM users " \
                 u"WHERE user_login = '{}' AND user_password = '{}'".format(login, password)
 
         queryResult = self.database.query(query)
 
         if queryResult :
-            return 200, u'You are logged in', queryResult[0]['user_id']
+            return 200, u'You are logged in', queryResult[0]['userId']
         else:
             return 404, u'Login or password do not exist', None
 
@@ -57,9 +57,9 @@ class Users:
                 status, queryResult, errorMessage = self.database.insert(query)
 
                 if status:
-                    return 200, u'Registered login={}, first name={}, last name={}, email={}'.format(
-                        login, firstName, lastName, email
-                    )
+                    queryUserId = u"SELECT MAX(user_id) AS userId FROM users; "
+                    user_id = self.database.query(queryUserId)
+                    return 200, user_id[0]['userId']
                 elif not status:
                     if queryResult == 1062:
                         return 404, u'This login exists in Database'

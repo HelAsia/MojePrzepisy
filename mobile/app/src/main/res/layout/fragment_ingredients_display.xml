@@ -9,11 +9,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <RelativeLayout
+      android:id="@+id/editAndDeleteRecipeRelativeLayout"
+      android:visibility="gone"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+
+      <ImageView
+        android:id="@+id/editUserRecipeImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:src="@android:drawable/ic_menu_edit"/>
+    </RelativeLayout>
+
     <TextView
       android:id="@+id/textView"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:gravity="center"
+      android:layout_below="@+id/editAndDeleteRecipeRelativeLayout"
       android:text="@string/info_about_shopping_list"/>
     <ScrollView
       android:id="@+id/scrollViewLayout"

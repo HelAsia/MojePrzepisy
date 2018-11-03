@@ -3,6 +3,7 @@ package com.moje.przepisy.mojeprzepisy.recipe_details.main_info_details_display;
 import android.content.Context;
 import android.widget.ImageView;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public interface MainInfoDetailsDisplayContract {
@@ -22,6 +23,9 @@ public interface MainInfoDetailsDisplayContract {
     ImageView getFavoritesImageView();
     TextView getFavoritesCountTextView();
     RatingBar getRatingBarStars();
+    RelativeLayout getEditAndDeleteRecipeRelativeLayout();
+    ImageView getEditRecipeImageView();
+    ImageView getDeleteRecipeImageView();
   }
 
   interface Presenter{

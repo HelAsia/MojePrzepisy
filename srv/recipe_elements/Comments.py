@@ -16,7 +16,7 @@ class Comments:
         self.database = database
 
     def getComments(self, recipeID):
-        query = u"SELECT C.recipe_id AS recipeId, U.user_login AS authorName, " \
+        query = u"SELECT C.recipe_id AS recipeId, U.user_login AS authorName, U.user_id AS userId, " \
                 u"C.comment_id AS commentId, C.comment AS comment, C.created_date AS createdDate " \
                 u"FROM comments AS C " \
                 u"INNER JOIN users AS U " \

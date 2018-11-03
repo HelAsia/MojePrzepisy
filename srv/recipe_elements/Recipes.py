@@ -17,7 +17,7 @@ class Recipes:
         self.database = database
 
     def getRecipe(self, recipeID):
-        query = u'SELECT R.recipe_id AS recipeId, U.user_login AS authorName, ' \
+        query = u'SELECT R.recipe_id AS recipeId, R.user_id AS userId, U.user_login AS authorName, ' \
                 u'R.photo_id AS recipeMainPictureNumber, ' \
                 u'R.recipe_name AS recipeName, ' \
                 u'TIME_FORMAT(R.recipe_prepare_time, "%h %i %s") AS recipePrepareTime, ' \
