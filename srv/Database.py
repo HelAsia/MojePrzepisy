@@ -148,7 +148,8 @@ class Database:
             self.databaseCursor.execute(query)
 
             # Commit new records to the database
-            result = self.databaseConnection.commit()
+
+            self.databaseConnection.commit()
             return True, 1, None
 
         except (MySQLdb.Error, MySQLdb.Error) as e:

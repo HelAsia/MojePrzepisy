@@ -17,7 +17,7 @@ class Stars:
     def getStars(self, recipeID, userId):
         query = u"SELECT favorite AS favoritesCount, stars AS starsCount " \
                 u"FROM users_recipes_stars " \
-                u"WHERE recipe_id LIKE '{}' AND user_id LIKE '{}')".format(recipeID, userId)
+                u"WHERE recipe_id = {} AND user_id = {};".format(recipeID, userId)
 
         queryResult = self.database.query(query)
 
@@ -64,30 +64,31 @@ class Stars:
             return 404, u'Forwarded data are not correct'
 
     def editStars(self, columnName, columnValue, recipeId, userID):
-        if columnName == "favorite":
-            if columnValue == 0:
-                columnValue = "false"
-            elif columnValue == 1:
-                columnValue = "true"
-        query = u"UPDATE users_recipes_stars " \
-                u"SET {} = {} " \
-                u"WHERE recipe_id = {} " \
-                u"AND user_id = {};".format(columnName, columnValue, recipeId, userID)
+        isRecordInTable = self.getStars(recipeId,userID)
 
-        queryResult, rows, msg = self.database.insert(query)
+        Logger.dbg(isRecordInTable)
 
-        if rows > 0:
+        if isRecordInTable != {}:
+            if columnName == "favorite":
+                if columnValue == 0:
+                    columnValue = "false"
+                elif columnValue == 1:
+                    columnValue = "true"
+            query = u"UPDATE users_recipes_stars " \
+                    u"SET {} = {} " \
+                    u"WHERE recipe_id = {} " \
+                    u"AND user_id = {};".format(columnName, columnValue, recipeId, userID)
+
+            queryResult, rows, msg = self.database.insert(query)
             Logger.dbg(queryResult)
             return 200, u'Your changed {}={}'.format(columnName, columnValue)
-        elif rows == 0:
-            Logger.dbg(queryResult)
+        elif isRecordInTable == {}:
             if columnName == "favorite":
                 self.addStars(userID, recipeId, 0, columnValue)
             elif columnName == "stars":
-                self.addStars(userID, recipeId, columnValue, 0)
+                self.addStars(userID, recipeId, columnValue, False)
             return 200, u'Your changed {}={}'.format(columnName, columnValue)
         else:
-            Logger.dbg(queryResult)
             return 404, u'Forwarded data to check are not correct'
 
     def deleteStars(self, recipeId, userID):
