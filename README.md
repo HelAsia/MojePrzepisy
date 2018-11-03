@@ -45,17 +45,14 @@ The application is not finished yet. It is still being developed.
  4. Edit comment
  5. Delete comment
  6. Update timer *(alarm after finish countdown)*
- 7. Update ingredients list *(strikethrough ingredients like shopping list)*
- 8. Application's description
- 9. Used third-party code and it's licences
- 10. Different layout for horizontal screens
- 11. Tests (unit and integration)
+ 7. Application's description
+ 8. Used third-party code and it's licences
+ 9. Different layout for horizontal screens
+ 10. Tests (unit and integration)
 
 ## Known bugs:
  1. Optimize loading photos and data receival from server
  2. Wrong number of just added step
- 3. Wrong number of comments in recipe details view
- 4. Wrong rating and favourite state when favourite number in recipe details is zero (server related)
 
 ## Credits:
 #### 1. Libraries
