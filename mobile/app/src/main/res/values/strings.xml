@@ -132,4 +132,6 @@
   <string name="user_password">"Twoje hasło:"</string>
   <string name="user_repeat_password">Powtórzone hasło</string>
 
+  <string name="info_about_shopping_list">"Naciśnij na składnik, aby skreślić go na liście zakupów. </string>
+
 </resources>
