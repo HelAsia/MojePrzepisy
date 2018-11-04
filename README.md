@@ -37,18 +37,18 @@ The application is not finished yet. It is still being developed.
  - email
  - password
 13. Kitchen Timers
+14. Delete recipe
 
 ## To do:
  1. Edit recipe
- 2. Delete recipe
- 3. Delete user's account
- 4. Edit comment
- 5. Delete comment
- 6. Update timer *(alarm after finish countdown)*
- 7. Application's description
- 8. Used third-party code and it's licences
- 9. Different layout for horizontal screens
- 10. Tests (unit and integration)
+ 2. Delete user's account
+ 3. Edit comment
+ 4. Delete comment
+ 5. Update timer *(alarm after finish countdown)*
+ 6. Application's description
+ 7. Used third-party code and it's licences
+ 8. Different layout for horizontal screens
+ 9. Tests (unit and integration)
 
 ## Known bugs:
  1. Optimize loading photos and data receival from server
@@ -74,6 +74,11 @@ The application is not finished yet. It is still being developed.
 [Food photos](https://pixabay.com/pl/photos/?cat=food) - used to download free of cost food images (e. g. category).
 
 [Material design icons](https://github.com/google/material-design-icons) - used to download and set icons (e. g. in drawer).
+
+[Free vector icons](https://www.flaticon.com/) - used to download and set icons (e. g. in drawer).
+
+[Bitmap - String converter](http://vinayandroid.blogspot.com/2015/02/convert-image-bitmap-to-string.html) - used to convert image Bitmap to String and String to image Bitmap.
+
 
 ## Screens:
 ![first_screen](Photo/first_screen.PNG)
