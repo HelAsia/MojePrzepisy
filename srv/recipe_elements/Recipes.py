@@ -84,12 +84,44 @@ class Recipes:
             return 404, u'Forwarded data to check are not correct'
 
     def deleteRecipe(self, recipeId):
-        query = u"DELETE FROM recipes " \
-                u"WHERE recipe_id = {}".format(recipeId)
-        queryResult = self.database.query(query)
+        query = u"SELECT recipe_id, recipe_name, photo_id  " \
+                u"FROM recipes " \
+                u"WHERE recipe_id = {};".format(recipeId)
 
-        if queryResult:
-            Logger.dbg(str(tuple(queryResult)))
-            return 200, u'Your deleted recipe_id = {}'.format(recipeId)
-        else:
-            return 404, u'Forwarded data to check are not correct'
+        isRecordInTable = self.database.query(query)
+
+        Logger.dbg(isRecordInTable)
+
+        if isRecordInTable:
+            deleteRecipeQuery = u"DELETE FROM recipes " \
+                    u"WHERE recipe_id = {};".format(recipeId)
+            deleteRecipeQueryResult, rows, msg = self.database.delete(deleteRecipeQuery)
+
+            deleteIngredientsQuery = u"DELETE FROM ingredients " \
+                    u"WHERE recipe_id = {};".format(recipeId)
+            deleteIngredientsQueryResult, rows, msg = self.database.delete(deleteIngredientsQuery)
+
+            deleteStepsQuery = u"DELETE FROM steps " \
+                    u"WHERE recipe_id = {};".format(recipeId)
+            deleteStepsQueryResult, rows, msg = self.database.delete(deleteStepsQuery)
+
+            deleteCommentsQuery = u"DELETE FROM comments " \
+                    u"WHERE recipe_id = {};".format(recipeId)
+            deleteCommentsQueryResult, rows, msg = self.database.delete(deleteCommentsQuery)
+
+            deleteUserRecipesStarsQuery = u"DELETE FROM users_recipes_stars " \
+                    u"WHERE recipe_id = {};".format(recipeId)
+            deleteUserRecipesStarsQueryResult, rows, msg = self.database.delete(deleteUserRecipesStarsQuery)
+
+            if deleteRecipeQueryResult and deleteIngredientsQueryResult \
+                    and deleteStepsQueryResult and deleteCommentsQueryResult \
+                    and deleteUserRecipesStarsQueryResult :
+                Logger.dbg(deleteRecipeQueryResult)
+                Logger.dbg(deleteIngredientsQueryResult)
+                Logger.dbg(deleteCommentsQueryResult)
+                Logger.dbg(deleteUserRecipesStarsQueryResult)
+                return 200, u'Your deleted recipe_id = {}'.format(recipeId)
+            else:
+                return 404, u'Forwarded data to check are not correct'
+        elif not isRecordInTable:
+            return 404, u'Record is not exist in table'

@@ -26,6 +26,7 @@ public interface MainInfoDetailsDisplayContract {
     RelativeLayout getEditAndDeleteRecipeRelativeLayout();
     ImageView getEditRecipeImageView();
     ImageView getDeleteRecipeImageView();
+    void goToMainCardActivity();
   }
 
   interface Presenter{
@@ -36,5 +37,6 @@ public interface MainInfoDetailsDisplayContract {
     void sendStarsToServer(int rate);
     void sendFavouriteToServer(int favorite);
     void setFavoriteImage(Boolean favorites);
+    void setDeleteRecipeAction();
   }
 }

@@ -27,7 +27,7 @@ public interface RecipeAPI {
   Call<Message> addRecipe(@Body Recipe recipe);
 
   @DELETE("recipe/{recipeId}")
-  Call<List<Recipe>> deleteRecipe(@Path("recipeId") int recipeId, @Body Recipe recipe);
+  Call<Message> deleteRecipe(@Path("recipeId") int recipeId);
 
 
   @POST("recipe/photo/{photoId}")

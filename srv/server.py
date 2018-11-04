@@ -328,10 +328,10 @@ def editRecipe(recipeId, columnName, columnValue):
 
 @app.route('/recipe/<int:recipeId>', methods=['DELETE'])
 @authorized
-def deleteRecipePhoto(recipeId):
+def deleteRecipe(recipeId):
     recipe = Recipes(get_database())
 
-    status, message = recipe.deletePhoto(recipeId)
+    status, message = recipe.deleteRecipe(recipeId)
 
     return jsonify({
         'status': status,

@@ -18,7 +18,7 @@ import com.squareup.picasso.Picasso;
 
 public class MainInfoDetailsDisplayPresenter implements MainInfoDetailsDisplayContract.Presenter,
     RecipeRepository.OnMainInfoDetailsDisplayListener, RecipeRepository.OnStarsEditInRecipeListener,
-    RecipeRepository.OnFavoriteListener {
+    RecipeRepository.OnFavoriteListener, RecipeRepository.OnDeleteRecipeDetailsDisplayListener {
   private RecipeRepository recipeRepository;
   private MainInfoDetailsDisplayContract.View mainInfoDetailsDisplayView;
   private Boolean favorite = null;
@@ -165,6 +165,11 @@ public class MainInfoDetailsDisplayPresenter implements MainInfoDetailsDisplayCo
   }
 
   @Override
+  public void setDeleteRecipeAction() {
+    recipeRepository.deleteRecipe(mainInfoDetailsDisplayView.getRecipeId(), this);
+  }
+
+  @Override
   public void sendStarsToServer(int rate) {
     recipeRepository.editStarsAndHeartInRecipe(mainInfoDetailsDisplayView.getRecipeId(), "stars", rate, this);
   }
@@ -172,5 +177,16 @@ public class MainInfoDetailsDisplayPresenter implements MainInfoDetailsDisplayCo
   @Override
   public void sendFavouriteToServer(int favorite) {
     recipeRepository.editStarsAndHeartInRecipe(mainInfoDetailsDisplayView.getRecipeId(), "favorite", favorite, this);
+  }
+
+  @Override
+  public void onSuccess() {
+    Toast.makeText(mainInfoDetailsDisplayView.getContext(), "Przepis został usunięty!", Toast.LENGTH_SHORT).show();
+    mainInfoDetailsDisplayView.goToMainCardActivity();
+  }
+
+  @Override
+  public void onError() {
+    Toast.makeText(mainInfoDetailsDisplayView.getContext(), "Błąd podczas usuwania przepisu!", Toast.LENGTH_SHORT).show();
   }
 }

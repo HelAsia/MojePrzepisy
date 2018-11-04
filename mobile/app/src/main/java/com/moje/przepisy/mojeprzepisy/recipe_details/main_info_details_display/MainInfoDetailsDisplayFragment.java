@@ -2,6 +2,7 @@ package com.moje.przepisy.mojeprzepisy.recipe_details.main_info_details_display;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -15,6 +16,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.moje.przepisy.mojeprzepisy.R;
 import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.recipe.RecipeRepository;
+import com.moje.przepisy.mojeprzepisy.ui.MainCardsActivityView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -66,6 +68,8 @@ public class MainInfoDetailsDisplayFragment extends Fragment implements MainInfo
       presenter.setRatingBarStarsVisibility();
     }else if(view.getId() == R.id.heart_image_view){
       presenter.setFavoriteImageAndGetFavoriteState();
+    }else if(view.getId() == R.id.deleteUserRecipeImageView){
+      presenter.setDeleteRecipeAction();
     }
   }
 
@@ -79,6 +83,7 @@ public class MainInfoDetailsDisplayFragment extends Fragment implements MainInfo
     if(isLogged){
       getStarImageView().setOnClickListener(this);
       getFavoritesImageView().setOnClickListener(this);
+      getDeleteRecipeImageView().setOnClickListener(this);
     }
   }
 
@@ -95,6 +100,13 @@ public class MainInfoDetailsDisplayFragment extends Fragment implements MainInfo
   public Boolean getIsLogged() {
     this.isLogged = getArguments().getBoolean("isLogged");
     return isLogged;
+  }
+
+  @Override
+  public void goToMainCardActivity(){
+    Intent intent = new Intent(context, MainCardsActivityView.class);
+    intent.putExtra("LOGGED",true);
+    startActivity(intent);
   }
 
   @Override

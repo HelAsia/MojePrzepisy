@@ -367,16 +367,39 @@ public class RecipeRepository implements RecipeRepositoryInterface{
       public void onResponse(Call<Message> call, Response<Message> response) {
         Message message = response.body();
         if(message.status == 200){
-          Log.i("deleteComment.onResponse(): Comment ", "OK. Comment has been added");
+          Log.i("deleteComment.onResponse(): Comment ", "OK. Comment has been deleted");
           listener.onSuccess();
         }else if(message.status == 404){
-          Log.e("deleteComment.onResponse(): Comment ", "NOT OK. Comment hasn't been added");
+          Log.e("deleteComment.onResponse(): Comment ", "NOT OK. Comment hasn't been deleted");
           listener.onError();
         }
       }
       @Override
       public void onFailure(Call<Message> call, Throwable t) {
         Log.i("deleteComment.onFailure(): SERWER", t.getMessage());
+        listener.onError();
+      }
+    });
+  }
+
+  @Override
+  public void deleteRecipe(int recipeId, final OnDeleteRecipeDetailsDisplayListener listener) {
+    Call<Message> resp = recipeAPI.deleteRecipe(recipeId);
+    resp.enqueue(new Callback<Message>() {
+      @Override
+      public void onResponse(Call<Message> call, Response<Message> response) {
+        Message message = response.body();
+        if(message.status == 200){
+          Log.i("deleteRecipe.onResponse(): Recipe ", "OK. Recipe has been deleted");
+          listener.onSuccess();
+        }else if(message.status == 404){
+          Log.e("deleteRecipe.onResponse(): Recipe ", "NOT OK. Recipe hasn't been deleted");
+          listener.onError();
+        }
+      }
+      @Override
+      public void onFailure(Call<Message> call, Throwable t) {
+        Log.i("deleteRecipe.onFailure(): SERWER", t.getMessage());
         listener.onError();
       }
     });
