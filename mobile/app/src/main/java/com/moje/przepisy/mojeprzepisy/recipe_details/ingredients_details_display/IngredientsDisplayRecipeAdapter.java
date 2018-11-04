@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,24 +41,22 @@ public class IngredientsDisplayRecipeAdapter extends RecyclerView.Adapter<Ingred
   public void onBindViewHolder(@NonNull final IngredientsDisplayRecipeAdapter.ViewHolder viewHolder, int position) {
     viewHolder.bind(ingredientList.get(position));
 
-    viewHolder.ingredientsTableRow.setOnClickListener(new OnClickListener() {
+    viewHolder.ingredientsCardViewLayout.setOnClickListener(new OnClickListener() {
       @Override
       public void onClick(View view) {
         if(isCrossed){
+          viewHolder.ingredientsCardViewLayout.setCardBackgroundColor(Color.parseColor("#ffffff"));
+          viewHolder.ingredientsTableRow.setBackgroundColor(Color.parseColor("#ffffff"));
           viewHolder.nameIngredientTextView.setPaintFlags(viewHolder.nameIngredientTextView.getPaintFlags()& (~Paint.STRIKE_THRU_TEXT_FLAG));
-          viewHolder.nameIngredientTextView.setTextColor(Color.parseColor("#212121"));
           viewHolder.quantityTextView.setPaintFlags(viewHolder.nameIngredientTextView.getPaintFlags()& (~Paint.STRIKE_THRU_TEXT_FLAG));
-          viewHolder.quantityTextView.setTextColor(Color.parseColor("#212121"));
           viewHolder.unitTextView.setPaintFlags(viewHolder.nameIngredientTextView.getPaintFlags()& (~Paint.STRIKE_THRU_TEXT_FLAG));
-          viewHolder.unitTextView.setTextColor(Color.parseColor("#212121"));
           isCrossed = false;
         }else {
+          viewHolder.ingredientsCardViewLayout.setCardBackgroundColor(Color.parseColor("#757575"));
+          viewHolder.ingredientsTableRow.setBackgroundColor(Color.parseColor("#757575"));
           viewHolder.nameIngredientTextView.setPaintFlags(viewHolder.nameIngredientTextView.getPaintFlags()| Paint.STRIKE_THRU_TEXT_FLAG);
-          viewHolder.nameIngredientTextView.setTextColor(Color.parseColor("#757575"));
           viewHolder.quantityTextView.setPaintFlags(viewHolder.nameIngredientTextView.getPaintFlags()| Paint.STRIKE_THRU_TEXT_FLAG);
-          viewHolder.quantityTextView.setTextColor(Color.parseColor("#757575"));
           viewHolder.unitTextView.setPaintFlags(viewHolder.nameIngredientTextView.getPaintFlags()| Paint.STRIKE_THRU_TEXT_FLAG);
-          viewHolder.unitTextView.setTextColor(Color.parseColor("#757575"));
           isCrossed = true;
         }
       }
@@ -79,6 +78,7 @@ public class IngredientsDisplayRecipeAdapter extends RecyclerView.Adapter<Ingred
     @BindView(R.id.unitTextView) TextView unitTextView;
     @BindView(R.id.nameIngredientTextView) TextView nameIngredientTextView;
     @BindView(R.id.ingredientsTableRow) TableRow ingredientsTableRow;
+    @BindView(R.id.ingredient_display_my_card_view_layout) CardView ingredientsCardViewLayout;
 
     ViewHolder(View v) {
       super(v);

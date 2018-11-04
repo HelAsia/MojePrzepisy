@@ -17,6 +17,7 @@
 
   <TableRow
     android:id="@+id/ingredientsTableRow"
+    android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="10dp">
