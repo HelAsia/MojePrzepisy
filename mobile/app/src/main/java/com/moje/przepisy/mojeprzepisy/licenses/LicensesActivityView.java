@@ -36,7 +36,7 @@ public class LicensesActivityView extends AppCompatActivity implements LicensesC
 
   @Override
   public void setToolbar() {
-    Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_licences);
+    Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_licenses);
     toolbar.setSubtitle(R.string.licences);
     setSupportActionBar(toolbar);
   }

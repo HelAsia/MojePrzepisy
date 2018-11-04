@@ -12,7 +12,7 @@
   tools:context="com.moje.przepisy.mojeprzepisy.licenses.LicensesActivityView">
 
   <android.support.v7.widget.Toolbar
-    android:id="@+id/toolbar_licences"
+    android:id="@+id/toolbar_licenses"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/primary"
@@ -31,7 +31,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center"
-    android:layout_below="@+id/toolbar_licences"
+    android:layout_below="@+id/toolbar_licenses"
     android:text="@string/info_about_licences_list"/>
   <ScrollView
     android:id="@+id/scrollViewLayout"

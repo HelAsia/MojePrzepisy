@@ -54,6 +54,7 @@
           android:layout_height="match_parent"
           android:layout_weight="1"
           android:gravity="center"
+          android:background="@color/blue_transparent"
           android:textColor="@color/primary_text"
           android:textSize="18sp"/>
         <ImageView
@@ -61,30 +62,24 @@
           android:layout_width="20dp"
           android:layout_height="wrap_content"
           android:layout_weight="1"
+          android:background="@color/blue_transparent"
           app:srcCompat="@android:drawable/ic_menu_edit"/>
-
       </LinearLayout>
 
       <android.support.v7.widget.RecyclerView
         android:id="@+id/addMainRecipeInfoRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         android:layout_below="@+id/recipeMainInfoLayoutEOL"
         android:scrollbars="vertical">
       </android.support.v7.widget.RecyclerView>
 
-      <View
-        android:id="@+id/deviderOne"
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_below="@+id/addMainRecipeInfoRecyclerView"
-        android:background="@color/aqua_transparent"/>
-
       <LinearLayout
         android:id="@+id/ingredientsLayoutEOL"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/deviderOne"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/addMainRecipeInfoRecyclerView"
         android:orientation="horizontal">
         <TextView
           android:id="@+id/ingredientsTextViewEOL"
@@ -93,34 +88,30 @@
           android:layout_weight="1"
           android:gravity="center"
           android:text="Składniki:"
+          android:background="@color/blue_transparent"
           android:textColor="@color/primary_text"
-          android:textSize="18sp"/>
+          android:textSize="@dimen/edit_text_size"/>
         <ImageView
           android:id="@+id/ingredientsEditImageView"
           android:layout_width="20dp"
           android:layout_height="wrap_content"
           android:layout_weight="1"
+          android:background="@color/blue_transparent"
           app:srcCompat="@android:drawable/ic_menu_edit"/>
       </LinearLayout>
       <android.support.v7.widget.RecyclerView
         android:id="@+id/addIngredientsRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         android:layout_below="@+id/ingredientsLayoutEOL"
         android:scrollbars="vertical"/>
-
-      <View
-        android:id="@+id/deviderTwo"
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_below="@+id/addIngredientsRecyclerView"
-        android:background="@color/aqua_transparent"/>
 
       <LinearLayout
         android:id="@+id/stepsLayoutEOL"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/deviderTwo"
+        android:layout_below="@+id/addIngredientsRecyclerView"
         android:orientation="horizontal">
         <TextView
           android:id="@+id/stepsTextViewEOL"
@@ -129,26 +120,29 @@
           android:layout_weight="1"
           android:gravity="center"
           android:text="Kroki:"
+          android:background="@color/blue_transparent"
           android:textColor="@color/primary_text"
-          android:textSize="18sp"/>
+          android:textSize="@dimen/edit_text_size"/>
         <ImageView
           android:id="@+id/stepsEditImageView"
           android:layout_width="20dp"
           android:layout_height="wrap_content"
           android:layout_weight="1"
+          android:background="@color/blue_transparent"
           app:srcCompat="@android:drawable/ic_menu_edit"/>
       </LinearLayout>
       <android.support.v7.widget.RecyclerView
         android:id="@+id/addStepsRecyclerView"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         android:layout_below="@+id/stepsLayoutEOL"
         android:scrollbars="vertical"/>
 
       <ImageView
         android:id="@+id/saveRecipeImageView"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_below="@+id/addStepsRecyclerView"
         android:layout_centerHorizontal="true"
         app:srcCompat="@android:drawable/ic_menu_save"/>
