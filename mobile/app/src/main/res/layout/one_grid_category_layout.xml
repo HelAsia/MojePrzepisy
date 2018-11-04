@@ -5,6 +5,7 @@
   android:id="@+id/my_one_card_gridview_layout"
   android:layout_width="match_parent"
   android:layout_height="120dp"
+  android:layout_margin="10dp"
   android:background="@color/white"
   android:clickable="true"
   android:focusable="true"
@@ -12,8 +13,8 @@
   android:foreground="?android:attr/selectableItemBackground"
   android:orientation="vertical"
   card_view:cardBackgroundColor="@color/white"
-  card_view:cardCornerRadius="0dp"
-  card_view:cardElevation="0dp">
+  card_view:cardCornerRadius="20dp"
+  card_view:cardElevation="10dp">
 
   <ImageView
     android:id="@+id/category_image"

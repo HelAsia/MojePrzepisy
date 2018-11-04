@@ -27,7 +27,7 @@ import com.moje.przepisy.mojeprzepisy.category_search.CategorySearchActivity;
 import com.moje.przepisy.mojeprzepisy.data.model.OneRecipeCard;
 import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.cards.OperationsOnCardRepository;
 import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.recipe.RecipeRepository;
-import com.moje.przepisy.mojeprzepisy.licenses.LicensesActivity;
+import com.moje.przepisy.mojeprzepisy.licenses.LicensesActivityView;
 import com.moje.przepisy.mojeprzepisy.log_in.LoginActivityView;
 import com.moje.przepisy.mojeprzepisy.log_out.LogoutActivityView;
 import com.moje.przepisy.mojeprzepisy.recipe_details.main_recipe_details.MainDetailsTabActivityView;
@@ -167,7 +167,7 @@ public class MainCardsActivityView extends AppCompatActivity implements MainCard
               presenter.setSortedMethod(context,"favorite");
               presenter.getAllCardsSortedFromServer("favorite");
             }else if (id == R.id.licences_nav) {
-              Intent intent = new Intent(MainCardsActivityView.this, LicensesActivity.class);
+              Intent intent = new Intent(MainCardsActivityView.this, LicensesActivityView.class);
               startActivity(intent);
             }else if (id == R.id.logout_nav) {
               Intent intent = new Intent(MainCardsActivityView.this, LogoutActivityView.class);
@@ -205,7 +205,7 @@ public class MainCardsActivityView extends AppCompatActivity implements MainCard
               Intent intent = new Intent(MainCardsActivityView.this, TimerActivityView.class);
               startActivity(intent);
             }else if (id == R.id.licences_nav) {
-              Intent intent = new Intent(MainCardsActivityView.this, LicensesActivity.class);
+              Intent intent = new Intent(MainCardsActivityView.this, LicensesActivityView.class);
               startActivity(intent);
             }
             return false;

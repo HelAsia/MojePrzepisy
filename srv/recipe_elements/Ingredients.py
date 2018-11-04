@@ -39,7 +39,7 @@ class Ingredients:
             return {}
 
     def addIngredient(self, recipeId, ingredientQuantity, ingredientUnit,
-                      ingredientName, ingredientGroup):
+                      ingredientName):
 
         if not checkIsInteger(ingredientQuantity):
             Logger.err("User has passed 'ingredientQuantity' as non-integer! '{}'".format(ingredientQuantity))

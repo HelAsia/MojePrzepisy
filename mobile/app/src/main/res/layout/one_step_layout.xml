@@ -5,7 +5,7 @@
   android:id="@+id/step_my_card_view_layout"
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
-  android:layout_margin="0dp"
+  android:layout_margin="10dp"
   android:background="@color/white"
   android:clickable="true"
   android:focusable="true"

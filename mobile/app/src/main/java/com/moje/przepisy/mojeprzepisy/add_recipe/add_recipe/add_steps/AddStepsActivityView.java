@@ -193,6 +193,7 @@ public class AddStepsActivityView extends AppCompatActivity implements AddStepCo
     startActivity(intent);
   }
 
+  @RequiresApi(api = VERSION_CODES.M)
   @Override
   public void ShareGalleryClicked(String massage) {
     loadImageFromGallery();
