@@ -1,10 +1,11 @@
 package com.moje.przepisy.mojeprzepisy.data.model;
 
 public class License {
-  int licenseId;
+  private int licenseId;
   private String licenseName;
   private String licenseAuthor;
   private String licenseDescription;
+  private String licenseUrl;
 
   public License(String licenseName, String licenseAuthor, String licenseDescription) {
     this.licenseName = licenseName;
@@ -18,6 +19,15 @@ public class License {
     this.licenseName = licenseName;
     this.licenseAuthor = licenseAuthor;
     this.licenseDescription = licenseDescription;
+  }
+
+  public License(int licenseId, String licenseName, String licenseAuthor,
+      String licenseDescription, String licenseUrl) {
+    this.licenseId = licenseId;
+    this.licenseName = licenseName;
+    this.licenseAuthor = licenseAuthor;
+    this.licenseDescription = licenseDescription;
+    this.licenseUrl = licenseUrl;
   }
 
   public String getLicenseName() {
@@ -50,5 +60,13 @@ public class License {
 
   public void setLicenseId(int licenseId) {
     this.licenseId = licenseId;
+  }
+
+  public String getLicenseUrl() {
+    return licenseUrl;
+  }
+
+  public void setLicenseUrl(String licenseUrl) {
+    this.licenseUrl = licenseUrl;
   }
 }

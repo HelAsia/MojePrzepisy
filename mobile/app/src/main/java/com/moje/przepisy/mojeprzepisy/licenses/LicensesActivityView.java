@@ -1,6 +1,7 @@
 package com.moje.przepisy.mojeprzepisy.licenses;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -55,5 +56,11 @@ public class LicensesActivityView extends AppCompatActivity implements LicensesC
 
   public LicensesAdapter getAdapter(){
     return adapter;
+  }
+
+  public void goToLicenseSource(String licenseUrl){
+    Intent intent = new Intent(this, WebViewActivity.class);
+    intent.putExtra("url", licenseUrl);
+    startActivity(intent);
   }
 }

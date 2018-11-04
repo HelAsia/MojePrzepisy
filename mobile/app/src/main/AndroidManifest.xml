@@ -16,8 +16,8 @@
 
   <application
     android:allowBackup="true"
-    android:hardwareAccelerated="true"
     android:configChanges="orientation|screenSize"
+    android:hardwareAccelerated="true"
     android:icon="@drawable/logo"
     android:label="@string/app_name"
     android:largeHeap="true"
@@ -57,6 +57,8 @@
     <activity android:name=".recipe_details.main_recipe_details.MainDetailsTabActivityView">
     </activity>
     <activity android:name=".user_profile.UserProfileActivityView">
+    </activity>
+    <activity android:name=".licenses.WebViewActivity">
     </activity>
   </application>
 

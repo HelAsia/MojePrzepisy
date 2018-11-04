@@ -10,6 +10,7 @@ public interface LicensesContract {
     Context getContext();
     void setToolbar();
     void setRecyclerView(List<License> licenseList);
+    void goToLicenseSource(String licenseUrl);
   }
 
   interface Presenter{
