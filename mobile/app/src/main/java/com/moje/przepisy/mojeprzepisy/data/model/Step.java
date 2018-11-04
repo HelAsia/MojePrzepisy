@@ -3,6 +3,7 @@ package com.moje.przepisy.mojeprzepisy.data.model;
 public class Step {
   private int stepId;
   private int recipeId;
+  private int userId;
   private String photo;
   private int photoNumber;
   private int stepNumber;
@@ -32,6 +33,16 @@ public class Step {
 
   public Step(int recipeId, int photoNumber, int stepNumber, String stepDescription) {
     this.recipeId = recipeId;
+    this.photoNumber = photoNumber;
+    this.stepNumber = stepNumber;
+    this.stepDescription = stepDescription;
+  }
+
+  public Step(int stepId, int recipeId, int userId, int photoNumber, int stepNumber,
+      String stepDescription) {
+    this.stepId = stepId;
+    this.recipeId = recipeId;
+    this.userId = userId;
     this.photoNumber = photoNumber;
     this.stepNumber = stepNumber;
     this.stepDescription = stepDescription;
@@ -85,6 +96,14 @@ public class Step {
     this.photoNumber = photoNumber;
   }
 
+  public int getUserId() {
+    return userId;
+  }
+
+  public void setUserId(int userId) {
+    this.userId = userId;
+  }
+
   public String toString() {
     return String.format("Step(%d,  %d, '%s')",
         recipeId,
@@ -92,4 +111,6 @@ public class Step {
         stepDescription
     );
   }
+
+
 }

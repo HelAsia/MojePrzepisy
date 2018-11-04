@@ -15,17 +15,26 @@ class Steps:
         self.database = database
 
     def getStep(self, recipeID):
-        query = u"SELECT recipe_id AS recipeId, step_id AS stepId, " \
+        getStepsQuery = u"SELECT recipe_id AS recipeId, step_id AS stepId, " \
                 u"photo_id AS photoNumber, step_number AS stepNumber, " \
                 u"step_description AS stepDescription " \
                 u"FROM steps "\
                 u"WHERE recipe_id = {}; ".format(recipeID)
 
-        queryResult = self.database.query(query)
+        getStepsQueryResult = self.database.query(getStepsQuery)
 
-        if queryResult:
-            Logger.dbg(queryResult)
-            return queryResult
+        getUserIdQuery = u"SELECT recipe_id AS recipeId, user_id AS userId " \
+                    u"FROM recipes; "
+        getUserIdQueryResult = self.database.query(getUserIdQuery)
+
+        for getStepsQueryRow in getStepsQueryResult:
+            for getUserIdQueryRow in getUserIdQueryResult:
+                if getStepsQueryRow['recipeId'] == getUserIdQueryRow['recipeId']:
+                    getStepsQueryRow['userId'] = getUserIdQueryRow['userId']
+
+        if getStepsQueryResult:
+            Logger.dbg(getStepsQueryResult)
+            return getStepsQueryResult
         else:
             return {}
 

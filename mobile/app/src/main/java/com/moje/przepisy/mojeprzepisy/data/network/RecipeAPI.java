@@ -78,7 +78,7 @@ public interface RecipeAPI {
   Call<Message> addComment(@Body Comment comment);
 
   @DELETE("recipe/comment/{commentId}")
-  Call<Message> deleteComment(@Path("commentId") int commentId, @Body Comment comment);
+  Call<Message> deleteComment(@Path("commentId") int commentId);
 
   @DELETE("recipe/comment/all/{recipeId}")
   Call<Message> deleteAllComments(@Path("recipeId") int recipeId);

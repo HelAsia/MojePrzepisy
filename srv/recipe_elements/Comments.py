@@ -62,7 +62,7 @@ class Comments:
     def editComment(self, columnName, columnValue, commentId):
         query = u"UPDATE comments " \
                 u"SET {} = '{}'" \
-                u"WHERE comment_id = {}".format(columnName, columnValue, commentId)
+                u"WHERE comment_id = {};".format(columnName, columnValue, commentId)
         queryResult = self.database.query(query)
 
         if queryResult:
@@ -72,15 +72,26 @@ class Comments:
             return 404, u'Forwarded data to check are not correct'
 
     def deleteComment(self, commentId):
-        query = u"DELETE FROM comments " \
-                u"WHERE comment_id = {}".format(commentId)
-        queryResult = self.database.query(query)
+        query = u"SELECT comment_id, comment " \
+                u"FROM comments " \
+                u"WHERE comment_id = {};".format(commentId)
 
-        if queryResult:
-            Logger.dbg(str(tuple(queryResult)))
-            return 200, u'Your deleted comment_id = {}'.format(commentId)
-        else:
-            return 404, u'Forwarded data to check are not correct'
+        isRecordInTable = self.database.query(query)
+
+        Logger.dbg(isRecordInTable)
+
+        if isRecordInTable:
+            query = u"DELETE FROM comments " \
+                    u"WHERE comment_id = {};".format(commentId)
+            queryResult, rows, msg = self.database.delete(query)
+
+            if queryResult:
+                Logger.dbg(queryResult)
+                return 200, u'Your deleted comment_id = {}'.format(commentId)
+            else:
+                return 404, u'Forwarded data to check are not correct'
+        elif not isRecordInTable:
+            return 404, u'Record is not exist in table'
 
     def deleteAllComment(self, recipeId):
         query = u"DELETE FROM comments " \

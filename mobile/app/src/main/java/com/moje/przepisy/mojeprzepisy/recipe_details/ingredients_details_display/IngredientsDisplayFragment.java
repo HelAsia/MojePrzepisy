@@ -9,6 +9,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import com.moje.przepisy.mojeprzepisy.R;
 import com.moje.przepisy.mojeprzepisy.data.model.Ingredient;
 import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.recipe.RecipeRepository;
@@ -25,7 +27,6 @@ public class IngredientsDisplayFragment extends Fragment implements IngredientsD
   View view;
 
   public IngredientsDisplayFragment() {
-    // Required empty public constructor
   }
 
   @Override
@@ -64,5 +65,15 @@ public class IngredientsDisplayFragment extends Fragment implements IngredientsD
   public Boolean getIsLogged() {
     this.isLogged = getArguments().getBoolean("isLogged");
     return isLogged;
+  }
+
+  @Override
+  public RelativeLayout getEditAndDeleteRecipeRelativeLayout() {
+    return (RelativeLayout)getView().findViewById(R.id.editAndDeleteRecipeRelativeLayout);
+  }
+
+  @Override
+  public ImageView getEditRecipeImageView() {
+    return (ImageView)getView().findViewById(R.id.editUserRecipeImageView);
   }
 }

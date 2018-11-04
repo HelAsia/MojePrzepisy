@@ -358,4 +358,27 @@ public class RecipeRepository implements RecipeRepositoryInterface{
       }
     });
   }
+
+  @Override
+  public void deleteComment(int commentId, final OnDeleteCommentsDetailsDisplayListener listener) {
+    Call<Message> resp = recipeAPI.deleteComment(commentId);
+    resp.enqueue(new Callback<Message>() {
+      @Override
+      public void onResponse(Call<Message> call, Response<Message> response) {
+        Message message = response.body();
+        if(message.status == 200){
+          Log.i("deleteComment.onResponse(): Comment ", "OK. Comment has been added");
+          listener.onSuccess();
+        }else if(message.status == 404){
+          Log.e("deleteComment.onResponse(): Comment ", "NOT OK. Comment hasn't been added");
+          listener.onError();
+        }
+      }
+      @Override
+      public void onFailure(Call<Message> call, Throwable t) {
+        Log.i("deleteComment.onFailure(): SERWER", t.getMessage());
+        listener.onError();
+      }
+    });
+  }
 }

@@ -3,6 +3,7 @@ package com.moje.przepisy.mojeprzepisy.data.model;
 public class Ingredient {
   private int ingredientId;
   private int recipeId;
+  private int userId;
   private int ingredientQuantity;
   private String ingredientUnit;
   private String ingredientName;
@@ -23,6 +24,16 @@ public class Ingredient {
 
   public Ingredient(){
 
+  }
+
+  public Ingredient(int ingredientId, int recipeId, int userId, int ingredientQuantity,
+      String ingredientUnit, String ingredientName) {
+    this.ingredientId = ingredientId;
+    this.recipeId = recipeId;
+    this.userId = userId;
+    this.ingredientQuantity = ingredientQuantity;
+    this.ingredientUnit = ingredientUnit;
+    this.ingredientName = ingredientName;
   }
 
   public int getIngredientId() {
@@ -63,5 +74,13 @@ public class Ingredient {
 
   public void setIngredientName(String ingredientName) {
     this.ingredientName = ingredientName;
+  }
+
+  public int getUserId() {
+    return userId;
+  }
+
+  public void setUserId(int userId) {
+    this.userId = userId;
   }
 }

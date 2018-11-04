@@ -28,7 +28,6 @@ public class MainInfoDetailsDisplayFragment extends Fragment implements MainInfo
   View view;
 
   public MainInfoDetailsDisplayFragment() {
-    // Required empty public constructor
   }
 
   @Override

@@ -6,24 +6,30 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.moje.przepisy.mojeprzepisy.R;
 import com.moje.przepisy.mojeprzepisy.data.model.Comment;
+import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.recipe.RecipeRepository;
+import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.recipe.RecipeRepositoryInterface.OnDeleteCommentsDetailsDisplayListener;
 import com.moje.przepisy.mojeprzepisy.utils.Constant;
 import java.util.List;
 
 public class CommentDisplayRecipeAdapter extends RecyclerView.Adapter<CommentDisplayRecipeAdapter.ViewHolder> {
   public Context context;
   private List<Comment> commentList;
+  private RecipeRepository recipeRepository;
 
   CommentDisplayRecipeAdapter(Context context, List<Comment> commentList){
     this.context = context;
     this.commentList = commentList;
+    recipeRepository = new RecipeRepository(context);
     setHasStableIds(true);
   }
 
@@ -36,8 +42,28 @@ public class CommentDisplayRecipeAdapter extends RecyclerView.Adapter<CommentDis
   }
 
   @Override
-  public void onBindViewHolder(@NonNull CommentDisplayRecipeAdapter.ViewHolder viewHolder, int position) {
+  public void onBindViewHolder(@NonNull CommentDisplayRecipeAdapter.ViewHolder viewHolder, final int position) {
     viewHolder.bind(commentList.get(position));
+
+    viewHolder.deleteUserRecipeImageView.setOnClickListener(new OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        recipeRepository.deleteComment(commentList.get(position).getCommentId(),
+            new OnDeleteCommentsDetailsDisplayListener() {
+              @Override
+              public void onSuccess() {
+                Toast.makeText(context, "Komentarz został usunięty!", Toast.LENGTH_SHORT).show();
+                commentList.remove(position);
+                notifyItemRemoved(position);
+              }
+
+              @Override
+              public void onError() {
+                Toast.makeText(context, "Błąd podczas usuwania komentarza!", Toast.LENGTH_SHORT).show();
+              }
+            });
+      }
+    });
   }
 
   @Override
@@ -49,6 +75,7 @@ public class CommentDisplayRecipeAdapter extends RecyclerView.Adapter<CommentDis
   public long getItemId(int position) {
     return commentList.get(position).getCommentId();
   }
+
 
 
   public class ViewHolder extends RecyclerView.ViewHolder {

@@ -9,6 +9,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import com.moje.przepisy.mojeprzepisy.R;
 import com.moje.przepisy.mojeprzepisy.data.model.Step;
 import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.recipe.RecipeRepository;
@@ -25,7 +27,6 @@ public class StepsDisplayFragment extends Fragment implements StepDisplayContrac
   View view;
 
   public StepsDisplayFragment() {
-    // Required empty public constructor
   }
 
   @Override
@@ -64,5 +65,15 @@ public class StepsDisplayFragment extends Fragment implements StepDisplayContrac
     RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.stepsDisplayRecyclerView);
     recyclerView.setAdapter(adapter);
     recyclerView.setLayoutManager(new LinearLayoutManager(context));
+  }
+
+  @Override
+  public RelativeLayout getEditAndDeleteRecipeRelativeLayout() {
+    return (RelativeLayout)getView().findViewById(R.id.editAndDeleteRecipeRelativeLayout);
+  }
+
+  @Override
+  public ImageView getEditRecipeImageView() {
+    return (ImageView)getView().findViewById(R.id.editUserRecipeImageView);
   }
 }

@@ -55,6 +55,11 @@ public interface RecipeRepositoryInterface {
     void setCommentAddedState(Boolean state);
   }
 
+  interface OnDeleteCommentsDetailsDisplayListener{
+    void onSuccess();
+    void onError();
+  }
+
   void addRecipe(List<Recipe> recipeList, OnRecipeFinishedListener listener);
   void addIngredients(List<Ingredient> ingredientList, OnRecipeFinishedListener listener);
   void addStep(List<Step> stepList, OnRecipeFinishedListener listener);
@@ -68,4 +73,5 @@ public interface RecipeRepositoryInterface {
   void getComments(int recipeId, final OnCommentsDetailsDisplayListener listener);
   void getRecipeDetailsStars(int recipeId, final OnMainInfoDetailsDisplayListener listener);
   void getFavorite(int recipeId, final OnFavoriteListener listener);
+  void deleteComment(int commentId, OnDeleteCommentsDetailsDisplayListener listener);
 }
