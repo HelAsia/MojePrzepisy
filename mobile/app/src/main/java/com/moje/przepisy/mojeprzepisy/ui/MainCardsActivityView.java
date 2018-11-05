@@ -23,6 +23,7 @@ import android.widget.Toast;
 import butterknife.BindView;
 import com.moje.przepisy.mojeprzepisy.R;
 import com.moje.przepisy.mojeprzepisy.add_recipe.add_recipe.add_main_recipe_page.AddRecipeActivityView;
+import com.moje.przepisy.mojeprzepisy.app_description.AboutAppActivityView;
 import com.moje.przepisy.mojeprzepisy.category_search.CategorySearchActivity;
 import com.moje.przepisy.mojeprzepisy.data.model.OneRecipeCard;
 import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.cards.OperationsOnCardRepository;
@@ -166,6 +167,9 @@ public class MainCardsActivityView extends AppCompatActivity implements MainCard
             }else if (id == R.id.favorites_nav) {
               presenter.setSortedMethod(context,"favorite");
               presenter.getAllCardsSortedFromServer("favorite");
+            }else if (id == R.id.about_app_nav) {
+              Intent intent = new Intent(MainCardsActivityView.this, AboutAppActivityView.class);
+              startActivity(intent);
             }else if (id == R.id.licences_nav) {
               Intent intent = new Intent(MainCardsActivityView.this, LicensesActivityView.class);
               startActivity(intent);
@@ -203,6 +207,9 @@ public class MainCardsActivityView extends AppCompatActivity implements MainCard
               startActivity(intent);
             }else if (id == R.id.timer_nav) {
               Intent intent = new Intent(MainCardsActivityView.this, TimerActivityView.class);
+              startActivity(intent);
+            }else if (id == R.id.about_app_nav) {
+              Intent intent = new Intent(MainCardsActivityView.this, AboutAppActivityView.class);
               startActivity(intent);
             }else if (id == R.id.licences_nav) {
               Intent intent = new Intent(MainCardsActivityView.this, LicensesActivityView.class);

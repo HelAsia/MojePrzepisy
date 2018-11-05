@@ -12,9 +12,9 @@ import com.moje.przepisy.mojeprzepisy.data.model.License;
 import java.util.List;
 
 public class LicensesActivityView extends AppCompatActivity implements LicensesContract.View {
-  LicensesContract.Presenter presenter;
-  LicensesAdapter adapter;
-  Context context;
+  private LicensesContract.Presenter presenter;
+  private LicensesAdapter adapter;
+  private Context context;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {

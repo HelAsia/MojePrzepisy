@@ -190,4 +190,42 @@
   <string name="license_eleven_author">Vinay Rathod</string>
   <string name="license_eleven_description">Used to convert image Bitmap to String and String to image Bitmap. </string>
   <string name="license_eleven_url">http://vinayandroid.blogspot.com/2015/02/convert-image-bitmap-to-string.html</string>
+
+  <string name="app_description">Opis aplikacji</string>
+
+  <string name="app_description_title">O aplikacji</string>
+  <string name="app_author_title">O autorze</string>
+  <string name="app_version_title">O wersji</string>
+  <string name="app_error_title">Zgłoś błąd</string>
+
+  <string name="app_description_title_ang">About application</string>
+  <string name="app_author_title_ang">About author</string>
+  <string name="app_version_title_ang">About version</string>
+  <string name="app_error_title_ang">Report an error</string>
+
+  <string name="app_description_text_ang">Przepisy domowe Helasia is my first complex Android
+    application where I learned many programming concepts and tried to make useful tool in everyday life.
+    Application code is on my github account:  HelAsia.
+  </string>
+
+  <string name="app_description_text_pl">Przepisy domowe Helasia jest moją pierwszą złożoną aplikacją Androidową
+    gdzie nauczyłam się wiele koncepcji programistycznych oraz starałam się stworzyć użyteczne narzędzie w codziennym życiu.
+    Kod aplikacji znajduje się na moim koncie na github\'ie: HelAsia. </string>
+
+  <string name="app_author_text_ang">My name is Joanna. I graduated from master\'s studies
+    Wrocław University of Technology in the field of "Mechanical Engineering". In my free time I like to play
+     board games and solve logic puzzles (Escape rooms).
+  </string>
+
+  <string name="app_author_text_pl">Nazywam się Joanna. Ukończyłam studia magisterskie na
+    Politechnice Wrocławskiej na kierunku "Mechanika i Budowa Maszyn". W wolnym czasie lubię grać w gry
+    planszowe oraz rozwiązywać zagadki logiczne (Escape room\'y). </string>
+
+  <string name="app_version_text_ang">Application version: 1.1 </string>
+
+  <string name="app_version_text_pl">Wersja aplikacji: 1.1 </string>
+
+  <string name="app_error_text_ang">If You found error in my application, I would be grateful for the information on the email: xxx </string>
+
+  <string name="app_error_text_pl">Jeśli udało Ci się znaleźć błąd w mojej aplikacji, będę wdzięczna za informację na e-maila: xxx </string>
 </resources>

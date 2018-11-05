@@ -60,7 +60,7 @@
     </activity>
     <activity android:name=".licenses.WebViewActivity">
     </activity>
-    <activity android:name=".app_description.AppDescriptionActivityView">
+    <activity android:name=".app_description.AboutAppActivityView">
     </activity>
   </application>
 
