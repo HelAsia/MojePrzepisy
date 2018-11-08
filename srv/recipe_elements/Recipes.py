@@ -39,9 +39,14 @@ class Recipes:
         else:
             return {}
 
-    def addRecipe(self, userId, recipeName,
-                  recipePrepareTime, recipeCookTime, recipeBakeTime,
-                  recipeMainPicture, recipeCategory):
+    def addRecipe(self, userId, recipeList):
+
+        recipeName = recipeList['recipeName']
+        recipePrepareTime = recipeList['recipePrepareTime']
+        recipeCookTime = recipeList['recipeCookTime']
+        recipeBakeTime = recipeList['recipeBakeTime']
+        recipeMainPicture = recipeList['recipeMainPicture']
+        recipeCategory = recipeList['recipeCategory']
 
         photo = Photo(self.database)
         state, photoMsg = photo.addPhoto(recipeMainPicture)

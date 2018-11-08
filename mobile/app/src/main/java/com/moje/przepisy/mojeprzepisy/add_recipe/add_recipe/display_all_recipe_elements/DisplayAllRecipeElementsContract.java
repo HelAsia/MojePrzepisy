@@ -25,6 +25,7 @@ public interface DisplayAllRecipeElementsContract {
   }
 
   interface Presenter {
+    void addWholeElementsToServer();
     void setRecipeList(List<Recipe> recipeList);
     List<Ingredient> getIngredientList();
     void setIngredientList(List<Ingredient> ingredientList);
@@ -40,16 +41,7 @@ public interface DisplayAllRecipeElementsContract {
     void setRecipeDetailsScreen();
     void setIngredientsDetailScreen();
     void setStepsDetailsScreen();
-    void addRecipeToServer();
-    void addIngredientsToServer();
-    void addStepsToServer();
-    void addStarsToServer();
-    void addRecipeIdToIngredients();
-    void addRecipeIdToSteps();
     void saved();
-    Boolean getIfRecipeAdded();
-    Boolean getIfIngredientsAdded();
-    Boolean getIfStepsAdded();
     void setEditRecipeIconAction();
     void setEditIngredientsIconAction();
     void setEditStepsIconAction();

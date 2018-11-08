@@ -38,18 +38,21 @@ class Ingredients:
         else:
             return {}
 
-    def addIngredient(self, recipeId, ingredientQuantity, ingredientUnit,
-                      ingredientName):
+    def addIngredient(self, recipeId, ingredientList):
+        for ingredientRow in ingredientList:
+            ingredientQuantity = ingredientRow['ingredientQuantity']
+            ingredientUnit = ingredientRow['ingredientUnit']
+            ingredientName = ingredientRow['ingredientName']
 
-        if not checkIsInteger(ingredientQuantity):
-            Logger.err("User has passed 'ingredientQuantity' as non-integer! '{}'".format(ingredientQuantity))
-            return {}
+            if not checkIsInteger(ingredientQuantity):
+                Logger.err("User has passed 'ingredientQuantity' as non-integer! '{}'".format(ingredientQuantity))
+                return {}
 
-        query = u"INSERT INTO ingredients " \
-                u"(recipe_id, ingredient_quantity, ingredient_unit, ingredient_name) " \
-                u"values ({}, {}, '{}', '{}' )".format(recipeId, int(ingredientQuantity), ingredientUnit, ingredientName)
+            query = u"INSERT INTO ingredients " \
+                    u"(recipe_id, ingredient_quantity, ingredient_unit, ingredient_name) " \
+                    u"values ({}, {}, '{}', '{}' )".format(recipeId, int(ingredientQuantity), ingredientUnit, ingredientName)
 
-        queryResult, rows, msg = self.database.insert(query)
+            queryResult, rows, msg = self.database.insert(query)
 
         if queryResult:
             Logger.dbg(queryResult)

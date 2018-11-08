@@ -5,6 +5,7 @@ import com.moje.przepisy.mojeprzepisy.data.model.Ingredient;
 import com.moje.przepisy.mojeprzepisy.data.model.Message;
 import com.moje.przepisy.mojeprzepisy.data.model.Photo;
 import com.moje.przepisy.mojeprzepisy.data.model.Recipe;
+import com.moje.przepisy.mojeprzepisy.data.model.RecipeAllElements;
 import com.moje.przepisy.mojeprzepisy.data.model.Stars;
 import com.moje.przepisy.mojeprzepisy.data.model.Step;
 import java.util.List;
@@ -25,6 +26,9 @@ public interface RecipeAPI {
 
   @PUT("recipe")
   Call<Message> addRecipe(@Body Recipe recipe);
+
+  @PUT("recipe/allElements")
+  Call<Message> addWholeRecipeElements(@Body RecipeAllElements recipeAllElements);
 
   @DELETE("recipe/{recipeId}")
   Call<Message> deleteRecipe(@Path("recipeId") int recipeId);

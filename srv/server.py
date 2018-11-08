@@ -313,6 +313,40 @@ def addRecipe():
         'message': message
     })
 
+@app.route('/recipe/allElements', methods=['PUT'])
+@authorized
+def addWholeRecipeElements():
+    recipe = Recipes(get_database())
+    star = Stars(get_database())
+    ingredient = Ingredients(get_database())
+    step = Steps(get_database())
+    userID = get_user_id()
+
+    params = request.get_json()
+
+    recipeList = params['recipeList'][0]
+    statusAddingRecipe, recipeId = recipe.addRecipe(userID, recipeList)
+
+    starsList = params['starsList'][0]
+    statusAddingStars, messageAddingStars = star.addStars(userID, recipeId, starsList)
+
+    ingredientList = params['ingredientList']
+    statusAddingIngredient, messageAddingIngredient = ingredient.addIngredient(recipeId, ingredientList)
+
+    stepList = params['stepList']
+    statusAddingStep, message = step.addStep(recipeId,stepList)
+
+    if statusAddingRecipe == 200 and statusAddingIngredient == 200 and statusAddingStep == 200 and statusAddingStars == 200:
+        return jsonify({
+            'status': 200,
+            'message': u'Whole recipe elements were added. '
+        })
+    else:
+        return jsonify({
+            'status': 404,
+            'message': u'Forwarded data are not correct'
+        })
+
 
 @app.route('/recipe/<int:recipeId>/<string:columnName>/<string:columnValue>/', methods=['POST'])
 @authorized

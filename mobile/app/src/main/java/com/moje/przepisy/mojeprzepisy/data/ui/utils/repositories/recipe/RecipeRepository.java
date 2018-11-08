@@ -6,6 +6,7 @@ import com.moje.przepisy.mojeprzepisy.data.model.Comment;
 import com.moje.przepisy.mojeprzepisy.data.model.Ingredient;
 import com.moje.przepisy.mojeprzepisy.data.model.Message;
 import com.moje.przepisy.mojeprzepisy.data.model.Recipe;
+import com.moje.przepisy.mojeprzepisy.data.model.RecipeAllElements;
 import com.moje.przepisy.mojeprzepisy.data.model.Stars;
 import com.moje.przepisy.mojeprzepisy.data.model.Step;
 import com.moje.przepisy.mojeprzepisy.data.network.RecipeAPI;
@@ -24,6 +25,33 @@ public class RecipeRepository implements RecipeRepositoryInterface{
   public RecipeRepository(Context context) {
     this.retrofit = RetrofitSingleton.getRetrofitInstance(context);
     this.recipeAPI = retrofit.create(RecipeAPI.class);
+  }
+
+  @Override
+  public void addWholeRecipeElements(final RecipeAllElements recipeAllElements,
+      final OnWholeRecipeElementsFinishedListener listener) {
+    Call<Message> resp = recipeAPI.addWholeRecipeElements(recipeAllElements);
+    resp.enqueue(new Callback<Message>() {
+      @Override
+      public void onResponse(Call<Message> call, Response<Message> response) {
+        Message message = response.body();
+        if(message.status == 200){
+          Log.i("addWholeRecipeElements.onResponse(): WholeRecipeElements: ", "OK. WholeRecipeElements has been added");
+          listener.onWholeRecipeElementsAdded(true);
+        }else if(message.status == 404){
+          Log.e("addWholeRecipeElements.onResponse(): WholeRecipeElements: ", "NOT OK. WholeRecipeElements hasn't been added");
+          listener.onRecipeError();
+          listener.onWholeRecipeElementsAdded(false);
+        }
+      }
+
+      @Override
+      public void onFailure(Call<Message> call, Throwable t) {
+        Log.i("addWholeRecipeElements.onFailure(): SERWER", t.getMessage());
+        listener.onRecipeError();
+        listener.onWholeRecipeElementsAdded(false);
+      }
+    });
   }
 
   @Override

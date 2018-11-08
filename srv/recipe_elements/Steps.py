@@ -38,17 +38,20 @@ class Steps:
         else:
             return {}
 
-    def addStep(self, recipeId, photoImage, stepNumber,
-                stepDescription):
+    def addStep(self, recipeId, stepList):
+        for stepRow in stepList:
+            photoImage = stepRow['photo']
+            stepNumber = stepRow['stepNumber']
+            stepDescription = stepRow['stepDescription']
 
-        photo = Photo(self.database)
-        state, PhotoMsg = photo.addPhoto(photoImage)
+            photo = Photo(self.database)
+            state, PhotoMsg = photo.addPhoto(photoImage)
 
-        query = u"INSERT INTO steps " \
-                u"(recipe_id, photo_id, step_number, step_description) " \
-                u"values ({}, '{}', {}, '{}' )".format(recipeId, int(PhotoMsg), int(stepNumber), stepDescription)
+            query = u"INSERT INTO steps " \
+                    u"(recipe_id, photo_id, step_number, step_description) " \
+                    u"values ({}, '{}', {}, '{}' )".format(recipeId, int(PhotoMsg), int(stepNumber), stepDescription)
 
-        queryResult, rows, msg = self.database.insert(query)
+            queryResult, rows, msg = self.database.insert(query)
 
         if queryResult:
             Logger.dbg(queryResult)

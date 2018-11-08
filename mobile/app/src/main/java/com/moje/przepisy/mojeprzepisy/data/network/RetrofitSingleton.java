@@ -17,8 +17,8 @@ public class RetrofitSingleton {
 
       OkHttpClient client;
       OkHttpClient.Builder builder = new OkHttpClient.Builder()
-          .readTimeout(60, TimeUnit.SECONDS)
-          .connectTimeout(60, TimeUnit.SECONDS);
+          .readTimeout(360, TimeUnit.SECONDS)
+          .connectTimeout(360, TimeUnit.SECONDS);
 
       builder.addInterceptor(new AddCookiesInterceptor(context));
       builder.addInterceptor(new ReceivedCookiesInterceptor(context));

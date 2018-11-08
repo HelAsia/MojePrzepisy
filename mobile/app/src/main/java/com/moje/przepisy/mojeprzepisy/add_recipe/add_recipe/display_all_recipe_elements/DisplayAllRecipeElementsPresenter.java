@@ -5,12 +5,12 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.moje.przepisy.mojeprzepisy.data.model.Ingredient;
 import com.moje.przepisy.mojeprzepisy.data.model.Recipe;
+import com.moje.przepisy.mojeprzepisy.data.model.RecipeAllElements;
 import com.moje.przepisy.mojeprzepisy.data.model.Stars;
 import com.moje.przepisy.mojeprzepisy.data.model.Step;
 import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.recipe.RecipeRepository;
@@ -19,38 +19,21 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DisplayAllRecipeElementsPresenter implements DisplayAllRecipeElementsContract.Presenter,
-RecipeRepository.OnRecipeFinishedListener{
+public class DisplayAllRecipeElementsPresenter implements DisplayAllRecipeElementsContract.Presenter, RecipeRepository.OnWholeRecipeElementsFinishedListener{
   private RecipeRepository recipeRepository;
   private DisplayAllRecipeElementsContract.View recipeElementsView;
   private List<Ingredient> ingredientList = new ArrayList<>();
-  private List<Ingredient> ingredientListWithRecipeId = new ArrayList<>();
   private List<Recipe> recipeList = new ArrayList<>();
   private List<Step> stepList = new ArrayList<>();
-  private List<Step> stepListWithRecipeId = new ArrayList<>();
+  private List<Stars> starsList = new ArrayList<>();
   private Gson gson = new Gson();
-  private Boolean ifRecipeAdded = false;
-  private Boolean ifIngredientsAdded = false;
-  private Boolean ifStepsAdded = false;
-  private Boolean ifStarsAdded = false;
-  private int recipeId;
+  private Boolean isWholeRecipeAdded = false;
 
   public DisplayAllRecipeElementsPresenter(DisplayAllRecipeElementsContract.View recipeElementsView, RecipeRepository recipeRepository){
     this.recipeElementsView = recipeElementsView;
     this.recipeRepository = recipeRepository;
   }
 
-  public Boolean getIfRecipeAdded() {
-    return ifRecipeAdded;
-  }
-
-  public Boolean getIfIngredientsAdded() {
-    return ifIngredientsAdded;
-  }
-
-  public Boolean getIfStepsAdded() {
-    return ifStepsAdded;
-  }
 
   @Override
   public void setEditRecipeIconAction() {
@@ -65,10 +48,6 @@ RecipeRepository.OnRecipeFinishedListener{
   @Override
   public void setEditStepsIconAction() {
     recipeElementsView.navigateToEditSteps();
-  }
-
-  public Boolean getIfStarsAdded() {
-    return ifStarsAdded;
   }
 
   @Override
@@ -183,70 +162,13 @@ RecipeRepository.OnRecipeFinishedListener{
   }
 
   @Override
-  public void addRecipeToServer() {
-    recipeRepository.addRecipe(recipeList,this);
-  }
-
-  @Override
-  public void addIngredientsToServer() {
-    addRecipeIdToIngredients();
-    recipeRepository.addIngredients(ingredientListWithRecipeId, this);
-  }
-
-  @Override
-  public void addStepsToServer() {
-    addRecipeIdToSteps();
-    recipeRepository.addStep(stepListWithRecipeId, this);
-  }
-
-  @Override
-  public void addStarsToServer() {
-    Stars stars = new Stars(recipeId, 0, 0);
-    recipeRepository.addFirstStars(stars, this);
-  }
-
-  @Override
-  public void addRecipeIdToIngredients() {
-    for(Ingredient ingredient : ingredientList){
-      Ingredient ingredientWithRecipeId = new Ingredient(recipeId, ingredient.getIngredientQuantity(),
-          ingredient.getIngredientUnit(), ingredient.getIngredientName());
-      ingredientListWithRecipeId.add(ingredientWithRecipeId);
-    }
-  }
-
-  @Override
-  public void addRecipeIdToSteps() {
-    for(Step step : stepList){
-      Step stepWithRecipeId = new Step(recipeId, step.getPhoto(),
-          step.getStepNumber(), step.getStepDescription());
-      Log.d("addRecipeIdToSteps()", "Adding step: " + step.toString());
-      stepListWithRecipeId.add(stepWithRecipeId);
-    }
-    Log.d("addRecipeIdToSteps()", "Steps got added.");
-  }
-
-  @Override
   public void saved() {
-    Log.i("recipe saved()", "Stage 2. Adding Recipe.");
-    addRecipeToServer();
-    while (!getIfRecipeAdded()){
+    addWholeElementsToServer();
+    while (!isWholeRecipeAdded){
+
     }
 
-    Log.i("ingredients saved()", "Stage 3. Adding ingredients.");
-    addIngredientsToServer();
-    while (!getIfIngredientsAdded()){
-    }
-
-    Log.i("steps saved()", "Stage 5. Adding recipe steps.");
-    addStepsToServer();
-    while (!getIfStepsAdded()){
-    }
-
-    Log.i("stars saved()", "Stage 6. Adding recipe stars.");
-    addStarsToServer();
-    while (!getIfStarsAdded()){
-    }
-    if(ifRecipeAdded && ifIngredientsAdded && ifStepsAdded && ifStarsAdded){
+    if(isWholeRecipeAdded){
       deleteAllSharedPreferences();
     }else {
       recipeElementsView.getInformationTextView().setText("Nie udało się zapisać przepisu!");
@@ -262,35 +184,8 @@ RecipeRepository.OnRecipeFinishedListener{
   }
 
   @Override
-  public void onStarsError() {
-    if(recipeElementsView != null){
-      recipeElementsView.getInformationTextView().setText("Wystąpił błąd podczas dodawania gwiazdek. Spróbuj ponownie.");
-    }
-  }
-
-  @Override
-  public void onRecipeAdded(Boolean ifAdded) {
-    ifRecipeAdded = ifAdded;
-  }
-
-  @Override
-  public void onIngredientsAdded(Boolean ifAdded) {
-    ifIngredientsAdded = ifAdded;
-  }
-
-  @Override
-  public void onStepsAdded(Boolean ifAdded) {
-    ifStepsAdded = ifAdded;
-  }
-
-  @Override
-  public void onStarsAdded(Boolean ifAdded) {
-    ifStarsAdded = ifAdded;
-  }
-
-  @Override
-  public void setRecipeId(String message) {
-    recipeId = Integer.parseInt(message);
+  public void onWholeRecipeElementsAdded(Boolean ifAdded) {
+    this.isWholeRecipeAdded = ifAdded;
   }
 
   @Override
@@ -324,5 +219,17 @@ RecipeRepository.OnRecipeFinishedListener{
       activity.removeDialog(DisplayAllRecipeElementsActivityView.PLEASE_WAIT_DIALOG);
       Toast.makeText(activity, "Zapisano!", Toast.LENGTH_SHORT).show();
     }
+  }
+
+  @Override
+  public void addWholeElementsToServer() {
+    recipeList = getRecipeListAfterChangeScreen(getRecipeListPojoFromPreferences(recipeElementsView.getContext()));
+    ingredientList = getIngredientListAfterChangeScreen(getIngredientsPojoListFromPreferences(recipeElementsView.getContext()));
+    stepList = getStepListAfterChangeScreen(getStepsPojoListFromPreferences(recipeElementsView.getContext()));
+    Stars stars = new Stars(-1, 0, 0);
+    starsList.add(stars);
+    RecipeAllElements recipeAllElements = new RecipeAllElements(recipeList, ingredientList, stepList, starsList);
+
+    recipeRepository.addWholeRecipeElements(recipeAllElements, this);
   }
 }

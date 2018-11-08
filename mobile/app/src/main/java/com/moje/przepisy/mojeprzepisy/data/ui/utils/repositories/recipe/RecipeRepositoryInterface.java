@@ -3,11 +3,17 @@ package com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.recipe;
 import com.moje.przepisy.mojeprzepisy.data.model.Comment;
 import com.moje.przepisy.mojeprzepisy.data.model.Ingredient;
 import com.moje.przepisy.mojeprzepisy.data.model.Recipe;
+import com.moje.przepisy.mojeprzepisy.data.model.RecipeAllElements;
 import com.moje.przepisy.mojeprzepisy.data.model.Stars;
 import com.moje.przepisy.mojeprzepisy.data.model.Step;
 import java.util.List;
 
 public interface RecipeRepositoryInterface {
+
+  interface OnWholeRecipeElementsFinishedListener {
+    void onRecipeError();
+    void onWholeRecipeElementsAdded(Boolean ifAdded);
+  }
 
   interface OnRecipeFinishedListener {
     void onRecipeError();
@@ -64,6 +70,8 @@ public interface RecipeRepositoryInterface {
     void onSuccess();
     void onError();
   }
+
+  void addWholeRecipeElements(RecipeAllElements recipeAllElements, OnWholeRecipeElementsFinishedListener listener);
 
   void addRecipe(List<Recipe> recipeList, OnRecipeFinishedListener listener);
   void addIngredients(List<Ingredient> ingredientList, OnRecipeFinishedListener listener);
