@@ -54,6 +54,8 @@ class Ingredients:
 
             queryResult, rows, msg = self.database.insert(query)
 
+        queryResult = True
+
         if queryResult:
             Logger.dbg(queryResult)
             return 200, u'You added ingredients'

@@ -48,6 +48,12 @@ public class Step {
     this.stepDescription = stepDescription;
   }
 
+  public Step(int photoNumber, int stepNumber, String stepDescription) {
+    this.photoNumber = photoNumber;
+    this.stepNumber = stepNumber;
+    this.stepDescription = stepDescription;
+  }
+
   public int getStepId() {
     return stepId;
   }

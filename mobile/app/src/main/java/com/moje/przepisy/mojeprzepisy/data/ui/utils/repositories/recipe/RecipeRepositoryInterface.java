@@ -15,14 +15,9 @@ public interface RecipeRepositoryInterface {
     void onWholeRecipeElementsAdded(Boolean ifAdded);
   }
 
-  interface OnRecipeFinishedListener {
-    void onRecipeError();
-    void onStarsError();
-    void onRecipeAdded(Boolean ifAdded);
-    void onIngredientsAdded(Boolean ifAdded);
-    void onStepsAdded(Boolean ifAdded);
-    void onStarsAdded(Boolean ifAdded);
-    void setRecipeId(String message);
+  interface OnAddPhotoFinishedListener {
+    void onPhotoError();
+    void onSetPhotoNumber(int photoNumber);
   }
 
   interface OnStarsEditListener{
@@ -31,10 +26,6 @@ public interface RecipeRepositoryInterface {
 
   interface OnStarsEditInRecipeListener{
     void onUpdateStarsOrFavoriteInRecipe(int recipeId);
-  }
-
-  interface OnFavoriteListener{
-    void onUpdateFavoriteState(Boolean favoriteState);
   }
 
   interface OnMainInfoDetailsDisplayListener{
@@ -71,13 +62,9 @@ public interface RecipeRepositoryInterface {
     void onError();
   }
 
+  void addPhoto(String photo, OnAddPhotoFinishedListener listener);
   void addWholeRecipeElements(RecipeAllElements recipeAllElements, OnWholeRecipeElementsFinishedListener listener);
-
-  void addRecipe(List<Recipe> recipeList, OnRecipeFinishedListener listener);
-  void addIngredients(List<Ingredient> ingredientList, OnRecipeFinishedListener listener);
-  void addStep(List<Step> stepList, OnRecipeFinishedListener listener);
   void addComment(Comment comment, OnCommentsDetailsDisplayListener listener);
-  void addFirstStars(Stars stars, OnRecipeFinishedListener listener);
   void editStarsAndHeart(int recipeId, String columnName, int columnValue, OnStarsEditListener listener, int position);
   void editStarsAndHeartInRecipe(final int recipeId, String columnName, int columnValue, OnStarsEditInRecipeListener listener);
   void getRecipe(int recipeId, final OnMainInfoDetailsDisplayListener listener);
@@ -85,7 +72,6 @@ public interface RecipeRepositoryInterface {
   void getSteps(int recipeId, final OnStepsDetailsDisplayListener listener);
   void getComments(int recipeId, final OnCommentsDetailsDisplayListener listener);
   void getRecipeDetailsStars(int recipeId, final OnMainInfoDetailsDisplayListener listener);
-  void getFavorite(int recipeId, final OnFavoriteListener listener);
   void deleteComment(int commentId, OnDeleteCommentsDetailsDisplayListener listener);
   void deleteRecipe(int commentId, OnDeleteRecipeDetailsDisplayListener listener);
 }

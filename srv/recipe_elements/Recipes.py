@@ -45,11 +45,8 @@ class Recipes:
         recipePrepareTime = recipeList['recipePrepareTime']
         recipeCookTime = recipeList['recipeCookTime']
         recipeBakeTime = recipeList['recipeBakeTime']
-        recipeMainPicture = recipeList['recipeMainPicture']
         recipeCategory = recipeList['recipeCategory']
-
-        photo = Photo(self.database)
-        state, photoMsg = photo.addPhoto(recipeMainPicture)
+        recipeMainPictureNumber = recipeList['recipeMainPictureNumber']
 
         query = u"INSERT INTO recipes " \
                 u"(user_id, recipe_name, recipe_prepare_time, recipe_cook_time, " \
@@ -57,7 +54,7 @@ class Recipes:
                 u"values ({}, '{}', '{}', '{}', '{}', '{}', " \
                 u"'{}', NOW())".format(userId, recipeName, normalizeTime(recipePrepareTime),
                                         normalizeTime(recipeCookTime),normalizeTime(recipeBakeTime),
-                                       int(photoMsg), recipeCategory)
+                                       int(recipeMainPictureNumber), recipeCategory)
 
         queryResult, rows, msg = self.database.insert(query)
 

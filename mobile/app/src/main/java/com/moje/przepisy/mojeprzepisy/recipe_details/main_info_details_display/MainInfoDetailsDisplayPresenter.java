@@ -18,7 +18,7 @@ import com.squareup.picasso.Picasso;
 
 public class MainInfoDetailsDisplayPresenter implements MainInfoDetailsDisplayContract.Presenter,
     RecipeRepository.OnMainInfoDetailsDisplayListener, RecipeRepository.OnStarsEditInRecipeListener,
-    RecipeRepository.OnFavoriteListener, RecipeRepository.OnDeleteRecipeDetailsDisplayListener {
+    RecipeRepository.OnDeleteRecipeDetailsDisplayListener {
   private RecipeRepository recipeRepository;
   private MainInfoDetailsDisplayContract.View mainInfoDetailsDisplayView;
   private Boolean favorite = null;
@@ -31,11 +31,6 @@ public class MainInfoDetailsDisplayPresenter implements MainInfoDetailsDisplayCo
   @Override
   public void onUpdateStarsOrFavoriteInRecipe(int recipeId) {
     recipeRepository.getRecipeDetailsStars(recipeId, this);
-  }
-
-  @Override
-  public void onUpdateFavoriteState(Boolean favoriteState) {
-    this.favorite = favoriteState;
   }
 
   @Override

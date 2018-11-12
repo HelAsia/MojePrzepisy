@@ -32,6 +32,7 @@ global_query_id = 1000
 def request_has_database():
     return hasattr(g, 'database')
 
+
 def get_database():
     if not request_has_database():
         Logger.info("Acquiring new database connection to server GLOBALS")
@@ -41,6 +42,7 @@ def get_database():
             return None
 
     return g.database
+
 
 @app.teardown_request
 def close_db_connection(ex):
@@ -222,6 +224,7 @@ def getSearchedCards():
         Logger.fail("There were no cards returned!")
     return jsonify(cards)
 
+
 @app.route('/cards/categoryCards', methods=['POST'])
 def getCategoryCards():
     card = Cards(get_database())
@@ -238,6 +241,7 @@ def getCategoryCards():
         Logger.fail("There were no cards returned!")
     return jsonify(cards)
 
+
 @app.route('/cards/<int:recipeId>', methods=['GET'])
 def getUpdatedCard(recipeId):
     card = Cards(get_database())
@@ -251,6 +255,7 @@ def getUpdatedCard(recipeId):
     if not cards:
         Logger.fail("There were no cards returned!")
     return jsonify(cards)
+
 
 @app.route('/cards/<string:sorted_method>', methods=['GET'])
 def getSortedCards(sorted_method):
@@ -290,31 +295,6 @@ def getRecipe(recipeId):
 
 @app.route('/recipe', methods=['PUT'])
 @authorized
-def addRecipe():
-    recipe = Recipes(get_database())
-    userID = get_user_id()
-
-    params = request.get_json()
-
-    recipeName = params.get('recipeName')
-    recipePrepareTime = params.get('recipePrepareTime')
-    recipeCookTime = params.get('recipeCookTime')
-    recipeBakeTime = params.get('recipeBakeTime')
-    recipeMainPicture = params.get('recipeMainPicture')
-    recipeCategory = params.get('recipeCategory')
-
-
-    status, message = recipe.addRecipe(userID, recipeName,
-                                        recipePrepareTime, recipeCookTime, recipeBakeTime,
-                                        recipeMainPicture, recipeCategory)
-
-    return jsonify({
-        'status': status,
-        'message': message
-    })
-
-@app.route('/recipe/allElements', methods=['PUT'])
-@authorized
 def addWholeRecipeElements():
     recipe = Recipes(get_database())
     star = Stars(get_database())
@@ -334,7 +314,16 @@ def addWholeRecipeElements():
     statusAddingIngredient, messageAddingIngredient = ingredient.addIngredient(recipeId, ingredientList)
 
     stepList = params['stepList']
-    statusAddingStep, message = step.addStep(recipeId,stepList)
+    statusAddingStep, messageAddingStep = step.addStep(recipeId,stepList)
+
+    Logger.dbg(statusAddingRecipe)
+    Logger.dbg(recipeId)
+    Logger.dbg(statusAddingStars)
+    Logger.dbg(messageAddingStars)
+    Logger.dbg(statusAddingIngredient)
+    Logger.dbg(messageAddingIngredient)
+    Logger.dbg(statusAddingStep)
+    Logger.dbg(messageAddingStep)
 
     if statusAddingRecipe == 200 and statusAddingIngredient == 200 and statusAddingStep == 200 and statusAddingStars == 200:
         return jsonify({
@@ -398,6 +387,7 @@ def editPhoto(photoId):
         'message': message
     })
 
+
 @app.route('/recipe/photo/<int:photoId>', methods=['DELETE'])
 @authorized
 def deletePhoto(photoId):
@@ -408,6 +398,21 @@ def deletePhoto(photoId):
     return jsonify({
         'status': status,
         'message': message
+    })
+
+
+@app.route('/recipe/photo', methods=['PUT'])
+@authorized
+def addPhoto():
+    photo = Photo(get_database())
+
+    photoString = request.form['photo']
+
+    status, photoNumber = photo.addPhoto(photoString)
+
+    return jsonify({
+        'status': status,
+        'message': photoNumber
     })
 
 @app.route('/recipe/step/<int:recipeId>', methods=['GET'])
@@ -427,38 +432,6 @@ def deleteStep(stepId):
     step = Steps(get_database())
 
     status, message = step.deleteStep(stepId)
-
-    return jsonify({
-        'status': status,
-        'message': message
-    })
-
-@app.route('/recipe/step/all/<int:recipeId>', methods=['DELETE'])
-@authorized
-def deleteAllSteps(recipeId):
-    step = Steps(get_database())
-
-    status, message = step.deleteAllStep(recipeId)
-
-    return jsonify({
-        'status': status,
-        'message': message
-    })
-
-@app.route('/recipe/step', methods=['PUT'])
-@authorized
-def addStep():
-    step = Steps(get_database())
-
-    params = request.get_json()
-
-    recipeId = params.get('recipeId')
-    photo = params.get('photo')
-    stepNumber = params.get('stepNumber')
-    stepDescription = params.get('stepDescription')
-
-    status, message = step.addStep(recipeId, photo, stepNumber,
-                  stepDescription)
 
     return jsonify({
         'status': status,
@@ -496,39 +469,6 @@ def deleteIngredient(ingredientId):
     ingredient = Ingredients(get_database())
 
     status, message = ingredient.deleteIngredient(ingredientId)
-
-    return jsonify({
-        'status': status,
-        'message': message
-    })
-
-@app.route('/recipe/ingredient/all/<int:recipeId>', methods=['DELETE'])
-@authorized
-def deleteAllIngredients(recipeId):
-    ingredient = Ingredients(get_database())
-
-    status, message = ingredient.deleteAllIngredient(recipeId)
-
-    return jsonify({
-        'status': status,
-        'message': message
-    })
-
-@app.route('/recipe/ingredient', methods=['PUT'])
-@authorized
-def addIngredient():
-    ingredient = Ingredients(get_database())
-
-    params = request.get_json()
-
-    recipeId = params.get('recipeId')
-    ingredientQuantity = params.get('ingredientQuantity')
-    ingredientUnit = params.get('ingredientUnit')
-    ingredientName = params.get('ingredientName')
-    ingredientGroup = params.get('ingredientGroup')
-
-    status, message = ingredient.addIngredient(recipeId, ingredientQuantity, ingredientUnit,
-                      ingredientName, ingredientGroup)
 
     return jsonify({
         'status': status,
@@ -663,18 +603,6 @@ def deleteStars(recipeId):
         'message': message
     })
 
-
-@app.route('/recipe/stars/all/<int:recipeId>', methods=['DELETE'])
-@authorized
-def deleteAllStars(recipeId):
-    star = Stars(get_database())
-
-    status, message = star.deleteAllStars(recipeId)
-
-    return jsonify({
-        'status': status,
-        'message': message
-    })
 
 @app.route('/recipe/stars', methods=['PUT'])
 @authorized

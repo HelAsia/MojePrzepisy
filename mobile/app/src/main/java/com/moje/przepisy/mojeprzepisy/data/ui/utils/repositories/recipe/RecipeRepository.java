@@ -28,9 +28,36 @@ public class RecipeRepository implements RecipeRepositoryInterface{
   }
 
   @Override
+  public void addPhoto(String photo, final OnAddPhotoFinishedListener listener) {
+    Log.i("RecipeRepository.addPhoto(): ", "Before preparing request");
+    Call<Message> resp = recipeAPI.addPhoto(photo);
+    Log.i("RecipeRepository.addPhoto(): ", "Before sending request");
+    resp.enqueue(new Callback<Message>() {
+      @Override
+      public void onResponse(Call<Message> call, Response<Message> response) {
+        Message message = response.body();
+        if(message.status == 200){
+          Log.i("addPhoto.onResponse(): ", "OK. addPhoto has been added");
+          listener.onSetPhotoNumber(Integer.parseInt(message.message));
+        }else if(message.status == 404){
+          Log.e("addPhoto.onResponse(): ", "NOT OK. addPhoto hasn't been added");
+          listener.onPhotoError();
+        }
+      }
+      @Override
+      public void onFailure(Call<Message> call, Throwable t) {
+        Log.i("addWholeRecipeElements.onFailure(): SERWER", t.getMessage());
+        listener.onPhotoError();
+      }
+    });
+  }
+
+  @Override
   public void addWholeRecipeElements(final RecipeAllElements recipeAllElements,
       final OnWholeRecipeElementsFinishedListener listener) {
+    Log.i("RecipeRepository.addWholeRecipeElements(): ", "Before preparing request");
     Call<Message> resp = recipeAPI.addWholeRecipeElements(recipeAllElements);
+    Log.i("RecipeRepository.addWholeRecipeElements(): ", "Before sending request");
     resp.enqueue(new Callback<Message>() {
       @Override
       public void onResponse(Call<Message> call, Response<Message> response) {
@@ -54,89 +81,7 @@ public class RecipeRepository implements RecipeRepositoryInterface{
     });
   }
 
-  @Override
-  public void addRecipe(List<Recipe> recipeList, final OnRecipeFinishedListener listener) {
-    Call<Message> resp = recipeAPI.addRecipe(recipeList.get(0));
-    resp.enqueue(new Callback<Message>() {
-      @Override
-      public void onResponse(Call<Message> call, Response<Message> response) {
-        Message message = response.body();
-        if(message.status == 200){
-          Log.i("addRecipe.onResponse(): Recipe: ", "OK. Recipe has been added");
-          listener.setRecipeId(message.message);
-          listener.onRecipeAdded(true);
-        }else if(message.status == 404){
-          Log.e("addRecipe.onResponse(): Recipe: ", "NOT OK. Recipe hasn't been added");
-          listener.onRecipeError();
-          listener.onRecipeAdded(false);
-        }
-      }
 
-      @Override
-      public void onFailure(Call<Message> call, Throwable t) {
-        Log.i("addRecipe.onFailure(): SERWER", t.getMessage());
-        listener.onRecipeError();
-        listener.onRecipeAdded(false);
-      }
-    });
-  }
-
-  @Override
-  public void addIngredients(List<Ingredient> ingredientList, final OnRecipeFinishedListener listener) {
-    for(Ingredient ingredient : ingredientList){
-      Call<Message> resp = recipeAPI.addIngredient(ingredient);
-      resp.enqueue(new Callback<Message>() {
-        @Override
-        public void onResponse(Call<Message> call, Response<Message> response) {
-          Message message = response.body();
-          if(message != null) {
-            if (message.status == 200) {
-              Log.d("addIngredients.onResponse()", "Added ingredient, got response");
-            } else if (message.status == 404) {
-              listener.onRecipeError();
-              listener.onIngredientsAdded(false);
-            }
-          }
-        }
-        @Override
-        public void onFailure(Call<Message> call, Throwable t) {
-          Log.i("addIngredients.onFailure(): SERWER", t.getMessage());
-          listener.onRecipeError();
-          listener.onIngredientsAdded(false);
-        }
-      });
-    }
-    listener.onIngredientsAdded(true);
-  }
-
-  @Override
-  public void addStep(List<Step> stepList, final OnRecipeFinishedListener listener) {
-    for(Step step : stepList){
-      Log.d("addStep()", "About to PUT /recipe/step: " + step.toString());
-      Call<Message> resp = recipeAPI.addStep(step);
-      resp.enqueue(new Callback<Message>() {
-        @Override
-        public void onResponse(Call<Message> call, Response<Message> response) {
-          Message message = response.body();
-          Log.d("addStep.onResponse()", "Added step, got response");
-          if(message.status == 200){
-            Log.d("addStep.onResponse()", "Success;");
-          }else if(message.status == 404){
-            Log.d("addStep.onResponse()", "Failure: 404;");
-            listener.onRecipeError();
-            listener.onStepsAdded(false);
-          }
-        }
-        @Override
-        public void onFailure(Call<Message> call, Throwable t) {
-          Log.i("addStep.onFailure(): SERWER", t.getMessage());
-          listener.onRecipeError();
-          listener.onStepsAdded(false);
-        }
-      });
-    }
-    listener.onStepsAdded(true);
-  }
 
   @Override
   public void addComment(Comment comment, final OnCommentsDetailsDisplayListener listener) {
@@ -158,31 +103,6 @@ public class RecipeRepository implements RecipeRepositoryInterface{
       public void onFailure(Call<Message> call, Throwable t) {
         Log.i("addFirstStars.onFailure(): SERWER", t.getMessage());
         listener.onCommentError();
-      }
-    });
-  }
-
-  @Override
-  public void addFirstStars(Stars stars, final OnRecipeFinishedListener listener) {
-    Call<Message> resp = recipeAPI.addStars(stars);
-    resp.enqueue(new Callback<Message>() {
-      @Override
-      public void onResponse(Call<Message> call, Response<Message> response) {
-        Message message = response.body();
-        if(message.status == 200){
-          Log.i("addFirstStars.onResponse(): Stars: ", "OK. Stars has been added");
-          listener.onStarsAdded(true);
-        }else if(message.status == 404){
-          Log.e("addFirstStars.onResponse(): Stars: ", "NOT OK. Stars hasn't been added");
-          listener.onStarsError();
-          listener.onStarsAdded(false);
-        }
-      }
-      @Override
-      public void onFailure(Call<Message> call, Throwable t) {
-        Log.i("addFirstStars.onFailure(): SERWER", t.getMessage());
-        listener.onStarsError();
-        listener.onStarsAdded(false);
       }
     });
   }
@@ -358,31 +278,6 @@ public class RecipeRepository implements RecipeRepositoryInterface{
       public void onFailure(Call<List<Stars>> call, Throwable t) {
         Log.i("getRecipeDetailsStars.onFailure(): SERWER STARS: ", t.getMessage());
         listener.onStarsError();
-      }
-    });
-  }
-
-  @Override
-  public void getFavorite(int recipeId, final OnFavoriteListener listener) {
-    Call<Stars> resp = recipeAPI.getFavorite(recipeId);
-    resp.enqueue(new Callback<Stars>() {
-      @Override
-      public void onResponse(Call<Stars> call, Response<Stars> response) {
-        Stars stars = response.body();
-        if(stars != null){
-          Log.i("getFavorite.onResponse(): Favorite: ", "OK. Favorite has been downloaded");
-          listener.onUpdateFavoriteState(stars.getFavorites());
-        }else if(stars == null){
-          Log.i("getFavorite.onResponse(): Favorite: ", "OK. Favorite has been downloaded but is empty");
-          listener.onUpdateFavoriteState(false);
-        }
-        else{
-          Log.e("getRecipeDetailsStars.onResponse(): Favorite: ", "NOT OK. Favorite hasn't been downloaded");
-        }
-      }
-      @Override
-      public void onFailure(Call<Stars> call, Throwable t) {
-        Log.i("getFavorite.onFailure(): SERWER STARS: ", t.getMessage());
       }
     });
   }

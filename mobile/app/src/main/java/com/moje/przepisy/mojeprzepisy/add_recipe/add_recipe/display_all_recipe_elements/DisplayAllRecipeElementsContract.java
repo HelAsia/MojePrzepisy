@@ -45,6 +45,9 @@ public interface DisplayAllRecipeElementsContract {
     void setEditRecipeIconAction();
     void setEditIngredientsIconAction();
     void setEditStepsIconAction();
+    void sendPhotoToServer(String photo);
+    void addPhotosNumberToElements();
     void startBackgroundActions(Activity activity);
+    void startBackgroundAddingPhoto(Activity activity);
   }
 }

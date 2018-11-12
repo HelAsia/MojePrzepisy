@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
@@ -80,7 +81,9 @@ public class DisplayAllRecipeElementsActivityView extends AppCompatActivity impl
   @Override
   public void onClick(View view) {
     if(view.getId() == R.id.saveRecipeImageView){
+      Log.i("onClick.saveRecipeImageView:", "Before startBackgroundActions()");
       presenter.startBackgroundActions(DisplayAllRecipeElementsActivityView.this);
+      Log.i("onClick.saveRecipeImageView:", "After startBackgroundActions()");
     }else if(view.getId() == R.id.recipeEditImageView){
       presenter.setEditRecipeIconAction();
     }else if(view.getId() == R.id.ingredientsEditImageView){

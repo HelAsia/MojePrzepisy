@@ -5,10 +5,12 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.moje.przepisy.mojeprzepisy.data.model.Ingredient;
+import com.moje.przepisy.mojeprzepisy.data.model.Photo;
 import com.moje.przepisy.mojeprzepisy.data.model.Recipe;
 import com.moje.przepisy.mojeprzepisy.data.model.RecipeAllElements;
 import com.moje.przepisy.mojeprzepisy.data.model.Stars;
@@ -19,21 +21,24 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DisplayAllRecipeElementsPresenter implements DisplayAllRecipeElementsContract.Presenter, RecipeRepository.OnWholeRecipeElementsFinishedListener{
+public class DisplayAllRecipeElementsPresenter implements DisplayAllRecipeElementsContract.Presenter,
+    RecipeRepository.OnWholeRecipeElementsFinishedListener, RecipeRepository.OnAddPhotoFinishedListener{
   private RecipeRepository recipeRepository;
   private DisplayAllRecipeElementsContract.View recipeElementsView;
   private List<Ingredient> ingredientList = new ArrayList<>();
   private List<Recipe> recipeList = new ArrayList<>();
   private List<Step> stepList = new ArrayList<>();
+  private List<Recipe> recipeListWithPhotoNumber = new ArrayList<>();
+  private List<Step> stepListWithPhotoNumber = new ArrayList<>();
   private List<Stars> starsList = new ArrayList<>();
   private Gson gson = new Gson();
+  private int photoNumber = -1;
   private Boolean isWholeRecipeAdded = false;
 
   public DisplayAllRecipeElementsPresenter(DisplayAllRecipeElementsContract.View recipeElementsView, RecipeRepository recipeRepository){
     this.recipeElementsView = recipeElementsView;
     this.recipeRepository = recipeRepository;
   }
-
 
   @Override
   public void setEditRecipeIconAction() {
@@ -164,16 +169,11 @@ public class DisplayAllRecipeElementsPresenter implements DisplayAllRecipeElemen
   @Override
   public void saved() {
     addWholeElementsToServer();
+    Log.i("DisplayAllRecipeElementsPresenter.saved():", "After addWholeElementsToServer()");
     while (!isWholeRecipeAdded){
 
     }
-
-    if(isWholeRecipeAdded){
-      deleteAllSharedPreferences();
-    }else {
-      recipeElementsView.getInformationTextView().setText("Nie udało się zapisać przepisu!");
-    }
-    recipeElementsView.navigateToMainCardsScreen();
+    Log.i("DisplayAllRecipeElementsPresenter.saved():", "After while (!isWholeRecipeAdded)");
   }
 
   @Override
@@ -193,6 +193,22 @@ public class DisplayAllRecipeElementsPresenter implements DisplayAllRecipeElemen
     new BackgroundActions(activity).execute();
   }
 
+  @Override
+  public void startBackgroundAddingPhoto(Activity activity){
+    new BackgroundAddingPhoto(activity).execute();
+  }
+
+
+  @Override
+  public void onPhotoError() {
+    Toast.makeText(recipeElementsView.getContext(), "Nie udało się dodać zdjęcia!", Toast.LENGTH_SHORT).show();
+  }
+
+  @Override
+  public void onSetPhotoNumber(int photoNumber) {
+    this.photoNumber = photoNumber;
+  }
+
   private class BackgroundActions extends AsyncTask<Void, Void, Void> {
     private Activity activity;
 
@@ -203,11 +219,14 @@ public class DisplayAllRecipeElementsPresenter implements DisplayAllRecipeElemen
     @Override
     protected void onPreExecute() {
       activity.showDialog(DisplayAllRecipeElementsActivityView.PLEASE_WAIT_DIALOG);
+      startBackgroundAddingPhoto(activity);
     }
     @Override
     protected Void doInBackground(Void... arg0) {
       try {
+        Log.i("BackgroundActions.doInBackground():", "Before saved()");
         saved();
+        Log.i("BackgroundActions.doInBackground():", "After saved()");
         Thread.sleep(5000);
       } catch (InterruptedException e) {
         e.printStackTrace();
@@ -216,20 +235,85 @@ public class DisplayAllRecipeElementsPresenter implements DisplayAllRecipeElemen
     }
     @Override
     protected void onPostExecute(Void result) {
+      deleteAllSharedPreferences();
+      recipeElementsView.navigateToMainCardsScreen();
       activity.removeDialog(DisplayAllRecipeElementsActivityView.PLEASE_WAIT_DIALOG);
       Toast.makeText(activity, "Zapisano!", Toast.LENGTH_SHORT).show();
     }
   }
 
+  private class BackgroundAddingPhoto extends AsyncTask<Void, Void, Void> {
+    private Activity activity;
+
+    public BackgroundAddingPhoto(Activity activity) {
+      this.activity = activity;
+    }
+
+    @Override
+    protected void onPreExecute() {
+    }
+    @Override
+    protected Void doInBackground(Void... arg0) {
+      try {
+        Log.i("BackgroundActions.doInBackground():", "Before saved()");
+        addPhotosNumberToElements();
+        Log.i("BackgroundActions.doInBackground():", "After saved()");
+        Thread.sleep(5000);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+      return null;
+    }
+    @Override
+    protected void onPostExecute(Void result) {
+      Toast.makeText(activity, "Zdjęcia wysłane na serwer!", Toast.LENGTH_SHORT).show();
+    }
+  }
+
+  @Override
+  public void sendPhotoToServer(String photo){
+ //   Photo photoToSend = new Photo(photo);
+    recipeRepository.addPhoto(photo, this);
+  }
+
+  @Override
+  public void addPhotosNumberToElements() {
+    for(Recipe recipe : recipeList){
+      sendPhotoToServer(recipe.getRecipeMainPicture());
+      while(photoNumber == -1){
+
+      }
+      Recipe recipeWithPhotoNumber = new Recipe(recipe.getRecipeName(), photoNumber,
+          recipe.getRecipeCategory(), recipe.getRecipePrepareTime(), recipe.getRecipeCookTime(),
+          recipe.getRecipeBakeTime());
+      Log.d("addPhotosNumberToElements()", "After added recipe photo. ");
+      recipeListWithPhotoNumber.add(recipeWithPhotoNumber);
+      photoNumber = -1;
+    }
+
+    for(Step step : stepList){
+      sendPhotoToServer(step.getPhoto());
+      while(photoNumber == -1){
+
+      }
+      Step stepWithPhotoNumber = new Step(photoNumber, step.getStepNumber(),
+          step.getStepDescription());
+      Log.d("addPhotosNumberToElements()", "After added step photo. ");
+      stepListWithPhotoNumber.add(stepWithPhotoNumber);
+      photoNumber = -1;
+    }
+  }
+
+
   @Override
   public void addWholeElementsToServer() {
-    recipeList = getRecipeListAfterChangeScreen(getRecipeListPojoFromPreferences(recipeElementsView.getContext()));
-    ingredientList = getIngredientListAfterChangeScreen(getIngredientsPojoListFromPreferences(recipeElementsView.getContext()));
-    stepList = getStepListAfterChangeScreen(getStepsPojoListFromPreferences(recipeElementsView.getContext()));
     Stars stars = new Stars(-1, 0, 0);
+    Log.i("DisplayAllRecipeElementsPresenter.addWholeElementsToServer():", "After created new Stars Object");
     starsList.add(stars);
-    RecipeAllElements recipeAllElements = new RecipeAllElements(recipeList, ingredientList, stepList, starsList);
+    Log.i("DisplayAllRecipeElementsPresenter.addWholeElementsToServer():", "After added new Stars Object to starsList");
+    RecipeAllElements recipeAllElements = new RecipeAllElements(recipeListWithPhotoNumber, ingredientList, stepListWithPhotoNumber, starsList);
 
     recipeRepository.addWholeRecipeElements(recipeAllElements, this);
+    Log.i("DisplayAllRecipeElementsPresenter.addWholeElementsToServer():", "After addWholeRecipeElements()");
   }
 }

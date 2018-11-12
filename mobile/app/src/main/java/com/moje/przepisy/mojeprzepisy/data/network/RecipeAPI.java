@@ -12,6 +12,8 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
@@ -25,14 +27,15 @@ public interface RecipeAPI {
   Call<List<Recipe>> editRecipe(@Path("recipeId") int recipeId, @Path("columnName") String columnName, @Path("columnValue") String columnValue);
 
   @PUT("recipe")
-  Call<Message> addRecipe(@Body Recipe recipe);
-
-  @PUT("recipe/allElements")
   Call<Message> addWholeRecipeElements(@Body RecipeAllElements recipeAllElements);
 
   @DELETE("recipe/{recipeId}")
   Call<Message> deleteRecipe(@Path("recipeId") int recipeId);
 
+
+  @FormUrlEncoded
+  @PUT("recipe/photo")
+  Call<Message> addPhoto(@Field("photo") String photoString);
 
   @POST("recipe/photo/{photoId}")
   Call<List<Photo>> editPhoto(@Path("photoId") int photoId, @Body Photo photo);
@@ -47,14 +50,9 @@ public interface RecipeAPI {
   @POST("recipe/step/{stepId}/{columnName}/{columnValue}")
   Call<List<Step>> editStep(@Path("stepId") int stepId, @Path("columnName") String columnName, @Path("columnValue") String columnValue);
 
-  @PUT("recipe/step")
-  Call<Message> addStep(@Body Step step);
-
   @DELETE("recipe/step/{stepId}")
   Call<Message> deleteStep(@Path("stepId") int stepId, @Body Step step);
 
-  @DELETE("recipe/step/all/{recipeId}")
-  Call<Message> deleteAllStepa(@Path("recipeId") int recipeId);
 
   @GET("recipe/ingredient/{recipeId}")
   Call<List<Ingredient>> getIngredient(@Path("recipeId") int recipeId);
@@ -62,14 +60,8 @@ public interface RecipeAPI {
   @POST("recipe/ingredient/{ingredientId}/{columnName}/{columnValue}")
   Call<List<Ingredient>> editIngredient(@Path("ingredientId") int ingredientId, @Path("columnName") String columnName, @Path("columnValue") String columnValue);
 
-  @PUT("recipe/ingredient")
-  Call<Message> addIngredient(@Body Ingredient ingredient);
-
   @DELETE("recipe/ingredient/{ingredientId}")
   Call<Message> deleteIngredient(@Path("ingredientId") int ingredientId, @Body Ingredient ingredient);
-
-  @DELETE("recipe/ingredient/all/{recipeId}")
-  Call<Message> deleteAllIngredients(@Path("recipeId") int recipeId);
 
 
   @GET("recipe/comment/{recipeId}")
@@ -84,9 +76,6 @@ public interface RecipeAPI {
   @DELETE("recipe/comment/{commentId}")
   Call<Message> deleteComment(@Path("commentId") int commentId);
 
-  @DELETE("recipe/comment/all/{recipeId}")
-  Call<Message> deleteAllComments(@Path("recipeId") int recipeId);
-
   @GET("recipe/stars/detail/{recipeId}")
   Call<List<Stars>> getRecipeDetailsStars(@Path("recipeId") int recipeId);
 
@@ -98,9 +87,6 @@ public interface RecipeAPI {
 
   @DELETE("recipe/stars/{recipeId}")
   Call<Message> deleteStars(@Path("recipeId") int recipeId);
-
-  @DELETE("recipe/stars/all/{recipeId}")
-  Call<Message> deleteAllStars(@Path("recipeId") int recipeId);
 
   @GET("recipe/favorite/{recipeId}")
   Call<Stars> getFavorite(@Path("recipeId") int recipeId);
