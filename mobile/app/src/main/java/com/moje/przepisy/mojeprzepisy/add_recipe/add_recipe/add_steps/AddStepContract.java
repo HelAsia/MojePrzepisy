@@ -15,8 +15,8 @@ public interface AddStepContract {
   }
   interface Presenter {
     String convertPojoToJsonString(List<Step> step);
-    void addPojoListToPreferences(String jsonList, Context context);
-    String getPojoListFromPreferences(Context context);
+    void addPojoListToFile();
+    String getPojoListFromFile(Context context);
     List<Step> getStepListAfterChangeScreen(String jsonList);
     void setFirstScreen();
     void setNextStep();

@@ -11,6 +11,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -30,6 +31,9 @@ import com.moje.przepisy.mojeprzepisy.data.model.Step;
 import com.moje.przepisy.mojeprzepisy.utils.BitmapConverter;
 import com.moje.przepisy.mojeprzepisy.utils.Constant;
 import com.moje.przepisy.mojeprzepisy.utils.URLDialog;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.List;
 
@@ -98,14 +102,17 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> 
       public void onItemSelected(AdapterView<?> adapterView, View view, int positionInSpinner, long id) {
         stepList.get(position).setStepNumber(position + 1);
 
-        String pojoJson = convertPojoToJsonString(stepList);
-        addPojoListToPreferences(pojoJson, context);
+        addPojoListToFile();
+
+/*        String pojoJson = convertPojoToJsonString(stepList);
+        addPojoListToPreferences(pojoJson, context);*/
       }
 
       @Override
       public void onNothingSelected(AdapterView<?> adapterView) {
-        String pojoJson = convertPojoToJsonString(stepList);
-        addPojoListToPreferences(pojoJson, context);
+        addPojoListToFile();
+ /*       String pojoJson = convertPojoToJsonString(stepList);
+        addPojoListToPreferences(pojoJson, context);*/
       }
     });
 
@@ -114,8 +121,9 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> 
       public void onClick(View view) {
         stepList.remove(position);
         notifyItemRemoved(position);
-        String pojoJson = convertPojoToJsonString(stepList);
-        addPojoListToPreferences(pojoJson, context);
+        addPojoListToFile();
+/*        String pojoJson = convertPojoToJsonString(stepList);
+        addPojoListToPreferences(pojoJson, context);*/
       }
     });
 
@@ -130,8 +138,10 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> 
         Step updatedStep = stepList.get(position);
         updatedStep.setStepDescription(stepDescription);
 
-        String pojoJson = convertPojoToJsonString(stepList);
-        addPojoListToPreferences(pojoJson, context);
+        addPojoListToFile();
+
+/*        String pojoJson = convertPojoToJsonString(stepList);
+        addPojoListToPreferences(pojoJson, context);*/
       }
       @Override
       public void afterTextChanged(Editable editable) {
@@ -191,6 +201,10 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> 
     editor.commit();
   }
 
+  private void addPojoListToFile(){
+    new BackgroundSaveStepToFileActions().execute();
+  }
+
   private class BackgroundUrlImageAction extends AsyncTask<Void, Void, Void> {
     private Activity activity;
     private ImageView imageView;
@@ -230,8 +244,10 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> 
 
       stepList.get(position).setPhoto(converter.BitMapToString(picture));
 
-      String pojoJson = convertPojoToJsonString(stepList);
-      addPojoListToPreferences(pojoJson, context);
+      addPojoListToFile();
+
+/*      String pojoJson = convertPojoToJsonString(stepList);
+      addPojoListToPreferences(pojoJson, context);*/
 
       Toast.makeText(activity, "DODANE", Toast.LENGTH_SHORT).show();
     }
@@ -278,8 +294,10 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> 
 
       stepList.get(position).setPhoto(converter.BitMapToString(picture));
 
+      addPojoListToFile();
+/*
       String pojoJson = convertPojoToJsonString(stepList);
-      addPojoListToPreferences(pojoJson, context);
+      addPojoListToPreferences(pojoJson, context);*/
 
       ((AddStepsActivityView)context).setPicture(null);
 
@@ -328,12 +346,52 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> 
 
       stepList.get(position).setPhoto(converter.BitMapToString(picture));
 
-      String pojoJson = convertPojoToJsonString(stepList);
-      addPojoListToPreferences(pojoJson, context);
+/*      String pojoJson = convertPojoToJsonString(stepList);
+      addPojoListToPreferences(pojoJson, context);*/
 
+      addPojoListToFile();
       ((AddStepsActivityView)context).setPicture(null);
 
       Toast.makeText(activity, "DODANE", Toast.LENGTH_SHORT).show();
+    }
+  }
+
+  private class BackgroundSaveStepToFileActions extends AsyncTask<Void, Void, Void> {
+
+    public BackgroundSaveStepToFileActions() {
+    }
+
+    @Override
+    protected void onPreExecute() {
+    }
+
+    @Override
+    protected Void doInBackground(Void... arg0) {
+      try {
+        FileOutputStream fileWithData;
+        try {
+          fileWithData = (context.openFileOutput("StepsData.txt", Context.MODE_PRIVATE));
+          try {
+            Log.d("STRING TO WRITE", convertPojoToJsonString(stepList));
+            fileWithData.write(convertPojoToJsonString(stepList).getBytes());
+            fileWithData.close();
+          } catch (IOException e) {
+            e.printStackTrace();
+          }
+        } catch (FileNotFoundException e) {
+          e.printStackTrace();
+        }
+
+        Thread.sleep(1000);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+      return null;
+    }
+
+    @Override
+    protected void onPostExecute(Void result) {
+      Toast.makeText(context, "DODANE", Toast.LENGTH_SHORT).show();
     }
   }
 }

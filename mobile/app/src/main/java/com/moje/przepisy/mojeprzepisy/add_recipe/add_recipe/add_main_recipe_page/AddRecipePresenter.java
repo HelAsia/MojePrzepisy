@@ -1,36 +1,35 @@
 package com.moje.przepisy.mojeprzepisy.add_recipe.add_recipe.add_main_recipe_page;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
-import android.preference.PreferenceManager;
+import android.os.AsyncTask;
+import android.util.Log;
+import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.moje.przepisy.mojeprzepisy.data.model.Recipe;
-import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.recipe.RecipeRepository;
 import com.moje.przepisy.mojeprzepisy.utils.BitmapConverter;
-import com.moje.przepisy.mojeprzepisy.utils.Constant;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
 public class AddRecipePresenter implements AddRecipeContract.Presenter{
-  private RecipeRepository recipeRepository;
   private AddRecipeContract.View recipeView;
   private List<Recipe> recipeList = new ArrayList<>();
   private BitmapConverter converter = new BitmapConverter();
   private Gson gson = new Gson();
+  private String recipeListPojo;
 
-  public AddRecipePresenter(AddRecipeContract.View recipeView, RecipeRepository recipeRepository){
+  public AddRecipePresenter(AddRecipeContract.View recipeView){
     this.recipeView = recipeView;
-    this.recipeRepository = recipeRepository;
-  }
-
-  @Override
-  public List<Recipe> getRecipeList(){
-    return recipeList;
   }
 
   @Override
@@ -44,41 +43,22 @@ public class AddRecipePresenter implements AddRecipeContract.Presenter{
     return gson.toJson(recipeList, type);
   }
 
-  @Override
-  public void addPojoToPreferences(String jsonList, Context context) {
-    SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
-    editor.putString(Constant.PREF_RECIPE, jsonList).apply();
-    editor.commit();
-  }
-
   public void setRecipeValueOnScreen(){
-    int position = 0;
-    setRecipe(getRecipeAfterChangeScreen(getPojoListFromPreferences(recipeView.getContext())));
-    recipeView.setMainPhotoImageView(getRecipeList().get(position).getRecipeMainPicture());
-    recipeView.setRecipeNameEditText(getRecipeList().get(position).getRecipeName());
-    recipeView.setCategoryChooseSpinner(getRecipeList().get(position).getRecipeCategory());
-    recipeView.setPreparedTimeEditText(getRecipeList().get(position).getRecipePrepareTime());
-    recipeView.setCookTimeEditText(getRecipeList().get(position).getRecipeCookTime());
-    recipeView.setBakeTimeEditText(getRecipeList().get(position).getRecipeBakeTime());
+    setRecipe(getRecipeAfterChangeScreen(getPojoListFromFile(recipeView.getContext())));
+    recipeView.setMainPhotoImageView(recipeList.get(0).getRecipeMainPicture());
+    recipeView.setRecipeNameEditText(recipeList.get(0).getRecipeName());
+    recipeView.setCategoryChooseSpinner(recipeList.get(0).getRecipeCategory());
+    recipeView.setPreparedTimeEditText(recipeList.get(0).getRecipePrepareTime());
+    recipeView.setCookTimeEditText(recipeList.get(0).getRecipeCookTime());
+    recipeView.setBakeTimeEditText(recipeList.get(0).getRecipeBakeTime());
   }
 
-  public void setRecipeValueInPreferences(){
-    int position = 0;
-    getRecipeList().get(position).setRecipeName(recipeView.getRecipeNameEditText().getText().toString());
-    BitmapDrawable drawable = (BitmapDrawable) recipeView.getMainPhotoImageView().getDrawable();
-    Bitmap bitmap = drawable.getBitmap();
-    getRecipeList().get(position).setRecipeMainPicture(converter.BitMapToString(bitmap));
-    getRecipeList().get(position).setRecipeCategory((String) recipeView.getCategoryChooseSpinner().getSelectedItem());
-    getRecipeList().get(position).setRecipePrepareTime(recipeView.getPreparedTimeEditText().getText().toString());
-    getRecipeList().get(position).setRecipeCookTime(recipeView.getCookTimeEditText().getText().toString());
-    getRecipeList().get(position).setRecipeBakeTime(recipeView.getBakeTimeEditText().getText().toString());
-
-    String pojoJson = convertPojoToJsonString(getRecipeList());
-    addPojoToPreferences(pojoJson, recipeView.getContext());
+  public void setRecipeValueInFile(){
+    new BackgroundSaveToFileActions().execute();
   }
 
   public void setFirstScreen(){
-    List<Recipe> recipeFirstList = getRecipeAfterChangeScreen(getPojoListFromPreferences(recipeView.getContext()));
+    List<Recipe> recipeFirstList = getRecipeAfterChangeScreen(getPojoListFromFile(recipeView.getContext()));
     if(recipeFirstList != null){
       recipeList = recipeFirstList;
       setRecipeValueOnScreen();
@@ -106,13 +86,80 @@ public class AddRecipePresenter implements AddRecipeContract.Presenter{
   }
 
   @Override
-  public String getPojoListFromPreferences(Context context) {
-    return PreferenceManager.getDefaultSharedPreferences(context).getString(Constant.PREF_RECIPE, null);
+  public String getPojoListFromFile(Context context) {
+    try {
+      FileInputStream fileToRead = context.openFileInput("RecipeData.txt");
+      StringBuffer fileToReadBuffer = new StringBuffer();
+      BufferedReader dataIO = new BufferedReader(new InputStreamReader(fileToRead));
+
+      while ((recipeListPojo = dataIO.readLine()) != null){
+        fileToReadBuffer.append(recipeListPojo + "\n");
+      }
+
+      dataIO.close();
+      fileToRead.close();
+      return fileToReadBuffer.toString();
+
+    } catch (FileNotFoundException e) {
+      e.printStackTrace();
+      return null;
+    } catch (IOException e) {
+      e.printStackTrace();
+      return null;
+    }
   }
 
   @Override
   public List<Recipe> getRecipeAfterChangeScreen(String jsonList) {
     Type type = new TypeToken<List<Recipe>>() {}.getType();
     return gson.fromJson(jsonList, type);
+  }
+
+  private class BackgroundSaveToFileActions extends AsyncTask<Void, Void, Void> {
+
+    public BackgroundSaveToFileActions() {
+    }
+
+    @Override
+    protected void onPreExecute() {
+      int position = 0;
+      recipeList.get(position).setRecipeName(recipeView.getRecipeNameEditText().getText().toString());
+      BitmapDrawable drawable = (BitmapDrawable) recipeView.getMainPhotoImageView().getDrawable();
+      Bitmap bitmap = drawable.getBitmap();
+      recipeList.get(position).setRecipeMainPicture(converter.BitMapToString(bitmap));
+      recipeList.get(position).setRecipeCategory((String) recipeView.getCategoryChooseSpinner().getSelectedItem());
+      recipeList.get(position).setRecipePrepareTime(recipeView.getPreparedTimeEditText().getText().toString());
+      recipeList.get(position).setRecipeCookTime(recipeView.getCookTimeEditText().getText().toString());
+      recipeList.get(position).setRecipeBakeTime(recipeView.getBakeTimeEditText().getText().toString());
+    }
+
+    @Override
+    protected Void doInBackground(Void... arg0) {
+      try {
+        FileOutputStream fileWithData;
+        try {
+          fileWithData = recipeView.getContext().openFileOutput("RecipeData.txt", Context.MODE_PRIVATE);
+          try {
+            Log.d("STRING TO WRITE", convertPojoToJsonString(recipeList));
+            fileWithData.write(convertPojoToJsonString(recipeList).getBytes());
+            fileWithData.close();
+          } catch (IOException e) {
+            e.printStackTrace();
+          }
+        } catch (FileNotFoundException e) {
+          e.printStackTrace();
+        }
+
+        Thread.sleep(1000);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+      return null;
+    }
+
+    @Override
+    protected void onPostExecute(Void result) {
+      Toast.makeText(recipeView.getContext(), "DODANE", Toast.LENGTH_SHORT).show();
+    }
   }
 }

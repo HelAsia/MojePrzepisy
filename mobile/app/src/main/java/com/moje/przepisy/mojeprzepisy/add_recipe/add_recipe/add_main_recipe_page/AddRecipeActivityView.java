@@ -31,7 +31,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.moje.przepisy.mojeprzepisy.R;
 import com.moje.przepisy.mojeprzepisy.add_recipe.add_recipe.add_ingredients.AddIngredientsActivityView;
-import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.recipe.RecipeRepository;
 import com.moje.przepisy.mojeprzepisy.ui.MainCardsActivityView;
 import com.moje.przepisy.mojeprzepisy.utils.BitmapConverter;
 import com.moje.przepisy.mojeprzepisy.utils.TimeSetDialog;
@@ -67,12 +66,10 @@ public class AddRecipeActivityView extends AppCompatActivity implements AddRecip
     ButterKnife.bind(this);
     context = getApplicationContext();
 
-    presenter = new AddRecipePresenter(this, new RecipeRepository(context));
+    presenter = new AddRecipePresenter(this);
 
     setListeners();
-
     setToolbar();
-
     presenter.setFirstScreen();
   }
 
@@ -87,7 +84,7 @@ public class AddRecipeActivityView extends AppCompatActivity implements AddRecip
       navigateToPreviousPage();
     }else if(view.getId() == R.id.nextActionFab){
       if(!presenter.checkIfValueIsEmpty()){
-        presenter.setRecipeValueInPreferences();
+        presenter.setRecipeValueInFile();
         navigateToNextPage();
       }
     }else if(view.getId() == R.id.preparedTimeEditText){

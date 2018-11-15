@@ -1,12 +1,12 @@
 package com.moje.przepisy.mojeprzepisy.add_recipe.add_recipe.add_ingredients;
 
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -17,13 +17,16 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.moje.przepisy.mojeprzepisy.R;
 import com.moje.przepisy.mojeprzepisy.data.model.Ingredient;
-import com.moje.przepisy.mojeprzepisy.utils.Constant;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.List;
 
@@ -75,8 +78,8 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
         public void onClick(View view) {
           ingredientList.remove(getAdapterPosition());
           notifyItemRemoved(getAdapterPosition());
-          String pojoJson = convertPojoToJsonString(ingredientList);
-          addPojoListToPreferences(pojoJson, context);
+          ((AddIngredientsActivityView)context).setIngredientList(ingredientList);
+  //        addPojoListToFile();
         }
       });
 
@@ -91,8 +94,8 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
           Ingredient updatedIngredient = new Ingredient(ingredientQuantity, ingredientList.get(getAdapterPosition()).getIngredientUnit(), ingredientList.get(getAdapterPosition()).getIngredientName());
           ingredientList.set(getAdapterPosition(), updatedIngredient);
 
-          String pojoJson = convertPojoToJsonString(ingredientList);
-          addPojoListToPreferences(pojoJson, context);
+          ((AddIngredientsActivityView)context).setIngredientList(ingredientList);
+//          addPojoListToFile();
         }
         @Override
         public void afterTextChanged(Editable editable) {
@@ -110,8 +113,8 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
           Ingredient updatedIngredient = new Ingredient(ingredientList.get(getAdapterPosition()).getIngredientQuantity(), ingredientList.get(getAdapterPosition()).getIngredientUnit(), ingredientName);
           ingredientList.set(getAdapterPosition(), updatedIngredient);
 
-          String pojoJson = convertPojoToJsonString(ingredientList);
-          addPojoListToPreferences(pojoJson, context);
+          ((AddIngredientsActivityView)context).setIngredientList(ingredientList);
+//          addPojoListToFile();
         }
         @Override
         public void afterTextChanged(Editable editable) {
@@ -121,13 +124,14 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
       ingredientUnitSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
         @Override
         public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
-            String ingredientUnit = (String) adapterView.getSelectedItem();
+          String ingredientUnit = (String) adapterView.getSelectedItem();
 
-            Ingredient updatedIngredient = new Ingredient(ingredientList.get(getAdapterPosition()).getIngredientQuantity(), ingredientUnit, ingredientList.get(getAdapterPosition()).getIngredientName());
-            ingredientList.set(getAdapterPosition(), updatedIngredient);
+          Ingredient updatedIngredient = new Ingredient(ingredientList.get(getAdapterPosition()).getIngredientQuantity(), ingredientUnit, ingredientList.get(getAdapterPosition()).getIngredientName());
+          ingredientList.set(getAdapterPosition(), updatedIngredient);
 
-            String pojoJson = convertPojoToJsonString(ingredientList);
-            addPojoListToPreferences(pojoJson, context);
+          ((AddIngredientsActivityView)context).setIngredientList(ingredientList);
+//          addPojoListToFile();
+
         }
         @Override
         public void onNothingSelected(AdapterView<?> adapterView) {
@@ -154,10 +158,46 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
     return gson.toJson(ingredientList, type);
   }
 
+  private void addPojoListToFile(){
+    new BackgroundSaveIngredientsToFileActions().execute();
+  }
 
-  private void addPojoListToPreferences(String jsonList, Context context) {
-    SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
-    editor.putString(Constant.PREF_INGREDIENT, jsonList).apply();
-    editor.commit();
+  private class BackgroundSaveIngredientsToFileActions extends AsyncTask<Void, Void, Void> {
+
+    public BackgroundSaveIngredientsToFileActions() {
+    }
+
+    @Override
+    protected void onPreExecute() {
+    }
+
+    @Override
+    protected Void doInBackground(Void... arg0) {
+      try {
+        FileOutputStream fileWithData;
+        try {
+          fileWithData = (context.openFileOutput("IngredientsData.txt", Context.MODE_PRIVATE));
+          try {
+            Log.d("STRING TO WRITE", convertPojoToJsonString(ingredientList));
+            fileWithData.write(convertPojoToJsonString(ingredientList).getBytes());
+            fileWithData.close();
+          } catch (IOException e) {
+            e.printStackTrace();
+          }
+        } catch (FileNotFoundException e) {
+          e.printStackTrace();
+        }
+
+        Thread.sleep(1000);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+      return null;
+    }
+
+    @Override
+    protected void onPostExecute(Void result) {
+      Toast.makeText(context, "DODANE", Toast.LENGTH_SHORT).show();
+    }
   }
 }

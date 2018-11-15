@@ -15,7 +15,6 @@ import com.moje.przepisy.mojeprzepisy.R;
 import com.moje.przepisy.mojeprzepisy.add_recipe.add_recipe.add_main_recipe_page.AddRecipeActivityView;
 import com.moje.przepisy.mojeprzepisy.add_recipe.add_recipe.add_steps.AddStepsActivityView;
 import com.moje.przepisy.mojeprzepisy.data.model.Ingredient;
-import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.recipe.RecipeRepository;
 import java.util.List;
 
 public class AddIngredientsActivityView extends AppCompatActivity implements AddIngredientsContract.View,
@@ -33,12 +32,10 @@ public class AddIngredientsActivityView extends AppCompatActivity implements Add
     context = getApplicationContext();
     ButterKnife.bind(this);
 
-    presenter = new AddIngredientsPresenter(this, new RecipeRepository(context));
+    presenter = new AddIngredientsPresenter(this);
 
     setListeners();
-
     setToolbar();
-
     presenter.setFirstScreen();
   }
 
@@ -57,10 +54,14 @@ public class AddIngredientsActivityView extends AppCompatActivity implements Add
     nextActionFab.setOnClickListener(this);
   }
 
-
   @Override
   public Context getContext() {
     return context;
+  }
+
+  @Override
+  public List<Ingredient> setIngredientList(List<Ingredient> ingredientList) {
+    return ingredientList;
   }
 
   @Override

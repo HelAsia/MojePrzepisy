@@ -1,22 +1,22 @@
 package com.moje.przepisy.mojeprzepisy.add_recipe.add_recipe.display_all_recipe_elements;
 
 import android.app.Activity;
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.moje.przepisy.mojeprzepisy.data.model.Ingredient;
-import com.moje.przepisy.mojeprzepisy.data.model.Photo;
 import com.moje.przepisy.mojeprzepisy.data.model.Recipe;
 import com.moje.przepisy.mojeprzepisy.data.model.RecipeAllElements;
 import com.moje.przepisy.mojeprzepisy.data.model.Stars;
 import com.moje.przepisy.mojeprzepisy.data.model.Step;
 import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.recipe.RecipeRepository;
-import com.moje.przepisy.mojeprzepisy.utils.Constant;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
@@ -80,13 +80,6 @@ public class DisplayAllRecipeElementsPresenter implements DisplayAllRecipeElemen
     this.stepList = stepList;
   }
 
-
-  @Override
-  public String getIngredientsPojoListFromPreferences(Context context) {
-    return PreferenceManager
-        .getDefaultSharedPreferences(context).getString(Constant.PREF_INGREDIENT, null);
-  }
-
   @Override
   public List<Ingredient> getIngredientListAfterChangeScreen(String jsonList) {
     Type type = new TypeToken<List<Ingredient>>() {}.getType();
@@ -94,21 +87,9 @@ public class DisplayAllRecipeElementsPresenter implements DisplayAllRecipeElemen
   }
 
   @Override
-  public String getRecipeListPojoFromPreferences(Context context) {
-    return PreferenceManager
-        .getDefaultSharedPreferences(context).getString(Constant.PREF_RECIPE, null);
-  }
-
-  @Override
   public List<Recipe> getRecipeListAfterChangeScreen(String jsonList) {
     Type type = new TypeToken<List<Recipe>>() {}.getType();
     return gson.fromJson(jsonList, type);
-  }
-
-  @Override
-  public String getStepsPojoListFromPreferences(Context context) {
-    return PreferenceManager
-        .getDefaultSharedPreferences(context).getString(Constant.PREF_STEP, null);
   }
 
   @Override
@@ -119,20 +100,33 @@ public class DisplayAllRecipeElementsPresenter implements DisplayAllRecipeElemen
 
   @Override
   public void deleteAllSharedPreferences() {
-    SharedPreferences.Editor ingredientsEditor = PreferenceManager.getDefaultSharedPreferences(recipeElementsView.getContext()).edit();
-    ingredientsEditor.remove(Constant.PREF_INGREDIENT);
-    ingredientsEditor.apply();
-    SharedPreferences.Editor stepsEditor = PreferenceManager.getDefaultSharedPreferences(recipeElementsView.getContext()).edit();
-    stepsEditor.remove(Constant.PREF_STEP);
-    stepsEditor.apply();
-    SharedPreferences.Editor recipeEditor = PreferenceManager.getDefaultSharedPreferences(recipeElementsView.getContext()).edit();
-    recipeEditor.remove(Constant.PREF_RECIPE);
-    recipeEditor.apply();
+    recipeElementsView.getContext().deleteFile("StepsData.txt");
+    recipeElementsView.getContext().deleteFile("IngredientsData.txt");
+    recipeElementsView.getContext().deleteFile("RecipeData.txt");
   }
 
   @Override
   public void setRecipeDetailsScreen() {
-    recipeList = getRecipeListAfterChangeScreen(getRecipeListPojoFromPreferences(recipeElementsView.getContext()));
+    try {
+      FileInputStream fileToRead = recipeElementsView.getContext().openFileInput("RecipeData.txt");
+      StringBuffer fileToReadBuffer = new StringBuffer();
+      BufferedReader dataIO = new BufferedReader(new InputStreamReader(fileToRead));
+
+      String recipeListPojo;
+      while ((recipeListPojo = dataIO.readLine()) != null){
+        fileToReadBuffer.append(recipeListPojo + "\n");
+      }
+      dataIO.close();
+      fileToRead.close();
+      recipeList = getRecipeListAfterChangeScreen(fileToReadBuffer.toString());
+
+    } catch (FileNotFoundException e) {
+      e.printStackTrace();
+      recipeList = null;
+    } catch (IOException e) {
+      e.printStackTrace();
+      recipeList = null;
+    }
 
     if(recipeList != null){
       setRecipeList(recipeList);
@@ -144,7 +138,26 @@ public class DisplayAllRecipeElementsPresenter implements DisplayAllRecipeElemen
 
   @Override
   public void setIngredientsDetailScreen() {
-    ingredientList = getIngredientListAfterChangeScreen(getIngredientsPojoListFromPreferences(recipeElementsView.getContext()));
+    try {
+      FileInputStream fileToRead = recipeElementsView.getContext().openFileInput("IngredientsData.txt");
+      StringBuffer fileToReadBuffer = new StringBuffer();
+      BufferedReader dataIO = new BufferedReader(new InputStreamReader(fileToRead));
+
+      String ingredientsListPojo;
+      while ((ingredientsListPojo = dataIO.readLine()) != null){
+        fileToReadBuffer.append(ingredientsListPojo + "\n");
+      }
+      dataIO.close();
+      fileToRead.close();
+      ingredientList = getIngredientListAfterChangeScreen(fileToReadBuffer.toString());
+
+    } catch (FileNotFoundException e) {
+      e.printStackTrace();
+      ingredientList = null;
+    } catch (IOException e) {
+      e.printStackTrace();
+      ingredientList = null;
+    }
 
     if(ingredientList != null){
       setIngredientList(ingredientList);
@@ -156,7 +169,33 @@ public class DisplayAllRecipeElementsPresenter implements DisplayAllRecipeElemen
 
   @Override
   public void setStepsDetailsScreen() {
-    stepList = getStepListAfterChangeScreen(getStepsPojoListFromPreferences(recipeElementsView.getContext()));
+    try {
+      FileInputStream fileToRead = recipeElementsView.getContext().openFileInput("StepsData.txt");
+      StringBuffer fileToReadBuffer = new StringBuffer();
+      BufferedReader dataIO = new BufferedReader(new InputStreamReader(fileToRead));
+
+      String stepsListPojo;
+      while ((stepsListPojo = dataIO.readLine()) != null){
+        fileToReadBuffer.append(stepsListPojo + "\n");
+      }
+      dataIO.close();
+      fileToRead.close();
+      stepList = getStepListAfterChangeScreen(fileToReadBuffer.toString());
+
+    } catch (FileNotFoundException e) {
+      e.printStackTrace();
+      stepList = null;
+    } catch (IOException e) {
+      e.printStackTrace();
+      stepList = null;
+    }
+
+    if(stepList != null){
+      setStepList(stepList);
+      recipeElementsView.setStepsRecyclerView(stepList);
+    }else {
+      Toast.makeText(recipeElementsView.getContext(), "Nie udało się pobrać składników!", Toast.LENGTH_SHORT).show();
+    }
 
     if(stepList != null){
       setStepList(stepList);
@@ -169,11 +208,11 @@ public class DisplayAllRecipeElementsPresenter implements DisplayAllRecipeElemen
   @Override
   public void saved() {
     addWholeElementsToServer();
-    Log.i("DisplayAllRecipeElementsPresenter.saved():", "After addWholeElementsToServer()");
+    Log.i("Presenter ", "DisplayAllRecipeElementsPresenter.saved(): After addWholeElementsToServer()");
     while (!isWholeRecipeAdded){
 
     }
-    Log.i("DisplayAllRecipeElementsPresenter.saved():", "After while (!isWholeRecipeAdded)");
+    Log.i("Presenter", "DisplayAllRecipeElementsPresenter.saved(): After while (!isWholeRecipeAdded)");
   }
 
   @Override
@@ -212,7 +251,7 @@ public class DisplayAllRecipeElementsPresenter implements DisplayAllRecipeElemen
   private class BackgroundActions extends AsyncTask<Void, Void, Void> {
     private Activity activity;
 
-    public BackgroundActions(Activity activity) {
+    private BackgroundActions(Activity activity) {
       this.activity = activity;
     }
 
@@ -224,9 +263,9 @@ public class DisplayAllRecipeElementsPresenter implements DisplayAllRecipeElemen
     @Override
     protected Void doInBackground(Void... arg0) {
       try {
-        Log.i("BackgroundActions.doInBackground():", "Before saved()");
+        Log.i("BackgroundActions", ".doInBackground(): Before saved()");
         saved();
-        Log.i("BackgroundActions.doInBackground():", "After saved()");
+        Log.i("BackgroundActions", ".doInBackground(): After saved()");
         Thread.sleep(5000);
       } catch (InterruptedException e) {
         e.printStackTrace();
@@ -245,7 +284,7 @@ public class DisplayAllRecipeElementsPresenter implements DisplayAllRecipeElemen
   private class BackgroundAddingPhoto extends AsyncTask<Void, Void, Void> {
     private Activity activity;
 
-    public BackgroundAddingPhoto(Activity activity) {
+    private BackgroundAddingPhoto(Activity activity) {
       this.activity = activity;
     }
 
@@ -255,9 +294,9 @@ public class DisplayAllRecipeElementsPresenter implements DisplayAllRecipeElemen
     @Override
     protected Void doInBackground(Void... arg0) {
       try {
-        Log.i("BackgroundActions.doInBackground():", "Before saved()");
+        Log.i("BackgroundActions", ".doInBackground(): Before saved()");
         addPhotosNumberToElements();
-        Log.i("BackgroundActions.doInBackground():", "After saved()");
+        Log.i("BackgroundActions", ".doInBackground(): After saved()");
         Thread.sleep(5000);
       } catch (InterruptedException e) {
         e.printStackTrace();
@@ -272,7 +311,6 @@ public class DisplayAllRecipeElementsPresenter implements DisplayAllRecipeElemen
 
   @Override
   public void sendPhotoToServer(String photo){
- //   Photo photoToSend = new Photo(photo);
     recipeRepository.addPhoto(photo, this);
   }
 
@@ -286,7 +324,7 @@ public class DisplayAllRecipeElementsPresenter implements DisplayAllRecipeElemen
       Recipe recipeWithPhotoNumber = new Recipe(recipe.getRecipeName(), photoNumber,
           recipe.getRecipeCategory(), recipe.getRecipePrepareTime(), recipe.getRecipeCookTime(),
           recipe.getRecipeBakeTime());
-      Log.d("addPhotosNumberToElements()", "After added recipe photo. ");
+      Log.d("addPhotoToElements", "addPhotosNumberToElements() After added recipe photo. ");
       recipeListWithPhotoNumber.add(recipeWithPhotoNumber);
       photoNumber = -1;
     }
@@ -298,22 +336,21 @@ public class DisplayAllRecipeElementsPresenter implements DisplayAllRecipeElemen
       }
       Step stepWithPhotoNumber = new Step(photoNumber, step.getStepNumber(),
           step.getStepDescription());
-      Log.d("addPhotosNumberToElements()", "After added step photo. ");
+      Log.d("addPhotoToElements)", "addPhotosNumberToElements() After added step photo. ");
       stepListWithPhotoNumber.add(stepWithPhotoNumber);
       photoNumber = -1;
     }
   }
 
-
   @Override
   public void addWholeElementsToServer() {
     Stars stars = new Stars(-1, 0, 0);
-    Log.i("DisplayAllRecipeElementsPresenter.addWholeElementsToServer():", "After created new Stars Object");
+    Log.i("Presenter ", "DisplayAllRecipeElementsPresenter.addWholeElementsToServer(): After created new Stars Object");
     starsList.add(stars);
-    Log.i("DisplayAllRecipeElementsPresenter.addWholeElementsToServer():", "After added new Stars Object to starsList");
+    Log.i("Presenter", "DisplayAllRecipeElementsPresenter.addWholeElementsToServer(): After added new Stars Object to starsList");
     RecipeAllElements recipeAllElements = new RecipeAllElements(recipeListWithPhotoNumber, ingredientList, stepListWithPhotoNumber, starsList);
 
     recipeRepository.addWholeRecipeElements(recipeAllElements, this);
-    Log.i("DisplayAllRecipeElementsPresenter.addWholeElementsToServer():", "After addWholeRecipeElements()");
+    Log.i("Presenter", "DisplayAllRecipeElementsPresenter.addWholeElementsToServer():After addWholeRecipeElements()");
   }
 }

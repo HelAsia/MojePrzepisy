@@ -5,38 +5,21 @@ import com.moje.przepisy.mojeprzepisy.data.model.Ingredient;
 import java.util.List;
 
 public interface AddIngredientsContract {
-
   interface View {
-
     void setToolbar();
-
     Context getContext();
-
+    List<Ingredient> setIngredientList(List<Ingredient> ingredientList);
     void setRecyclerView(List<Ingredient> ingredientList);
-
     void setListeners();
   }
 
   interface Presenter {
-
-    void setBackground(android.view.View child);
-
-    List<Ingredient> getIngredientList();
-
     void setIngredientList(List<Ingredient> ingredient);
-
     String convertPojoToJsonString(List<Ingredient> ingredient);
-
-    void addPojoListToPreferences(String jsonList, Context context);
-
-    String getPojoListFromPreferences(Context context);
-
+    void addPojoListToFile();
+    String getPojoListFromFile(Context context);
     List<Ingredient> getIngredientListAfterChangeScreen(String jsonList);
-
     void setFirstScreen();
-
     void setNextStep();
-
-
   }
 }

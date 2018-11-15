@@ -123,7 +123,7 @@
   <string name="main_info">Główne</string>
   <string name="ingredients">Składniki</string>
   <string name="steps">Kroki</string>
-  <string name="comments">Komentarze</string>
+  <string name="comments">Komentarz</string>
 
   <string name="user_login">Twój login:</string>
   <string name="user_first_name">Twoje imię:</string>

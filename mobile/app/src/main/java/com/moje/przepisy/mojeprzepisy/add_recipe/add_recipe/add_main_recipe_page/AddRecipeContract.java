@@ -30,14 +30,12 @@ public interface AddRecipeContract {
   }
 
   interface Presenter{
-    List<Recipe> getRecipeList();
     void setRecipe(List<Recipe> recipeList);
     String convertPojoToJsonString(List<Recipe> recipeList);
-    void addPojoToPreferences(String json, Context context);
-    String getPojoListFromPreferences(Context context);
+    String getPojoListFromFile(Context context);
     List<Recipe> getRecipeAfterChangeScreen(String jsonList);
     void setRecipeValueOnScreen();
-    void setRecipeValueInPreferences();
+    void setRecipeValueInFile();
     void setFirstScreen();
     Boolean checkIfValueIsEmpty();
   }

@@ -109,7 +109,7 @@ public class MyCardViewAdapter extends RecyclerView.Adapter<MyCardViewAdapter.Vi
           int recipeId = (int)getItemId(position);
           int rate = (int)v;
           callbackStars.shareStarsClicked(recipeId, rate, position);
-          viewHolder.ratingBarStars.setVisibility(View.INVISIBLE);
+          viewHolder.ratingBarStars.setVisibility(View.GONE);
         }
       });
 

@@ -31,11 +31,8 @@ public interface DisplayAllRecipeElementsContract {
     void setIngredientList(List<Ingredient> ingredientList);
     List<Step> getStepList();
     void setStepList(List<Step> stepList);
-    String getIngredientsPojoListFromPreferences(Context context);
     List<Ingredient> getIngredientListAfterChangeScreen(String jsonList);
-    String getRecipeListPojoFromPreferences(Context context);
     List<Recipe> getRecipeListAfterChangeScreen(String jsonList);
-    String getStepsPojoListFromPreferences(Context context);
     List<Step> getStepListAfterChangeScreen(String jsonList);
     void deleteAllSharedPreferences();
     void setRecipeDetailsScreen();
