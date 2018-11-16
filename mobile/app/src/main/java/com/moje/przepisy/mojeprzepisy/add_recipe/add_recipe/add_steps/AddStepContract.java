@@ -8,6 +8,7 @@ public interface AddStepContract {
   interface View {
     void setToolbar();
     Context getContext();
+    List<Step> setStepList(List<Step> stepList);
     void setRecyclerView(List<Step> stepList);
     void loadImageFromCamera();
     void loadImageFromGallery();

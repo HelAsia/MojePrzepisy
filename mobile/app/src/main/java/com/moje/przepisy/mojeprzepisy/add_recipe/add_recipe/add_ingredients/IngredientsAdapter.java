@@ -1,12 +1,10 @@
 package com.moje.przepisy.mojeprzepisy.add_recipe.add_recipe.add_ingredients;
 
 import android.content.Context;
-import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -17,17 +15,11 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.moje.przepisy.mojeprzepisy.R;
 import com.moje.przepisy.mojeprzepisy.data.model.Ingredient;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.lang.reflect.Type;
 import java.util.List;
 
 public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.ViewHolder> {
@@ -79,7 +71,6 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
           ingredientList.remove(getAdapterPosition());
           notifyItemRemoved(getAdapterPosition());
           ((AddIngredientsActivityView)context).setIngredientList(ingredientList);
-  //        addPojoListToFile();
         }
       });
 
@@ -95,7 +86,6 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
           ingredientList.set(getAdapterPosition(), updatedIngredient);
 
           ((AddIngredientsActivityView)context).setIngredientList(ingredientList);
-//          addPojoListToFile();
         }
         @Override
         public void afterTextChanged(Editable editable) {
@@ -114,7 +104,6 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
           ingredientList.set(getAdapterPosition(), updatedIngredient);
 
           ((AddIngredientsActivityView)context).setIngredientList(ingredientList);
-//          addPojoListToFile();
         }
         @Override
         public void afterTextChanged(Editable editable) {
@@ -130,8 +119,6 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
           ingredientList.set(getAdapterPosition(), updatedIngredient);
 
           ((AddIngredientsActivityView)context).setIngredientList(ingredientList);
-//          addPojoListToFile();
-
         }
         @Override
         public void onNothingSelected(AdapterView<?> adapterView) {
@@ -150,54 +137,6 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
       ingredientQuantityEditText.setText(Integer.toString(ingredientQuantity));
       ingredientUnitSpinner.setSelection(ingredientUnitSpinnerPosition);
       ingredientNameEditText.setText(ingredientName);
-    }
-  }
-
-  private String convertPojoToJsonString(List<Ingredient> ingredientList) {
-    Type type = new TypeToken<List<Ingredient>>(){}.getType();
-    return gson.toJson(ingredientList, type);
-  }
-
-  private void addPojoListToFile(){
-    new BackgroundSaveIngredientsToFileActions().execute();
-  }
-
-  private class BackgroundSaveIngredientsToFileActions extends AsyncTask<Void, Void, Void> {
-
-    public BackgroundSaveIngredientsToFileActions() {
-    }
-
-    @Override
-    protected void onPreExecute() {
-    }
-
-    @Override
-    protected Void doInBackground(Void... arg0) {
-      try {
-        FileOutputStream fileWithData;
-        try {
-          fileWithData = (context.openFileOutput("IngredientsData.txt", Context.MODE_PRIVATE));
-          try {
-            Log.d("STRING TO WRITE", convertPojoToJsonString(ingredientList));
-            fileWithData.write(convertPojoToJsonString(ingredientList).getBytes());
-            fileWithData.close();
-          } catch (IOException e) {
-            e.printStackTrace();
-          }
-        } catch (FileNotFoundException e) {
-          e.printStackTrace();
-        }
-
-        Thread.sleep(1000);
-      } catch (InterruptedException e) {
-        e.printStackTrace();
-      }
-      return null;
-    }
-
-    @Override
-    protected void onPostExecute(Void result) {
-      Toast.makeText(context, "DODANE", Toast.LENGTH_SHORT).show();
     }
   }
 }

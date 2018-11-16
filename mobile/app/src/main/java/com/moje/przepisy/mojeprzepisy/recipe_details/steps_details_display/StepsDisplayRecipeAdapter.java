@@ -14,14 +14,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.moje.przepisy.mojeprzepisy.R;
 import com.moje.przepisy.mojeprzepisy.data.model.Step;
-import com.moje.przepisy.mojeprzepisy.utils.BitmapConverter;
 import com.squareup.picasso.Picasso;
 import java.util.List;
 
 public class StepsDisplayRecipeAdapter extends RecyclerView.Adapter<StepsDisplayRecipeAdapter.ViewHolder> {
   public Context context;
   private List<Step> stepList;
-  private BitmapConverter converter = new BitmapConverter();
 
   StepsDisplayRecipeAdapter(Context context, List<Step> stepList){
     this.context = context;
@@ -77,7 +75,7 @@ public class StepsDisplayRecipeAdapter extends RecyclerView.Adapter<StepsDisplay
       }else{
         stepDescriptionTextView.setText("Brak opisu");
       }
-      if(photo == 0){
+      if(photo == -1){
         stepImageView.setVisibility(View.GONE);
       }else {
         stepImageView.setVisibility(View.VISIBLE);

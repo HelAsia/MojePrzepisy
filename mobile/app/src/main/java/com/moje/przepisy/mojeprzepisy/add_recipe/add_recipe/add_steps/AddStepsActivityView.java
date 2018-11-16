@@ -74,6 +74,11 @@ public class AddStepsActivityView extends AppCompatActivity implements AddStepCo
     return context;
   }
 
+  @Override
+  public List<Step> setStepList(List<Step> stepList) {
+    return stepList;
+  }
+
   public Bitmap getPicture() {
     return picture;
   }
@@ -95,9 +100,11 @@ public class AddStepsActivityView extends AppCompatActivity implements AddStepCo
       presenter.setNextStep();
 
     }else if(view.getId() == R.id.previousActionFab){
+      presenter.addPojoListToFile();
       navigateToPreviousPage();
 
     }else if(view.getId() == R.id.nextActionFab) {
+      presenter.addPojoListToFile();
       navigateToNextPage();
     }
   }

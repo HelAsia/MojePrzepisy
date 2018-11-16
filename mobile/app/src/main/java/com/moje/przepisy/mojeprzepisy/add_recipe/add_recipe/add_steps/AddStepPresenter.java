@@ -91,7 +91,7 @@ public class AddStepPresenter implements AddStepContract.Presenter {
     }
     Step emptyStep = new Step(stepNumber, "Opis kroku");
 
-    stepList = getStepListAfterChangeScreen(getPojoListFromFile(stepsView.getContext()));
+//    stepList = getStepListAfterChangeScreen(getPojoListFromFile(stepsView.getContext()));
     stepList.add(emptyStep);
     stepsView.setRecyclerView(stepList);
 

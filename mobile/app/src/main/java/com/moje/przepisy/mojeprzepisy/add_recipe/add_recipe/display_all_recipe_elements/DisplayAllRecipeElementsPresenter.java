@@ -317,28 +317,44 @@ public class DisplayAllRecipeElementsPresenter implements DisplayAllRecipeElemen
   @Override
   public void addPhotosNumberToElements() {
     for(Recipe recipe : recipeList){
-      sendPhotoToServer(recipe.getRecipeMainPicture());
-      while(photoNumber == -1){
+      if(recipe.getRecipeMainPicture() != null){
+        sendPhotoToServer(recipe.getRecipeMainPicture());
+        while(photoNumber == -1){
 
+        }
+        Recipe recipeWithPhotoNumber = new Recipe(recipe.getRecipeName(), photoNumber,
+            recipe.getRecipeCategory(), recipe.getRecipePrepareTime(), recipe.getRecipeCookTime(),
+            recipe.getRecipeBakeTime());
+        Log.d("addPhotoToElements", "addPhotosNumberToElements() After added recipe photo. ");
+        recipeListWithPhotoNumber.add(recipeWithPhotoNumber);
+        photoNumber = -1;
       }
-      Recipe recipeWithPhotoNumber = new Recipe(recipe.getRecipeName(), photoNumber,
-          recipe.getRecipeCategory(), recipe.getRecipePrepareTime(), recipe.getRecipeCookTime(),
-          recipe.getRecipeBakeTime());
-      Log.d("addPhotoToElements", "addPhotosNumberToElements() After added recipe photo. ");
-      recipeListWithPhotoNumber.add(recipeWithPhotoNumber);
-      photoNumber = -1;
+      else {
+        Recipe recipeWithPhotoNumber = new Recipe(recipe.getRecipeName(),
+            recipe.getRecipeCategory(), recipe.getRecipePrepareTime(), recipe.getRecipeCookTime(),
+            recipe.getRecipeBakeTime());
+        recipeListWithPhotoNumber.add(recipeWithPhotoNumber);
+      }
     }
 
     for(Step step : stepList){
-      sendPhotoToServer(step.getPhoto());
-      while(photoNumber == -1){
+      if(step.getPhoto() != null){
+        sendPhotoToServer(step.getPhoto());
+        while(photoNumber == -1){
 
+        }
+        Step stepWithPhotoNumber = new Step(step.getStepNumber(),
+            step.getStepDescription());
+        Log.d("addPhotoToElements)", "addPhotosNumberToElements() After added step photo. ");
+        stepListWithPhotoNumber.add(stepWithPhotoNumber);
+        photoNumber = -1;
       }
-      Step stepWithPhotoNumber = new Step(photoNumber, step.getStepNumber(),
-          step.getStepDescription());
-      Log.d("addPhotoToElements)", "addPhotosNumberToElements() After added step photo. ");
-      stepListWithPhotoNumber.add(stepWithPhotoNumber);
-      photoNumber = -1;
+      else {
+        Step stepWithPhotoNumber = new Step(photoNumber, step.getStepNumber(),
+            step.getStepDescription());
+        Log.d("addPhotoToElements)", "addPhotosNumberToElements() After added step photo. ");
+        stepListWithPhotoNumber.add(stepWithPhotoNumber);
+      }
     }
   }
 

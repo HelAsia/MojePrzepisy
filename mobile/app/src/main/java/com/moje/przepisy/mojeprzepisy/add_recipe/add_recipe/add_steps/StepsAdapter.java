@@ -2,16 +2,13 @@ package com.moje.przepisy.mojeprzepisy.add_recipe.add_recipe.add_steps;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
-import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -25,16 +22,10 @@ import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.moje.przepisy.mojeprzepisy.R;
 import com.moje.przepisy.mojeprzepisy.data.model.Step;
 import com.moje.przepisy.mojeprzepisy.utils.BitmapConverter;
-import com.moje.przepisy.mojeprzepisy.utils.Constant;
 import com.moje.przepisy.mojeprzepisy.utils.URLDialog;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.lang.reflect.Type;
 import java.util.List;
 
 public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> {
@@ -102,17 +93,12 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> 
       public void onItemSelected(AdapterView<?> adapterView, View view, int positionInSpinner, long id) {
         stepList.get(position).setStepNumber(position + 1);
 
-        addPojoListToFile();
-
-/*        String pojoJson = convertPojoToJsonString(stepList);
-        addPojoListToPreferences(pojoJson, context);*/
+        ((AddStepsActivityView)context).setStepList(stepList);
       }
 
       @Override
       public void onNothingSelected(AdapterView<?> adapterView) {
-        addPojoListToFile();
- /*       String pojoJson = convertPojoToJsonString(stepList);
-        addPojoListToPreferences(pojoJson, context);*/
+        ((AddStepsActivityView)context).setStepList(stepList);
       }
     });
 
@@ -121,9 +107,7 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> 
       public void onClick(View view) {
         stepList.remove(position);
         notifyItemRemoved(position);
-        addPojoListToFile();
-/*        String pojoJson = convertPojoToJsonString(stepList);
-        addPojoListToPreferences(pojoJson, context);*/
+        ((AddStepsActivityView)context).setStepList(stepList);
       }
     });
 
@@ -138,10 +122,7 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> 
         Step updatedStep = stepList.get(position);
         updatedStep.setStepDescription(stepDescription);
 
-        addPojoListToFile();
-
-/*        String pojoJson = convertPojoToJsonString(stepList);
-        addPojoListToPreferences(pojoJson, context);*/
+        ((AddStepsActivityView)context).setStepList(stepList);
       }
       @Override
       public void afterTextChanged(Editable editable) {
@@ -190,21 +171,6 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> 
     }
   }
 
-  private String convertPojoToJsonString(List<Step> stepList) {
-    Type type = new TypeToken<List<Step>>(){}.getType();
-    return gson.toJson(stepList, type);
-  }
-
-  private void addPojoListToPreferences(String jsonList, Context context) {
-    SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
-    editor.putString(Constant.PREF_STEP, jsonList).apply();
-    editor.commit();
-  }
-
-  private void addPojoListToFile(){
-    new BackgroundSaveStepToFileActions().execute();
-  }
-
   private class BackgroundUrlImageAction extends AsyncTask<Void, Void, Void> {
     private Activity activity;
     private ImageView imageView;
@@ -244,10 +210,7 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> 
 
       stepList.get(position).setPhoto(converter.BitMapToString(picture));
 
-      addPojoListToFile();
-
-/*      String pojoJson = convertPojoToJsonString(stepList);
-      addPojoListToPreferences(pojoJson, context);*/
+      ((AddStepsActivityView)context).setStepList(stepList);
 
       Toast.makeText(activity, "DODANE", Toast.LENGTH_SHORT).show();
     }
@@ -294,11 +257,7 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> 
 
       stepList.get(position).setPhoto(converter.BitMapToString(picture));
 
-      addPojoListToFile();
-/*
-      String pojoJson = convertPojoToJsonString(stepList);
-      addPojoListToPreferences(pojoJson, context);*/
-
+      ((AddStepsActivityView)context).setStepList(stepList);
       ((AddStepsActivityView)context).setPicture(null);
 
       Toast.makeText(activity, "DODANE", Toast.LENGTH_SHORT).show();
@@ -346,52 +305,10 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> 
 
       stepList.get(position).setPhoto(converter.BitMapToString(picture));
 
-/*      String pojoJson = convertPojoToJsonString(stepList);
-      addPojoListToPreferences(pojoJson, context);*/
-
-      addPojoListToFile();
+      ((AddStepsActivityView)context).setStepList(stepList);
       ((AddStepsActivityView)context).setPicture(null);
 
       Toast.makeText(activity, "DODANE", Toast.LENGTH_SHORT).show();
-    }
-  }
-
-  private class BackgroundSaveStepToFileActions extends AsyncTask<Void, Void, Void> {
-
-    public BackgroundSaveStepToFileActions() {
-    }
-
-    @Override
-    protected void onPreExecute() {
-    }
-
-    @Override
-    protected Void doInBackground(Void... arg0) {
-      try {
-        FileOutputStream fileWithData;
-        try {
-          fileWithData = (context.openFileOutput("StepsData.txt", Context.MODE_PRIVATE));
-          try {
-            Log.d("STRING TO WRITE", convertPojoToJsonString(stepList));
-            fileWithData.write(convertPojoToJsonString(stepList).getBytes());
-            fileWithData.close();
-          } catch (IOException e) {
-            e.printStackTrace();
-          }
-        } catch (FileNotFoundException e) {
-          e.printStackTrace();
-        }
-
-        Thread.sleep(1000);
-      } catch (InterruptedException e) {
-        e.printStackTrace();
-      }
-      return null;
-    }
-
-    @Override
-    protected void onPostExecute(Void result) {
-      Toast.makeText(context, "DODANE", Toast.LENGTH_SHORT).show();
     }
   }
 }

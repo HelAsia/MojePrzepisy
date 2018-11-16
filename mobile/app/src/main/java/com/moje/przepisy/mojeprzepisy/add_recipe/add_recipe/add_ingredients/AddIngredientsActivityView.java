@@ -70,9 +70,11 @@ public class AddIngredientsActivityView extends AppCompatActivity implements Add
       presenter.setNextStep();
 
     }else if(view.getId() == R.id.previousActionFab){
+      presenter.addPojoListToFile();
       navigateToPreviousPage();
 
     }else if((view.getId() == R.id.nextActionFab)) {
+      presenter.addPojoListToFile();
       navigateToNextPage();
     }
   }
