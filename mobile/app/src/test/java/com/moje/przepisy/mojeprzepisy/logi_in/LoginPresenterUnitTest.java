@@ -25,7 +25,7 @@ import org.robolectric.shadows.ShadowActivity;
 
 @RunWith(RobolectricTestRunner.class)
 @Config(constants = BuildConfig.class, sdk = 16)
-public class LoginActivityViewUnitTest {
+public class LoginPresenterUnitTest {
   private LoginActivityView loginActivityView;
   private LoginPresenter mockPresenter;
 
@@ -40,7 +40,7 @@ public class LoginActivityViewUnitTest {
   }
 
   @Test
-  public void startRegisteredActivity(){
+  public void onSuccess_shouldStartMainCardsActivityView(){
     mockPresenter.onSuccess(anyInt());
 
     ShadowActivity shadowActivity = shadowOf(loginActivityView);
@@ -49,7 +49,7 @@ public class LoginActivityViewUnitTest {
   }
 
   @Test
-  public void showErrorMessage(){
+  public void onLoginAndPasswordError_shouldShowErrorMessage(){
     mockPresenter.onLoginAndPasswordError();
     TextView errorMessage = (TextView) loginActivityView.findViewById(R.id.errorMessageTextView);
 
