@@ -1,68 +1,46 @@
 package com.moje.przepisy.mojeprzepisy.log_in;
 
-import android.test.ActivityInstrumentationTestCase2;
-import android.test.TouchUtils;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
+import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
+import static android.support.test.espresso.action.ViewActions.typeText;
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.ViewMatchers.withId;
+
+import android.support.test.espresso.matcher.ViewMatchers;
+import android.support.test.rule.ActivityTestRule;
+import android.support.test.runner.AndroidJUnit4;
 import com.moje.przepisy.mojeprzepisy.R;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
-public class LoginActivityViewTest extends ActivityInstrumentationTestCase2<LoginActivityView>{
+@RunWith(AndroidJUnit4.class)
+public class LoginActivityViewTest{
   private static final String EMPTY_STRING = "";
-  private static final String GOOD_LOGIN = "A B C 1 2 3 ENTER";
-  private static final String GOOD_PASSWORD = "A B C 1 2 3 ENTER";
-  TextView errorMessageTextView;
-  Button loginButton;
-  EditText loginEditText;
-  EditText passwordEditText;
-  LoginActivityView loginActivityView;
+  private static final String TESTING_DATA = "test";
 
-  public LoginActivityViewTest(){
-    super(LoginActivityView.class);
-  }
+  @Rule
+  public ActivityTestRule<LoginActivityView> loginActivityViewActivityTestRule =
+      new ActivityTestRule<LoginActivityView>(LoginActivityView.class);
 
-  protected void setUp() throws Exception{
-    super.setUp();
-    loginActivityView = getActivity();
-    errorMessageTextView = (TextView) loginActivityView.findViewById(R.id.errorMessageTextView);
-    loginButton = (Button) loginActivityView.findViewById(R.id.login_action_button);
-    loginEditText = (EditText) loginActivityView.findViewById(R.id.login_editText);
-    passwordEditText = (EditText) loginActivityView.findViewById(R.id.password_editText);
+  @Test
+  public void mainScreen_firstLoads(){
+    onView(withId(R.id.errorMessageTextView)).check(matches(ViewMatchers.withText(EMPTY_STRING)));
+
+    onView(withId(R.id.login_editText)).check(matches(ViewMatchers.withText(EMPTY_STRING)));
+    onView(withId(R.id.login_editText)).check(matches(ViewMatchers.withHint(R.string.your_login)));
+
+    onView(withId(R.id.password_editText)).check(matches(ViewMatchers.withText(EMPTY_STRING)));
+    onView(withId(R.id.password_editText)).check(matches(ViewMatchers.withHint(R.string.your_password)));
   }
 
   @Test
-  public void testPreCondition(){
-    String errorText = errorMessageTextView.getText().toString();
-    assertEquals(EMPTY_STRING,errorText);
+  public void goodDataInEditText(){
+    onView(withId(R.id.login_editText))
+        .perform(typeText(TESTING_DATA)).check(matches(ViewMatchers.withText(TESTING_DATA)));
 
-    String loginFirstText = loginEditText.getText().toString();
-    String loginFirstHint = loginEditText.getHint().toString();
-    assertEquals(EMPTY_STRING,loginFirstText);
-    assertEquals(loginActivityView.getResources().getString(R.string.your_login),loginFirstHint);
-
-    String passwordFirstText = passwordEditText.getText().toString();
-    String passwordFirstHint = passwordEditText.getHint().toString();
-    assertEquals(EMPTY_STRING,passwordFirstText);
-    assertEquals(loginActivityView.getResources().getString(R.string.your_password),passwordFirstHint);
-
-    String buttonText = loginButton.getText().toString();
-    assertEquals(loginActivityView.getResources().getString(R.string.login),buttonText);
-  }
-
-  @Test
-  public void testLoginAndPasswordValue(){
-    TouchUtils.clickView(this,loginEditText);
-    sendKeys(GOOD_LOGIN);
-
-    TouchUtils.clickView(this,passwordEditText);
-    sendKeys(GOOD_PASSWORD);
-
-    String loginInputText = loginEditText.getText().toString();
-    assertEquals("abc123",loginInputText);
-
-    String passwordInputText = passwordEditText.getText().toString();
-    assertEquals("abc123",passwordInputText);
+    onView(withId(R.id.password_editText))
+        .perform(typeText(TESTING_DATA)).check(matches(ViewMatchers.withText(TESTING_DATA)));
   }
 }
 

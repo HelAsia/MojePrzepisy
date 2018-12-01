@@ -98,7 +98,6 @@ public class LicensesAdapter extends RecyclerView.Adapter<LicensesAdapter.ViewHo
       licenseNameTextView.setText(licenseName);
       licenseAuthorTextView.setText(licenseAuthor);
       licenseDescriptionTextView.setText(licenseDescription);
-
     }
   }
 }

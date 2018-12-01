@@ -26,7 +26,6 @@ public class LicensesActivityView extends AppCompatActivity implements LicensesC
 
     setToolbar();
     setRecyclerView(presenter.getLicensesList());
-
   }
 
   @Override

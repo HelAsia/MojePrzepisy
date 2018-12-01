@@ -17,7 +17,6 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import com.google.gson.Gson;
 import com.moje.przepisy.mojeprzepisy.R;
 import com.moje.przepisy.mojeprzepisy.data.model.Ingredient;
 import java.util.List;
@@ -25,7 +24,6 @@ import java.util.List;
 public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.ViewHolder> {
   public Context context;
   private List<Ingredient> ingredientList;
-  private Gson gson = new Gson();
 
   IngredientsAdapter(Context context, List<Ingredient> ingredientList){
     this.context = context;
@@ -124,7 +122,6 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
         public void onNothingSelected(AdapterView<?> adapterView) {
         }
       });
-
     }
 
     void bind(Ingredient ingredient) {

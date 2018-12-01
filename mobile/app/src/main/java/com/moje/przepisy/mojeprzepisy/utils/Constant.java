@@ -16,9 +16,6 @@ public class Constant {
 
  public static final String PREF_COOKIES = "PREF_COOKIES";
  public static final String PREF_SORTED_METHOD = "PREF_SORTED_METHOD";
- public static final String PREF_INGREDIENT = "PREF_INGREDIENT";
- public static final String PREF_STEP = "PREF_STEP";
- public static final String PREF_RECIPE = "PREF_RECIPE";
   public static final String PREF_USER_ID = "PREF_USER_ID";
 }
 

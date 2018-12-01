@@ -139,6 +139,7 @@ public class DisplayAllRecipeElementsActivityView extends AppCompatActivity impl
     Intent intent = new Intent(DisplayAllRecipeElementsActivityView.this, MainCardsActivityView.class);
     intent.putExtra("LOGGED",true);
     startActivity(intent);
+    DisplayAllRecipeElementsActivityView.this.finish();
   }
 
   @Override

@@ -24,7 +24,7 @@ public class AddCookiesInterceptor implements Interceptor {
         .getString(Constant.PREF_COOKIES, new String());
 
       builder.addHeader("Cookie", cookiePreferences);
-      Log.i("AddCookiesInterceptor::intercept(): DEB","Using cookie in request: " + cookiePreferences);
+      Log.i("AddCookiesInterceptor ",":intercept(): DEB Using cookie in request: " + cookiePreferences);
 
     return chain.proceed(builder.build());
   }

@@ -9,7 +9,6 @@ import android.webkit.WebViewClient;
 import com.moje.przepisy.mojeprzepisy.R;
 
 public class WebViewActivity extends AppCompatActivity {
-  private WebView webView;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -20,7 +19,7 @@ public class WebViewActivity extends AppCompatActivity {
 
     Intent i = getIntent();
     String url= i.getStringExtra("url");
-    webView = (WebView) findViewById(R.id.webview);
+    WebView webView = (WebView) findViewById(R.id.webview);
     webView.getSettings().setJavaScriptEnabled(true);
     webView.setWebViewClient(new WebViewClient());
     webView.loadUrl(url);
