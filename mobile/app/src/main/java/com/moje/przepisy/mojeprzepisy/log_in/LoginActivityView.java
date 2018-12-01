@@ -73,9 +73,4 @@ public class LoginActivityView extends AppCompatActivity implements LoginContrac
   public String getPassword() {
     return passwordEditText.getText().toString();
   }
-
-  @Override
-  public void onResume() {
-    super.onResume();
-  }
 }
