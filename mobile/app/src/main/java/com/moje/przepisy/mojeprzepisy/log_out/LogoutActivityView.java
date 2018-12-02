@@ -46,7 +46,7 @@ public class LogoutActivityView extends AppCompatActivity implements LogoutContr
         presenter.validateCredentials();
         break;
       case R.id.logout_button_no:
-        navigateToMainLoggedCardsActivity();
+        presenter.onCancel();
         break;
       default:
         break;
@@ -62,7 +62,7 @@ public class LogoutActivityView extends AppCompatActivity implements LogoutContr
   }
 
   @Override
-  public void navigateToUnloggedMainCardsActivity() {
+  public void navigateToUnLoggedMainCardsActivity() {
     Intent intent = new Intent(LogoutActivityView.this, MainCardsActivityView.class);
     intent.putExtra("LOGGED",false);
     startActivity(intent);
@@ -72,7 +72,5 @@ public class LogoutActivityView extends AppCompatActivity implements LogoutContr
   @Override
   public void showLogoutError(String message) {
     errorMessageTextView.setText(message);
-
-   // getString(R.string.logout_error_message) +
   }
 }

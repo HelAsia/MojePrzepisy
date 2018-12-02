@@ -1,8 +1,6 @@
 package com.moje.przepisy.mojeprzepisy.log_in;
 
 import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
@@ -26,7 +24,7 @@ public class LoginActivityViewTest {
       new ActivityTestRule<LoginActivityView>(LoginActivityView.class);
 
   @Test
-  public void mainScreen_firstLoads() {
+  public void mainScreen_firstLoad() {
     onView(withId(R.id.errorMessageTextView)).check(matches(ViewMatchers.withText(EMPTY_STRING)));
 
     onView(withId(R.id.login_textView)).check(matches(isDisplayed()));

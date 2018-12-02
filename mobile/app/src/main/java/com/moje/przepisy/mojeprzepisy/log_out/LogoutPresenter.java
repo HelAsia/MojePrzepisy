@@ -2,7 +2,8 @@ package com.moje.przepisy.mojeprzepisy.log_out;
 
 import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.user.UserRepository;
 
-public class LogoutPresenter implements LogoutContract.Presenter, UserRepository.OnLogoutFinishedListener {
+public class LogoutPresenter implements LogoutContract.Presenter,
+    UserRepository.OnLogoutFinishedListener {
 
   private UserRepository userRepository;
   private LogoutContract.View logoutView;
@@ -25,6 +26,11 @@ public class LogoutPresenter implements LogoutContract.Presenter, UserRepository
   }
 
   @Override
+  public void onCancel() {
+    logoutView.navigateToMainLoggedCardsActivity();
+  }
+
+  @Override
   public void onLogoutError(String message) {
     if(logoutView != null) {
       logoutView.showLogoutError(message);
@@ -34,7 +40,7 @@ public class LogoutPresenter implements LogoutContract.Presenter, UserRepository
   @Override
   public void onSuccess() {
     if(logoutView != null) {
-      logoutView.navigateToUnloggedMainCardsActivity();
+      logoutView.navigateToUnLoggedMainCardsActivity();
     }
   }
 }

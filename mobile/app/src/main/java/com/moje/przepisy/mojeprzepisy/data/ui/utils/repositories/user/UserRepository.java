@@ -34,8 +34,8 @@ public class UserRepository implements UserRepositoryInterface{
       @Override
       public void onResponse(Call<Message> call, Response<Message> response) {
         Message msg = response.body();
-        Log.i("login.onResponse(): SERVER", "Server return code: " + Integer.toString(msg.status));
-        Log.i("login.onResponse(): SERVER", "Message: " + msg.message);
+        Log.i("login.onResponse()", "Server return code: " + Integer.toString(msg.status));
+        Log.i("login.onResponse()", "Message: " + msg.message);
 
         if (msg.status == 200){
           listener.onSuccess(Integer.parseInt(msg.message));
@@ -46,7 +46,7 @@ public class UserRepository implements UserRepositoryInterface{
 
       @Override
       public void onFailure(Call<Message> call, Throwable t) {
-        Log.i("login.onFailure(): SERWER", t.getMessage());
+        Log.i("login.onFailure()", t.getMessage());
         listener.onLoginAndPasswordError();
       }
     });
@@ -55,13 +55,12 @@ public class UserRepository implements UserRepositoryInterface{
   @Override
   public void logout(final OnLogoutFinishedListener listener) {
     Call<Message> resp = userAPI.logout();
-
     resp.enqueue(new Callback<Message>() {
       @Override
       public void onResponse(Call<Message> call, Response<Message> response) {
         Message msg = response.body();
-        Log.i("logout.onResponse(): SERVER", "Server return code: " + Integer.toString(msg.status));
-        Log.i("logout.onResponse(): SERVER", "Message: " + msg.message);
+        Log.i("logout.onResponse()", "Server return code: " + Integer.toString(msg.status));
+        Log.i("logout.onResponse()", "Message: " + msg.message);
 
         if (msg.status == 200){
           listener.onSuccess();
@@ -72,7 +71,7 @@ public class UserRepository implements UserRepositoryInterface{
 
       @Override
       public void onFailure(Call<Message> call, Throwable t) {
-        Log.i("logout.onFailure(): SERWER", t.getMessage());
+        Log.i("logout.onFailure()", t.getMessage());
         listener.onLogoutError(t.getMessage());
       }
     });
@@ -94,8 +93,8 @@ public class UserRepository implements UserRepositoryInterface{
             public void onResponse(Call<Message> call, Response<Message> response) {
               Message msg = response.body();
 
-              Log.i("register.onResponse(): SERVER", "Server return code: " + Integer.toString(msg.status));
-              Log.i("register.onResponse(): SERVER", "Message: " + msg.message);
+              Log.i("register.onResponse()", "Server return code: " + Integer.toString(msg.status));
+              Log.i("register.onResponse()", "Message: " + msg.message);
 
               if (msg.status == 200){
                 listener.onSuccess(Integer.parseInt(msg.message));
@@ -108,7 +107,7 @@ public class UserRepository implements UserRepositoryInterface{
 
             @Override
             public void onFailure(Call<Message> call, Throwable t) {
-              Log.i("register.onFailure(): SERWER", t.getMessage());
+              Log.i("register.onFailure()", t.getMessage());
               listener.onLoginError();
             }
           });
@@ -125,16 +124,16 @@ public class UserRepository implements UserRepositoryInterface{
       public void onResponse(Call<Message> call, Response<Message> response) {
         Message message = response.body();
         if(message.status == 200){
-          Log.i("editUser.onResponse(): Stars: ", "OK. User data has been edited");
+          Log.i("editUser.onResponse()", "OK. User data has been edited");
           listener.onSuccess();
         }else if(message.status == 404){
-          Log.e("editUser.onResponse(): Stars: ", "NOT OK. User data hasn't been added");
+          Log.e("editUser.onResponse()", "NOT OK. User data hasn't been added");
           listener.onEditAndSendDataError();
         }
       }
       @Override
       public void onFailure(Call<Message> call, Throwable t) {
-        Log.i("editUser.onFailure(): SERWER", t.getMessage());
+        Log.i("editUser.onFailure()", t.getMessage());
         listener.onEditAndSendDataError();
       }
     });
@@ -149,16 +148,16 @@ public class UserRepository implements UserRepositoryInterface{
       public void onResponse(Call<Message> call, Response<Message> response) {
         Message message = response.body();
         if(message.status == 200){
-          Log.i("editPhotoUser.onResponse(): UserPhoto ", "OK. User data has been edited");
+          Log.i("editPhotoUser.onResponse()", "OK. User data has been edited");
           listener.onPhotoSuccess();
         }else if(message.status == 404){
-          Log.e("editPhotoUser.onResponse(): UserPhoto ", "NOT OK. User data hasn't been added");
+          Log.e("editPhotoUser.onResponse()", "NOT OK. User data hasn't been added");
           listener.onEditAndSendPhotoError();
         }
       }
       @Override
       public void onFailure(Call<Message> call, Throwable t) {
-        Log.i("editPhotoUser.onFailure(): SERWER", t.getMessage());
+        Log.i("editPhotoUser.onFailure()", t.getMessage());
         listener.onEditAndSendPhotoError();
       }
     });
@@ -172,7 +171,7 @@ public class UserRepository implements UserRepositoryInterface{
       public void onResponse(Call<User> call, Response<User> response) {
         User user = response.body();
         if(user.getStatus() == 401) {
-          Log.i("checkUser.onResponse(): SERVER", "User: " + user.getLogin());
+          Log.i("checkUser.onResponse()", "User: " + user.getLogin());
           listener.onGetUserError();
         } else {
           listener.setUserValue(user);
@@ -180,7 +179,7 @@ public class UserRepository implements UserRepositoryInterface{
       }
       @Override
       public void onFailure(Call<User> call, Throwable t) {
-        Log.i("checkUser.onFailure(): SERWER", t.getMessage());
+        Log.i("checkUser.onFailure()", t.getMessage());
         listener.onGetUserError();
       }
     });

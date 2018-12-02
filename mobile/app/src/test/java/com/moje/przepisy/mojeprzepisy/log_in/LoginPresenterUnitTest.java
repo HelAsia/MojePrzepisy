@@ -1,9 +1,8 @@
-package com.moje.przepisy.mojeprzepisy.logi_in;
+package com.moje.przepisy.mojeprzepisy.log_in;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.robolectric.Shadows.shadowOf;
 
 import android.content.Intent;
@@ -11,8 +10,6 @@ import android.widget.TextView;
 import com.moje.przepisy.mojeprzepisy.BuildConfig;
 import com.moje.przepisy.mojeprzepisy.R;
 import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.user.UserRepository;
-import com.moje.przepisy.mojeprzepisy.log_in.LoginActivityView;
-import com.moje.przepisy.mojeprzepisy.log_in.LoginPresenter;
 import com.moje.przepisy.mojeprzepisy.ui.MainCardsActivityView;
 import org.junit.Before;
 import org.junit.Test;
