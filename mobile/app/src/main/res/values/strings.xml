@@ -50,6 +50,7 @@
 
   <string name="login_password_error_message">Podany login lub hasło są błędne</string>
   <string name="logout_error_message">Błąd wylogowania</string>
+  <string name="server_connection_error">Błąd połączenia z serwerem!</string>
 
   <string name="logout_question">Czy chcesz się wylogować?</string>
   <string name="yes">TAK</string>

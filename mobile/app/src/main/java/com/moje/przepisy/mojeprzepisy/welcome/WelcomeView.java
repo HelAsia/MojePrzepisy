@@ -60,7 +60,7 @@ public class WelcomeView extends AppCompatActivity implements WelcomeContract.Vi
   @Override
   public void errorMessage() {
     TextView errorTextView = (TextView) findViewById(R.id.errorTextView);
-    errorTextView.setText("Błąd połączenia z serwerem!");
     errorTextView.setVisibility(View.VISIBLE);
+    errorTextView.setText(R.string.server_connection_error);
   }
 }

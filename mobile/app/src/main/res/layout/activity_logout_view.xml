@@ -60,7 +60,8 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_below="@+id/logout_button_no"
-        android:text=""/>
+        android:text=""
+        android:visibility="gone"/>
 
     </RelativeLayout>
   </ScrollView>

@@ -48,6 +48,7 @@ public class LoginActivityView extends AppCompatActivity implements LoginContrac
 
   @Override
   public void showLoginAndPasswordError() {
+    errorMessageTextView.setVisibility(View.VISIBLE);
     errorMessageTextView.setText(getString(R.string.login_password_error_message));
   }
 
