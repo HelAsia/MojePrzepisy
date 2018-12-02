@@ -2,8 +2,11 @@ package com.moje.przepisy.mojeprzepisy.welcome;
 
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.view.View;
+import com.moje.przepisy.mojeprzepisy.R;
 import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.welcome.WelcomeRepository;
 import com.moje.przepisy.mojeprzepisy.utils.Constant;
+import okhttp3.WebSocketListener;
 
 public class WelcomePresenter implements WelcomeContract.Presenter, WelcomeRepository.OnLoggedListener {
   private WelcomeRepository welcomeRepository;
@@ -23,7 +26,8 @@ public class WelcomePresenter implements WelcomeContract.Presenter, WelcomeRepos
 
   @Override
   public void onError() {
-    welcomeView.showErrorMessage();
+    welcomeView.getErrorTextView().setVisibility(View.VISIBLE);
+    welcomeView.getErrorTextView().setText(R.string.server_connection_error);
   }
 
   @Override

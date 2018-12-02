@@ -70,8 +70,7 @@ public class LogoutActivityView extends AppCompatActivity implements LogoutContr
   }
 
   @Override
-  public void showLogoutError(String message) {
-    errorMessageTextView.setVisibility(View.VISIBLE);
-    errorMessageTextView.setText(message);
+  public TextView getErrorMessageTextView() {
+    return errorMessageTextView;
   }
 }

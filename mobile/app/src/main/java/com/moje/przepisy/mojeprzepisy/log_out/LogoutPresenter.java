@@ -1,5 +1,6 @@
 package com.moje.przepisy.mojeprzepisy.log_out;
 
+import android.view.View;
 import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.user.UserRepository;
 
 public class LogoutPresenter implements LogoutContract.Presenter,
@@ -33,7 +34,8 @@ public class LogoutPresenter implements LogoutContract.Presenter,
   @Override
   public void onLogoutError(String message) {
     if(logoutView != null) {
-      logoutView.showLogoutError(message);
+      logoutView.getErrorMessageTextView().setVisibility(View.VISIBLE);
+      logoutView.getErrorMessageTextView().setText(message);
     }
   }
 

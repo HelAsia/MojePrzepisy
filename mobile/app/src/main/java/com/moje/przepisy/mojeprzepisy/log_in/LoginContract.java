@@ -1,18 +1,22 @@
 package com.moje.przepisy.mojeprzepisy.log_in;
 
 import android.content.Context;
+import android.widget.EditText;
+import android.widget.TextView;
 
 public interface LoginContract {
   interface View {
     void navigateToMainRegisteredActivity();
-    String getLogin();
-    String getPassword();
-    void showLoginAndPasswordError();
+    TextView getErrorMessageTextView();
+    EditText getLoginEditText();
+    EditText getPasswordEditText();
     Context getContext();
   }
 
   interface Presenter {
-    void validateCredentials(String login, String password);
+    void validateCredentials();
     void onDestroy();
+    String getLogin();
+    String getPassword();
   }
 }

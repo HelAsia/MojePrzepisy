@@ -1,10 +1,12 @@
 package com.moje.przepisy.mojeprzepisy.log_out;
 
+import android.widget.TextView;
+
 public interface LogoutContract {
   interface View {
     void navigateToMainLoggedCardsActivity();
     void navigateToUnLoggedMainCardsActivity();
-    void showLogoutError(String message);
+    TextView getErrorMessageTextView();
   }
 
   interface Presenter {

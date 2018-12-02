@@ -7,12 +7,15 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.welcome.WelcomeRepository;
 import com.moje.przepisy.mojeprzepisy.home_page.HomePageView;
 import com.moje.przepisy.mojeprzepisy.R;
 import com.moje.przepisy.mojeprzepisy.ui.MainCardsActivityView;
 
 public class WelcomeActivityView extends AppCompatActivity implements WelcomeContract.View {
+  @BindView(R.id.errorTextView) TextView errorTextView;
   private final int SPLASH_DISPLAY_LENGTH = 1500;
   private WelcomeContract.Presenter presenter;
   Context context;
@@ -21,6 +24,8 @@ public class WelcomeActivityView extends AppCompatActivity implements WelcomeCon
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_welcome_page);
+
+    ButterKnife.bind(this);
     context = getApplicationContext();
 
     new Handler().postDelayed(new Runnable() {
@@ -54,14 +59,12 @@ public class WelcomeActivityView extends AppCompatActivity implements WelcomeCon
   }
 
   @Override
-  public Context getContext() {
-    return context;
+  public TextView getErrorTextView() {
+    return errorTextView;
   }
 
   @Override
-  public void showErrorMessage() {
-    TextView errorTextView = (TextView) findViewById(R.id.errorTextView);
-    errorTextView.setVisibility(View.VISIBLE);
-    errorTextView.setText(R.string.server_connection_error);
+  public Context getContext() {
+    return context;
   }
 }

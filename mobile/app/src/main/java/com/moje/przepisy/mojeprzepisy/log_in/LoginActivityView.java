@@ -43,13 +43,7 @@ public class LoginActivityView extends AppCompatActivity implements LoginContrac
 
   @Override
   public void onClick(View view) {
-    presenter.validateCredentials(getLogin(),getPassword());
-  }
-
-  @Override
-  public void showLoginAndPasswordError() {
-    errorMessageTextView.setVisibility(View.VISIBLE);
-    errorMessageTextView.setText(getString(R.string.login_password_error_message));
+    presenter.validateCredentials();
   }
 
   @Override
@@ -66,12 +60,17 @@ public class LoginActivityView extends AppCompatActivity implements LoginContrac
   }
 
   @Override
-  public String getLogin() {
-    return loginEditText.getText().toString();
+  public TextView getErrorMessageTextView() {
+    return errorMessageTextView;
   }
 
   @Override
-  public String getPassword() {
-    return passwordEditText.getText().toString();
+  public EditText getLoginEditText() {
+    return loginEditText;
+  }
+
+  @Override
+  public EditText getPasswordEditText() {
+    return passwordEditText;
   }
 }

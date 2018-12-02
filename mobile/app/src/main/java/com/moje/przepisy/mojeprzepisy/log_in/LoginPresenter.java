@@ -2,6 +2,8 @@ package com.moje.przepisy.mojeprzepisy.log_in;
 
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.view.View;
+import com.moje.przepisy.mojeprzepisy.R;
 import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.user.UserRepository;
 import com.moje.przepisy.mojeprzepisy.utils.Constant;
 
@@ -16,9 +18,9 @@ public class LoginPresenter implements LoginContract.Presenter, UserRepository.O
   }
 
   @Override
-  public void validateCredentials(final String login, String password) {
+  public void validateCredentials() {
     if(loginView != null) {
-      userRepository.login(login, password, this);
+      userRepository.login(getLogin(), getPassword(), this);
     }
   }
 
@@ -30,7 +32,10 @@ public class LoginPresenter implements LoginContract.Presenter, UserRepository.O
   @Override
   public void onLoginAndPasswordError() {
     if(loginView != null) {
-      loginView.showLoginAndPasswordError();
+      loginView.getErrorMessageTextView().setVisibility(View.VISIBLE);
+      loginView.getErrorMessageTextView().setText(
+          loginView.getContext().getResources()
+              .getString(R.string.login_password_error_message));
     }
   }
 
@@ -46,5 +51,15 @@ public class LoginPresenter implements LoginContract.Presenter, UserRepository.O
     SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(loginView.getContext()).edit();
     editor.putInt(Constant.PREF_USER_ID, userId).apply();
     editor.commit();
+  }
+
+  @Override
+  public String getLogin() {
+    return loginView.getLoginEditText().getText().toString();
+  }
+
+  @Override
+  public String getPassword() {
+    return loginView.getPasswordEditText().getText().toString();
   }
 }
