@@ -2,6 +2,7 @@ package com.moje.przepisy.mojeprzepisy.welcome;
 
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.welcome.WelcomeRepository;
 import com.moje.przepisy.mojeprzepisy.utils.Constant;
 
 public class WelcomePresenter implements WelcomeContract.Presenter, WelcomeRepository.OnLoggedListener {

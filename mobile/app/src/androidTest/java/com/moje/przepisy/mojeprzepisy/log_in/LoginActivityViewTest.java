@@ -4,9 +4,11 @@ import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 
 import android.support.test.espresso.matcher.ViewMatchers;
+import android.support.test.espresso.matcher.ViewMatchers.Visibility;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import com.moje.przepisy.mojeprzepisy.R;
@@ -37,6 +39,7 @@ public class LoginActivityViewTest {
         .check(matches(ViewMatchers.withHint(R.string.your_password)));
 
     onView(withId(R.id.login_action_button)).check(matches(isDisplayed()));
+    onView(withId(R.id.errorMessageTextView)).check(matches(withEffectiveVisibility(Visibility.GONE)));
   }
 
   @Test

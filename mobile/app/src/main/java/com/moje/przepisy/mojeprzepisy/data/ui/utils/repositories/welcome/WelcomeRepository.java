@@ -1,8 +1,7 @@
-package com.moje.przepisy.mojeprzepisy.welcome;
+package com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.welcome;
 
 import android.content.Context;
 import android.util.Log;
-import com.moje.przepisy.mojeprzepisy.data.model.Message;
 import com.moje.przepisy.mojeprzepisy.data.model.User;
 import com.moje.przepisy.mojeprzepisy.data.network.RetrofitSingleton;
 import com.moje.przepisy.mojeprzepisy.data.network.UserAPI;

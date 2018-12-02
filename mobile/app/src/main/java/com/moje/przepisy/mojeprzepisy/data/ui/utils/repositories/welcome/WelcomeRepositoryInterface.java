@@ -1,4 +1,4 @@
-package com.moje.przepisy.mojeprzepisy.welcome;
+package com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.welcome;
 
 public interface WelcomeRepositoryInterface {
 

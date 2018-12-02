@@ -23,7 +23,7 @@
     android:largeHeap="true"
     android:supportsRtl="true"
     android:theme="@style/MyAppTheme">
-    <activity android:name=".welcome.WelcomeView">
+    <activity android:name=".welcome.WelcomeActivityView">
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
 
