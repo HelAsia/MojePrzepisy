@@ -8,7 +8,7 @@ public interface WelcomeRepositoryInterface {
 
     void onNotLogged();
 
-    void showErrorMessage();
+    void onError();
   }
   void checkUser(OnLoggedListener loggedListener);
 

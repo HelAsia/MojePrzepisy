@@ -37,7 +37,7 @@ public class WelcomeRepository implements WelcomeRepositoryInterface {
       @Override
       public void onFailure(Call<User> call, Throwable t) {
         Log.i("checkUser.onFailure()", t.getMessage());
-        loggedListener.showErrorMessage();
+        loggedListener.onError();
       }
     });
   }

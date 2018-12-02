@@ -7,7 +7,7 @@ public interface WelcomeContract {
   interface View {
     void navigateToMainRegisteredActivity();
     void navigateToHomePage();
-    void errorMessage();
+    void showErrorMessage();
     Context getContext();
   }
 

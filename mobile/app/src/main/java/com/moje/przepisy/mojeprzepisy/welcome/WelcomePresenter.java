@@ -22,8 +22,8 @@ public class WelcomePresenter implements WelcomeContract.Presenter, WelcomeRepos
   }
 
   @Override
-  public void showErrorMessage() {
-    welcomeView.errorMessage();
+  public void onError() {
+    welcomeView.showErrorMessage();
   }
 
   @Override
@@ -48,8 +48,8 @@ public class WelcomePresenter implements WelcomeContract.Presenter, WelcomeRepos
   }
 
   public void deleteUserIdFromPreferences(){
-    SharedPreferences.Editor ingredientsEditor = PreferenceManager.getDefaultSharedPreferences(welcomeView.getContext()).edit();
-    ingredientsEditor.remove(Constant.PREF_USER_ID);
-    ingredientsEditor.apply();
+    SharedPreferences.Editor userEditor = PreferenceManager.getDefaultSharedPreferences(welcomeView.getContext()).edit();
+    userEditor.remove(Constant.PREF_USER_ID);
+    userEditor.apply();
   }
 }

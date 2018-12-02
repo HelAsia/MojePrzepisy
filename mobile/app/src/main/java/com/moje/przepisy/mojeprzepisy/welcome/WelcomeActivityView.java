@@ -59,7 +59,7 @@ public class WelcomeActivityView extends AppCompatActivity implements WelcomeCon
   }
 
   @Override
-  public void errorMessage() {
+  public void showErrorMessage() {
     TextView errorTextView = (TextView) findViewById(R.id.errorTextView);
     errorTextView.setVisibility(View.VISIBLE);
     errorTextView.setText(R.string.server_connection_error);
