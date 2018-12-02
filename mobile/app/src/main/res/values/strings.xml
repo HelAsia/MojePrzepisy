@@ -223,10 +223,12 @@
     planszowe oraz rozwiązywać zagadki logiczne (Escape room\'y). </string>
 
   <string name="app_version_text_ang">Application version: 1.1 </string>
-
   <string name="app_version_text_pl">Wersja aplikacji: 1.1 </string>
-
   <string name="app_error_text_ang">If You found error in my application, I would be grateful for the information on the email: xxx </string>
-
   <string name="app_error_text_pl">Jeśli udało Ci się znaleźć błąd w mojej aplikacji, będę wdzięczna za informację na e-maila: xxx </string>
+
+  <string name="user_profile_login_error">Podany login istnieje już w bazie!</string>
+  <string name="user_profile_password_error">Podane hasła nie są identyczne!</string>
+  <string name="user_profile_validate_password_error">Hasło musi zawierać małą literę, dużą literę i znak specjalny oraz musi mieć przynajmniej 8 znaków!</string>
+  <string name="user_profile_validate_email_error">Podany email nie jest poprawny!</string>
 </resources>

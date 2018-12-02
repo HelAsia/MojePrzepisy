@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+import com.moje.przepisy.mojeprzepisy.R;
 import com.moje.przepisy.mojeprzepisy.data.model.User;
 import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.user.UserRepository;
 import com.moje.przepisy.mojeprzepisy.utils.BitmapConverter;
@@ -20,7 +21,7 @@ public class UserProfilePresenter implements UserProfileContract.Presenter, User
     UserRepository.OnEditUserFinishedListener, UserRepository.OnEditPhotoUserFinishedListener {
   private UserProfileContract.View userView;
   private UserRepository userRepository;
-  BitmapConverter converter = new BitmapConverter();
+  private BitmapConverter converter = new BitmapConverter();
 
   public UserProfilePresenter(UserProfileContract.View userView, UserRepository userRepository) {
     this.userView = userView;
@@ -58,23 +59,27 @@ public class UserProfilePresenter implements UserProfileContract.Presenter, User
 
   @Override
   public void showLoginError() {
-    userView.getErrorMessageTextView().setText("Podany login istnieje już w bazie!");
+    userView.getErrorMessageTextView().setText(userView.getContext().getResources()
+        .getString(R.string.user_profile_login_error));
 
   }
 
   @Override
   public void showPasswordError() {
-    userView.getErrorMessageTextView().setText("Podane hasła nie są identyczne");
+    userView.getErrorMessageTextView().setText(userView.getContext().getResources()
+        .getString(R.string.user_profile_password_error));
   }
 
   @Override
   public void showValidatePasswordError() {
-    userView.getErrorMessageTextView().setText("Hasło musi zawierać małą literę, dużą literę i znak specjalny oraz musi mieć przynajmniej 8 znaków!");
+    userView.getErrorMessageTextView().setText(userView.getContext().getResources()
+        .getString(R.string.user_profile_validate_password_error));
   }
 
   @Override
   public void showValidateEmailError() {
-    userView.getErrorMessageTextView().setText("Podany email nie jest poprawny");
+    userView.getErrorMessageTextView().setText(userView.getContext().getResources()
+        .getString(R.string.user_profile_validate_email_error));
   }
 
   @Override
