@@ -54,37 +54,9 @@ public class TimerActivityView extends AppCompatActivity implements TimerContrac
 
   @Override
   public void onClick(View view) {
-      if(view.getId() == R.id.playImageViewFirstTimer){
-        if(pauseImageViewFirstTimer.isEnabled()&&stopImageViewFirstTimer.isEnabled()){
-          presenter.startFirstTimer();
-        }else{
-          presenter.restartFirstTimer();
-        }
-      }else if(view.getId() == R.id.pauseImageViewFirstTimer){
-        presenter.pauseFirstTimer();
-      }else if(view.getId() == R.id.stopImageViewFirstTimer){
-        presenter.stopFirstTimer();
-      }else if(view.getId() == R.id.playImageViewSecondTimer){
-        if(pauseImageViewSecondTimer.isEnabled()&& stopImageViewSecondTimer.isEnabled()){
-          presenter.startSecondTimer();
-        }else{
-          presenter.restartSecondTimer();
-        }
-      }else if(view.getId() == R.id.pauseImageViewSecondTimer){
-        presenter.pauseSecondTimer();
-      }else if(view.getId() == R.id.stopImageViewSecondTimer){
-        presenter.stopSecondTimer();
-      }else if(view.getId() == R.id.playImageViewThirdTimer){
-        if(pauseImageViewThirdTimer.isEnabled()&& stopImageViewThirdTimer.isEnabled()){
-          presenter.startThirdTimer();
-        }else{
-          presenter.restartThirdTimer();
-        }
-      }else if(view.getId() == R.id.pauseImageViewThirdTimer){
-        presenter.pauseThirdTimer();
-      }else if(view.getId() == R.id.stopImageViewThirdTimer){
-        presenter.stopThirdTimer();
-      }
+      setFirstTimerActions(view);
+      setSecondTimerActions(view);
+      setThirdTimerActions(view);
   }
 
   @Override
@@ -105,6 +77,53 @@ public class TimerActivityView extends AppCompatActivity implements TimerContrac
     playImageViewThirdTimer.setOnClickListener(this);
     pauseImageViewThirdTimer.setOnClickListener(this);
     stopImageViewThirdTimer.setOnClickListener(this);
+  }
+
+  @Override
+  public void setFirstTimerActions(View view){
+    if(view.getId() == R.id.playImageViewFirstTimer){
+      if(pauseImageViewFirstTimer.isEnabled()&& stopImageViewFirstTimer.isEnabled()){
+        presenter.startFirstTimer();
+      }else{
+        presenter.restartFirstTimer();
+      }
+    }else if(view.getId() == R.id.pauseImageViewFirstTimer){
+      presenter.pauseFirstTimer();
+    }else if(view.getId() == R.id.stopImageViewFirstTimer){
+      presenter.stopFirstTimer();
+
+    }
+  }
+
+  @Override
+  public void setSecondTimerActions(View view) {
+    if(view.getId() == R.id.playImageViewSecondTimer){
+      if(pauseImageViewSecondTimer.isEnabled()&& stopImageViewSecondTimer.isEnabled()){
+        presenter.startSecondTimer();
+      }else{
+        presenter.restartSecondTimer();
+      }
+    }else if(view.getId() == R.id.pauseImageViewSecondTimer){
+      presenter.pauseSecondTimer();
+    }else if(view.getId() == R.id.stopImageViewSecondTimer){
+      presenter.stopSecondTimer();
+
+    }
+  }
+
+  @Override
+  public void setThirdTimerActions(View view) {
+    if(view.getId() == R.id.playImageViewThirdTimer){
+      if(pauseImageViewThirdTimer.isEnabled()&& stopImageViewThirdTimer.isEnabled()){
+        presenter.startThirdTimer();
+      }else{
+        presenter.restartThirdTimer();
+      }
+    }else if(view.getId() == R.id.pauseImageViewThirdTimer){
+      presenter.pauseThirdTimer();
+    }else if(view.getId() == R.id.stopImageViewThirdTimer){
+      presenter.stopThirdTimer();
+    }
   }
 
   @Override

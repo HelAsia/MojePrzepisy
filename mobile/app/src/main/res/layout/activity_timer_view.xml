@@ -34,28 +34,17 @@
 
     <RelativeLayout
       android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:layout_below="@+id/toolbar_timer"
+      android:layout_height="wrap_content"
       android:paddingTop="@dimen/activity_vertical_margin"
       android:paddingBottom="@dimen/activity_vertical_margin"
       android:paddingLeft="@dimen/activity_horizontal_margin"
       android:paddingRight="@dimen/activity_horizontal_margin">
 
-      <TextView
-        android:id="@+id/timerOneNameTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/primary_text"
-
-        android:layout_centerHorizontal="true"
-        android:text="Timer 1"/>
-
       <TableRow
         android:id="@+id/timerOneRow"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/rounded_corners_for_timer"
-        android:layout_below="@+id/timerOneNameTextView">
+        android:background="@color/white">
         <TextView
           android:id="@+id/timerOneTextView"
           android:layout_width="wrap_content"
@@ -85,21 +74,12 @@
           app:srcCompat="@mipmap/ic_stop"/>
       </TableRow>
 
-      <TextView
-        android:id="@+id/timerTwoNameTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/primary_text"
-        android:layout_below="@+id/timerOneRow"
-        android:layout_centerHorizontal="true"
-        android:text="Timer 2"/>
-
       <TableRow
         android:id="@+id/timerTwoRow"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/rounded_corners_for_timer"
-        android:layout_below="@+id/timerTwoNameTextView">
+        android:background="@color/white"
+        android:layout_below="@+id/timerOneRow">
         <TextView
           android:id="@+id/timerTwoTextView"
           android:layout_width="wrap_content"
@@ -128,21 +108,12 @@
           app:srcCompat="@mipmap/ic_stop"/>
       </TableRow>
 
-      <TextView
-        android:id="@+id/timerThreeNameTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/primary_text"
-        android:layout_below="@+id/timerTwoRow"
-        android:layout_centerHorizontal="true"
-        android:text="Timer 3"/>
-
       <TableRow
         android:id="@+id/timerThreeRow"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/rounded_corners_for_timer"
-        android:layout_below="@+id/timerThreeNameTextView">
+        android:background="@color/white"
+        android:layout_below="@+id/timerTwoRow">
         <TextView
           android:id="@+id/timerThreeTextView"
           android:layout_width="wrap_content"
