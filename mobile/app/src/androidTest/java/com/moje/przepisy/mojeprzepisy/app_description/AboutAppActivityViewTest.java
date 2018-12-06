@@ -1,6 +1,7 @@
 package com.moje.przepisy.mojeprzepisy.app_description;
 
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
@@ -113,5 +114,50 @@ public class AboutAppActivityViewTest {
     onView(withId(R.id.app_error_text_ang_my_card_view_layout)).
         check(matches(withEffectiveVisibility(Visibility.GONE)));
   }
+
+  @Test
+  public void appDescriptionTextChangeVisibility(){
+    onView(withId(R.id.app_description_title_my_card_view_layout)).
+        perform(click());
+    onView(withId(R.id.app_description_text_pl_my_card_view_layout)).
+        check(matches(withEffectiveVisibility(Visibility.VISIBLE)));
+
+    onView(withId(R.id.app_description_text_ang_my_card_view_layout)).
+        check(matches(withEffectiveVisibility(Visibility.VISIBLE)));
+  }
+
+  @Test
+  public void appAuthorTextChangeVisibility(){
+    onView(withId(R.id.app_author_title_my_card_view_layout)).
+        perform(click());
+    onView(withId(R.id.app_author_text_pl_my_card_view_layout)).
+        check(matches(withEffectiveVisibility(Visibility.VISIBLE)));
+
+    onView(withId(R.id.app_author_text_ang_my_card_view_layout)).
+        check(matches(withEffectiveVisibility(Visibility.VISIBLE)));
+  }
+
+  @Test
+  public void appVersionTextChangeVisibility(){
+    onView(withId(R.id.app_version_title_my_card_view_layout)).
+        perform(click());
+    onView(withId(R.id.app_version_text_pl_my_card_view_layout)).
+        check(matches(withEffectiveVisibility(Visibility.VISIBLE)));
+
+    onView(withId(R.id.app_version_text_ang_my_card_view_layout)).
+        check(matches(withEffectiveVisibility(Visibility.VISIBLE)));
+  }
+
+  @Test
+  public void appErrorTextChangeVisibility(){
+    onView(withId(R.id.app_error_title_my_card_view_layout)).
+        perform(click());
+    onView(withId(R.id.app_error_text_pl_my_card_view_layout)).
+        check(matches(withEffectiveVisibility(Visibility.VISIBLE)));
+
+    onView(withId(R.id.app_error_text_ang_my_card_view_layout)).
+        check(matches(withEffectiveVisibility(Visibility.VISIBLE)));
+  }
+
 
 }
