@@ -17,11 +17,13 @@ import com.moje.przepisy.mojeprzepisy.addRecipe.addSteps.AddStepsActivity;
 import com.moje.przepisy.mojeprzepisy.data.model.Ingredient;
 import java.util.List;
 
-public class AddIngredientsActivity extends AppCompatActivity implements AddIngredientsContract.View,
-    View.OnClickListener {
+public class AddIngredientsActivity extends AppCompatActivity implements
+        AddIngredientsContract.View {
   @BindView(R.id.addIngredientFab) FloatingActionButton addIngredientFab;
   @BindView(R.id.previousActionFab) FloatingActionButton previousActionFab;
   @BindView(R.id.nextActionFab) FloatingActionButton nextActionFab;
+  @BindView(R.id.addIngredientsRecyclerView) RecyclerView addIngredientsRecyclerView;
+  @BindView(R.id.toolbar_whole_recipe) Toolbar toolbarRecipe;
   private AddIngredientsContract.Presenter presenter;
   Context context;
 
@@ -42,16 +44,21 @@ public class AddIngredientsActivity extends AppCompatActivity implements AddIngr
   @Override
   public void setRecyclerView(List<Ingredient> ingredientList) {
     AddIngredientsAdapter adapter = new AddIngredientsAdapter(this, ingredientList);
-    RecyclerView recyclerView = (RecyclerView) findViewById(R.id.addIngredientsRecyclerView);
-    recyclerView.setAdapter(adapter);
-    recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    addIngredientsRecyclerView.setAdapter(adapter);
+    addIngredientsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
   }
 
   @Override
   public void setListeners() {
-    addIngredientFab.setOnClickListener(this);
-    previousActionFab.setOnClickListener(this);
-    nextActionFab.setOnClickListener(this);
+    addIngredientFab.setOnClickListener(v -> presenter.setNextStep());
+    previousActionFab.setOnClickListener(v -> {
+      presenter.addPojoListToFile();
+      navigateToPreviousPage();
+    });
+    nextActionFab.setOnClickListener(v -> {
+      presenter.addPojoListToFile();
+      navigateToNextPage();
+    });
   }
 
   @Override
@@ -64,25 +71,9 @@ public class AddIngredientsActivity extends AppCompatActivity implements AddIngr
     return ingredientList;
   }
 
-  @Override
-  public void onClick(View view){
-    if(view.getId() == R.id.addIngredientFab){
-      presenter.setNextStep();
-
-    }else if(view.getId() == R.id.previousActionFab){
-      presenter.addPojoListToFile();
-      navigateToPreviousPage();
-
-    }else if((view.getId() == R.id.nextActionFab)) {
-      presenter.addPojoListToFile();
-      navigateToNextPage();
-    }
-  }
-
   public void setToolbar() {
-    Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_whole_recipe);
-    toolbar.setSubtitle(R.string.add_recipe_title_step_two);
-    setSupportActionBar(toolbar);
+    toolbarRecipe.setSubtitle(R.string.add_recipe_title_step_two);
+    setSupportActionBar(toolbarRecipe);
   }
 
   public void navigateToPreviousPage(){

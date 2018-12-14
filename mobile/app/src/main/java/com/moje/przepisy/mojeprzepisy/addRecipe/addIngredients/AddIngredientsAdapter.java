@@ -63,13 +63,10 @@ public class AddIngredientsAdapter extends RecyclerView.Adapter<AddIngredientsAd
     ViewHolder(View v) {
       super(v);
       ButterKnife.bind(this, v);
-      deleteImageView.setOnClickListener(new OnClickListener() {
-        @Override
-        public void onClick(View view) {
+      deleteImageView.setOnClickListener(it -> {
           ingredientList.remove(getAdapterPosition());
           notifyItemRemoved(getAdapterPosition());
           ((AddIngredientsActivity)context).setIngredientList(ingredientList);
-        }
       });
 
       ingredientQuantityEditText.addTextChangedListener(new TextWatcher() {
@@ -129,8 +126,8 @@ public class AddIngredientsAdapter extends RecyclerView.Adapter<AddIngredientsAd
       String ingredientUnit = ingredient.getIngredientUnit();
       String ingredientName = ingredient.getIngredientName();
 
-      ArrayAdapter myAdap = (ArrayAdapter)  ingredientUnitSpinner.getAdapter();
-      int ingredientUnitSpinnerPosition = myAdap.getPosition(ingredientUnit);
+      ArrayAdapter myAdapter = (ArrayAdapter)  ingredientUnitSpinner.getAdapter();
+      int ingredientUnitSpinnerPosition = myAdapter.getPosition(ingredientUnit);
       ingredientQuantityEditText.setText(Integer.toString(ingredientQuantity));
       ingredientUnitSpinner.setSelection(ingredientUnitSpinnerPosition);
       ingredientNameEditText.setText(ingredientName);
