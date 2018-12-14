@@ -31,7 +31,7 @@ public class TimeSetDialog {
     minutePicker.setMaxValue(59);
     minutePicker.setWrapSelectorWheel(true);
 
-    Button dialogButton = (Button) dialog.findViewById(R.id.set_time_button);
+    Button dialogButton = dialog.findViewById(R.id.set_time_button);
     dialogButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
