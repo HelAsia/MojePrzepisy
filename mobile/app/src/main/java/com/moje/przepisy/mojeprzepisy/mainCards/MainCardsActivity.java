@@ -19,6 +19,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 import butterknife.BindView;
+import butterknife.ButterKnife;
+
 import com.moje.przepisy.mojeprzepisy.R;
 import com.moje.przepisy.mojeprzepisy.addRecipe.addMainInfo.AddRecipeActivity;
 import com.moje.przepisy.mojeprzepisy.aboutApplication.AboutApplicationActivity;
@@ -51,6 +53,7 @@ public class MainCardsActivity extends AppCompatActivity implements
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main_cards);
+    ButterKnife.bind(this);
     context = getApplicationContext();
 
     presenter = new MainCardsPresenter(this, new OperationsOnCardRepository(context), new RecipeRepository(context));
