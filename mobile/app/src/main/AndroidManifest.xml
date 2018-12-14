@@ -23,44 +23,44 @@
     android:largeHeap="true"
     android:supportsRtl="true"
     android:theme="@style/MyAppTheme">
-    <activity android:name=".welcome.WelcomeActivityView">
+    <activity android:name=".welcome.WelcomeActivity">
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
-
+        <action android:name="android.intent.action.VIEW"/>
         <category android:name="android.intent.category.LAUNCHER"/>
       </intent-filter>
     </activity>
-    <activity android:name=".home_page.HomePageView">
+    <activity android:name=".homePage.HomePageView">
     </activity>
-    <activity android:name=".register.RegisterActivityView">
+    <activity android:name=".register.RegisterActivity">
     </activity>
-    <activity android:name=".log_in.LoginActivityView">
+    <activity android:name=".logIn.LogInActivity">
     </activity>
-    <activity android:name=".ui.MainCardsActivityView">
+    <activity android:name=".mainCards.MainCardsActivity">
     </activity>
-    <activity android:name=".log_out.LogoutActivityView">
+    <activity android:name=".logOut.LogOutActivity">
     </activity>
-    <activity android:name=".add_recipe.add_recipe.add_main_recipe_page.AddRecipeActivityView">
+    <activity android:name=".addRecipe.addMainInfo.AddRecipeActivity">
     </activity>
-    <activity android:name=".add_recipe.add_recipe.add_ingredients.AddIngredientsActivityView">
+    <activity android:name=".addRecipe.addIngredients.AddIngredientsActivity">
     </activity>
-    <activity android:name=".add_recipe.add_recipe.add_steps.AddStepsActivityView">
+    <activity android:name=".addRecipe.addSteps.AddStepsActivity">
     </activity>
-    <activity android:name=".add_recipe.add_recipe.display_all_recipe_elements.DisplayAllRecipeElementsActivityView">
+    <activity android:name=".addRecipe.displayRecipe.DisplayRecipeActivity">
     </activity>
-    <activity android:name=".timer.TimerActivityView">
+    <activity android:name=".timer.TimerActivity">
     </activity>
-    <activity android:name=".category_search.CategorySearchActivity">
+    <activity android:name=".categorySearch.CategorySearchActivity">
     </activity>
-    <activity android:name=".licenses.LicensesActivityView">
+    <activity android:name=".licenses.LicensesActivity">
     </activity>
-    <activity android:name=".recipe_details.main_recipe_details.MainDetailsTabActivityView">
+    <activity android:name=".recipeDetails.recipeDisplay.MainDetailsTabActivity">
     </activity>
-    <activity android:name=".user_profile.UserProfileActivityView">
+    <activity android:name=".userProfile.UserProfileActivity">
     </activity>
     <activity android:name=".licenses.WebViewActivity">
     </activity>
-    <activity android:name=".app_description.AboutAppActivityView">
+    <activity android:name=".aboutApplication.AboutApplicationActivity">
     </activity>
   </application>
 

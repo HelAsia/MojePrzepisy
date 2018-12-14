@@ -1,7 +1,7 @@
 package com.moje.przepisy.mojeprzepisy.data.model;
 
 public class Step {
-  private int stepId;
+  private int id;
   private int recipeId;
   private int userId;
   private String photo;
@@ -38,9 +38,9 @@ public class Step {
     this.stepDescription = stepDescription;
   }
 
-  public Step(int stepId, int recipeId, int userId, int photoNumber, int stepNumber,
-      String stepDescription) {
-    this.stepId = stepId;
+  public Step(int id, int recipeId, int userId, int photoNumber, int stepNumber,
+              String stepDescription) {
+    this.id = id;
     this.recipeId = recipeId;
     this.userId = userId;
     this.photoNumber = photoNumber;
@@ -54,8 +54,8 @@ public class Step {
     this.stepDescription = stepDescription;
   }
 
-  public int getStepId() {
-    return stepId;
+  public int getId() {
+    return id;
   }
 
   public int getRecipeId() {
@@ -74,8 +74,8 @@ public class Step {
     return stepDescription;
   }
 
-  public void setStepId(int stepId) {
-    this.stepId = stepId;
+  public void setId(int id) {
+    this.id = id;
   }
 
   public void setRecipeId(int recipeId) {

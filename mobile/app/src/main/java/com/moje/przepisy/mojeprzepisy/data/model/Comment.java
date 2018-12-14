@@ -1,7 +1,7 @@
 package com.moje.przepisy.mojeprzepisy.data.model;
 
 public class Comment {
-  private int commentId;
+  private int id;
   private int recipeId;
   private int userId;
   private String comment;
@@ -23,9 +23,9 @@ public class Comment {
     this.comment = comment;
   }
 
-  public Comment(int commentId, int recipeId, int userId, String comment, String authorName,
-      String createdDate) {
-    this.commentId = commentId;
+  public Comment(int id, int recipeId, int userId, String comment, String authorName,
+                 String createdDate) {
+    this.id = id;
     this.recipeId = recipeId;
     this.userId = userId;
     this.comment = comment;
@@ -33,8 +33,8 @@ public class Comment {
     this.createdDate = createdDate;
   }
 
-  public int getCommentId() {
-    return commentId;
+  public int getId() {
+    return id;
   }
 
   public int getRecipeId() {
@@ -49,8 +49,8 @@ public class Comment {
     return authorName;
   }
 
-  public void setCommentId(int commentId) {
-    this.commentId = commentId;
+  public void setId(int id) {
+    this.id = id;
   }
 
   public void setRecipeId(int recipeId) {

@@ -15,7 +15,7 @@ class Steps:
         self.database = database
 
     def getStep(self, recipeID):
-        getStepsQuery = u"SELECT recipe_id AS recipeId, step_id AS stepId, " \
+        getStepsQuery = u"SELECT recipe_id AS recipeId, step_id AS id, " \
                 u"photo_id AS photoNumber, step_number AS stepNumber, " \
                 u"step_description AS stepDescription " \
                 u"FROM steps "\
@@ -60,10 +60,10 @@ class Steps:
             Logger.fail("NOT OK. Step hasn't been added")
             return 404, u'Forwarded data are not correct'
 
-    def editStep(self, columnName, columnValue, stepId):
+    def editStep(self, columnName, columnValue, id):
         query = u"UPDATE steps " \
                 u"SET {} = '{}'" \
-                u"WHERE step_id = {}".format(columnName, columnValue, stepId)
+                u"WHERE step_id = {}".format(columnName, columnValue, id)
         queryResult, rows, msg = self.database.insert(query)
 
         if queryResult:
@@ -72,14 +72,14 @@ class Steps:
         else:
             return 404, u'Forwarded data to check are not correct'
 
-    def deleteStep(self, stepId):
+    def deleteStep(self, id):
         query = u"DELETE FROM steps " \
-                u"WHERE step_id = {}".format(stepId)
+                u"WHERE step_id = {}".format(id)
         queryResult, rows, msg = self.database.delete(query)
 
         if queryResult:
             Logger.dbg(queryResult)
-            return 200, u'Your deleted step_id = {}'.format(stepId)
+            return 200, u'Your deleted step_id = {}'.format(id)
         else:
             return 404, u'Forwarded data to check are not correct'
 

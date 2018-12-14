@@ -25,15 +25,15 @@ public interface CardAPI {
   @GET("/cards/favorite")
   Call<List<OneRecipeCard>> getCardsSortedByFavorite();
 
-  @POST("cards/searchedCards")
+  @POST("cards/searched")
   Call<List<OneRecipeCard>> getCardsSortedBySearchedQuery(@Body OneRecipeCard oneRecipeCard);
 
-  @POST("cards/categoryCards")
+  @POST("cards/category")
   Call<List<OneRecipeCard>> getCardsSortedByCategoryQuery(@Body OneRecipeCard oneRecipeCard);
 
-  @GET("/cards/userCards")
+  @GET("/cards/user")
   Call<List<OneRecipeCard>> getUserCards();
 
-  @GET("/cards/{recipeId}")
-  Call<List<OneRecipeCard>> getUpdatedCard(@Path("recipeId") int recipeId);
+  @GET("/cards/{id}")
+  Call<List<OneRecipeCard>> getUpdatedCard(@Path("id") int recipeId);
 }

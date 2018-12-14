@@ -17,32 +17,32 @@ class Cards:
         self.database = database
 
     def getAllCards(self, userID):
-        recipeQuery = u"SELECT recipe_id AS recipeId, recipe_name AS recipeName, user_id AS userId, "\
-        u"photo_id as recipeMainPictureNumber, recipe_created_date_time as Date "\
+        recipeQuery = u"SELECT recipe_id AS id, recipe_name AS name, user_id AS userId, "\
+        u"photo_id as mainPictureNumber, recipe_created_date_time as Date "\
         u"FROM recipes; "
 
         return self.getAllCardsBasedMethod(userID,recipeQuery)
 
 
     def getAllCardsSortedAlphabetically(self, userID):
-        recipeQuery = u"SELECT recipe_id AS recipeId, recipe_name AS recipeName, user_id AS userId, " \
-                      u"photo_id as recipeMainPictureNumber, recipe_created_date_time as Date " \
+        recipeQuery = u"SELECT recipe_id AS id, recipe_name AS name, user_id AS userId, " \
+                      u"photo_id as mainPictureNumber, recipe_created_date_time as Date " \
                       u"FROM recipes " \
                       u"ORDER BY recipeName; "
 
         return self.getAllCardsBasedMethod(userID,recipeQuery)
 
     def getAllCardsSortedByLastAdded(self, userID):
-        recipeQuery = u"SELECT recipe_id AS recipeId, recipe_name AS recipeName, user_id AS userId, " \
-                      u"photo_id as recipeMainPictureNumber, recipe_created_date_time as Date " \
+        recipeQuery = u"SELECT recipe_id AS id, recipe_name AS name, user_id AS userId, " \
+                      u"photo_id as mainPictureNumber, recipe_created_date_time as Date " \
                       u"FROM recipes " \
                       u"ORDER BY Date; "
 
         return self.getAllCardsBasedMethod(userID,recipeQuery)
 
     def getAllCardsSortedByHighestRated(self, userID):
-        recipeQuery = u"SELECT recipe_id AS recipeId, recipe_name AS recipeName, user_id AS userId, "\
-        u"photo_id as recipeMainPictureNumber, recipe_created_date_time as Date "\
+        recipeQuery = u"SELECT recipe_id AS id, recipe_name AS name, user_id AS userId, "\
+        u"photo_id as mainPictureNumber, recipe_created_date_time as Date "\
         u"FROM recipes; "
 
         result = self.getAllCardsBasedMethod(userID,recipeQuery)
@@ -52,8 +52,8 @@ class Cards:
         return newList
 
     def getSearchedCardsSortedByDefault(self, searchedQuery, userID):
-        recipeQuery = u"SELECT recipe_id AS recipeId, recipe_name AS recipeName, user_id AS userId, " \
-                      u"photo_id as recipeMainPictureNumber, recipe_created_date_time as Date " \
+        recipeQuery = u"SELECT recipe_id AS id, recipe_name AS name, user_id AS userId, " \
+                      u"photo_id as mainPictureNumber, recipe_created_date_time as Date " \
                       u"FROM recipes " \
                       u"WHERE recipe_name LIKE '%{}%' "\
                       u"GROUP BY recipe_id; ".format(searchedQuery)
@@ -61,8 +61,8 @@ class Cards:
         return self.getAllCardsBasedMethod(userID, recipeQuery)
 
     def getCategoryCardsSortedByDefault(self, category, userID):
-        recipeQuery = u"SELECT recipe_id AS recipeId, recipe_name AS recipeName, user_id AS userId, " \
-                      u"photo_id as recipeMainPictureNumber, recipe_created_date_time as Date " \
+        recipeQuery = u"SELECT recipe_id AS id, recipe_name AS name, user_id AS userId, " \
+                      u"photo_id as mainPictureNumber, recipe_created_date_time as Date " \
                       u"FROM recipes " \
                       u"WHERE recipe_category LIKE '{}' "\
                       u"GROUP BY recipe_id; ".format(category)
@@ -72,16 +72,16 @@ class Cards:
         return self.getAllCardsBasedMethod(userID, recipeQuery)
 
     def getAllCardsSortedByUser(self, userID):
-        recipeQuery = u"SELECT recipe_id AS recipeId, recipe_name AS recipeName, user_id AS userId, " \
-                      u"photo_id as recipeMainPictureNumber, recipe_created_date_time as Date " \
+        recipeQuery = u"SELECT recipe_id AS id, recipe_name AS name, user_id AS userId, " \
+                      u"photo_id as mainPictureNumber, recipe_created_date_time as Date " \
                       u"FROM recipes " \
                       u"WHERE user_id LIKE '{}' " \
                       u"GROUP BY recipe_id ".format(userID)
         return self.getAllCardsBasedMethod(userID, recipeQuery)
 
     def getUpdatedCard(self, userID, recipeId):
-        recipeQuery = u"SELECT recipe_id AS recipeId, recipe_name AS recipeName, user_id AS userId, " \
-                      u"photo_id as recipeMainPictureNumber, recipe_created_date_time as Date " \
+        recipeQuery = u"SELECT recipe_id AS id, recipe_name AS name, user_id AS userId, " \
+                      u"photo_id as mainPictureNumber, recipe_created_date_time as Date " \
                       u"FROM recipes " \
                       u"WHERE recipe_id = {} ; ".format(recipeId)
 
@@ -89,8 +89,8 @@ class Cards:
 
 
     def getAllCardsSortedByFovorite(self, userID):
-        recipeQuery = u"SELECT recipe_id AS recipeId, recipe_name AS recipeName, user_id AS userId, "\
-        u"photo_id as recipeMainPictureNumber, recipe_created_date_time as Date "\
+        recipeQuery = u"SELECT recipe_id AS id, recipe_name AS name, user_id AS userId, "\
+        u"photo_id as mainPictureNumber, recipe_created_date_time as Date "\
         u"FROM recipes; "
 
         MainQueryReult = self.getAllCardsBasedMethod(userID, recipeQuery)
@@ -128,22 +128,22 @@ class Cards:
         return userQueryResult
 
     def getStarsCountQueryResult(self):
-        starsCountQuery = u"SELECT recipe_id AS recipeId, ROUND(avg(stars), 0) AS starsCount " \
+        starsCountQuery = u"SELECT recipe_id AS id, ROUND(avg(stars), 0) AS starsCount " \
                           u"FROM users_recipes_stars " \
-                          u"GROUP BY recipeId; "
+                          u"GROUP BY id; "
         starsCountQueryResult = self.database.query(starsCountQuery)
         return starsCountQueryResult
 
     def getFavoriteCountQueryResult(self):
-        favoriteCountQuery = u"SELECT recipe_id AS recipeId, count(favorite) AS favoritesCount " \
+        favoriteCountQuery = u"SELECT recipe_id AS id, count(favorite) AS favoritesCount " \
                              u"FROM users_recipes_stars " \
                              u"where favorite = true " \
-                             u"GROUP BY recipeId; "
+                             u"GROUP BY id; "
         favoriteCountQueryResult = self.database.query(favoriteCountQuery)
         return favoriteCountQueryResult
 
     def getFavoriteQueryResult(self, userID):
-        favoriteQuery = u"SELECT recipe_id AS recipeId, favorite " \
+        favoriteQuery = u"SELECT recipe_id AS id, favorite " \
                         u"FROM users_recipes_stars " \
                         u"where user_id = {}; ".format(userID)
         favoriteQueryResult = self.database.query(favoriteQuery)
@@ -159,14 +159,14 @@ class Cards:
     def addStarsCountToMainQueryResult(self, mainQueryResult, starsCountQueryResult):
         for mainQueryRow in mainQueryResult:
             for starsQueryRow in starsCountQueryResult:
-                if mainQueryRow['recipeId'] == starsQueryRow['recipeId']:
+                if mainQueryRow['id'] == starsQueryRow['id']:
                     mainQueryRow['starsCount'] = starsQueryRow['starsCount']
         return mainQueryResult
 
     def addfavoriteCountToMainQueryResult(self, mainQueryResult, favoriteCountQueryResult):
         for mainQueryRow in mainQueryResult:
             for favoriteCountQueryRow in favoriteCountQueryResult:
-                if mainQueryRow['recipeId'] == favoriteCountQueryRow['recipeId']:
+                if mainQueryRow['id'] == favoriteCountQueryRow['id']:
                     mainQueryRow['favoritesCount'] = favoriteCountQueryRow['favoritesCount']
         return mainQueryResult
 
@@ -175,7 +175,7 @@ class Cards:
             for mainQueryRow in mainQueryResult:
                 mainQueryRow['favorite'] = False
                 for favoriteQueryRow in favoriteQueryResult:
-                    if mainQueryRow['recipeId'] == favoriteQueryRow['recipeId']:
+                    if mainQueryRow['id'] == favoriteQueryRow['id']:
                         mainQueryRow['favorite'] = favoriteQueryRow['favorite']
                         if mainQueryRow['favorite'] is None:
                             mainQueryRow['favorite'] = False

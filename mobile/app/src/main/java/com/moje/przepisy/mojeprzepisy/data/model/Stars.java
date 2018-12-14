@@ -14,26 +14,6 @@ public class Stars {
     this.favoritesCount = favoritesCount;
   }
 
-  public Stars(int recipeId, int starsCount) {
-    this.recipeId = recipeId;
-    this.starsCount = starsCount;
-  }
-
-  public Stars(int recipeId, Boolean favorites) {
-    this.recipeId = recipeId;
-    this.favorites = favorites;
-  }
-
-  public Stars(int recipeId, int userId, String authorName, int starsCount, int favoritesCount,
-      Boolean favorites) {
-    this.recipeId = recipeId;
-    this.userId = userId;
-    this.authorName = authorName;
-    this.starsCount = starsCount;
-    this.favoritesCount = favoritesCount;
-    this.favorites = favorites;
-  }
-
   public int getRecipeId() {
     return recipeId;
   }

@@ -36,7 +36,7 @@
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:background="@color/primary_light"
-        tools:context=".add_recipe.add_recipe.add_main_recipe_page.AddRecipeActivityView">
+        tools:context=".addRecipe.addMainInfo.AddRecipeActivity">
 
       <EditText
         android:id="@+id/recipeNameEditText"

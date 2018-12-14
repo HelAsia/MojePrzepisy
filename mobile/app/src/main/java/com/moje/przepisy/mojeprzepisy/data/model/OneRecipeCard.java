@@ -8,16 +8,16 @@ import java.sql.Timestamp;
  */
 
 public class OneRecipeCard {
-  public int recipeId;
-  public int starsCount;
-  public int favoritesCount;
-  public String recipeCategory;
-  public String recipeName;
-  public String authorName;
-  public String recipeMainPicture;
-  public int recipeMainPictureNumber;
-  public Timestamp date;
-  public Boolean favorite;
+  private int id;
+  private int starsCount;
+  private int favoritesCount;
+  private String category;
+  private String name;
+  private String authorName;
+  private String mainPicture;
+  private int mainPictureNumber;
+  private Timestamp date;
+  private Boolean favorite;
 
   public OneRecipeCard(){
 
@@ -25,18 +25,14 @@ public class OneRecipeCard {
 
   public OneRecipeCard(String info, int option){
     if(option == 1){
-      this.recipeName = info;
+      this.name = info;
     }else if(option == 2){
-      this.recipeCategory = info;
+      this.category = info;
     }
   }
 
-  public OneRecipeCard(int recipeId){
-    this.recipeId = recipeId;
-  }
-
-  public int getRecipeId() {
-    return recipeId;
+  public int getId() {
+    return id;
   }
 
   public int getStarsCount() {
@@ -47,28 +43,28 @@ public class OneRecipeCard {
     return favoritesCount;
   }
 
-  public String getRecipeName() {
-    return recipeName;
+  public String getName() {
+    return name;
   }
 
   public String getAuthorName() {
     return authorName;
   }
 
-  public String getRecipeMainPicture() {
-    return recipeMainPicture;
+  public String getMainPicture() {
+    return mainPicture;
   }
 
-  public int getRecipeMainPictureNumber() {
-    return recipeMainPictureNumber;
+  public int getMainPictureNumber() {
+    return mainPictureNumber;
   }
 
   public Timestamp getDate() {
     return date;
   }
 
-  public void setRecipeId(int recipeId) {
-    this.recipeId = recipeId;
+  public void setId(int id) {
+    this.id = id;
   }
 
   public void setStarsCount(int starsCount) {
@@ -79,20 +75,20 @@ public class OneRecipeCard {
     this.favoritesCount = favoritesCount;
   }
 
-  public void setRecipeName(String recipeName) {
-    this.recipeName = recipeName;
+  public void setName(String name) {
+    this.name = name;
   }
 
   public void setAuthorName(String authorName) {
     this.authorName = authorName;
   }
 
-  public void setRecipeMainPicture(String recipeMainPicture) {
-    this.recipeMainPicture = recipeMainPicture;
+  public void setMainPicture(String mainPicture) {
+    this.mainPicture = mainPicture;
   }
 
-  public void setRecipeMainPictureNumber(int recipeMainPictureNumber) {
-    this.recipeMainPictureNumber = recipeMainPictureNumber;
+  public void setMainPictureNumber(int mainPictureNumber) {
+    this.mainPictureNumber = mainPictureNumber;
   }
 
   public Boolean getFavorite() {

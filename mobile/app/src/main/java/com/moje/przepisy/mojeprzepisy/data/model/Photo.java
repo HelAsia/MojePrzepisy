@@ -3,12 +3,12 @@ package com.moje.przepisy.mojeprzepisy.data.model;
 import android.graphics.Bitmap;
 
 public class Photo {
-  private int photoId;
+  private int id;
   private Bitmap photo;
   private String photoString;
 
-  public Photo(int photoId, Bitmap photo) {
-    this.photoId = photoId;
+  public Photo(int id, Bitmap photo) {
+    this.id = id;
     this.photo = photo;
   }
 
@@ -20,16 +20,16 @@ public class Photo {
     this.photoString = photoString;
   }
 
-  public Photo(int photoId) {
-    this.photoId = photoId;
+  public Photo(int id) {
+    this.id = id;
   }
 
-  public int getPhotoId() {
-    return photoId;
+  public int getId() {
+    return id;
   }
 
-  public void setPhotoId(int photoId) {
-    this.photoId = photoId;
+  public void setId(int id) {
+    this.id = id;
   }
 
   public Bitmap getPhoto() {

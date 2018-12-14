@@ -2,7 +2,7 @@ package com.moje.przepisy.mojeprzepisy.register;
 
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.user.UserRepository;
+import com.moje.przepisy.mojeprzepisy.data.repositories.user.UserRepository;
 import com.moje.przepisy.mojeprzepisy.utils.Constant;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

@@ -44,7 +44,7 @@ public class LicensesAdapter extends RecyclerView.Adapter<LicensesAdapter.ViewHo
     viewHolder.licenseCardViewLayout.setOnClickListener(new OnClickListener() {
       @Override
       public void onClick(View view) {
-        ((LicensesActivityView)context).goToLicenseSource(licensesList.get(position).getLicenseUrl());
+        ((LicensesActivity)context).goToLicenseSource(licensesList.get(position).getLicenseUrl());
       }
     });
 

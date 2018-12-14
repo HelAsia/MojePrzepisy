@@ -1,148 +1,148 @@
 package com.moje.przepisy.mojeprzepisy.data.model;
 
 public class Recipe {
-  private int recipeId;
+  private int id;
   private int userId;
-  private String recipeName;
-  private String recipeMainPicture;
-  private int recipeMainPictureNumber;
-  private String recipeCategory;
-  private String recipePrepareTime;
-  private String recipeCookTime;
-  private String recipeBakeTime;
+  private String name;
+  private String mainPicture;
+  private int mainPictureNumber;
+  private String category;
+  private String prepareTime;
+  private String cookTime;
+  private String bakeTime;
 
-  public Recipe(int recipeId, String recipeName, String recipeMainPicture,
-      String recipeCategory, String recipePrepareTime,
-      String recipeCookTime, String recipeBakeTime) {
-    this.recipeId = recipeId;
-    this.recipeName = recipeName;
-    this.recipeMainPicture = recipeMainPicture;
-    this.recipeCategory = recipeCategory;
-    this.recipePrepareTime = recipePrepareTime;
-    this.recipeCookTime = recipeCookTime;
-    this.recipeBakeTime = recipeBakeTime;
+  public Recipe(int id, String name, String mainPicture,
+                String category, String prepareTime,
+                String cookTime, String bakeTime) {
+    this.id = id;
+    this.name = name;
+    this.mainPicture = mainPicture;
+    this.category = category;
+    this.prepareTime = prepareTime;
+    this.cookTime = cookTime;
+    this.bakeTime = bakeTime;
   }
 
-  public Recipe(String recipeName, String recipeMainPicture, String recipeCategory, String recipePrepareTime, String recipeCookTime,
-      String recipeBakeTime) {
-    this.recipeName = recipeName;
-    this.recipeMainPicture = recipeMainPicture;
-    this.recipeCategory = recipeCategory;
-    this.recipePrepareTime = recipePrepareTime;
-    this.recipeCookTime = recipeCookTime;
-    this.recipeBakeTime = recipeBakeTime;
+  public Recipe(String name, String mainPicture, String category, String prepareTime, String cookTime,
+                String bakeTime) {
+    this.name = name;
+    this.mainPicture = mainPicture;
+    this.category = category;
+    this.prepareTime = prepareTime;
+    this.cookTime = cookTime;
+    this.bakeTime = bakeTime;
   }
 
-  public Recipe(String recipeName, String recipeCategory, String recipePrepareTime,
-      String recipeCookTime, String recipeBakeTime) {
-    this.recipeName = recipeName;
-    this.recipeCategory = recipeCategory;
-    this.recipePrepareTime = recipePrepareTime;
-    this.recipeCookTime = recipeCookTime;
-    this.recipeBakeTime = recipeBakeTime;
+  public Recipe(String name, String category, String prepareTime,
+                String cookTime, String bakeTime) {
+    this.name = name;
+    this.category = category;
+    this.prepareTime = prepareTime;
+    this.cookTime = cookTime;
+    this.bakeTime = bakeTime;
   }
 
   public Recipe(){
 
   }
 
-  public Recipe(int recipeId, int userId, String recipeName, int recipeMainPictureNumber,
-      String recipeCategory, String recipePrepareTime, String recipeCookTime,
-      String recipeBakeTime) {
-    this.recipeId = recipeId;
+  public Recipe(int id, int userId, String name, int mainPictureNumber,
+                String category, String prepareTime, String cookTime,
+                String bakeTime) {
+    this.id = id;
     this.userId = userId;
-    this.recipeName = recipeName;
-    this.recipeMainPictureNumber = recipeMainPictureNumber;
-    this.recipeCategory = recipeCategory;
-    this.recipePrepareTime = recipePrepareTime;
-    this.recipeCookTime = recipeCookTime;
-    this.recipeBakeTime = recipeBakeTime;
+    this.name = name;
+    this.mainPictureNumber = mainPictureNumber;
+    this.category = category;
+    this.prepareTime = prepareTime;
+    this.cookTime = cookTime;
+    this.bakeTime = bakeTime;
   }
 
-  public Recipe(int recipeId, String recipeName, int recipeMainPictureNumber,
-      String recipeCategory, String recipePrepareTime, String recipeCookTime,
-      String recipeBakeTime) {
-    this.recipeId = recipeId;
-    this.recipeName = recipeName;
-    this.recipeMainPictureNumber = recipeMainPictureNumber;
-    this.recipeCategory = recipeCategory;
-    this.recipePrepareTime = recipePrepareTime;
-    this.recipeCookTime = recipeCookTime;
-    this.recipeBakeTime = recipeBakeTime;
+  public Recipe(int id, String name, int mainPictureNumber,
+                String category, String prepareTime, String cookTime,
+                String bakeTime) {
+    this.id = id;
+    this.name = name;
+    this.mainPictureNumber = mainPictureNumber;
+    this.category = category;
+    this.prepareTime = prepareTime;
+    this.cookTime = cookTime;
+    this.bakeTime = bakeTime;
   }
 
-  public Recipe(String recipeName, int recipeMainPictureNumber, String recipeCategory,
-      String recipePrepareTime, String recipeCookTime, String recipeBakeTime) {
-    this.recipeName = recipeName;
-    this.recipeMainPictureNumber = recipeMainPictureNumber;
-    this.recipeCategory = recipeCategory;
-    this.recipePrepareTime = recipePrepareTime;
-    this.recipeCookTime = recipeCookTime;
-    this.recipeBakeTime = recipeBakeTime;
+  public Recipe(String name, int mainPictureNumber, String category,
+                String prepareTime, String cookTime, String bakeTime) {
+    this.name = name;
+    this.mainPictureNumber = mainPictureNumber;
+    this.category = category;
+    this.prepareTime = prepareTime;
+    this.cookTime = cookTime;
+    this.bakeTime = bakeTime;
   }
 
-  public int getRecipeId() {
-    return recipeId;
+  public int getId() {
+    return id;
   }
 
-  public String getRecipeMainPicture() {
-    return recipeMainPicture;
+  public String getMainPicture() {
+    return mainPicture;
   }
 
-  public String getRecipeName() {
-    return recipeName;
+  public String getName() {
+    return name;
   }
 
-  public String getRecipePrepareTime() {
-    return recipePrepareTime;
+  public String getPrepareTime() {
+    return prepareTime;
   }
 
-  public String getRecipeCookTime() {
-    return recipeCookTime;
+  public String getCookTime() {
+    return cookTime;
   }
 
-  public String getRecipeBakeTime() {
-    return recipeBakeTime;
+  public String getBakeTime() {
+    return bakeTime;
   }
 
-  public void setRecipeId(int recipeId) {
-    this.recipeId = recipeId;
+  public void setId(int id) {
+    this.id = id;
   }
 
-  public void setRecipeMainPicture(String recipeMainPicture) {
-    this.recipeMainPicture = recipeMainPicture;
+  public void setMainPicture(String mainPicture) {
+    this.mainPicture = mainPicture;
   }
 
-  public void setRecipeName(String recipeName) {
-    this.recipeName = recipeName;
+  public void setName(String name) {
+    this.name = name;
   }
 
-  public void setRecipePrepareTime(String recipePrepareTime) {
-    this.recipePrepareTime = recipePrepareTime;
+  public void setPrepareTime(String prepareTime) {
+    this.prepareTime = prepareTime;
   }
 
-  public void setRecipeCookTime(String recipeCookTime) {
-    this.recipeCookTime = recipeCookTime;
+  public void setCookTime(String cookTime) {
+    this.cookTime = cookTime;
   }
 
-  public void setRecipeBakeTime(String recipeBakeTime) {
-    this.recipeBakeTime = recipeBakeTime;
+  public void setBakeTime(String bakeTime) {
+    this.bakeTime = bakeTime;
   }
 
-  public String getRecipeCategory() {
-    return recipeCategory;
+  public String getCategory() {
+    return category;
   }
 
-  public void setRecipeCategory(String recipeCategory) {
-    this.recipeCategory = recipeCategory;
+  public void setCategory(String category) {
+    this.category = category;
   }
 
-  public int getRecipeMainPictureNumber() {
-    return recipeMainPictureNumber;
+  public int getMainPictureNumber() {
+    return mainPictureNumber;
   }
 
-  public void setRecipeMainPictureNumber(int recipeMainPictureNumber) {
-    this.recipeMainPictureNumber = recipeMainPictureNumber;
+  public void setMainPictureNumber(int mainPictureNumber) {
+    this.mainPictureNumber = mainPictureNumber;
   }
 
   public int getUserId() {

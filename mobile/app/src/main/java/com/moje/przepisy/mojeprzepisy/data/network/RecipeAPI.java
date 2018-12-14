@@ -20,75 +20,75 @@ import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface RecipeAPI {
-  @GET("recipe/{recipeId}")
-  Call<Recipe> getRecipe(@Path("recipeId") int recipeId);
+  @GET("recipe/{id}")
+  Call<Recipe> getRecipe(@Path("id") int id);
 
-  @POST("recipe/{recipeId}/{columnName}/{columnValue}")
-  Call<List<Recipe>> editRecipe(@Path("recipeId") int recipeId, @Path("columnName") String columnName, @Path("columnValue") String columnValue);
+  @POST("recipe/{id}/{columnName}/{columnValue}")
+  Call<List<Recipe>> editRecipe(@Path("id") int id, @Path("columnName") String columnName, @Path("columnValue") String columnValue);
 
   @PUT("recipe")
   Call<Message> addWholeRecipeElements(@Body RecipeAllElements recipeAllElements);
 
-  @DELETE("recipe/{recipeId}")
-  Call<Message> deleteRecipe(@Path("recipeId") int recipeId);
+  @DELETE("recipe/{id}")
+  Call<Message> deleteRecipe(@Path("id") int id);
 
 
   @FormUrlEncoded
   @PUT("recipe/photo")
   Call<Message> addPhoto(@Field("photo") String photoString);
 
-  @POST("recipe/photo/{photoId}")
-  Call<List<Photo>> editPhoto(@Path("photoId") int photoId, @Body Photo photo);
+  @POST("recipe/photo/{id}")
+  Call<List<Photo>> editPhoto(@Path("id") int id, @Body Photo photo);
 
-  @DELETE("recipe/photo/{photoId}")
-  Call<List<Photo>> deletePhoto(@Path("photoId") int photoId, @Body Photo photo);
-
-
-  @GET("recipe/step/{recipeId}")
-  Call<List<Step>> getStep(@Path("recipeId") int recipeId);
-
-  @POST("recipe/step/{stepId}/{columnName}/{columnValue}")
-  Call<List<Step>> editStep(@Path("stepId") int stepId, @Path("columnName") String columnName, @Path("columnValue") String columnValue);
-
-  @DELETE("recipe/step/{stepId}")
-  Call<Message> deleteStep(@Path("stepId") int stepId, @Body Step step);
+  @DELETE("recipe/photo/{id}")
+  Call<List<Photo>> deletePhoto(@Path("id") int id, @Body Photo photo);
 
 
-  @GET("recipe/ingredient/{recipeId}")
-  Call<List<Ingredient>> getIngredient(@Path("recipeId") int recipeId);
+  @GET("recipe/{id}/step")
+  Call<List<Step>> getStep(@Path("id") int recipeId);
 
-  @POST("recipe/ingredient/{ingredientId}/{columnName}/{columnValue}")
-  Call<List<Ingredient>> editIngredient(@Path("ingredientId") int ingredientId, @Path("columnName") String columnName, @Path("columnValue") String columnValue);
+  @POST("recipe/step/{id}/{columnName}/{columnValue}")
+  Call<List<Step>> editStep(@Path("id") int id, @Path("columnName") String columnName, @Path("columnValue") String columnValue);
 
-  @DELETE("recipe/ingredient/{ingredientId}")
-  Call<Message> deleteIngredient(@Path("ingredientId") int ingredientId, @Body Ingredient ingredient);
+  @DELETE("recipe/step/{id}")
+  Call<Message> deleteStep(@Path("id") int id, @Body Step step);
 
 
-  @GET("recipe/comment/{recipeId}")
-  Call<List<Comment>> getComment(@Path("recipeId") int recipeId);
+  @GET("recipe/{id}/ingredient")
+  Call<List<Ingredient>> getIngredient(@Path("id") int id);
 
-  @POST("recipe/comment/{commentId}/{columnName}/{columnValue}")
-  Call<List<Comment>> editComment(@Path("commentId") int commentId, @Path("columnName") String columnName, @Path("columnValue") String columnValue);
+  @POST("recipe/ingredient/{id}/{columnName}/{columnValue}")
+  Call<List<Ingredient>> editIngredient(@Path("id") int id, @Path("columnName") String columnName, @Path("columnValue") String columnValue);
+
+  @DELETE("recipe/ingredient/{id}")
+  Call<Message> deleteIngredient(@Path("id") int id, @Body Ingredient ingredient);
+
+
+  @GET("recipe/{id}/comment")
+  Call<List<Comment>> getComment(@Path("id") int id);
+
+  @POST("recipe/comment/{id}/{columnName}/{columnValue}")
+  Call<List<Comment>> editComment(@Path("id") int id, @Path("columnName") String columnName, @Path("columnValue") String columnValue);
 
   @PUT("recipe/comment")
   Call<Message> addComment(@Body Comment comment);
 
-  @DELETE("recipe/comment/{commentId}")
-  Call<Message> deleteComment(@Path("commentId") int commentId);
+  @DELETE("recipe/comment/{id}")
+  Call<Message> deleteComment(@Path("id") int id);
 
-  @GET("recipe/stars/detail/{recipeId}")
-  Call<List<Stars>> getRecipeDetailsStars(@Path("recipeId") int recipeId);
+  @GET("recipe/{id}/stars/detail")
+  Call<List<Stars>> getRecipeDetailsStars(@Path("id") int id);
 
-  @POST("recipe/stars/{recipeId}/{columnName}/{columnValue}")
-  Call<Message> editStarsAndHeart(@Path("recipeId") int recipeId, @Path("columnName") String columnName, @Path("columnValue") int columnValue);
+  @POST("recipe/{id}/stars/{columnName}/{columnValue}")
+  Call<Message> editStarsAndHeart(@Path("id") int recipeId, @Path("id") String columnName, @Path("columnValue") int columnValue);
 
   @PUT("recipe/stars")
   Call<Message> addStars(@Body Stars stars);
 
-  @DELETE("recipe/stars/{recipeId}")
-  Call<Message> deleteStars(@Path("recipeId") int recipeId);
+  @DELETE("recipe/{id}/stars")
+  Call<Message> deleteStars(@Path("id") int id);
 
-  @GET("recipe/favorite/{recipeId}")
-  Call<Stars> getFavorite(@Path("recipeId") int recipeId);
+  @GET("recipe/{id}/favorite")
+  Call<Stars> getFavorite(@Path("id") int id);
 
 }

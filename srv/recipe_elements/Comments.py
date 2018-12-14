@@ -17,7 +17,7 @@ class Comments:
 
     def getComments(self, recipeID):
         query = u"SELECT C.recipe_id AS recipeId, U.user_login AS authorName, U.user_id AS userId, " \
-                u"C.comment_id AS commentId, C.comment AS comment, C.created_date AS createdDate " \
+                u"C.comment_id AS id, C.comment AS comment, C.created_date AS createdDate " \
                 u"FROM comments AS C " \
                 u"INNER JOIN users AS U " \
                 u"ON C.user_id = U.user_id " \
@@ -47,22 +47,22 @@ class Comments:
         if queryResult:
             Logger.dbg(queryResult)
             Logger.ok("OK. Comment has been added")
-            queryCommentId = u"SELECT MAX(comment_id) AS commentId FROM comments; "
+            queryCommentId = u"SELECT MAX(comment_id) AS id FROM comments; "
             comment_id = self.database.query(queryCommentId)
             if comment_id and len(comment_id) >= 1:
-                message = comment_id[0]['commentId']
+                message = comment_id[0]['id']
                 return 200, unicode(message)
             else:
-                message = 'Could not return commentId'
+                message = 'Could not return id'
                 return 404, unicode(message)
         else:
             Logger.fail("NOT OK. Comment hasn't been added")
             return 404, u'Forwarded data are not correct'
 
-    def editComment(self, columnName, columnValue, commentId):
+    def editComment(self, columnName, columnValue, id):
         query = u"UPDATE comments " \
                 u"SET {} = '{}'" \
-                u"WHERE comment_id = {};".format(columnName, columnValue, commentId)
+                u"WHERE comment_id = {};".format(columnName, columnValue, id)
         queryResult = self.database.query(query)
 
         if queryResult:
@@ -71,10 +71,10 @@ class Comments:
         else:
             return 404, u'Forwarded data to check are not correct'
 
-    def deleteComment(self, commentId):
+    def deleteComment(self, id):
         query = u"SELECT comment_id, comment " \
                 u"FROM comments " \
-                u"WHERE comment_id = {};".format(commentId)
+                u"WHERE comment_id = {};".format(id)
 
         isRecordInTable = self.database.query(query)
 
@@ -82,12 +82,12 @@ class Comments:
 
         if isRecordInTable:
             query = u"DELETE FROM comments " \
-                    u"WHERE comment_id = {};".format(commentId)
+                    u"WHERE comment_id = {};".format(id)
             queryResult, rows, msg = self.database.delete(query)
 
             if queryResult:
                 Logger.dbg(queryResult)
-                return 200, u'Your deleted comment_id = {}'.format(commentId)
+                return 200, u'Your deleted comment_id = {}'.format(id)
             else:
                 return 404, u'Forwarded data to check are not correct'
         elif not isRecordInTable:

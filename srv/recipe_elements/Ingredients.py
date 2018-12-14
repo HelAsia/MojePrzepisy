@@ -15,9 +15,9 @@ class Ingredients:
         self.database = database
 
     def getIngredient(self, recipeID):
-        getIngredientsQuery = u"SELECT recipe_id AS recipeId, ingredient_id AS ingredientId, " \
-                u"ingredient_quantity AS ingredientQuantity, ingredient_unit AS ingredientUnit, " \
-                u"ingredient_name AS ingredientName " \
+        getIngredientsQuery = u"SELECT recipe_id AS recipeId, ingredient_id AS id, " \
+                u"ingredient_quantity AS quantity, ingredient_unit AS unit, " \
+                u"ingredient_name AS name " \
                 u"FROM ingredients "\
                 u"WHERE recipe_id = {}; ".format(recipeID)
 
@@ -40,17 +40,17 @@ class Ingredients:
 
     def addIngredient(self, recipeId, ingredientList):
         for ingredientRow in ingredientList:
-            ingredientQuantity = ingredientRow['ingredientQuantity']
-            ingredientUnit = ingredientRow['ingredientUnit']
-            ingredientName = ingredientRow['ingredientName']
+            quantity = ingredientRow['quantity']
+            unit = ingredientRow['unit']
+            name = ingredientRow['name']
 
-            if not checkIsInteger(ingredientQuantity):
-                Logger.err("User has passed 'ingredientQuantity' as non-integer! '{}'".format(ingredientQuantity))
+            if not checkIsInteger(quantity):
+                Logger.err("User has passed 'ingredientQuantity' as non-integer! '{}'".format(quantity))
                 return {}
 
             query = u"INSERT INTO ingredients " \
                     u"(recipe_id, ingredient_quantity, ingredient_unit, ingredient_name) " \
-                    u"values ({}, {}, '{}', '{}' )".format(recipeId, int(ingredientQuantity), ingredientUnit, ingredientName)
+                    u"values ({}, {}, '{}', '{}' )".format(recipeId, int(quantity), unit, name)
 
             queryResult, rows, msg = self.database.insert(query)
 
@@ -74,14 +74,14 @@ class Ingredients:
         else:
             return 404, u'Forwarded data to check are not correct'
 
-    def deleteIngredient(self, ingredientId):
+    def deleteIngredient(self, id):
         query = u"DELETE FROM ingredients " \
-                u"WHERE ingredient_id = {}".format(ingredientId)
+                u"WHERE ingredient_id = {}".format(id)
         queryResult = self.database.query(query)
 
         if queryResult:
             Logger.dbg(str(tuple(queryResult)))
-            return 200, u'Your deleted ingredient_id = {}'.format(ingredientId)
+            return 200, u'Your deleted ingredient_id = {}'.format(id)
         else:
             return 404, u'Forwarded data to check are not correct'
 

@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion 28
@@ -16,6 +17,10 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 
@@ -45,6 +50,7 @@ dependencies {
     testImplementation 'org.mockito:mockito-core:2.7.22'
     testImplementation "org.robolectric:robolectric:3.8"
     testImplementation 'com.squareup.okhttp3:mockwebserver:3.11.0'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     // Food images to category: https://pixabay.com/pl/photos/?cat=food
 }
@@ -56,4 +62,7 @@ android {
             unitTests.returnDefaultValues = true
         }
     }
+}
+repositories {
+    mavenCentral()
 }

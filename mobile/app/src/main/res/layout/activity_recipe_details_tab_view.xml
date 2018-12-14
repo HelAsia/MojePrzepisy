@@ -6,7 +6,7 @@
   android:layout_width="match_parent"
   android:layout_height="match_parent"
   android:background="@color/primary_light"
-  tools:context=".recipe_details.main_recipe_details.MainDetailsTabActivityView">
+  tools:context=".recipeDetails.recipeDisplay.MainDetailsTabActivity">
 
   <android.support.v7.widget.Toolbar
     android:id="@+id/toolbar_recipe_details_tab"

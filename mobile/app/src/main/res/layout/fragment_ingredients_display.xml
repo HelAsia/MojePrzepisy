@@ -3,7 +3,7 @@
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  tools:context=".recipe_details.ingredients_details_display.IngredientsDisplayFragment">
+  tools:context=".recipeDetails.ingredientsDetails.IngredientsDisplayFragment">
 
   <RelativeLayout
     android:layout_width="match_parent"

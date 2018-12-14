@@ -4,9 +4,8 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.view.View;
 import com.moje.przepisy.mojeprzepisy.R;
-import com.moje.przepisy.mojeprzepisy.data.ui.utils.repositories.welcome.WelcomeRepository;
+import com.moje.przepisy.mojeprzepisy.data.repositories.welcome.WelcomeRepository;
 import com.moje.przepisy.mojeprzepisy.utils.Constant;
-import okhttp3.WebSocketListener;
 
 public class WelcomePresenter implements WelcomeContract.Presenter, WelcomeRepository.OnLoggedListener {
   private WelcomeRepository welcomeRepository;

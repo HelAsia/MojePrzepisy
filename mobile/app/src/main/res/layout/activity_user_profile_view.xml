@@ -6,7 +6,7 @@
   android:id="@+id/activity_home_page"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  tools:context=".user_profile.UserProfileActivityView"
+  tools:context=".userProfile.UserProfileActivity"
   android:background="@color/primary_light">
 
   <android.support.v7.widget.Toolbar

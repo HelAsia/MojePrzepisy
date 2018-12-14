@@ -192,6 +192,7 @@ def editUser(columnName, columnValue):
         'message': message
     })
 
+
 @app.route('/user/photo', methods=['POST'])
 @authorized
 def editUserPhoto():
@@ -208,11 +209,11 @@ def editUserPhoto():
     })
 
 
-@app.route('/cards/searchedCards', methods=['POST'])
+@app.route('/cards/searched', methods=['POST'])
 def getSearchedCards():
     card = Cards(get_database())
     params = request.get_json()
-    searchedQuery = params.get('recipeName')
+    searchedQuery = params.get('name')
 
     userID = get_user_id()
     if not userID:
@@ -225,32 +226,32 @@ def getSearchedCards():
     return jsonify(cards)
 
 
-@app.route('/cards/categoryCards', methods=['POST'])
+@app.route('/cards/category', methods=['POST'])
 def getCategoryCards():
     card = Cards(get_database())
     params = request.get_json()
-    recipeCategory = params.get('recipeCategory')
+    category = params.get('category')
 
     userID = get_user_id()
     if not userID:
         userID = -1
 
-    cards = card.getCategoryCardsSortedByDefault(recipeCategory, userID)
+    cards = card.getCategoryCardsSortedByDefault(category, userID)
 
     if not cards:
         Logger.fail("There were no cards returned!")
     return jsonify(cards)
 
 
-@app.route('/cards/<int:recipeId>', methods=['GET'])
-def getUpdatedCard(recipeId):
+@app.route('/cards/<int:id>', methods=['GET'])
+def getUpdatedCard(id):
     card = Cards(get_database())
 
     userID = get_user_id()
     if not userID:
         userID = -1
 
-    cards = card.getUpdatedCard(userID, recipeId)
+    cards = card.getUpdatedCard(userID, id)
 
     if not cards:
         Logger.fail("There were no cards returned!")
@@ -274,7 +275,7 @@ def getSortedCards(sorted_method):
         cards = card.getAllCardsSortedByHighestRated(userID)
     elif sorted_method == 'favorite':
         cards = card.getAllCardsSortedByFovorite(userID)
-    elif sorted_method == 'userCards':
+    elif sorted_method == 'user':
         cards = card.getAllCardsSortedByUser(userID)
 
     if not cards:
@@ -282,11 +283,11 @@ def getSortedCards(sorted_method):
     return jsonify(cards)
 
 
-@app.route('/recipe/<int:recipeId>', methods=['GET'])
-def getRecipe(recipeId):
+@app.route('/recipe/<int:id>', methods=['GET'])
+def getRecipe(id):
     recipe = Recipes(get_database())
 
-    recipes = recipe.getRecipe(recipeId)
+    recipes = recipe.getRecipe(id)
 
     if not recipes:
         Logger.fail("There was no recipe returned!")
@@ -337,50 +338,50 @@ def addWholeRecipeElements():
         })
 
 
-@app.route('/recipe/<int:recipeId>/<string:columnName>/<string:columnValue>/', methods=['POST'])
+@app.route('/recipe/<int:id>/<string:columnName>/<string:columnValue>/', methods=['POST'])
 @authorized
-def editRecipe(recipeId, columnName, columnValue):
+def editRecipe(id, columnName, columnValue):
     recipe = Recipes(get_database())
 
-    status, message = recipe.editRecipe(columnName, columnValue, recipeId)
+    status, message = recipe.editRecipe(columnName, columnValue, id)
 
     return jsonify({
         'status': status,
         'message': message
     })
 
-@app.route('/recipe/<int:recipeId>', methods=['DELETE'])
+@app.route('/recipe/<int:id>', methods=['DELETE'])
 @authorized
-def deleteRecipe(recipeId):
+def deleteRecipe(id):
     recipe = Recipes(get_database())
 
-    status, message = recipe.deleteRecipe(recipeId)
+    status, message = recipe.deleteRecipe(id)
 
     return jsonify({
         'status': status,
         'message': message
     })
 
-@app.route('/recipe/photo/<int:photoId>', methods=['GET'])
-def getPhoto(photoId):
+@app.route('/recipe/photo/<int:id>', methods=['GET'])
+def getPhoto(id):
     photo = Photo(get_database())
 
-    photos = photo.getPhoto(photoId)
+    photos = photo.getPhoto(id)
 
     if not photos:
         Logger.fail("There was no photo returned!")
     return photos
 
-@app.route('/recipe/photo/<int:photoId>/', methods=['POST'])
+@app.route('/recipe/photo/<int:id>/', methods=['POST'])
 @authorized
-def editPhoto(photoId):
+def editPhoto(id):
     photo = Photo(get_database())
 
     params = request.get_json()
 
     photos = params.get('photo')
 
-    status, message = photo.editPhoto(photoId, photos)
+    status, message = photo.editPhoto(id, photos)
 
     return jsonify({
         'status': status,
@@ -388,12 +389,12 @@ def editPhoto(photoId):
     })
 
 
-@app.route('/recipe/photo/<int:photoId>', methods=['DELETE'])
+@app.route('/recipe/photo/<int:id>', methods=['DELETE'])
 @authorized
-def deletePhoto(photoId):
+def deletePhoto(id):
     photo = Photo(get_database())
 
-    status, message = photo.deletePhoto(photoId)
+    status, message = photo.deletePhoto(id)
 
     return jsonify({
         'status': status,
@@ -415,23 +416,23 @@ def addPhoto():
         'message': photoNumber
     })
 
-@app.route('/recipe/step/<int:recipeId>', methods=['GET'])
-def getStep(recipeId):
+@app.route('/recipe/<int:id>/step', methods=['GET'])
+def getStep(id):
     step = Steps(get_database())
 
-    steps = step.getStep(recipeId)
+    steps = step.getStep(id)
 
     if not steps:
         Logger.fail("There was no recipe returned!")
     return jsonify(steps)
 
 
-@app.route('/recipe/step/<int:stepId>', methods=['DELETE'])
+@app.route('/recipe/step/<int:id>', methods=['DELETE'])
 @authorized
-def deleteStep(stepId):
+def deleteStep(id):
     step = Steps(get_database())
 
-    status, message = step.deleteStep(stepId)
+    status, message = step.deleteStep(id)
 
     return jsonify({
         'status': status,
@@ -439,12 +440,12 @@ def deleteStep(stepId):
     })
 
 
-@app.route('/recipe/step/<int:stepId>/<string:columnName>/<string:columnValue>/', methods=['POST'])
+@app.route('/recipe/step/<int:id>/<string:columnName>/<string:columnValue>/', methods=['POST'])
 @authorized
-def editStep(stepId, columnName, columnValue):
+def editStep(id, columnName, columnValue):
     step = Steps(get_database())
 
-    status, message = step.editStep(columnName, columnValue, stepId)
+    status, message = step.editStep(columnName, columnValue, id)
 
     return jsonify({
         'status': status,
@@ -452,18 +453,18 @@ def editStep(stepId, columnName, columnValue):
     })
 
 
-@app.route('/recipe/ingredient/<int:recipeId>', methods=['GET'])
-def getIngredient(recipeId):
+@app.route('/recipe/<int:id>/ingredient', methods=['GET'])
+def getIngredient(id):
     ingredient = Ingredients(get_database())
 
-    ingredients = ingredient.getIngredient(recipeId)
+    ingredients = ingredient.getIngredient(id)
 
     if not ingredients:
         Logger.fail("There was no ingredients returned!")
     return jsonify(ingredients)
 
 
-@app.route('/recipe/ingredient/<int:ingredientId>', methods=['DELETE'])
+@app.route('/recipe/ingredient/<int:id>', methods=['DELETE'])
 @authorized
 def deleteIngredient(ingredientId):
     ingredient = Ingredients(get_database())
@@ -476,12 +477,12 @@ def deleteIngredient(ingredientId):
     })
 
 
-@app.route('/recipe/ingredient/<int:ingredientId>/<string:columnName>/<string:columnValue>/', methods=['POST'])
+@app.route('/recipe/ingredient/<int:id>/<string:columnName>/<string:columnValue>/', methods=['POST'])
 @authorized
-def editIngredient(ingredientId, columnName, columnValue):
+def editIngredient(id, columnName, columnValue):
     ingredient = Ingredients(get_database())
 
-    status, message = ingredient.editIngredient(columnName, columnValue, ingredientId)
+    status, message = ingredient.editIngredient(columnName, columnValue, id)
 
     return jsonify({
         'status': status,
@@ -489,33 +490,34 @@ def editIngredient(ingredientId, columnName, columnValue):
     })
 
 
-@app.route('/recipe/comment/<int:recipeId>', methods=['GET'])
-def getComment(recipeId):
+@app.route('/recipe/<int:id>/comment', methods=['GET'])
+def getComment(id):
     comment = Comments(get_database())
 
-    comments = comment.getComments(recipeId)
+    comments = comment.getComments(id)
 
     return jsonify(comments)
 
 
-@app.route('/recipe/comment/<int:commentId>', methods=['DELETE'])
+@app.route('/recipe/comment/<int:id>', methods=['DELETE'])
 @authorized
-def deleteComment(commentId):
+def deleteComment(id):
     comment = Comments(get_database())
 
-    status, message = comment.deleteComment(commentId)
+    status, message = comment.deleteComment(id)
 
     return jsonify({
         'status': status,
         'message': message
     })
 
-@app.route('/recipe/comment/all/<int:recipeId>', methods=['DELETE'])
+
+@app.route('/recipe/<int:id>/comment/all', methods=['DELETE'])
 @authorized
-def deleteAllComments(recipeId):
+def deleteAllComments(id):
     comment = Comments(get_database())
 
-    status, message = comment.deleteAllComment(recipeId)
+    status, message = comment.deleteAllComment(id)
 
     return jsonify({
         'status': status,
@@ -529,10 +531,10 @@ def addComment():
 
     params = request.get_json()
 
-    recipeId = params.get('recipeId')
+    id = params.get('id')
     commentText = params.get('comment')
 
-    status, message = comment.addComment(recipeId, get_user_id(), commentText)
+    status, message = comment.addComment(id, get_user_id(), commentText)
 
     return jsonify({
         'status': status,
@@ -540,63 +542,63 @@ def addComment():
     })
 
 
-@app.route('/recipe/comment/<int:commentId>/<string:columnName>/<string:columnValue>/', methods=['POST'])
+@app.route('/recipe/comment/<int:id>/<string:columnName>/<string:columnValue>/', methods=['POST'])
 @authorized
-def editComment(commentId, columnName, columnValue):
+def editComment(id, columnName, columnValue):
     comment = Comments(get_database())
 
-    status, message = comment.editComment(columnName, columnValue, commentId)
+    status, message = comment.editComment(columnName, columnValue, id)
 
     return jsonify({
         'status': status,
         'message': message
     })
 
-@app.route('/recipe/stars/<int:recipeId>', methods=['GET'])
-def getStars(recipeId):
+@app.route('/recipe/<int:id>/stars', methods=['GET'])
+def getStars(id):
     star = Stars(get_database())
     userID = get_user_id()
 
-    stars = star.getStars(recipeId, userID)
+    stars = star.getStars(id, userID)
 
     if not stars:
         Logger.fail("There was no stars returned!")
     return jsonify(stars)
 
 
-@app.route('/recipe/favorite/<int:recipeId>', methods=['GET'])
-def getFavorite(recipeId):
+@app.route('/recipe/<int:id>/favorite', methods=['GET'])
+def getFavorite(id):
     star = Stars(get_database())
     userID = get_user_id()
 
-    favorite = star.getFavorite(recipeId, userID)
+    favorite = star.getFavorite(id, userID)
 
     if not favorite:
         Logger.fail("There was no stars returned!")
     return jsonify(favorite)
 
-@app.route('/recipe/stars/detail/<int:recipeId>', methods=['GET'])
-def getRecipeDetailsStars(recipeId):
+@app.route('/recipe/<int:id>/stars/detail', methods=['GET'])
+def getRecipeDetailsStars(id):
     star = Stars(get_database())
 
     userID = get_user_id()
     if not userID:
         userID = -1
 
-    stars = star.getRecipeDetailsStars(userID, recipeId)
+    stars = star.getRecipeDetailsStars(userID, id)
 
     if not stars:
         Logger.fail("There was no stars returned!")
     return jsonify(stars)
 
 
-@app.route('/recipe/stars/<int:recipeId>', methods=['DELETE'])
+@app.route('/recipe/<int:id>/stars', methods=['DELETE'])
 @authorized
-def deleteStars(recipeId):
+def deleteStars(id):
     star = Stars(get_database())
     userID = get_user_id()
 
-    status, message = star.deleteStars(recipeId, userID)
+    status, message = star.deleteStars(id, userID)
 
     return jsonify({
         'status': status,
@@ -614,9 +616,9 @@ def addStars():
 
     starsCount = params.get('starsCount')
     favoritesCount = params.get('favoritesCount')
-    recipeId = params.get('recipeId')
+    id = params.get('id')
 
-    status, message = star.addStars(userID, recipeId, starsCount, favoritesCount)
+    status, message = star.addStars(userID, id, starsCount, favoritesCount)
 
     return jsonify({
         'status': status,
@@ -624,13 +626,13 @@ def addStars():
     })
 
 
-@app.route('/recipe/stars/<int:recipeId>/<string:columnName>/<int:columnValue>', methods=['POST'])
+@app.route('/recipe/<int:id>/stars/<string:columnName>/<int:columnValue>', methods=['POST'])
 @authorized
-def editStars(recipeId, columnName, columnValue):
+def editStars(id, columnName, columnValue):
     star = Stars(get_database())
     userID = get_user_id()
 
-    status, message = star.editStars(columnName, columnValue, recipeId, userID)
+    status, message = star.editStars(columnName, columnValue, id, userID)
 
     return jsonify({
         'status': status,
@@ -649,6 +651,7 @@ def main():
     # This launches server
     app.secret_key = os.urandom(32)
     app.run(debug=True)
+
 
 if __name__ == '__main__':
     main()

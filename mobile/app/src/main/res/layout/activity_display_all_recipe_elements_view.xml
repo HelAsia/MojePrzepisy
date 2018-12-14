@@ -9,7 +9,7 @@
   android:focusable="true"
   android:focusableInTouchMode="true"
   android:background="@color/primary_light"
-  tools:context=".add_recipe.add_recipe.display_all_recipe_elements.DisplayAllRecipeElementsActivityView">
+  tools:context=".addRecipe.displayRecipe.DisplayRecipeActivity">
 
   <android.support.v7.widget.Toolbar
     android:id="@+id/toolbar_whole_recipe"

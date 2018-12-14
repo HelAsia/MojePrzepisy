@@ -9,7 +9,7 @@ public class User {
   private String userID;
   private int photoId;
   private String userPhoto;
-  public int status;
+  private int status;
 
   public User(String login, String password, String dataType){
     if(dataType.equals("loginData")){

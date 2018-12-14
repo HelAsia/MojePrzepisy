@@ -3,7 +3,7 @@
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  tools:context=".recipe_details.comment_details_display.CommentDisplayFragment">
+  tools:context=".recipeDetails.commentDetails.CommentDisplayFragment">
 
   <ScrollView
     android:id="@+id/scrollViewLayout"
