@@ -13,7 +13,7 @@
   android:orientation="vertical"
   card_view:cardBackgroundColor="@color/white"
   card_view:cardCornerRadius="10dp"
-  card_view:cardElevation="10dp">
+  card_view:cardElevation="5dp">
 
   <LinearLayout
     android:id="@+id/one_ingredient_layout"

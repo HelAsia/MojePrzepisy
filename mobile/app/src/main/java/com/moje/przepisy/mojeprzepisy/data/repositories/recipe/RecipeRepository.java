@@ -238,9 +238,11 @@ public class RecipeRepository implements RecipeRepositoryInterface{
         List<Comment> commentList = response.body();
         if(commentList != null){
           Log.i("getComments.onResponse(): Comments: ", "OK. Comments has been downloaded");
+          listener.setCommentAddedState(true);
           listener.setComment(commentList);
         }else{
           Log.e("getComments.onResponse(): Comments: ", "NOT OK. Comments hasn't been downloaded");
+          listener.setCommentAddedState(false);
           listener.onCommentError();
         }
       }

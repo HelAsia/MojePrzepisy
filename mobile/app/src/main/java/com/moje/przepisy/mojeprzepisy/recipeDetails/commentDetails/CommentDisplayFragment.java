@@ -44,7 +44,7 @@ public class CommentDisplayFragment extends Fragment implements CommentDisplayCo
     presenter = new CommentDisplayPresenter(this, new RecipeRepository(context));
     presenter.setWholeCommentsElements();
 
-    getRecipeId();
+    setRecipeId();
     getIsLogged();
     setCommentListeners();
 
@@ -78,9 +78,12 @@ public class CommentDisplayFragment extends Fragment implements CommentDisplayCo
     }
   }
 
+  private void setRecipeId(){
+    this.recipeId = getArguments().getInt("id");
+  }
+
   @Override
   public int getRecipeId() {
-    this.recipeId = getArguments().getInt("id");
     return recipeId;
   }
 

@@ -531,10 +531,10 @@ def addComment():
 
     params = request.get_json()
 
-    id = params.get('id')
+    recipeId = params.get('recipeId')
     commentText = params.get('comment')
 
-    status, message = comment.addComment(id, get_user_id(), commentText)
+    status, message = comment.addComment(recipeId, get_user_id(), commentText)
 
     return jsonify({
         'status': status,

@@ -6,7 +6,7 @@ public class Constant {
 //  public static final String BASE_URL = "http://10.0.2.2:5000/";
 
   //Server version
-  public static final String BASE_URL = "http://145.239.83.170:5000/";
+  public static final String BASE_URL = "http://helasia.com:5000/";
 
   //Burp version
  //public static final String BASE_URL = "http://serwer_testowy:5000/";

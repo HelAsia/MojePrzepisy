@@ -43,7 +43,7 @@ public class DisplayIngredientsAdapter extends RecyclerView.Adapter<DisplayIngre
 
   @Override
   public long getItemId(int position) {
-    return ingredientList.get(position).getIngredientId();
+    return ingredientList.get(position).getId();
   }
 
   public class ViewHolder extends RecyclerView.ViewHolder {
@@ -57,9 +57,9 @@ public class DisplayIngredientsAdapter extends RecyclerView.Adapter<DisplayIngre
     }
 
     void bind(Ingredient ingredient) {
-      int ingredientQuantity = ingredient.getIngredientQuantity();
-      String ingredientUnit = ingredient.getIngredientUnit();
-      String ingredientName = ingredient.getIngredientName();
+      int ingredientQuantity = ingredient.getQuantity();
+      String ingredientUnit = ingredient.getUnit();
+      String ingredientName = ingredient.getName();
 
       quantityTextView.setText(Integer.toString(ingredientQuantity));
       unitTextView.setText(ingredientUnit);

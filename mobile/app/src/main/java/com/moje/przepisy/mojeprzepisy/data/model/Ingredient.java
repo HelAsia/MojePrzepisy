@@ -1,79 +1,79 @@
 package com.moje.przepisy.mojeprzepisy.data.model;
 
 public class Ingredient {
-  private int ingredientId;
+  private int id;
   private int recipeId;
   private int userId;
-  private int ingredientQuantity;
-  private String ingredientUnit;
-  private String ingredientName;
+  private int quantity;
+  private String unit;
+  private String name;
 
-  public Ingredient(int ingredientQuantity, String ingredientUnit, String ingredientName){
-    this.ingredientQuantity = ingredientQuantity;
-    this.ingredientUnit = ingredientUnit;
-    this.ingredientName = ingredientName;
+  public Ingredient(int quantity, String unit, String name){
+    this.quantity = quantity;
+    this.unit = unit;
+    this.name = name;
   }
 
-  public Ingredient(int recipeId, int ingredientQuantity, String ingredientUnit,
-      String ingredientName) {
+  public Ingredient(int recipeId, int quantity, String unit,
+                    String name) {
     this.recipeId = recipeId;
-    this.ingredientQuantity = ingredientQuantity;
-    this.ingredientUnit = ingredientUnit;
-    this.ingredientName = ingredientName;
+    this.quantity = quantity;
+    this.unit = unit;
+    this.name = name;
   }
 
   public Ingredient(){
 
   }
 
-  public Ingredient(int ingredientId, int recipeId, int userId, int ingredientQuantity,
-      String ingredientUnit, String ingredientName) {
-    this.ingredientId = ingredientId;
+  public Ingredient(int id, int recipeId, int userId, int quantity,
+                    String unit, String name) {
+    this.id = id;
     this.recipeId = recipeId;
     this.userId = userId;
-    this.ingredientQuantity = ingredientQuantity;
-    this.ingredientUnit = ingredientUnit;
-    this.ingredientName = ingredientName;
+    this.quantity = quantity;
+    this.unit = unit;
+    this.name = name;
   }
 
-  public int getIngredientId() {
-    return ingredientId;
+  public int getId() {
+    return id;
   }
 
   public int getRecipeId() {
     return recipeId;
   }
 
-  public int getIngredientQuantity() {
-    return ingredientQuantity;
+  public int getQuantity() {
+    return quantity;
   }
 
-  public String getIngredientUnit() {
-    return ingredientUnit;
+  public String getUnit() {
+    return unit;
   }
 
-  public String getIngredientName() {
-    return ingredientName;
+  public String getName() {
+    return name;
   }
 
-  public void setIngredientId(int ingredientId) {
-    this.ingredientId = ingredientId;
+  public void setId(int id) {
+    this.id = id;
   }
 
   public void setRecipeId(int recipeId) {
     this.recipeId = recipeId;
   }
 
-  public void setIngredientQuantity(int ingredientQuantity) {
-    this.ingredientQuantity = ingredientQuantity;
+  public void setQuantity(int quantity) {
+    this.quantity = quantity;
   }
 
-  public void setIngredientUnit(String ingredientUnit) {
-    this.ingredientUnit = ingredientUnit;
+  public void setUnit(String unit) {
+    this.unit = unit;
   }
 
-  public void setIngredientName(String ingredientName) {
-    this.ingredientName = ingredientName;
+  public void setName(String name) {
+    this.name = name;
   }
 
   public int getUserId() {

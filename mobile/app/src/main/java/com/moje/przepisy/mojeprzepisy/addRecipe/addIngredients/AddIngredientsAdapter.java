@@ -7,7 +7,6 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -51,7 +50,7 @@ public class AddIngredientsAdapter extends RecyclerView.Adapter<AddIngredientsAd
 
   @Override
   public long getItemId(int position) {
-    return ingredientList.get(position).getIngredientId();
+    return ingredientList.get(position).getId();
   }
 
   public class ViewHolder extends RecyclerView.ViewHolder {
@@ -77,7 +76,7 @@ public class AddIngredientsAdapter extends RecyclerView.Adapter<AddIngredientsAd
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
           int ingredientQuantity = Integer.valueOf(ingredientQuantityEditText.getText().toString());
-          Ingredient updatedIngredient = new Ingredient(ingredientQuantity, ingredientList.get(getAdapterPosition()).getIngredientUnit(), ingredientList.get(getAdapterPosition()).getIngredientName());
+          Ingredient updatedIngredient = new Ingredient(ingredientQuantity, ingredientList.get(getAdapterPosition()).getUnit(), ingredientList.get(getAdapterPosition()).getName());
           ingredientList.set(getAdapterPosition(), updatedIngredient);
 
           ((AddIngredientsActivity)context).setIngredientList(ingredientList);
@@ -95,7 +94,7 @@ public class AddIngredientsAdapter extends RecyclerView.Adapter<AddIngredientsAd
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
           String ingredientName = ingredientNameEditText.getText().toString();
-          Ingredient updatedIngredient = new Ingredient(ingredientList.get(getAdapterPosition()).getIngredientQuantity(), ingredientList.get(getAdapterPosition()).getIngredientUnit(), ingredientName);
+          Ingredient updatedIngredient = new Ingredient(ingredientList.get(getAdapterPosition()).getQuantity(), ingredientList.get(getAdapterPosition()).getUnit(), ingredientName);
           ingredientList.set(getAdapterPosition(), updatedIngredient);
 
           ((AddIngredientsActivity)context).setIngredientList(ingredientList);
@@ -110,7 +109,7 @@ public class AddIngredientsAdapter extends RecyclerView.Adapter<AddIngredientsAd
         public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
           String ingredientUnit = (String) adapterView.getSelectedItem();
 
-          Ingredient updatedIngredient = new Ingredient(ingredientList.get(getAdapterPosition()).getIngredientQuantity(), ingredientUnit, ingredientList.get(getAdapterPosition()).getIngredientName());
+          Ingredient updatedIngredient = new Ingredient(ingredientList.get(getAdapterPosition()).getQuantity(), ingredientUnit, ingredientList.get(getAdapterPosition()).getName());
           ingredientList.set(getAdapterPosition(), updatedIngredient);
 
           ((AddIngredientsActivity)context).setIngredientList(ingredientList);
@@ -122,9 +121,9 @@ public class AddIngredientsAdapter extends RecyclerView.Adapter<AddIngredientsAd
     }
 
     void bind(Ingredient ingredient) {
-      int ingredientQuantity = ingredient.getIngredientQuantity();
-      String ingredientUnit = ingredient.getIngredientUnit();
-      String ingredientName = ingredient.getIngredientName();
+      int ingredientQuantity = ingredient.getQuantity();
+      String ingredientUnit = ingredient.getUnit();
+      String ingredientName = ingredient.getName();
 
       ArrayAdapter myAdapter = (ArrayAdapter)  ingredientUnitSpinner.getAdapter();
       int ingredientUnitSpinnerPosition = myAdapter.getPosition(ingredientUnit);

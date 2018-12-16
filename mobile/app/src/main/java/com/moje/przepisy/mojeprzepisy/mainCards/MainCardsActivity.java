@@ -97,9 +97,8 @@ public class MainCardsActivity extends AppCompatActivity implements
     MainCardsAdapter adapter = getAdapter();
     recyclerView.setAdapter(adapter);
     recyclerView.setLayoutManager(new LinearLayoutManager(this));
-    adapter.setStarsOnShareClickedListener((int recipeId, int starRate, int position) -> {
-        presenter.sentStars(recipeId, starRate, position);
-    });
+    adapter.setStarsOnShareClickedListener((int recipeId, int starRate, int position) ->
+        presenter.sentStars(recipeId, starRate, position));
     adapter.setHeartOnShareClickedListener(this);
     adapter.setCallbackRecipeIdOnShareClickedListener(this);
   }
@@ -114,7 +113,6 @@ public class MainCardsActivity extends AppCompatActivity implements
 
   @Override
   public FloatingActionButton getFloatingActionButton(){
-    floatingActionButton = (FloatingActionButton) findViewById(R.id.my_fab);
     return floatingActionButton;
   }
 
