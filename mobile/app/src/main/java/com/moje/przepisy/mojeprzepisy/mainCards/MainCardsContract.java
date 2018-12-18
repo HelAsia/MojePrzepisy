@@ -10,11 +10,12 @@ import java.util.List;
 public interface MainCardsContract {
   interface View {
     Context getContext();
-    NavigationView getNavigationView();
-    DrawerLayout getDrawerLayout();
-    FloatingActionButton getFloatingActionButton();
+    void setNavigationViewListener(boolean ifLogged);
+    void setFloatingActionButton(boolean ifLogged);
+    void setDrawerLayoutListener();
     void setRecyclerView(List<OneRecipeCard> cardList);
     void setToolbar();
+    boolean getIsLoggedStatus();
     void setNavigationViewListenerWithRegistration(NavigationView navigationView);
     void setNavigationViewListenerWithoutRegistration(NavigationView navigationView);
     void goToRecipeDetails(int recipeId);
@@ -24,14 +25,11 @@ public interface MainCardsContract {
   interface Presenter {
     void sentStars(int recipeId, int starRate, int position);
     void sentHeart(int recipeId, int favorite, int position);
-    void getAllCardsSortedFromServer(String method);
-    void getSortedMethod(Context context);
+    String getSortedMethod(Context context);
+    void setSortedCards();
+    void setFirstScreen();
     void setSortedMethod(Context context, String sortedMethod);
-    void setDrawerLayoutListener(DrawerLayout drawerLayout);
-    void setFloatingActionButton(FloatingActionButton floatingActionButton, boolean ifLogged);
     void getSearchedCardsFromServer(String recipeName);
-    void setNavigationViewListener(NavigationView navigationView, boolean ifLogged);
-    void onDestroy();
     void refreshCardsAction();
   }
 }

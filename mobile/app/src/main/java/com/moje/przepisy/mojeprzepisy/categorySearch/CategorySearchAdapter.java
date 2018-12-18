@@ -71,9 +71,13 @@ public class CategorySearchAdapter extends RecyclerView.Adapter<CategorySearchAd
     return position;
   }
 
-  public void setSortedMethod(String sortedMethod){
+  private void setSortedMethod(String category){
+    SharedPreferences.Editor categorySetting = PreferenceManager.getDefaultSharedPreferences(context).edit();
+    categorySetting.putString(Constant.PREF_SORTED_METHOD, "category").apply();
+    categorySetting.apply();
+
     SharedPreferences.Editor sortingSetting = PreferenceManager.getDefaultSharedPreferences(context).edit();
-    sortingSetting.putString(Constant.PREF_SORTED_METHOD, sortedMethod).apply();
+    sortingSetting.putString(Constant.PREF_CATEGORY, category).apply();
     sortingSetting.commit();
   }
 

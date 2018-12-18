@@ -23,10 +23,8 @@ public class OperationsOnCardRepository implements OperationsOnCardRepositoryInt
 
   @Override
   public void getCardsSortedByChoseMethod(final OnCardsListener cardsListener, String method) {
-    Call<List<OneRecipeCard>> resp = cardAPI.getCards();
-    if (method.equals("default")){
-      resp = cardAPI.getCards();
-    }else if (method.equals("alphabetically")){
+    Call<List<OneRecipeCard>> resp;
+    if (method.equals("alphabetically")){
       resp = cardAPI.getCardsSortedAlphabetically();
     }else if (method.equals("lastAdded")){
       resp = cardAPI.getCardsSortedByLastAdded();
@@ -36,6 +34,8 @@ public class OperationsOnCardRepository implements OperationsOnCardRepositoryInt
       resp = cardAPI.getCardsSortedByFavorite();
     }else if (method.equals("myRecipe")){
       resp = cardAPI.getUserCards();
+    }else{
+      resp = cardAPI.getCards();
     }
     resp.enqueue(new Callback<List<OneRecipeCard>>() {
       @Override

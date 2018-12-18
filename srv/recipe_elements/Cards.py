@@ -28,7 +28,7 @@ class Cards:
         recipeQuery = u"SELECT recipe_id AS id, recipe_name AS name, user_id AS userId, " \
                       u"photo_id as mainPictureNumber, recipe_created_date_time as Date " \
                       u"FROM recipes " \
-                      u"ORDER BY recipeName; "
+                      u"ORDER BY name; "
 
         return self.getAllCardsBasedMethod(userID,recipeQuery)
 
@@ -41,9 +41,9 @@ class Cards:
         return self.getAllCardsBasedMethod(userID,recipeQuery)
 
     def getAllCardsSortedByHighestRated(self, userID):
-        recipeQuery = u"SELECT recipe_id AS id, recipe_name AS name, user_id AS userId, "\
-        u"photo_id as mainPictureNumber, recipe_created_date_time as Date "\
-        u"FROM recipes; "
+        recipeQuery =   u"SELECT recipe_id AS id, recipe_name AS name, user_id AS userId, "\
+                        u"photo_id as mainPictureNumber, recipe_created_date_time as Date "\
+                        u"FROM recipes; "
 
         result = self.getAllCardsBasedMethod(userID,recipeQuery)
         newList = sorted(result, key=lambda k : k['starsCount'], reverse=True)

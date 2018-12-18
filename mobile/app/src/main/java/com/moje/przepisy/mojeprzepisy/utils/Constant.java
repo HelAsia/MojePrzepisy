@@ -16,7 +16,8 @@ public class Constant {
 
  public static final String PREF_COOKIES = "PREF_COOKIES";
  public static final String PREF_SORTED_METHOD = "PREF_SORTED_METHOD";
-  public static final String PREF_USER_ID = "PREF_USER_ID";
+ public static final String PREF_CATEGORY = "PREF_SORTED_METHOD";
+ public static final String PREF_USER_ID = "PREF_USER_ID";
 
   public static final int NOTIFICATION_TIMER_COUNTDOWN = 1;
   public static final int NOTIFICATION_TIMER_EXPIRED = 2;
