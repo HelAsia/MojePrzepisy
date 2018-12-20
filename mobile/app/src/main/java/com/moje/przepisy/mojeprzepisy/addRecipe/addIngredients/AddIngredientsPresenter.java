@@ -1,141 +1,69 @@
 package com.moje.przepisy.mojeprzepisy.addRecipe.addIngredients;
 
-import android.content.Context;
-import android.os.AsyncTask;
-import android.util.Log;
-import android.widget.Toast;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.moje.przepisy.mojeprzepisy.data.model.Ingredient;
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.lang.reflect.Type;
+import com.moje.przepisy.mojeprzepisy.utils.Constant;
+import com.moje.przepisy.mojeprzepisy.utils.PojoFileConverter;
+import com.moje.przepisy.mojeprzepisy.utils.PojoJsonConverter;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class AddIngredientsPresenter implements AddIngredientsContract.Presenter {
   private AddIngredientsContract.View ingredientsView;
   private List<Ingredient> ingredientList = new ArrayList<>();
-  private Gson gson = new Gson();
+  private PojoFileConverter pojoFileConverter;
+  private PojoJsonConverter pojoJsonConverter = new PojoJsonConverter();
 
   public AddIngredientsPresenter(AddIngredientsContract.View ingredientsView){
     this.ingredientsView = ingredientsView;
+    pojoFileConverter = new PojoFileConverter(ingredientsView.getContext());
   }
 
   @Override
-  public void setIngredientList(List<Ingredient> ingredientList) {
-    this.ingredientList = ingredientList;
+  public void previousAction(){
+    pojoFileConverter.addPojoListToFile(Constant.INGREDIENTS_FILE_NAME, ingredientList);
+    ingredientsView.navigateToPreviousPage();
   }
 
   @Override
-  public String convertPojoToJsonString(List<Ingredient> ingredientList) {
-    Type type = new TypeToken<List<Ingredient>>(){}.getType();
-    return gson.toJson(ingredientList, type);
+  public void nextAction() {
+    pojoFileConverter.addPojoListToFile(Constant.INGREDIENTS_FILE_NAME, ingredientList);
+    ingredientsView.navigateToNextPage();
   }
 
-  @Override
-  public void addPojoListToFile() {
-    new BackgroundSaveIngredientsToFileActions().execute();
-  }
+  private void setFirstList(){
+    List<Ingredient> ingredientFirstList = getIngredientFirstList();
 
-  @Override
-  public String getPojoListFromFile(Context context) {
-    try {
-      FileInputStream fileToRead = context.openFileInput("IngredientsData.txt");
-      StringBuffer fileToReadBuffer = new StringBuffer();
-      BufferedReader dataIO = new BufferedReader(new InputStreamReader(fileToRead));
-
-      String ingredientsListPojo;
-      while ((ingredientsListPojo = dataIO.readLine()) != null){
-        fileToReadBuffer.append(ingredientsListPojo + "\n");
-      }
-
-      dataIO.close();
-      fileToRead.close();
-      return fileToReadBuffer.toString();
-
-    } catch (FileNotFoundException e) {
-      e.printStackTrace();
-      return null;
-    } catch (IOException e) {
-      e.printStackTrace();
-      return null;
+    if(ingredientFirstList != null){
+      ingredientList = ingredientFirstList;
+      ingredientsView.setRecyclerView(ingredientList);
+    }else {
+      setInitialIngredient();
     }
-  }
-
-  @Override
-  public List<Ingredient> getIngredientListAfterChangeScreen(String jsonList) {
-    Type type = new TypeToken<List<Ingredient>>() {}.getType();
-    return gson.fromJson(jsonList, type);
   }
 
   @Override
   public void setFirstScreen() {
-    List<Ingredient> ingredientFirstList = getIngredientListAfterChangeScreen(getPojoListFromFile(ingredientsView.getContext()));
-    if(ingredientFirstList != null){
-      ingredientList = ingredientFirstList;
-      setIngredientList(ingredientList);
-      ingredientsView.setRecyclerView(ingredientList);
-    }else {
-      Ingredient emptyIngredient = new Ingredient(1, "kg", "np. cukier");
-      ingredientList.add(emptyIngredient);
-      setIngredientList(ingredientList);
-      ingredientsView.setRecyclerView(ingredientList);
-    }
+    ingredientsView.setToolbar();
+    ingredientsView.setListeners();
+    setFirstList();
   }
 
   @Override
-  public void setNextStep() {
-    Ingredient emptyIngredient = new Ingredient(1, "kg", "np. cukier");
-
-    ingredientList.add(emptyIngredient);
-    setIngredientList(ingredientList);
-    ingredientsView.setRecyclerView(ingredientList);
-
-    addPojoListToFile();
+  public void setNextIngredient() {
+    setInitialIngredient();
+    pojoFileConverter.addPojoListToFile(Constant.INGREDIENTS_FILE_NAME, ingredientList);
   }
 
-  private class BackgroundSaveIngredientsToFileActions extends AsyncTask<Void, Void, Void> {
+  private void setInitialIngredient(){
+    Ingredient emptyIngredient = new Ingredient(1, "kg", "np. cukier");
+    ingredientList.add(emptyIngredient);
+    ingredientsView.setRecyclerView(ingredientList);
+  }
 
-    public BackgroundSaveIngredientsToFileActions() {
-    }
-
-    @Override
-    protected void onPreExecute() {
-    }
-
-    @Override
-    protected Void doInBackground(Void... arg0) {
-      try {
-        FileOutputStream fileWithData;
-        try {
-          fileWithData = (ingredientsView.getContext().openFileOutput("IngredientsData.txt", Context.MODE_PRIVATE));
-          try {
-            Log.d("STRING TO WRITE", convertPojoToJsonString(ingredientList));
-            fileWithData.write(convertPojoToJsonString(ingredientList).getBytes());
-            fileWithData.close();
-          } catch (IOException e) {
-            e.printStackTrace();
-          }
-        } catch (FileNotFoundException e) {
-          e.printStackTrace();
-        }
-
-        Thread.sleep(1000);
-      } catch (InterruptedException e) {
-        e.printStackTrace();
-      }
-      return null;
-    }
-
-    @Override
-    protected void onPostExecute(Void result) {
-      Toast.makeText(ingredientsView.getContext(), "DODANE", Toast.LENGTH_SHORT).show();
-    }
+  private List<Ingredient> getIngredientFirstList(){
+    return pojoJsonConverter.convertJsonToPojo(pojoFileConverter
+            .getPojoListFromFile(Constant.INGREDIENTS_FILE_NAME), Constant.INGREDIENTS_FILE_NAME);
   }
 }
 

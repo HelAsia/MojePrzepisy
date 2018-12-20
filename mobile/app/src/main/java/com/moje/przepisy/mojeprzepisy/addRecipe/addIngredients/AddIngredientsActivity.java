@@ -8,7 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.moje.przepisy.mojeprzepisy.R;
@@ -35,10 +35,18 @@ public class AddIngredientsActivity extends AppCompatActivity implements
     ButterKnife.bind(this);
 
     presenter = new AddIngredientsPresenter(this);
-
-    setListeners();
-    setToolbar();
     presenter.setFirstScreen();
+  }
+
+  @Override
+  public Context getContext() {
+    return context;
+  }
+
+  @Override
+  public void setToolbar() {
+    toolbarRecipe.setSubtitle(R.string.add_recipe_title_step_two);
+    setSupportActionBar(toolbarRecipe);
   }
 
   @Override
@@ -50,39 +58,20 @@ public class AddIngredientsActivity extends AppCompatActivity implements
 
   @Override
   public void setListeners() {
-    addIngredientFab.setOnClickListener(v -> presenter.setNextStep());
-    previousActionFab.setOnClickListener(v -> {
-      presenter.addPojoListToFile();
-      navigateToPreviousPage();
-    });
-    nextActionFab.setOnClickListener(v -> {
-      presenter.addPojoListToFile();
-      navigateToNextPage();
-    });
+    addIngredientFab.setOnClickListener(v -> presenter.setNextIngredient());
+    previousActionFab.setOnClickListener(v -> presenter.previousAction());
+    nextActionFab.setOnClickListener(v -> presenter.nextAction());
   }
 
   @Override
-  public Context getContext() {
-    return context;
-  }
-
-  @Override
-  public List<Ingredient> setIngredientList(List<Ingredient> ingredientList) {
-    return ingredientList;
-  }
-
-  public void setToolbar() {
-    toolbarRecipe.setSubtitle(R.string.add_recipe_title_step_two);
-    setSupportActionBar(toolbarRecipe);
-  }
-
   public void navigateToPreviousPage(){
-    Intent intent = new Intent(AddIngredientsActivity.this, AddRecipeActivity.class);
+    Intent intent = new Intent(this, AddRecipeActivity.class);
     startActivity(intent);
   }
 
+  @Override
   public void navigateToNextPage(){
-    Intent intent = new Intent(AddIngredientsActivity.this, AddStepsActivity.class);
+    Intent intent = new Intent(this, AddStepsActivity.class);
     startActivity(intent);
   }
 }

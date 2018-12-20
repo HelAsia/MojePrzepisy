@@ -18,10 +18,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.moje.przepisy.mojeprzepisy.R;
 import com.moje.przepisy.mojeprzepisy.data.model.Ingredient;
+import com.moje.przepisy.mojeprzepisy.utils.Constant;
+import com.moje.przepisy.mojeprzepisy.utils.PojoFileConverter;
+
 import java.util.List;
 
 public class AddIngredientsAdapter extends RecyclerView.Adapter<AddIngredientsAdapter.ViewHolder> {
-  public Context context;
+  private Context context;
   private List<Ingredient> ingredientList;
 
   AddIngredientsAdapter(Context context, List<Ingredient> ingredientList){
@@ -54,10 +57,12 @@ public class AddIngredientsAdapter extends RecyclerView.Adapter<AddIngredientsAd
   }
 
   public class ViewHolder extends RecyclerView.ViewHolder {
+    private PojoFileConverter pojoFileConverter = new PojoFileConverter(context);
     @BindView(R.id.ingredientQuantityEditText) EditText ingredientQuantityEditText;
     @BindView(R.id.ingredientUnitSpinner) Spinner ingredientUnitSpinner;
     @BindView(R.id.ingredientNameEditText) EditText ingredientNameEditText;
     @BindView(R.id.deleteImageView) ImageView deleteImageView;
+
 
     ViewHolder(View v) {
       super(v);
@@ -65,7 +70,7 @@ public class AddIngredientsAdapter extends RecyclerView.Adapter<AddIngredientsAd
       deleteImageView.setOnClickListener(it -> {
           ingredientList.remove(getAdapterPosition());
           notifyItemRemoved(getAdapterPosition());
-          ((AddIngredientsActivity)context).setIngredientList(ingredientList);
+          pojoFileConverter.addPojoListToFile(Constant.INGREDIENTS_FILE_NAME, ingredientList);
       });
 
       ingredientQuantityEditText.addTextChangedListener(new TextWatcher() {
@@ -79,7 +84,7 @@ public class AddIngredientsAdapter extends RecyclerView.Adapter<AddIngredientsAd
           Ingredient updatedIngredient = new Ingredient(ingredientQuantity, ingredientList.get(getAdapterPosition()).getUnit(), ingredientList.get(getAdapterPosition()).getName());
           ingredientList.set(getAdapterPosition(), updatedIngredient);
 
-          ((AddIngredientsActivity)context).setIngredientList(ingredientList);
+          pojoFileConverter.addPojoListToFile(Constant.INGREDIENTS_FILE_NAME, ingredientList);
         }
         @Override
         public void afterTextChanged(Editable editable) {
@@ -96,8 +101,7 @@ public class AddIngredientsAdapter extends RecyclerView.Adapter<AddIngredientsAd
           String ingredientName = ingredientNameEditText.getText().toString();
           Ingredient updatedIngredient = new Ingredient(ingredientList.get(getAdapterPosition()).getQuantity(), ingredientList.get(getAdapterPosition()).getUnit(), ingredientName);
           ingredientList.set(getAdapterPosition(), updatedIngredient);
-
-          ((AddIngredientsActivity)context).setIngredientList(ingredientList);
+          pojoFileConverter.addPojoListToFile(Constant.INGREDIENTS_FILE_NAME, ingredientList);
         }
         @Override
         public void afterTextChanged(Editable editable) {
@@ -111,8 +115,7 @@ public class AddIngredientsAdapter extends RecyclerView.Adapter<AddIngredientsAd
 
           Ingredient updatedIngredient = new Ingredient(ingredientList.get(getAdapterPosition()).getQuantity(), ingredientUnit, ingredientList.get(getAdapterPosition()).getName());
           ingredientList.set(getAdapterPosition(), updatedIngredient);
-
-          ((AddIngredientsActivity)context).setIngredientList(ingredientList);
+          pojoFileConverter.addPojoListToFile(Constant.INGREDIENTS_FILE_NAME, ingredientList);
         }
         @Override
         public void onNothingSelected(AdapterView<?> adapterView) {
