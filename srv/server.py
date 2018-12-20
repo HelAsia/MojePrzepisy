@@ -309,7 +309,8 @@ def addWholeRecipeElements():
     statusAddingRecipe, recipeId = recipe.addRecipe(userID, recipeList)
 
     starsList = params['starsList'][0]
-    statusAddingStars, messageAddingStars = star.addStars(userID, recipeId, starsList)
+    statusAddingStars, messageAddingStars = star\
+        .addStars(userID, recipeId, starsList['starsCount'], starsList['favoritesCount'])
 
     ingredientList = params['ingredientList']
     statusAddingIngredient, messageAddingIngredient = ingredient.addIngredient(recipeId, ingredientList)

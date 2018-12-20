@@ -51,9 +51,7 @@ class Stars:
                 return queryResult[0]
             return False
 
-    def addStars(self, userID, recipeId, starsList):
-        starsCount = starsList['starsCount']
-        favoritesCount = starsList['favoritesCount']
+    def addStars(self,userID, recipeId, starsCount, favoritesCount):
 
         query = u"INSERT INTO users_recipes_stars " \
                 u"(user_id, recipe_id, favorite, stars) " \

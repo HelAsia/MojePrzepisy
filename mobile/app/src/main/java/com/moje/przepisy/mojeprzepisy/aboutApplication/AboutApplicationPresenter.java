@@ -12,6 +12,14 @@ public class AboutApplicationPresenter implements AboutApplicationContract.Prese
   }
 
   @Override
+  public void setFirstScreen() {
+    aboutApplicationView.setToolbar();
+    aboutApplicationView.setDownArrow();
+    aboutApplicationView.setRightArrow();
+    aboutApplicationView.setDetailsOnClickListeners();
+  }
+
+  @Override
   public void openOrCloseAppDescriptionCardView() {
     if(isDescriptionInfoOpen){
       aboutApplicationView.closeAppDescriptionCardView();

@@ -11,9 +11,7 @@
   android:focusable="true"
   android:foreground="?android:attr/selectableItemBackground"
   android:orientation="vertical"
-  card_view:cardBackgroundColor="@color/white"
-  card_view:cardCornerRadius="10dp"
-  card_view:cardElevation="10dp">
+  card_view:cardBackgroundColor="@color/white">
 
   <LinearLayout
     android:layout_width="match_parent"
@@ -57,7 +55,7 @@
       android:layout_height="300dp"
       android:layout_weight="1"
       android:layout_gravity="center_horizontal"
-      android:visibility="gone"
+      android:visibility="visible"
       card_view:srcCompat="@android:drawable/ic_menu_gallery"/>
   </LinearLayout>
 

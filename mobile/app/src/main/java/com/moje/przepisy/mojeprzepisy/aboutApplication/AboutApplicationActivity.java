@@ -33,7 +33,9 @@ public class AboutApplicationActivity extends AppCompatActivity implements
   @BindView(R.id.app_author_play_arrow) ImageView authorPlayArrow;
   @BindView(R.id.app_version_play_arrow) ImageView versionPlayArrow;
   @BindView(R.id.app_error_play_arrow) ImageView errorPlayArrow;
-  AboutApplicationContract.Presenter presenter;
+  private AboutApplicationContract.Presenter presenter;
+  private Drawable downArrow;
+  private Drawable rightArrow;
   Context context;
 
   @Override
@@ -44,8 +46,7 @@ public class AboutApplicationActivity extends AppCompatActivity implements
     context = getApplicationContext();
 
     presenter = new AboutApplicationPresenter(this);
-    setDetailsOnClickListeners();
-    setToolbar();
+    presenter.setFirstScreen();
   }
 
   @Override
@@ -124,12 +125,20 @@ public class AboutApplicationActivity extends AppCompatActivity implements
   }
 
   @Override
-  public Drawable getDownArrow() {
-    return context.getResources().getDrawable(R.drawable.ic_arrow_drop_down_black_24dp);
+  public void setDownArrow() {
+    downArrow = context.getResources().getDrawable(R.drawable.ic_arrow_drop_down_black_24dp);
   }
 
   @Override
-  public Drawable getRightArrow() {
-    return context.getResources().getDrawable(R.drawable.ic_play_arrow_black_24dp);
+  public void setRightArrow() {
+    rightArrow = context.getResources().getDrawable(R.drawable.ic_play_arrow_black_24dp);
+  }
+
+  private Drawable getDownArrow() {
+    return downArrow;
+  }
+
+  private Drawable getRightArrow() {
+    return rightArrow;
   }
 }

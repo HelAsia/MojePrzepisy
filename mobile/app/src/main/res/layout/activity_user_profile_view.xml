@@ -46,13 +46,20 @@
           android:layout_height="200dp"
           android:layout_gravity="center"
           app:srcCompat="@android:drawable/ic_menu_gallery"/>
+        <ImageView
+            android:id="@+id/saveUserPictureImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_gravity="end"
+            app:srcCompat="@android:drawable/ic_menu_save"/>
         <TextView
           android:id="@+id/loadPictureTextView"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:gravity="center"
           android:text="@string/load_photo"
-          android:background="@color/blue_transparent"
           android:textColor="@color/primary_text"
           android:textSize="@dimen/edit_text_size"/>
         <LinearLayout
@@ -82,22 +89,6 @@
             android:src="@mipmap/ic_find_in_page"/>
         </LinearLayout>
         <TextView
-          android:id="@+id/savePictureTextView"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:gravity="center"
-          android:text="@string/save_photo"
-          android:background="@color/blue_transparent"
-          android:textColor="@color/primary_text"
-          android:textSize="@dimen/edit_text_size"/>
-        <ImageView
-          android:id="@+id/saveUserPictureImageView"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_marginBottom="20dp"
-          android:layout_gravity="center"
-          app:srcCompat="@android:drawable/ic_menu_save"/>
-        <TextView
           android:id="@+id/anyErrorMessageTextView"
           android:layout_width="match_parent"
           android:textColor="@color/red"
@@ -118,12 +109,10 @@
           android:layout_weight="2"
           android:layout_marginBottom="4dp"
           android:layout_marginLeft="4dp"
-          android:background="@color/yellow"
           android:ems="10"
           android:gravity="center"
           android:text="@string/user_login"
-          android:textColor="@color/primary_text"
-          android:textSize="14sp"/>
+          style="@style/UserInformation"/>
 
         <TextView
           android:id="@+id/editLoginTextView"
@@ -133,8 +122,14 @@
           android:layout_marginBottom="4dp"
           android:gravity="center"
           android:textColor="@color/primary_text"
-          android:text="Name"
           android:textSize="18sp"/>
+
+        <ImageView
+            android:id="@+id/saveLoginImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            app:srcCompat="@android:drawable/ic_menu_save"/>
       </LinearLayout>
 
       <LinearLayout
@@ -150,12 +145,10 @@
           android:layout_weight="1"
           android:layout_marginBottom="4dp"
           android:layout_marginLeft="4dp"
-          android:background="@color/yellow"
           android:ems="10"
           android:gravity="center"
           android:text="@string/user_first_name"
-          android:textColor="@color/primary_text"
-          android:textSize="14sp"/>
+          style="@style/UserInformation"/>
 
         <EditText
           android:id="@+id/editNameEditText"
@@ -163,13 +156,14 @@
           android:layout_height="wrap_content"
           android:ems="10"
           android:gravity="center"
-          android:inputType="textPersonName"
-          android:text="Name"/>
+          android:inputType="textPersonName"/>
 
         <ImageView
           android:id="@+id/saveNameImageView"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
+          android:layout_marginRight="20dp"
+          android:layout_marginEnd="20dp"
           app:srcCompat="@android:drawable/ic_menu_save"/>
       </LinearLayout>
 
@@ -186,12 +180,10 @@
           android:layout_weight="1"
           android:layout_marginBottom="4dp"
           android:layout_marginLeft="4dp"
-          android:background="@color/yellow"
           android:ems="10"
           android:gravity="center"
           android:text="@string/user_last_name"
-          android:textColor="@color/primary_text"
-          android:textSize="14sp"/>
+          style="@style/UserInformation"/>
 
         <EditText
           android:id="@+id/editLastNameEditText"
@@ -199,13 +191,14 @@
           android:layout_height="wrap_content"
           android:ems="10"
           android:gravity="center"
-          android:inputType="textPersonName"
-          android:text="Name"/>
+          android:inputType="textPersonName"/>
 
         <ImageView
           android:id="@+id/saveLastNameImageView"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
+          android:layout_marginRight="20dp"
+          android:layout_marginEnd="20dp"
           app:srcCompat="@android:drawable/ic_menu_save"/>
       </LinearLayout>
 
@@ -222,12 +215,10 @@
           android:layout_weight="1"
           android:layout_marginBottom="4dp"
           android:layout_marginLeft="4dp"
-          android:background="@color/yellow"
           android:ems="10"
           android:gravity="center"
           android:text="@string/user_email"
-          android:textColor="@color/primary_text"
-          android:textSize="14sp"/>
+          style="@style/UserInformation"/>
 
         <EditText
           android:id="@+id/editEmailEditText"
@@ -235,13 +226,14 @@
           android:layout_height="wrap_content"
           android:ems="10"
           android:gravity="center"
-          android:inputType="textEmailAddress"
-          android:text="Name"/>
+          android:inputType="textEmailAddress"/>
 
         <ImageView
           android:id="@+id/saveEmailImageView"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
+          android:layout_marginRight="20dp"
+          android:layout_marginEnd="20dp"
           app:srcCompat="@android:drawable/ic_menu_save"/>
       </LinearLayout>
 
@@ -258,12 +250,10 @@
           android:layout_weight="1"
           android:layout_marginBottom="4dp"
           android:layout_marginLeft="4dp"
-          android:background="@color/yellow"
           android:ems="10"
           android:gravity="center"
           android:text="@string/user_password"
-          android:textColor="@color/primary_text"
-          android:textSize="14sp"/>
+          style="@style/UserInformation"/>
 
         <EditText
           android:id="@+id/editPasswordEditText"
@@ -271,13 +261,14 @@
           android:layout_height="wrap_content"
           android:ems="10"
           android:gravity="center"
-          android:inputType="textPassword"
-          android:text="Name"/>
+          android:inputType="textPassword"/>
 
         <ImageView
           android:id="@+id/editPasswordImageView"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
+          android:layout_marginRight="20dp"
+          android:layout_marginEnd="20dp"
           android:src="@android:drawable/ic_menu_edit"/>
       </LinearLayout>
 
@@ -296,11 +287,9 @@
           android:layout_weight="1"
           android:layout_marginBottom="4dp"
           android:layout_marginLeft="4dp"
-          android:background="@color/yellow"
           android:ems="10"
           android:text="@string/user_repeat_password"
-          android:textColor="@color/primary_text"
-          android:textSize="14sp"/>
+          style="@style/UserInformation"/>
 
         <EditText
           android:id="@+id/editRepeatPasswordEditText"
@@ -308,13 +297,14 @@
           android:layout_height="wrap_content"
           android:ems="10"
           android:gravity="center"
-          android:inputType="textPassword"
-          android:text="Name"/>
+          android:inputType="textPassword"/>
 
         <ImageView
           android:id="@+id/savePasswordImageView"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
+          android:layout_marginRight="20dp"
+          android:layout_marginEnd="20dp"
           android:src="@android:drawable/ic_menu_save"/>
       </LinearLayout>
     </RelativeLayout>

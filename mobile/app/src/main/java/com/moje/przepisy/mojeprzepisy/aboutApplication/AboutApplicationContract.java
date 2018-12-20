@@ -19,11 +19,12 @@ public interface AboutApplicationContract {
     void openAppErrorCardView();
     void closeAppErrorCardView();
     void setDetailsOnClickListeners();
-    Drawable getDownArrow();
-    Drawable getRightArrow();
+    void setDownArrow();
+    void setRightArrow();
   }
 
   interface Presenter{
+    void setFirstScreen();
     void openOrCloseAppDescriptionCardView();
     void openOrCloseAppAuthorCardView();
     void openOrCloseAppVersionCardView();
