@@ -7,6 +7,7 @@ public interface OperationsOnCardRepositoryInterface {
   interface OnCardsListener {
     void setRecipesList(List<OneRecipeCard> recipesList) ;
     void setUpdatedCardFromServer(OneRecipeCard updatedCard, int position);
+    void onError(String message);
   }
 
   void getCardsSortedByChoseMethod(OnCardsListener cordsListener, String method);

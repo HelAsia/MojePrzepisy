@@ -10,22 +10,23 @@ import java.util.List;
 public interface MainCardsContract {
   interface View {
     Context getContext();
+    boolean getIsLoggedStatus();
     void setNavigationViewListener(boolean ifLogged);
     void setFloatingActionButton(boolean ifLogged);
     void setDrawerLayoutListener();
     void setRecyclerView(List<OneRecipeCard> cardList);
     void setToolbar();
-    boolean getIsLoggedStatus();
     void setNavigationViewListenerWithRegistration(NavigationView navigationView);
     void setNavigationViewListenerWithoutRegistration(NavigationView navigationView);
     void goToRecipeDetails(int recipeId);
     void setUpdatedCard(OneRecipeCard oneRecipeCard, int position);
+    void setErrorMessage(String message);
   }
 
   interface Presenter {
+    String getSortedMethod(Context context);
     void sentStars(int recipeId, int starRate, int position);
     void sentHeart(int recipeId, int favorite, int position);
-    String getSortedMethod(Context context);
     void setSortedCards();
     void setFirstScreen();
     void setSortedMethod(Context context, String sortedMethod);

@@ -6,24 +6,29 @@ import com.moje.przepisy.mojeprzepisy.data.model.OneRecipeCard;
 import com.moje.przepisy.mojeprzepisy.data.network.CardAPI;
 import com.moje.przepisy.mojeprzepisy.data.network.RetrofitSingleton;
 import java.util.List;
+
+import io.reactivex.Scheduler;
+import io.reactivex.Single;
+import io.reactivex.SingleObserver;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class OperationsOnCardRepository implements OperationsOnCardRepositoryInterface {
-
-  private Retrofit retrofit;
   private CardAPI cardAPI;
 
   public OperationsOnCardRepository(Context context) {
-    this.retrofit = RetrofitSingleton.getRetrofitInstance(context);
+    Retrofit retrofit = RetrofitSingleton.getRetrofitInstance(context);
     this.cardAPI = retrofit.create(CardAPI.class);
   }
 
   @Override
   public void getCardsSortedByChoseMethod(final OnCardsListener cardsListener, String method) {
-    Call<List<OneRecipeCard>> resp;
+    Single<List<OneRecipeCard>> resp;
     if (method.equals("alphabetically")){
       resp = cardAPI.getCardsSortedAlphabetically();
     }else if (method.equals("lastAdded")){
@@ -37,79 +42,96 @@ public class OperationsOnCardRepository implements OperationsOnCardRepositoryInt
     }else{
       resp = cardAPI.getCards();
     }
-    resp.enqueue(new Callback<List<OneRecipeCard>>() {
-      @Override
-      public void onResponse(Call<List<OneRecipeCard>> call, Response<List<OneRecipeCard>> response) {
-        List<OneRecipeCard> recipes = response.body();
-        cardsListener.setRecipesList(recipes);
 
-       for (OneRecipeCard recipe : recipes) {
-          Log.i("getCardsSortedByChoseMethod.onResponse(): SERWER", "Id: " + recipe.getId());
-          Log.i("getCardsSortedByChoseMethod.onResponse(): SERWER", "Author: " + recipe.getAuthorName());
-          Log.i("getCardsSortedByChoseMethod.onResponse(): SERWER", "Favorite: " + recipe.getFavoritesCount());
-          Log.i("getCardsSortedByChoseMethod.onResponse(): SERWER", "PhotoRecipe: " + recipe.getMainPicture());
-          Log.i("getCardsSortedByChoseMethod.onResponse(): SERWER", "Recipe: " + recipe.getName());
-          Log.i("getCardsSortedByChoseMethod.onResponse(): SERWER", "Stars: " + recipe.getStarsCount());
-        }
-      }
-      @Override
-      public void onFailure(Call<List<OneRecipeCard>> call, Throwable t) {
-        Log.i("getCardsSortedByChoseMethod.onFailure(): SERWER", t.getMessage());
-      }
-    });
+    resp.subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(new SingleObserver<List<OneRecipeCard>>() {
+              @Override
+              public void onSubscribe(Disposable d) {
+
+              }
+
+              @Override
+              public void onSuccess(List<OneRecipeCard> oneRecipeCards) {
+                cardsListener.setRecipesList(oneRecipeCards);
+              }
+
+              @Override
+              public void onError(Throwable e) {
+                cardsListener.onError(e.getMessage());
+              }
+            });
   }
 
   @Override
   public void getCardsSortedBySearchedQuery(final OnCardsListener cardsListener, String recipeName) {
     OneRecipeCard oneRecipeCard = new OneRecipeCard(recipeName, 1);
-    Call<List<OneRecipeCard>> resp = cardAPI.getCardsSortedBySearchedQuery(oneRecipeCard);
+    cardAPI.getCardsSortedBySearchedQuery(oneRecipeCard)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(new SingleObserver<List<OneRecipeCard>>() {
+              @Override
+              public void onSubscribe(Disposable d) {
 
-    resp.enqueue(new Callback<List<OneRecipeCard>>() {
-      @Override
-      public void onResponse(Call<List<OneRecipeCard>> call, Response<List<OneRecipeCard>> response) {
-        List<OneRecipeCard> recipes = response.body();
-        cardsListener.setRecipesList(recipes);
-      }
-      @Override
-      public void onFailure(Call<List<OneRecipeCard>> call, Throwable t) {
-        Log.i("getCardsSortedByChoseMethod.onFailure(): SERWER", t.getMessage());
-      }
-    });
+              }
+
+              @Override
+              public void onSuccess(List<OneRecipeCard> oneRecipeCards) {
+                cardsListener.setRecipesList(oneRecipeCards);
+              }
+
+              @Override
+              public void onError(Throwable e) {
+                cardsListener.onError(e.getMessage());
+              }
+            });
   }
 
   @Override
   public void getCardsSortedByCategoryQuery(final OnCardsListener cardsListener, String recipeCategory) {
     OneRecipeCard oneRecipeCard = new OneRecipeCard(recipeCategory, 2);
-    Call<List<OneRecipeCard>> resp = cardAPI.getCardsSortedByCategoryQuery(oneRecipeCard);
+    cardAPI.getCardsSortedByCategoryQuery(oneRecipeCard)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(new SingleObserver<List<OneRecipeCard>>() {
+              @Override
+              public void onSubscribe(Disposable d) {
 
-    resp.enqueue(new Callback<List<OneRecipeCard>>() {
-      @Override
-      public void onResponse(Call<List<OneRecipeCard>> call, Response<List<OneRecipeCard>> response) {
-        List<OneRecipeCard> recipes = response.body();
-        cardsListener.setRecipesList(recipes);
-      }
-      @Override
-      public void onFailure(Call<List<OneRecipeCard>> call, Throwable t) {
-        Log.i("getCardsSortedByCategoryQuery.onFailure(): SERWER", t.getMessage());
-      }
-    });
+              }
+
+              @Override
+              public void onSuccess(List<OneRecipeCard> oneRecipeCards) {
+                cardsListener.setRecipesList(oneRecipeCards);
+              }
+
+              @Override
+              public void onError(Throwable e) {
+                cardsListener.onError(e.getMessage());
+              }
+            });
   }
 
   @Override
   public void getUpdatedCard(final OnCardsListener cardsListener, int recipeId, final int position) {
-    Call<List<OneRecipeCard>> resp = cardAPI.getUpdatedCard(recipeId);
+    cardAPI.getUpdatedCard(recipeId)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(new SingleObserver<List<OneRecipeCard>>() {
+              @Override
+              public void onSubscribe(Disposable d) {
 
-    resp.enqueue(new Callback<List<OneRecipeCard>>() {
-      @Override
-      public void onResponse(Call<List<OneRecipeCard>> call, Response<List<OneRecipeCard>> response) {
-        List<OneRecipeCard> recipe = response.body();
-        cardsListener.setUpdatedCardFromServer(recipe.get(0), position);
-      }
-      @Override
-      public void onFailure(Call<List<OneRecipeCard>> call, Throwable t) {
-        Log.i("getUpdatedCard.onFailure(): SERWER", t.getMessage());
-      }
-    });
+              }
+
+              @Override
+              public void onSuccess(List<OneRecipeCard> oneRecipeCards) {
+                cardsListener.setUpdatedCardFromServer(oneRecipeCards.get(0), position);
+              }
+
+              @Override
+              public void onError(Throwable e) {
+                cardsListener.onError(e.getMessage());
+              }
+            });
   }
 
 }

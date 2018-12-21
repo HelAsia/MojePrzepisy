@@ -94,6 +94,7 @@ public class MainCardsPresenter implements MainCardsContract.Presenter,
   @Override
   public void setRecipesList(List<OneRecipeCard> recipesList) {
     if(cardsView != null){
+      cardsView.setErrorMessage("");
       cardsView.setRecyclerView(recipesList);
     }
   }
@@ -114,6 +115,11 @@ public class MainCardsPresenter implements MainCardsContract.Presenter,
   @Override
   public void setUpdatedCardFromServer(OneRecipeCard updatedCard, int position) {
     cardsView.setUpdatedCard(updatedCard, position);
+  }
+
+  @Override
+  public void onError(String message) {
+    cardsView.setErrorMessage(message);
   }
 
   @Override

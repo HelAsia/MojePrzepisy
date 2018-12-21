@@ -19,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -43,12 +44,12 @@ import java.util.List;
 
 public class MainCardsActivity extends AppCompatActivity implements
         MainCardsContract.View {
-
   @BindView(R.id.my_fab) FloatingActionButton floatingActionButton;
   @BindView(R.id.my_recycler_view) RecyclerView recyclerView;
   @BindView(R.id.toolbar_add_recipe) Toolbar toolbar;
   @BindView(R.id.activity_main_cards) DrawerLayout drawerLayout;
   @BindView(R.id.nav_view) NavigationView navigationView;
+  @BindView(R.id.errorMessage_mainCards) TextView errorMessageTextView;
 
   private MainCardsContract.Presenter presenter;
   private Context context;
@@ -139,7 +140,6 @@ public class MainCardsActivity extends AppCompatActivity implements
     );
   }
 
-
   @Override
   public void setToolbar() {
     setSupportActionBar(toolbar);
@@ -165,33 +165,23 @@ public class MainCardsActivity extends AppCompatActivity implements
           int id = menuItem.getItemId();
 
           if (id == R.id.category_nav){
-            Intent intent = new Intent(MainCardsActivity.this, CategorySearchActivity.class);
-            intent.putExtra("LOGGED",true);
-            startActivity(intent);
+            goToCategorySearchActivity();
           }else if (id == R.id.add_nav) {
-            Intent intent = new Intent(MainCardsActivity.this, AddRecipeActivity.class);
-            startActivity(intent);
+            goToAddRecipeActivity();
           }else if (id == R.id.timer_nav) {
-            Intent intent = new Intent(MainCardsActivity.this, TimerActivity.class);
-            startActivity(intent);
+            goToTimerActivity();
           }else if(id == R.id.my_profile_nav){
-            Intent intent = new Intent(MainCardsActivity.this, UserProfileActivity.class);
-            startActivity(intent);
+            goToUserProfileActivity();
           }else if (id == R.id.my_recipe_nav) {
-            presenter.setSortedMethod(context,"myRecipe");
-            presenter.setSortedCards();
+            goToMyRecipe();
           }else if (id == R.id.favorites_nav) {
-            presenter.setSortedMethod(context,"favorite");
-            presenter.setSortedCards();
+            goToFavourite();
           }else if (id == R.id.about_app_nav) {
-            Intent intent = new Intent(MainCardsActivity.this, AboutApplicationActivity.class);
-            startActivity(intent);
+            goToAboutApplicationActivity();
           }else if (id == R.id.licences_nav) {
-            Intent intent = new Intent(MainCardsActivity.this, LicensesActivity.class);
-            startActivity(intent);
+            goToLicensesActivity();
           }else if (id == R.id.logout_nav) {
-            Intent intent = new Intent(MainCardsActivity.this, LogOutActivity.class);
-            startActivity(intent);
+            goToLogOutActivity();
           }
           return false;
         }
@@ -208,28 +198,77 @@ public class MainCardsActivity extends AppCompatActivity implements
           int id = menuItem.getItemId();
 
           if( id == R.id.register_nav){
-            Intent intent = new Intent(MainCardsActivity.this, RegisterActivity.class);
-            startActivity(intent);
+            goToRegisterActivity();
           }else if( id == R.id.login_nav){
-            Intent intent = new Intent(MainCardsActivity.this, LogInActivity.class);
-            startActivity(intent);
+            goToLogInActivity();
           }else if(id == R.id.category_nav){
-            Intent intent = new Intent(MainCardsActivity.this, CategorySearchActivity.class);
-            intent.putExtra("LOGGED",false);
-            startActivity(intent);
+            goToCategorySearchActivity();
           }else if (id == R.id.timer_nav) {
-            Intent intent = new Intent(MainCardsActivity.this, TimerActivity.class);
-            startActivity(intent);
+            goToTimerActivity();
           }else if (id == R.id.about_app_nav) {
-            Intent intent = new Intent(MainCardsActivity.this, AboutApplicationActivity.class);
-            startActivity(intent);
+            goToAboutApplicationActivity();
           }else if (id == R.id.licences_nav) {
-            Intent intent = new Intent(MainCardsActivity.this, LicensesActivity.class);
-            startActivity(intent);
+            goToLicensesActivity();
           }
           return false;
         }
     );
+  }
+
+  private void goToRegisterActivity(){
+    Intent intent = new Intent(MainCardsActivity.this, RegisterActivity.class);
+    startActivity(intent);
+  }
+
+  private void goToLogInActivity(){
+    Intent intent = new Intent(MainCardsActivity.this, LogInActivity.class);
+    startActivity(intent);
+  }
+
+  private void goToCategorySearchActivity() {
+    Intent intent = new Intent(this, CategorySearchActivity.class);
+    intent.putExtra("LOGGED",true);
+    startActivity(intent);
+  }
+
+  private void goToAddRecipeActivity() {
+    Intent intent = new Intent(this, AddRecipeActivity.class);
+    startActivity(intent);
+  }
+
+  private void goToTimerActivity() {
+    Intent intent = new Intent(this, TimerActivity.class);
+    startActivity(intent);
+  }
+
+  private void goToUserProfileActivity() {
+    Intent intent = new Intent(this, UserProfileActivity.class);
+    startActivity(intent);
+  }
+
+  private void goToMyRecipe(){
+    presenter.setSortedMethod(context,"myRecipe");
+    presenter.setSortedCards();
+  }
+
+  private void goToFavourite(){
+    presenter.setSortedMethod(context,"favorite");
+    presenter.setSortedCards();
+  }
+
+  private void goToAboutApplicationActivity(){
+    Intent intent = new Intent(this, AboutApplicationActivity.class);
+    startActivity(intent);
+  }
+
+  private void goToLicensesActivity(){
+    Intent intent = new Intent(this, LicensesActivity.class);
+    startActivity(intent);
+  }
+
+  private void goToLogOutActivity(){
+    Intent intent = new Intent(this, LogOutActivity.class);
+    startActivity(intent);
   }
 
   @Override
@@ -249,7 +288,6 @@ public class MainCardsActivity extends AppCompatActivity implements
       @Override
       public boolean onQueryTextSubmit(String query) {
         presenter.getSearchedCardsFromServer(query);
-        Toast.makeText(context, query, Toast.LENGTH_SHORT).show();
         return true;
       }
 
@@ -264,27 +302,19 @@ public class MainCardsActivity extends AppCompatActivity implements
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
       case R.id.sort_default:
-        presenter.setSortedMethod(context,"default");
-        presenter.setSortedCards();
-        item.setChecked(true);
+        setDefaultSorting(item);
         return true;
 
       case R.id.sort_alphabetic:
-        presenter.setSortedMethod(context,"alphabetically");
-        presenter.setSortedCards();
-        item.setChecked(true);
+        setAlphabeticSorting(item);
         return true;
 
       case R.id.sort_last_add:
-        presenter.setSortedMethod(context,"lastAdded");
-        presenter.setSortedCards();
-        item.setChecked(true);
+        setLastAddedSorting(item);
         return true;
 
       case R.id.sort_highest_rated:
-        presenter.setSortedMethod(context,"highestRated");
-        presenter.setSortedCards();
-        item.setChecked(true);
+        setHighestRatedSorting(item);
         return true;
 
       case android.R.id.home:
@@ -294,6 +324,30 @@ public class MainCardsActivity extends AppCompatActivity implements
       default:
         return super.onOptionsItemSelected(item);
     }
+  }
+
+  private void setDefaultSorting(MenuItem item){
+    presenter.setSortedMethod(context,"default");
+    presenter.setSortedCards();
+    item.setChecked(true);
+  }
+
+  private void setAlphabeticSorting(MenuItem item){
+    presenter.setSortedMethod(context,"alphabetically");
+    presenter.setSortedCards();
+    item.setChecked(true);
+  }
+
+  private void setLastAddedSorting(MenuItem item){
+    presenter.setSortedMethod(context,"lastAdded");
+    presenter.setSortedCards();
+    item.setChecked(true);
+  }
+
+  private void setHighestRatedSorting(MenuItem item){
+    presenter.setSortedMethod(context,"highestRated");
+    presenter.setSortedCards();
+    item.setChecked(true);
   }
 
   @Override
@@ -309,6 +363,16 @@ public class MainCardsActivity extends AppCompatActivity implements
   @Override
   public void setUpdatedCard(OneRecipeCard oneRecipeCard, int position){
     adapter.updateFavoriteOnCard(oneRecipeCard, position);
+  }
+
+  @Override
+  public void setErrorMessage(String message) {
+    if(message.equals("")){
+      errorMessageTextView.setVisibility(View.GONE);
+    }else {
+      errorMessageTextView.setText(message);
+      errorMessageTextView.setVisibility(View.VISIBLE);
+    }
   }
 }
 
