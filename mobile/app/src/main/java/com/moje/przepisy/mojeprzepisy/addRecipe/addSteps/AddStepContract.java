@@ -8,18 +8,16 @@ public interface AddStepContract {
   interface View {
     void setToolbar();
     Context getContext();
-    List<Step> setStepList(List<Step> stepList);
     void setRecyclerView(List<Step> stepList);
     void loadImageFromCamera();
     void loadImageFromGallery();
     void setListeners();
+    void navigateToPreviousPage();
+    void navigateToNextPage();
   }
   interface Presenter {
-    String convertPojoToJsonString(List<Step> step);
-    void addPojoListToFile();
-    String getPojoListFromFile(Context context);
-    List<Step> getStepListAfterChangeScreen(String jsonList);
+    void previousAction();
+    void nextAction();
     void setFirstScreen();
-    void setNextStep();
-  }
+    void setNextStep();  }
 }

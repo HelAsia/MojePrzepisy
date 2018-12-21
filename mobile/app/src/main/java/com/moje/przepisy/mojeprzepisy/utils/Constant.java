@@ -20,6 +20,7 @@ public class Constant {
  public static final String PREF_USER_ID = "PREF_USER_ID";
 
  public static final String INGREDIENTS_FILE_NAME = "IngredientsData.txt";
+ public static final String STEPS_FILE_NAME = "StepsData.txt";
 
   public static final int NOTIFICATION_TIMER_COUNTDOWN = 1;
   public static final int NOTIFICATION_TIMER_EXPIRED = 2;

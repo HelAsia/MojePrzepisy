@@ -6,7 +6,12 @@ import android.util.Log;
 import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.moje.przepisy.mojeprzepisy.data.model.Ingredient;
 import com.moje.przepisy.mojeprzepisy.data.model.Step;
+import com.moje.przepisy.mojeprzepisy.utils.Constant;
+import com.moje.przepisy.mojeprzepisy.utils.PojoFileConverter;
+import com.moje.przepisy.mojeprzepisy.utils.PojoJsonConverter;
+
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -20,120 +25,58 @@ import java.util.List;
 public class AddStepPresenter implements AddStepContract.Presenter {
   private AddStepContract.View stepsView;
   private List<Step> stepList = new ArrayList<>();
-  private Gson gson = new Gson();
-  private int stepNumber = -1;
+  private PojoFileConverter pojoFileConverter;
+  private PojoJsonConverter pojoJsonConverter = new PojoJsonConverter();
 
   AddStepPresenter(AddStepContract.View stepsView){
     this.stepsView = stepsView;
+    pojoFileConverter = new PojoFileConverter(stepsView.getContext());
   }
 
   @Override
-  public String convertPojoToJsonString(List<Step> step) {
-    Type type = new TypeToken<List<Step>>(){}.getType();
-    return gson.toJson(step, type);
+  public void previousAction(){
+    pojoFileConverter.addPojoListToFile(Constant.INGREDIENTS_FILE_NAME, stepList);
+    stepsView.navigateToPreviousPage();
   }
 
   @Override
-  public void addPojoListToFile() {
-    new BackgroundSaveStepsToFileActions().execute();
+  public void nextAction() {
+    pojoFileConverter.addPojoListToFile(Constant.INGREDIENTS_FILE_NAME, stepList);
+    stepsView.navigateToNextPage();
   }
 
-  @Override
-  public String getPojoListFromFile(Context context) {
-    try {
-      FileInputStream fileToRead = context.openFileInput("StepsData.txt");
-      StringBuffer fileToReadBuffer = new StringBuffer();
-      BufferedReader dataIO = new BufferedReader(new InputStreamReader(fileToRead));
+  private void setFirstList(){
+    List<Step> stepFirstList = getStepFirstList();
 
-      String stepsListPojo;
-      while ((stepsListPojo = dataIO.readLine()) != null){
-        fileToReadBuffer.append(stepsListPojo + "\n");
-      }
-
-      dataIO.close();
-      fileToRead.close();
-      return fileToReadBuffer.toString();
-
-    } catch (FileNotFoundException e) {
-      e.printStackTrace();
-      return null;
-    } catch (IOException e) {
-      e.printStackTrace();
-      return null;
-    }
-  }
-
-  @Override
-  public List<Step> getStepListAfterChangeScreen(String jsonList) {
-    Type type = new TypeToken<List<Step>>() {}.getType();
-    return gson.fromJson(jsonList, type);
-  }
-
-  @Override
-  public void setFirstScreen() {
-    List<Step> stepFirstList = getStepListAfterChangeScreen(getPojoListFromFile(stepsView.getContext()));
     if(stepFirstList != null){
       stepList = stepFirstList;
       stepsView.setRecyclerView(stepList);
     }else {
-      Step emptyStep = new Step( -1, "Opis kroku");
-      stepList.add(emptyStep);
-      stepsView.setRecyclerView(stepList);
+      setInitialStep();
     }
   }
 
   @Override
-  public void setNextStep() {
-    for (Step step : stepList){
-      if(step.getStepNumber() > stepNumber){
-        stepNumber = step.getStepNumber();
-      }
-    }
-    Step emptyStep = new Step(stepNumber, "Opis kroku");
-
-//    stepList = getStepListAfterChangeScreen(getPojoListFromFile(stepsView.getContext()));
-    stepList.add(emptyStep);
-    stepsView.setRecyclerView(stepList);
-
-    addPojoListToFile();
+  public void setFirstScreen() {
+    stepsView.setToolbar();
+    stepsView.setListeners();
+    setFirstList();
   }
 
-  private class BackgroundSaveStepsToFileActions extends AsyncTask<Void, Void, Void> {
+  @Override
+  public void setNextStep() {
+    setInitialStep();
+    pojoFileConverter.addPojoListToFile(Constant.STEPS_FILE_NAME, stepList);
+  }
 
-    public BackgroundSaveStepsToFileActions() {
-    }
+  private void setInitialStep(){
+    Step emptyStep = new Step(1, "Opis kroku");
+    stepList.add(emptyStep);
+    stepsView.setRecyclerView(stepList);
+  }
 
-    @Override
-    protected void onPreExecute() {
-    }
-
-    @Override
-    protected Void doInBackground(Void... arg0) {
-      try {
-        FileOutputStream fileWithData;
-        try {
-          fileWithData = (stepsView.getContext().openFileOutput("StepsData.txt", Context.MODE_PRIVATE));
-          try {
-            Log.d("STRING TO WRITE", convertPojoToJsonString(stepList));
-            fileWithData.write(convertPojoToJsonString(stepList).getBytes());
-            fileWithData.close();
-          } catch (IOException e) {
-            e.printStackTrace();
-          }
-        } catch (FileNotFoundException e) {
-          e.printStackTrace();
-        }
-
-        Thread.sleep(1000);
-      } catch (InterruptedException e) {
-        e.printStackTrace();
-      }
-      return null;
-    }
-
-    @Override
-    protected void onPostExecute(Void result) {
-      Toast.makeText(stepsView.getContext(), "DODANE", Toast.LENGTH_SHORT).show();
-    }
+  private List<Step> getStepFirstList(){
+    return pojoJsonConverter.convertJsonToPojo(pojoFileConverter
+            .getPojoListFromFile(Constant.STEPS_FILE_NAME), Constant.STEPS_FILE_NAME);
   }
 }
