@@ -13,6 +13,7 @@ public class AboutApplicationPresenter implements AboutApplicationContract.Prese
 
   @Override
   public void setFirstScreen() {
+    aboutApplicationView.setLogged();
     aboutApplicationView.setToolbar();
     aboutApplicationView.setDownArrow();
     aboutApplicationView.setRightArrow();

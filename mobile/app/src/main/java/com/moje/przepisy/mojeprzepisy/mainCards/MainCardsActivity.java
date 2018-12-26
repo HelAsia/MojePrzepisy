@@ -1,5 +1,6 @@
 package com.moje.przepisy.mojeprzepisy.mainCards;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,6 +24,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 
 import com.moje.przepisy.mojeprzepisy.R;
 import com.moje.przepisy.mojeprzepisy.addRecipe.addMainInfo.AddRecipeActivity;
@@ -40,7 +45,10 @@ import com.moje.przepisy.mojeprzepisy.timer.TimerActivity;
 import com.moje.przepisy.mojeprzepisy.mainCards.MainCardsAdapter.OnShareHeartClickedListener;
 import com.moje.przepisy.mojeprzepisy.userProfile.UserProfileActivity;
 
+import org.reactivestreams.Subscriber;
+
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class MainCardsActivity extends AppCompatActivity implements
         MainCardsContract.View {
@@ -52,17 +60,16 @@ public class MainCardsActivity extends AppCompatActivity implements
   @BindView(R.id.errorMessage_mainCards) TextView errorMessageTextView;
 
   private MainCardsContract.Presenter presenter;
-  private Context context;
   private MainCardsAdapter adapter;
+  private Boolean isLogged;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main_cards);
     ButterKnife.bind(this);
-    context = getApplicationContext();
 
-    presenter = new MainCardsPresenter(this, new OperationsOnCardRepository(context), new RecipeRepository(context));
+    presenter = new MainCardsPresenter(this, new OperationsOnCardRepository(this), new RecipeRepository(this));
     presenter.setFirstScreen();
 
     floatingActionButton.setOnClickListener(v -> {
@@ -72,19 +79,26 @@ public class MainCardsActivity extends AppCompatActivity implements
   }
 
   public Context getContext() {
-    return context;
+    return this;
+  }
+
+  @Override
+  public void setIsLoggedStatus() {
+    if(getIntent().getExtras() != null){
+      isLogged = getIntent().getExtras().getBoolean("LOGGED");
+    }
   }
 
   @Override
   protected void onRestart(){
     super.onRestart();
-    presenter.setSortedMethod(context,"default");
+    presenter.setSortedMethod(this,"default");
   }
 
   @Override
   protected void onResume(){
     super.onResume();
-    presenter.setSortedMethod(context,"default");
+    presenter.setSortedMethod(this,"default");
   }
 
   @Override
@@ -92,7 +106,6 @@ public class MainCardsActivity extends AppCompatActivity implements
     adapter = new MainCardsAdapter(this, cardList);
     recyclerView.setAdapter(adapter);
     recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
     setCallbacksOnAdapter();
   }
 
@@ -152,7 +165,7 @@ public class MainCardsActivity extends AppCompatActivity implements
 
   @Override
   public boolean getIsLoggedStatus(){
-    return getIntent().getExtras().getBoolean("LOGGED");
+    return isLogged;
   }
 
   @Override
@@ -227,7 +240,7 @@ public class MainCardsActivity extends AppCompatActivity implements
 
   private void goToCategorySearchActivity() {
     Intent intent = new Intent(this, CategorySearchActivity.class);
-    intent.putExtra("LOGGED",true);
+    intent.putExtra("LOGGED", isLogged);
     startActivity(intent);
   }
 
@@ -247,22 +260,24 @@ public class MainCardsActivity extends AppCompatActivity implements
   }
 
   private void goToMyRecipe(){
-    presenter.setSortedMethod(context,"myRecipe");
+    presenter.setSortedMethod(this,"myRecipe");
     presenter.setSortedCards();
   }
 
   private void goToFavourite(){
-    presenter.setSortedMethod(context,"favorite");
+    presenter.setSortedMethod(this,"favorite");
     presenter.setSortedCards();
   }
 
   private void goToAboutApplicationActivity(){
     Intent intent = new Intent(this, AboutApplicationActivity.class);
+    intent.putExtra("LOGGED", isLogged);
     startActivity(intent);
   }
 
   private void goToLicensesActivity(){
     Intent intent = new Intent(this, LicensesActivity.class);
+    intent.putExtra("LOGGED", isLogged);
     startActivity(intent);
   }
 
@@ -271,6 +286,7 @@ public class MainCardsActivity extends AppCompatActivity implements
     startActivity(intent);
   }
 
+  @SuppressLint("CheckResult")
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     MenuInflater inflater = getMenuInflater();
@@ -283,8 +299,11 @@ public class MainCardsActivity extends AppCompatActivity implements
     });
 
     MenuItem searchViewItem = menu.findItem(R.id.action_search);
-    final SearchView searchViewAndroidActionBar = (SearchView) MenuItemCompat.getActionView(searchViewItem);
-    searchViewAndroidActionBar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+    final SearchView searchViewAndroidActionBar =
+            (SearchView) MenuItemCompat.getActionView(searchViewItem);
+
+    Observable.create((ObservableOnSubscribe<String>) emitter ->
+            searchViewAndroidActionBar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
       @Override
       public boolean onQueryTextSubmit(String query) {
         presenter.getSearchedCardsFromServer(query);
@@ -293,9 +312,16 @@ public class MainCardsActivity extends AppCompatActivity implements
 
       @Override
       public boolean onQueryTextChange(String newText) {
+        if(newText.length() > 2){
+          emitter.onNext(newText);
+
+        }
         return false;
       }
-    });
+    })).debounce(1000, TimeUnit.MILLISECONDS)
+    .observeOn(AndroidSchedulers.mainThread())
+    .subscribe( newText -> presenter.getSearchedCardsFromServer(newText));
+
     return super.onCreateOptionsMenu(menu);
   }
 
@@ -327,25 +353,25 @@ public class MainCardsActivity extends AppCompatActivity implements
   }
 
   private void setDefaultSorting(MenuItem item){
-    presenter.setSortedMethod(context,"default");
+    presenter.setSortedMethod(this,"default");
     presenter.setSortedCards();
     item.setChecked(true);
   }
 
   private void setAlphabeticSorting(MenuItem item){
-    presenter.setSortedMethod(context,"alphabetically");
+    presenter.setSortedMethod(this,"alphabetically");
     presenter.setSortedCards();
     item.setChecked(true);
   }
 
   private void setLastAddedSorting(MenuItem item){
-    presenter.setSortedMethod(context,"lastAdded");
+    presenter.setSortedMethod(this,"lastAdded");
     presenter.setSortedCards();
     item.setChecked(true);
   }
 
   private void setHighestRatedSorting(MenuItem item){
-    presenter.setSortedMethod(context,"highestRated");
+    presenter.setSortedMethod(this,"highestRated");
     presenter.setSortedCards();
     item.setChecked(true);
   }

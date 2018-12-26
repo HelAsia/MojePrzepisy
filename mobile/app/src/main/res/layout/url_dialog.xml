@@ -60,14 +60,14 @@
         android:id="@+id/set_url_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/bright_buton_wuth_rounded_corners"
+        android:background="@drawable/bright_buton_with_rounded_corners"
         android:text="@string/save"/>
 
         <Button
           android:id="@+id/set_url_cancel_button"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:background="@drawable/bright_buton_wuth_rounded_corners"
+          android:background="@drawable/bright_buton_with_rounded_corners"
           android:text="@string/cancel"/>
     </TableRow>
 

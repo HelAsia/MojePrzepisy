@@ -1,15 +1,19 @@
 package com.moje.przepisy.mojeprzepisy.aboutApplication;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import com.moje.przepisy.mojeprzepisy.R;
+import com.moje.przepisy.mojeprzepisy.mainCards.MainCardsActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,16 +38,15 @@ public class AboutApplicationActivity extends AppCompatActivity implements
   @BindView(R.id.app_version_play_arrow) ImageView versionPlayArrow;
   @BindView(R.id.app_error_play_arrow) ImageView errorPlayArrow;
   private AboutApplicationContract.Presenter presenter;
+  private Boolean isLogged;
   private Drawable downArrow;
   private Drawable rightArrow;
-  Context context;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_about_app_view);
     ButterKnife.bind(this);
-    context = getApplicationContext();
 
     presenter = new AboutApplicationPresenter(this);
     presenter.setFirstScreen();
@@ -53,11 +56,44 @@ public class AboutApplicationActivity extends AppCompatActivity implements
   public void setToolbar() {
     toolbar.setSubtitle(R.string.app_description);
     setSupportActionBar(toolbar);
+    ActionBar actionbar = getSupportActionBar();
+    if(actionbar != null){
+      actionbar.setDisplayHomeAsUpEnabled(true);
+      actionbar.setHomeAsUpIndicator(R.drawable.ic_arrow_back);
+    }
+  }
+
+  public boolean onOptionsItemSelected(MenuItem item){
+    Intent intent = new Intent(this, MainCardsActivity.class);
+    intent.putExtra("LOGGED", isLogged);
+    startActivity(intent);
+    AboutApplicationActivity.this.finish();
+    return true;
+  }
+
+  @Override
+  public void onBackPressed() {
+    Intent intent = new Intent(this, MainCardsActivity.class);
+    intent.putExtra("LOGGED", isLogged);
+    startActivity(intent);
+    AboutApplicationActivity.this.finish();
   }
 
   @Override
   public Context getContext() {
-    return context;
+    return this;
+  }
+
+  @Override
+  public Boolean getLogged() {
+    return isLogged;
+  }
+
+  @Override
+  public void setLogged() {
+    if(getIntent().getExtras() != null){
+      isLogged = getIntent().getExtras().getBoolean("LOGGED");
+    }
   }
 
   @Override
@@ -126,12 +162,12 @@ public class AboutApplicationActivity extends AppCompatActivity implements
 
   @Override
   public void setDownArrow() {
-    downArrow = context.getResources().getDrawable(R.drawable.ic_arrow_drop_down_black_24dp);
+    downArrow = this.getResources().getDrawable(R.drawable.ic_arrow_drop_down_black_24dp);
   }
 
   @Override
   public void setRightArrow() {
-    rightArrow = context.getResources().getDrawable(R.drawable.ic_play_arrow_black_24dp);
+    rightArrow = this.getResources().getDrawable(R.drawable.ic_play_arrow_black_24dp);
   }
 
   private Drawable getDownArrow() {

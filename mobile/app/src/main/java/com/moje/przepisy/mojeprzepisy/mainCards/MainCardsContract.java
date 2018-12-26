@@ -10,6 +10,7 @@ import java.util.List;
 public interface MainCardsContract {
   interface View {
     Context getContext();
+    void setIsLoggedStatus();
     boolean getIsLoggedStatus();
     void setNavigationViewListener(boolean ifLogged);
     void setFloatingActionButton(boolean ifLogged);

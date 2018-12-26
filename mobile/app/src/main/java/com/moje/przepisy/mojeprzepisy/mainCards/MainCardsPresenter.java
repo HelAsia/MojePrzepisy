@@ -67,6 +67,7 @@ public class MainCardsPresenter implements MainCardsContract.Presenter,
 
   @Override
   public void setFirstScreen() {
+    cardsView.setIsLoggedStatus();
     setSortedCards();
     cardsView.setToolbar();
     cardsView.setDrawerLayoutListener();
