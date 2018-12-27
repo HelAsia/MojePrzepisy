@@ -8,12 +8,11 @@ public interface WelcomeContract {
   interface View {
     void navigateToMainRegisteredActivity();
     void navigateToHomePage();
-    TextView getErrorTextView();
+    void setErrorTextView(String errorMessage);
     Context getContext();
   }
 
   interface Presenter {
     void validateCredentialsBeforeMainMenu();
-    void onDestroy();
   }
 }

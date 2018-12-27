@@ -33,12 +33,6 @@ public class LogInActivity extends AppCompatActivity implements LogInContract.Vi
   }
 
   @Override
-  protected  void onDestroy() {
-    presenter.onDestroy();
-    super.onDestroy();
-  }
-
-  @Override
   public Context getContext() {
     return this;
   }
@@ -52,17 +46,18 @@ public class LogInActivity extends AppCompatActivity implements LogInContract.Vi
   }
 
   @Override
-  public TextView getErrorMessageTextView() {
-    return errorMessageTextView;
+  public void setErrorMessageTextView(String errorMessage) {
+    errorMessageTextView.setVisibility(View.VISIBLE);
+    errorMessageTextView.setText(errorMessage);
   }
 
   @Override
-  public EditText getLoginEditText() {
-    return loginEditText;
+  public String getLogin() {
+    return loginEditText.getText().toString();
   }
 
   @Override
-  public EditText getPasswordEditText() {
-    return passwordEditText;
+  public String getPassword() {
+    return passwordEditText.getText().toString();
   }
 }

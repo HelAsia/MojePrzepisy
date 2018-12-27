@@ -13,15 +13,10 @@ public interface RegisterContract {
     String getEmail();
     String getRepeatedEmail();
     Context getContext();
-    void showEmailError();
-    void showPasswordError();
-    void showValidatePasswordError();
-    void showValidateEmailError();
-    void showError(String message);
+    void setErrorTextView(String errorMessage);
   }
 
   interface Presenter {
-    void validateCredentials(String name, String lastName, String login, String password, String email);
-    void onDestroy();
+    void validateCredentials();
   }
 }

@@ -7,8 +7,8 @@ import com.moje.przepisy.mojeprzepisy.utils.Constant;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class RegisterPresenter implements RegisterContract.Presenter, UserRepository.OnRegisterFinishedListener {
-
+public class RegisterPresenter implements RegisterContract.Presenter,
+        UserRepository.OnRegisterFinishedListener {
   private UserRepository userRepository;
   private RegisterContract.View registerView;
 
@@ -18,26 +18,22 @@ public class RegisterPresenter implements RegisterContract.Presenter, UserReposi
   }
 
   @Override
-  public void validateCredentials(String name, String lastName, String login, String password,
-      String email) {
+  public void validateCredentials() {
     if(registerView != null) {
-      userRepository.register(name, lastName, login, password, email,this);
+      userRepository.register(registerView.getName(), registerView.getLastName(),
+                              registerView.getLogin(), registerView.getPassword(),
+                              registerView.getEmail(),this);
     }
-  }
-
-  @Override
-  public void onDestroy() {
-    registerView = null;
   }
 
   @Override
   public boolean onPasswordOrEmailError() {
     if(registerView != null) {
       if(!registerView.getPassword().equals(registerView.getRepeatedPassword())){
-        registerView.showPasswordError();
+        registerView.setErrorTextView("Podane hasła nie są identyczne");
         return false;
       }else if(!registerView.getEmail().equals(registerView.getRepeatedEmail())){
-        registerView.showEmailError();
+        registerView.setErrorTextView("Podane emaile nie są identyczne");
         return false;
       }else {
         return true;
@@ -49,13 +45,17 @@ public class RegisterPresenter implements RegisterContract.Presenter, UserReposi
   @Override
   public boolean onValidatePasswordError(String password) {
     if(registerView != null){
-      String regex = "^(?=.*\\d)(?=.*[a-z])(?=.*[\\!\\@\\#\\$\\%\\^\\&\\*\\(\\)\\_\\+\\-\\=])(?=.*[A-Z])(?!.*\\s).{8,}$";
+      String regex =
+              "^(?=.*\\d)(?=.*[a-z])(?=.*[\\!\\@\\#\\$\\%\\^\\&\\*\\(\\)\\_\\+\\-\\=])" +
+                      "(?=.*[A-Z])(?!.*\\s).{8,}$";
 
       Pattern pattern = Pattern.compile(regex);
       Matcher matcher = pattern.matcher(password);
 
       if(!matcher.matches()){
-        registerView.showValidatePasswordError();
+        String errorMessage = "Hasło musi zawierać małą literę, dużą literę i znak specjalny " +
+                "oraz musi mieć przynajmniej 8 znaków!";
+        registerView.setErrorTextView(errorMessage);
         return false;
       }else {
         return true;
@@ -73,7 +73,7 @@ public class RegisterPresenter implements RegisterContract.Presenter, UserReposi
       Matcher matcher = pattern.matcher(email);
 
       if(!matcher.matches()){
-        registerView.showValidateEmailError();
+        registerView.setErrorTextView("Podany email nie jest poprawny");
         return false;
       }else {
         return true;
@@ -93,11 +93,11 @@ public class RegisterPresenter implements RegisterContract.Presenter, UserReposi
   @Override
   public void onError(String message) {
     if(registerView != null) {
-      registerView.showError(message);
+      registerView.setErrorTextView(message);
     }
   }
 
-  public void saveUserIdInPreferences(int userId){
+  private void saveUserIdInPreferences(int userId){
     SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(registerView.getContext()).edit();
     editor.putInt(Constant.PREF_USER_ID, userId).apply();
     editor.commit();
