@@ -31,13 +31,6 @@ public class RegisterPresenter implements RegisterContract.Presenter, UserReposi
   }
 
   @Override
-  public void onLoginError() {
-    if(registerView != null) {
-      registerView.showLoginError();
-    }
-  }
-
-  @Override
   public boolean onPasswordOrEmailError() {
     if(registerView != null) {
       if(!registerView.getPassword().equals(registerView.getRepeatedPassword())){
@@ -98,9 +91,9 @@ public class RegisterPresenter implements RegisterContract.Presenter, UserReposi
   }
 
   @Override
-  public void onOtherError(String message) {
+  public void onError(String message) {
     if(registerView != null) {
-      registerView.showOtherError(message);
+      registerView.showError(message);
     }
   }
 

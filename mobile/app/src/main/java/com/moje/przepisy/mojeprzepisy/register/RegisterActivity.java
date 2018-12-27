@@ -100,12 +100,6 @@ public class RegisterActivity extends AppCompatActivity implements RegisterContr
   }
 
   @Override
-  public void showLoginError() {
-    errorMessageTextView.setText("Podany login istnieje już w bazie!");
-
-  }
-
-  @Override
   public void showPasswordError() {
     errorMessageTextView.setText("Podane hasła nie są identyczne");
   }
@@ -121,7 +115,7 @@ public class RegisterActivity extends AppCompatActivity implements RegisterContr
   }
 
   @Override
-  public void showOtherError(String message) {
+  public void showError(String message) {
     errorMessageTextView.setText(message);
   }
 

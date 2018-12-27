@@ -89,7 +89,7 @@ public class UserProfilePresenter implements UserProfileContract.Presenter, User
 
 
   @Override
-  public void onGetUserError() {
+  public void onError() {
     Toast.makeText(userView.getContext(), "Błąd pobierania danych użytkownika!", Toast.LENGTH_SHORT)
         .show();
   }

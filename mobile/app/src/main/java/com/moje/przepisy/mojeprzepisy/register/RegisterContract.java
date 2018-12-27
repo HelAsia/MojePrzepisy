@@ -13,12 +13,11 @@ public interface RegisterContract {
     String getEmail();
     String getRepeatedEmail();
     Context getContext();
-    void showLoginError();
     void showEmailError();
     void showPasswordError();
     void showValidatePasswordError();
     void showValidateEmailError();
-    void showOtherError(String message);
+    void showError(String message);
   }
 
   interface Presenter {

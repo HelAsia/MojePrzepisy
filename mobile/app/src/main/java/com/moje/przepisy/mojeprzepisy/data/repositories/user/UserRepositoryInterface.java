@@ -19,12 +19,11 @@ public interface UserRepositoryInterface {
   void logout(OnLogoutFinishedListener listener);
 
   interface OnRegisterFinishedListener {
-    void onLoginError();
     boolean onPasswordOrEmailError();
     boolean onValidatePasswordError(String password);
     boolean onValidateEmailError(String email);
     void onSuccess(int userId);
-    void onOtherError(String message);
+    void onError(String message);
   }
 
   void register(String name, String lastName, String login, String password, String email, OnRegisterFinishedListener listener);
@@ -46,7 +45,7 @@ public interface UserRepositoryInterface {
   void editPhotoUser(String photoData, OnEditPhotoUserFinishedListener listener);
 
   interface OnGetUserFinishedListener{
-    void onGetUserError();
+    void onError();
     void setUserValue(User user);
   }
 
