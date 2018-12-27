@@ -96,7 +96,7 @@ public class CommentDisplayFragment extends Fragment implements CommentDisplayCo
   @Override
   public void setCommentsRecyclerViewAndCommentNumber(List<Comment> commentList) {
     CommentDisplayAdapter adapter = new CommentDisplayAdapter(context, commentList);
-    RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.commentsDisplayRecyclerView);
+    RecyclerView recyclerView = view.findViewById(R.id.commentsDisplayRecyclerView);
     recyclerView.setAdapter(adapter);
     recyclerView.setLayoutManager(new LinearLayoutManager(context));
     presenter.setCommentNumberOnScreen(adapter.getItemCount());

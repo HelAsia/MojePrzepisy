@@ -45,25 +45,20 @@ public class CommentDisplayAdapter extends RecyclerView.Adapter<CommentDisplayAd
   public void onBindViewHolder(@NonNull CommentDisplayAdapter.ViewHolder viewHolder, final int position) {
     viewHolder.bind(commentList.get(position));
 
-    viewHolder.deleteUserRecipeImageView.setOnClickListener(new OnClickListener() {
-      @Override
-      public void onClick(View view) {
-        recipeRepository.deleteComment(commentList.get(position).getId(),
-            new OnDeleteCommentsDetailsDisplayListener() {
-              @Override
-              public void onSuccess() {
-                Toast.makeText(context, "Komentarz został usunięty!", Toast.LENGTH_SHORT).show();
-                commentList.remove(position);
-                notifyItemRemoved(position);
-              }
+    viewHolder.deleteUserRecipeImageView.setOnClickListener(view -> recipeRepository.deleteComment(commentList.get(position).getId(),
+        new OnDeleteCommentsDetailsDisplayListener() {
+          @Override
+          public void onSuccess() {
+            Toast.makeText(context, "Komentarz został usunięty!", Toast.LENGTH_SHORT).show();
+            commentList.remove(position);
+            notifyItemRemoved(position);
+          }
 
-              @Override
-              public void onError() {
-                Toast.makeText(context, "Błąd podczas usuwania komentarza!", Toast.LENGTH_SHORT).show();
-              }
-            });
-      }
-    });
+          @Override
+          public void onError() {
+            Toast.makeText(context, "Błąd podczas usuwania komentarza!", Toast.LENGTH_SHORT).show();
+          }
+        }));
   }
 
   @Override

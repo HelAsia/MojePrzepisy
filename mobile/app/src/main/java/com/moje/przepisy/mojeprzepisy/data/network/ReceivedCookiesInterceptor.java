@@ -21,8 +21,8 @@ public class ReceivedCookiesInterceptor implements Interceptor{
     Response originalResponse = chain.proceed(chain.request());
 
     if(!originalResponse.headers("Set-Cookie").isEmpty()) {
-      String cookies = (String) PreferenceManager.getDefaultSharedPreferences(context)
-          .getString(Constant.PREF_COOKIES, new String());
+      String cookies = PreferenceManager.getDefaultSharedPreferences(context)
+          .getString(Constant.PREF_COOKIES, "");
 
       for (String header : originalResponse.headers("Set-Cookie")){
         cookies = header;

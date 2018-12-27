@@ -229,12 +229,12 @@ public class MainCardsActivity extends AppCompatActivity implements
   }
 
   private void goToRegisterActivity(){
-    Intent intent = new Intent(MainCardsActivity.this, RegisterActivity.class);
+    Intent intent = new Intent(this, RegisterActivity.class);
     startActivity(intent);
   }
 
   private void goToLogInActivity(){
-    Intent intent = new Intent(MainCardsActivity.this, LogInActivity.class);
+    Intent intent = new Intent(this, LogInActivity.class);
     startActivity(intent);
   }
 

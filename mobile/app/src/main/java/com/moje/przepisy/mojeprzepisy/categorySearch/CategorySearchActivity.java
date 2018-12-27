@@ -14,15 +14,17 @@ import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
-public class CategorySearchActivity extends AppCompatActivity implements
-    CategorySearchAdapter.OnShareClickedListener {
+public class CategorySearchActivity extends AppCompatActivity {
   @BindView(R.id.toolbar_category_name) Toolbar toolbar;
+  @BindView(R.id.addCategoryNamesRecyclerView) RecyclerView recyclerView;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_category_search);
+    ButterKnife.bind(this);
 
     setToolbar();
     setCategoryList(getCategoryNameList());
@@ -35,9 +37,15 @@ public class CategorySearchActivity extends AppCompatActivity implements
 
   public void setCategoryList(List<String> categoryNameList){
     CategorySearchAdapter adapter = new CategorySearchAdapter(this, categoryNameList);
-    RecyclerView recyclerView = findViewById(R.id.addCategoryNamesRecyclerView);
     int numberOfColumns = 2;
-    adapter.setCategoryOnShareClickedListener(this);
+
+    adapter.setCategoryOnShareClickedListener(() -> {
+      Intent intent = new Intent(this, MainCardsActivity.class);
+      intent.putExtra("LOGGED", getIsLogged());
+      startActivity(intent);
+      CategorySearchActivity.this.finish();
+    });
+
     recyclerView.setLayoutManager(new GridLayoutManager(this, numberOfColumns));
     recyclerView.getLayoutManager().getPaddingRight();
     recyclerView.setAdapter(adapter);
@@ -51,14 +59,6 @@ public class CategorySearchActivity extends AppCompatActivity implements
       actionbar.setDisplayHomeAsUpEnabled(true);
       actionbar.setHomeAsUpIndicator(R.drawable.ic_arrow_back);
     }
-  }
-
-  @Override
-  public void ShareCategoryClicked() {
-    Intent intent = new Intent(this, MainCardsActivity.class);
-    intent.putExtra("LOGGED", getIsLogged());
-    startActivity(intent);
-    CategorySearchActivity.this.finish();
   }
 
   public Boolean getIsLogged() {

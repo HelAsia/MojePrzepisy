@@ -6,13 +6,14 @@ import android.view.View;
 import android.widget.Toast;
 import com.moje.przepisy.mojeprzepisy.data.model.Comment;
 import com.moje.przepisy.mojeprzepisy.data.repositories.recipe.RecipeRepository;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class CommentDisplayPresenter implements CommentDisplayContract.Presenter,
     RecipeRepository.OnCommentsDetailsDisplayListener {
   private RecipeRepository recipeRepository;
   private CommentDisplayContract.View commentsDisplayView;
-  int commentId;
   private Boolean commentAddedState = false;
 
   public CommentDisplayPresenter(CommentDisplayContract.View commentsDisplayView,
@@ -23,8 +24,14 @@ public class CommentDisplayPresenter implements CommentDisplayContract.Presenter
 
   @Override
   public void setComment(List<Comment> commentList) {
-    if(commentsDisplayView != null){
-      commentsDisplayView.setCommentsRecyclerViewAndCommentNumber(commentList);
+    if(commentsDisplayView != null) {
+      if (commentList != null) {
+        commentsDisplayView.setCommentsRecyclerViewAndCommentNumber(commentList);
+      } else {
+        List<Comment> emptyCommentList = new ArrayList<Comment>();
+        emptyCommentList.add(new Comment("Użytkownik", "Data utworzenia", "Brak komentarzy!"));
+        commentsDisplayView.setCommentsRecyclerViewAndCommentNumber(emptyCommentList);
+      }
     }
   }
 
@@ -32,11 +39,6 @@ public class CommentDisplayPresenter implements CommentDisplayContract.Presenter
   public void onCommentError() {
     Toast.makeText(commentsDisplayView.getContext(), "Błąd podczas pobierania komentarzy!",
         Toast.LENGTH_SHORT).show();
-  }
-
-  @Override
-  public void setCommentId(String message) {
-    this.commentId = Integer.parseInt(message);
   }
 
   @Override
@@ -69,7 +71,7 @@ public class CommentDisplayPresenter implements CommentDisplayContract.Presenter
   @Override
   public void setEditTextAfterAdded() {
     commentsDisplayView.getCommentEditText().setText("");
-    commentsDisplayView.getCommentEditText().setHint("Dodaj komentarz...");
+    commentsDisplayView.getCommentEditText().setHint("Napisz komentarz...");
   }
 
   @Override

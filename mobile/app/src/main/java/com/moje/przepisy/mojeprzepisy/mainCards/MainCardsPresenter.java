@@ -32,7 +32,7 @@ public class MainCardsPresenter implements MainCardsContract.Presenter,
             .getString(Constant.PREF_SORTED_METHOD,"default");
   }
 
-  public String getCategory(Context context){
+  private String getCategory(Context context){
     return PreferenceManager.getDefaultSharedPreferences(context)
             .getString(Constant.PREF_CATEGORY,"Zupy");
   }
