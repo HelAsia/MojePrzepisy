@@ -11,50 +11,39 @@ import com.moje.przepisy.mojeprzepisy.R;
 import com.moje.przepisy.mojeprzepisy.data.model.License;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class LicensesActivity extends AppCompatActivity implements LicensesContract.View {
-  private LicensesContract.Presenter presenter;
-  private LicensesAdapter adapter;
-  private Context context;
+  @BindView(R.id.toolbar_licenses) Toolbar toolbar;
+  @BindView(R.id.licencesDisplayRecyclerView) RecyclerView recyclerView;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_licenses);
-    context = getApplicationContext();
+    ButterKnife.bind(this);
 
-    presenter = new LicensesPresenter(this);
-
-    setToolbar();
-    setRecyclerView(presenter.getLicensesList());
+    LicensesContract.Presenter presenter = new LicensesPresenter(this);
+    presenter.setFirstScreen();
   }
 
   @Override
   public Context getContext() {
-    return context;
+    return this;
   }
 
   @Override
   public void setToolbar() {
-    Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_licenses);
     toolbar.setSubtitle(R.string.licences);
     setSupportActionBar(toolbar);
   }
 
   @Override
   public void setRecyclerView(List<License> licenseList){
-    RecyclerView recyclerView = (RecyclerView) findViewById(R.id.licencesDisplayRecyclerView);
-    setAdapter(licenseList);
-    LicensesAdapter adapter = getAdapter();
+    LicensesAdapter adapter = new LicensesAdapter(this, licenseList);
     recyclerView.setAdapter(adapter);
     recyclerView.setLayoutManager(new LinearLayoutManager(this));
-  }
-
-  public void setAdapter(List<License> licenseList){
-    this.adapter = new LicensesAdapter(this, licenseList);
-  }
-
-  public LicensesAdapter getAdapter(){
-    return adapter;
   }
 
   public void goToLicenseSource(String licenseUrl){
