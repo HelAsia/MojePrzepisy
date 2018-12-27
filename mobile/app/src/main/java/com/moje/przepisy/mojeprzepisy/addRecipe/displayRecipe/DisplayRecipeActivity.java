@@ -138,7 +138,7 @@ public class DisplayRecipeActivity extends AppCompatActivity implements
   @Override
   public void navigateToMainCardsScreen() {
     Intent intent = new Intent(DisplayRecipeActivity.this, MainCardsActivity.class);
-    intent.putExtra("LOGGED",true);
+    intent.putExtra("isLogged",true);
     startActivity(intent);
     DisplayRecipeActivity.this.finish();
   }

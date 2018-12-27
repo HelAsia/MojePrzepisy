@@ -17,12 +17,10 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class WelcomeRepository implements WelcomeRepositoryInterface {
-
-  private Retrofit retrofit;
   private UserAPI userAPI;
 
   public WelcomeRepository(Context context){
-    this.retrofit = RetrofitSingleton.getRetrofitInstance(context);
+      Retrofit retrofit = RetrofitSingleton.getRetrofitInstance(context);
     this.userAPI = retrofit.create(UserAPI.class);
   }
 

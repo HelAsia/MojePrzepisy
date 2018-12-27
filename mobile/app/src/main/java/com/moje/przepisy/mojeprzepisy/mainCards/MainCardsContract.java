@@ -12,8 +12,8 @@ public interface MainCardsContract {
     Context getContext();
     void setIsLoggedStatus();
     boolean getIsLoggedStatus();
-    void setNavigationViewListener(boolean ifLogged);
-    void setFloatingActionButton(boolean ifLogged);
+    void setNavigationViewListener(boolean isLogged);
+    void setFloatingActionButton(boolean isLogged);
     void setDrawerLayoutListener();
     void setRecyclerView(List<OneRecipeCard> cardList);
     void setToolbar();

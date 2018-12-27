@@ -48,15 +48,12 @@ public class HomePageView extends AppCompatActivity {
       }
     });
 
-    noRegisteredButton.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View view) {
-        deleteUserIdFromPreferences();
-        Intent intent = new Intent(HomePageView.this, MainCardsActivity.class);
-        intent.putExtra("LOGGED",false);
-        startActivity(intent);
-        HomePageView.this.finish();
-      }
+    noRegisteredButton.setOnClickListener(view -> {
+      deleteUserIdFromPreferences();
+      Intent intent = new Intent(HomePageView.this, MainCardsActivity.class);
+      intent.putExtra("isLogged",false);
+      startActivity(intent);
+      HomePageView.this.finish();
     });
   }
 

@@ -241,7 +241,7 @@ public class AddRecipeActivity extends AppCompatActivity implements AddRecipeCon
 
   private void navigateToPreviousPage(){
     Intent intent = new Intent (AddRecipeActivity.this, MainCardsActivity.class);
-    intent.putExtra("LOGGED",true);
+    intent.putExtra("isLogged",true);
     startActivity(intent);
   }
 

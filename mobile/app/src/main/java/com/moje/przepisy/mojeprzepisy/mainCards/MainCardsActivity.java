@@ -85,7 +85,7 @@ public class MainCardsActivity extends AppCompatActivity implements
   @Override
   public void setIsLoggedStatus() {
     if(getIntent().getExtras() != null){
-      isLogged = getIntent().getExtras().getBoolean("LOGGED");
+      isLogged = getIntent().getExtras().getBoolean("isLogged");
     }
   }
 
@@ -118,8 +118,8 @@ public class MainCardsActivity extends AppCompatActivity implements
   }
 
   @Override
-  public void setNavigationViewListener(boolean ifLogged) {
-    if(ifLogged) {
+  public void setNavigationViewListener(boolean isLogged) {
+    if(isLogged) {
       setNavigationViewListenerWithRegistration(navigationView);
     }else {
       setNavigationViewListenerWithoutRegistration(navigationView);
@@ -240,7 +240,7 @@ public class MainCardsActivity extends AppCompatActivity implements
 
   private void goToCategorySearchActivity() {
     Intent intent = new Intent(this, CategorySearchActivity.class);
-    intent.putExtra("LOGGED", isLogged);
+    intent.putExtra("isLogged", isLogged);
     startActivity(intent);
   }
 
@@ -271,13 +271,13 @@ public class MainCardsActivity extends AppCompatActivity implements
 
   private void goToAboutApplicationActivity(){
     Intent intent = new Intent(this, AboutApplicationActivity.class);
-    intent.putExtra("LOGGED", isLogged);
+    intent.putExtra("isLogged", isLogged);
     startActivity(intent);
   }
 
   private void goToLicensesActivity(){
     Intent intent = new Intent(this, LicensesActivity.class);
-    intent.putExtra("LOGGED", isLogged);
+    intent.putExtra("isLogged", isLogged);
     startActivity(intent);
   }
 

@@ -14,23 +14,20 @@ import com.moje.przepisy.mojeprzepisy.R;
 import com.moje.przepisy.mojeprzepisy.data.repositories.user.UserRepository;
 import com.moje.przepisy.mojeprzepisy.mainCards.MainCardsActivity;
 
-public class LogInActivity extends AppCompatActivity implements LogInContract.View, View.OnClickListener{
+public class LogInActivity extends AppCompatActivity implements LogInContract.View{
   private LogInContract.Presenter presenter;
   @BindView(R.id.errorMessageTextView)TextView errorMessageTextView;
   @BindView(R.id.login_action_button) Button loginButton;
   @BindView(R.id.login_editText) EditText loginEditText;
   @BindView(R.id.password_editText) EditText passwordEditText;
-  Context context;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_login);
-    context = getApplicationContext();
-
     ButterKnife.bind(this);
 
-    loginButton.setOnClickListener(this);
+    loginButton.setOnClickListener(view -> presenter.validateCredentials());
 
     presenter = new LogInPresenter(this, new UserRepository(getApplicationContext()));
   }
@@ -42,19 +39,14 @@ public class LogInActivity extends AppCompatActivity implements LogInContract.Vi
   }
 
   @Override
-  public void onClick(View view) {
-    presenter.validateCredentials();
-  }
-
-  @Override
   public Context getContext() {
-    return context;
+    return this;
   }
 
   @Override
   public void navigateToMainRegisteredActivity() {
     Intent intent = new Intent(LogInActivity.this, MainCardsActivity.class);
-    intent.putExtra("LOGGED",true);
+    intent.putExtra("isLogged",true);
     startActivity(intent);
     LogInActivity.this.finish();
   }

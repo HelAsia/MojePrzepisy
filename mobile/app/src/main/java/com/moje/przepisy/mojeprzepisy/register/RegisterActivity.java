@@ -53,7 +53,7 @@ public class RegisterActivity extends AppCompatActivity implements RegisterContr
   @Override
   public void navigateToMainRegisteredActivity() {
     Intent intent = new Intent(RegisterActivity.this, MainCardsActivity.class);
-    intent.putExtra("LOGGED",true);
+    intent.putExtra("isLogged",true);
     startActivity(intent);
     RegisterActivity.this.finish();
 

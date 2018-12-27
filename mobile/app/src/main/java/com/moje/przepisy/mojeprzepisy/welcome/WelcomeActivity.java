@@ -45,7 +45,7 @@ public class WelcomeActivity extends AppCompatActivity implements WelcomeContrac
   @Override
   public void navigateToMainRegisteredActivity() {
     Intent intent = new Intent(WelcomeActivity.this, MainCardsActivity.class);
-    intent.putExtra("LOGGED",true);
+    intent.putExtra("isLogged",true);
     startActivity(intent);
     WelcomeActivity.this.finish();
   }

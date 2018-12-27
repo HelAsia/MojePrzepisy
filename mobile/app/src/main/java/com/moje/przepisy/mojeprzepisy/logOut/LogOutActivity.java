@@ -56,7 +56,7 @@ public class LogOutActivity extends AppCompatActivity implements LogOutContract.
   @Override
   public void navigateToMainLoggedCardsActivity() {
     Intent intent = new Intent(LogOutActivity.this, MainCardsActivity.class);
-    intent.putExtra("LOGGED",true);
+    intent.putExtra("isLogged",true);
     startActivity(intent);
     LogOutActivity.this.finish();
   }
@@ -64,7 +64,7 @@ public class LogOutActivity extends AppCompatActivity implements LogOutContract.
   @Override
   public void navigateToUnLoggedMainCardsActivity() {
     Intent intent = new Intent(LogOutActivity.this, MainCardsActivity.class);
-    intent.putExtra("LOGGED",false);
+    intent.putExtra("isLogged",false);
     startActivity(intent);
     LogOutActivity.this.finish();
   }
