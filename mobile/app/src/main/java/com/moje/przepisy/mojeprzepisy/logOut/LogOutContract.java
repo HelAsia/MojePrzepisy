@@ -9,7 +9,6 @@ public interface LogOutContract {
 
   interface Presenter {
     void validateCredentials();
-    void onDestroy();
     void onCancel();
   }
 }

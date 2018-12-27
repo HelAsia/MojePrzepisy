@@ -1,21 +1,18 @@
 package com.moje.przepisy.mojeprzepisy.timer;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.moje.przepisy.mojeprzepisy.R;
+import com.moje.przepisy.mojeprzepisy.utils.Timer;
 
-public class TimerActivity extends AppCompatActivity implements TimerContract.View,
-    View.OnClickListener{
-  Context context;
-  private TimerContract.Presenter presenter;
+public class TimerActivity extends AppCompatActivity implements TimerContract.View{
+  @BindView(R.id.toolbar_timer) Toolbar toolbar;
   @BindView(R.id.hourPicker) NumberPicker hourPicker;
   @BindView(R.id.minutePicker) NumberPicker minutePicker;
   @BindView(R.id.secondPicker) NumberPicker secondPicker;
@@ -31,6 +28,10 @@ public class TimerActivity extends AppCompatActivity implements TimerContract.Vi
   @BindView(R.id.playImageViewThirdTimer) ImageView playImageViewThirdTimer;
   @BindView(R.id.pauseImageViewThirdTimer) ImageView pauseImageViewThirdTimer;
   @BindView(R.id.stopImageViewThirdTimer) ImageView stopImageViewThirdTimer;
+  private TimerContract.Presenter presenter;
+  private Timer firstTimer;
+  private Timer secondTimer;
+  private Timer thirdTimer;
 
 
   @Override
@@ -38,166 +39,118 @@ public class TimerActivity extends AppCompatActivity implements TimerContract.Vi
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_timer_view);
     ButterKnife.bind(this);
-    context = getApplicationContext();
 
     presenter = new TimerPresenter(this);
+    presenter.setFirstScreen();
 
-    setToolbar();
+    createTimerObjects();
 
-    presenter.setFirstIconEnabledStatus();
-    presenter.setMinAndMaxHourValueAndWheelSelector();
-    presenter.setMinAndMaxMinuteValueAndWheelSelector();
-    presenter.setMinAndMaxSecondValueAndWheelSelector();
-
-    setListeners();
-  }
-
-  @Override
-  public void onClick(View view) {
-      setFirstTimerActions(view);
-      setSecondTimerActions(view);
-      setThirdTimerActions(view);
   }
 
   @Override
   public void setToolbar() {
-    Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_timer);
     toolbar.setSubtitle(R.string.set_timer);
     setSupportActionBar(toolbar);
   }
 
   @Override
   public void setListeners() {
-    playImageViewFirstTimer.setOnClickListener(this);
-    pauseImageViewFirstTimer.setOnClickListener(this);
-    stopImageViewFirstTimer.setOnClickListener(this);
-    playImageViewSecondTimer.setOnClickListener(this);
-    pauseImageViewSecondTimer.setOnClickListener(this);
-    stopImageViewSecondTimer.setOnClickListener(this);
-    playImageViewThirdTimer.setOnClickListener(this);
-    pauseImageViewThirdTimer.setOnClickListener(this);
-    stopImageViewThirdTimer.setOnClickListener(this);
+    setFirstTimerActions();
+    setSecondTimerActions();
+    setThirdTimerActions();
+  }
+
+  private void createTimerObjects(){
+    firstTimer = new Timer(playImageViewFirstTimer, pauseImageViewFirstTimer,
+            stopImageViewFirstTimer, timerOneTextView);
+    secondTimer = new Timer(playImageViewSecondTimer, pauseImageViewSecondTimer,
+            stopImageViewSecondTimer, timerTwoTextView);
+    thirdTimer = new Timer(playImageViewThirdTimer, pauseImageViewSecondTimer,
+            stopImageViewSecondTimer, timerThreeTextView);
   }
 
   @Override
-  public void setFirstTimerActions(View view){
-    if(view.getId() == R.id.playImageViewFirstTimer){
+  public void setFirstIconEnabledStatus() {
+    pauseImageViewFirstTimer.setEnabled(true);
+    pauseImageViewSecondTimer.setEnabled(true);
+    pauseImageViewThirdTimer.setEnabled(true);
+    stopImageViewFirstTimer.setEnabled(true);
+    stopImageViewSecondTimer.setEnabled(true);
+    stopImageViewThirdTimer.setEnabled(true);
+  }
+
+  @Override
+  public int getHour() {
+    return hourPicker.getValue();
+  }
+
+  @Override
+  public int getMinute() {
+    return minutePicker.getValue();
+  }
+
+  @Override
+  public int getSecond() {
+    return secondPicker.getValue();
+  }
+
+  @Override
+  public void setMinAndMaxHourValueAndWheelSelector() {
+    hourPicker.setMinValue(0);
+    hourPicker.setMaxValue(24);
+    hourPicker.setWrapSelectorWheel(true);
+  }
+
+  @Override
+  public void setMinAndMaxMinuteValueAndWheelSelector() {
+    minutePicker.setMinValue(0);
+    minutePicker.setMaxValue(59);
+    minutePicker.setWrapSelectorWheel(true);
+  }
+
+  @Override
+  public void setMinAndMaxSecondValueAndWheelSelector() {
+    secondPicker.setMinValue(0);
+    secondPicker.setMaxValue(59);
+    secondPicker.setWrapSelectorWheel(true);
+  }
+
+  @Override
+  public void setFirstTimerActions(){
+    playImageViewFirstTimer.setOnClickListener(view -> {
       if(pauseImageViewFirstTimer.isEnabled()&& stopImageViewFirstTimer.isEnabled()){
-        presenter.startFirstTimer();
+        firstTimer.startTimer(presenter.getCountDownTime());
       }else{
-        presenter.restartFirstTimer();
+        firstTimer.restartTimer();
       }
-    }else if(view.getId() == R.id.pauseImageViewFirstTimer){
-      presenter.pauseFirstTimer();
-    }else if(view.getId() == R.id.stopImageViewFirstTimer){
-      presenter.stopFirstTimer();
-
-    }
+    });
+    pauseImageViewFirstTimer.setOnClickListener(view -> firstTimer.pauseTimer());
+    stopImageViewFirstTimer.setOnClickListener(view -> firstTimer.stopTimer());
   }
 
   @Override
-  public void setSecondTimerActions(View view) {
-    if(view.getId() == R.id.playImageViewSecondTimer){
+  public void setSecondTimerActions() {
+    playImageViewSecondTimer.setOnClickListener(view -> {
       if(pauseImageViewSecondTimer.isEnabled()&& stopImageViewSecondTimer.isEnabled()){
-        presenter.startSecondTimer();
+        secondTimer.startTimer(presenter.getCountDownTime());
       }else{
-        presenter.restartSecondTimer();
+        secondTimer.restartTimer();
       }
-    }else if(view.getId() == R.id.pauseImageViewSecondTimer){
-      presenter.pauseSecondTimer();
-    }else if(view.getId() == R.id.stopImageViewSecondTimer){
-      presenter.stopSecondTimer();
-
-    }
+    });
+    pauseImageViewSecondTimer.setOnClickListener(view -> secondTimer.pauseTimer());
+    stopImageViewSecondTimer.setOnClickListener(view -> secondTimer.stopTimer());
   }
 
   @Override
-  public void setThirdTimerActions(View view) {
-    if(view.getId() == R.id.playImageViewThirdTimer){
+  public void setThirdTimerActions() {
+    playImageViewThirdTimer.setOnClickListener(view -> {
       if(pauseImageViewThirdTimer.isEnabled()&& stopImageViewThirdTimer.isEnabled()){
-        presenter.startThirdTimer();
+        thirdTimer.startTimer(presenter.getCountDownTime());
       }else{
-        presenter.restartThirdTimer();
+        thirdTimer.restartTimer();
       }
-    }else if(view.getId() == R.id.pauseImageViewThirdTimer){
-      presenter.pauseThirdTimer();
-    }else if(view.getId() == R.id.stopImageViewThirdTimer){
-      presenter.stopThirdTimer();
-    }
-  }
-
-  @Override
-  public NumberPicker getNumberPickerHour() {
-    return hourPicker;
-  }
-
-  @Override
-  public NumberPicker getNumberPickerMinute() {
-    return minutePicker;
-  }
-
-  @Override
-  public NumberPicker getNumberPickerSecond() {
-    return secondPicker;
-  }
-
-  @Override
-  public TextView getFirstTimer() {
-    return timerOneTextView;
-  }
-
-  @Override
-  public TextView getSecondTimer() {
-    return timerTwoTextView;
-  }
-
-  @Override
-  public TextView getThirdTimer() {
-    return timerThreeTextView;
-  }
-
-  @Override
-  public ImageView getFirstPlayTimer() {
-    return playImageViewFirstTimer;
-  }
-
-  @Override
-  public ImageView getSecondPlayTimer() {
-    return playImageViewSecondTimer;
-  }
-
-  @Override
-  public ImageView getThirdPlayTimer() {
-    return playImageViewThirdTimer;
-  }
-
-  @Override
-  public ImageView getFirstPauseTimer() {
-    return pauseImageViewFirstTimer;
-  }
-
-  @Override
-  public ImageView getSecondPauseTimer() {
-    return pauseImageViewSecondTimer;
-  }
-
-  @Override
-  public ImageView getThirdPauseTimer() {
-    return pauseImageViewThirdTimer;
-  }
-
-  @Override
-  public ImageView getFirstStopTimer() {
-    return stopImageViewFirstTimer;
-  }
-
-  @Override
-  public ImageView getSecondStopTimer() {
-    return stopImageViewSecondTimer;
-  }
-
-  @Override
-  public ImageView getThirdStopTimer() {
-    return stopImageViewThirdTimer;
+    });
+    pauseImageViewThirdTimer.setOnClickListener(view -> thirdTimer.pauseTimer());
+    stopImageViewThirdTimer.setOnClickListener(view -> thirdTimer.stopTimer());
   }
 }

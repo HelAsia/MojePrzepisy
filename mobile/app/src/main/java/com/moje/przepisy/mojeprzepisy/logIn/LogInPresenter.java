@@ -30,7 +30,6 @@ public class LogInPresenter implements LogInContract.Presenter,
       String errorMessage = loginView.getContext().getResources()
               .getString(R.string.login_password_error_message);
       loginView.setErrorMessageTextView(errorMessage);
-
     }
   }
 
