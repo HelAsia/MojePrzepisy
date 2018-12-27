@@ -25,13 +25,11 @@ public class AddIngredientsActivity extends AppCompatActivity implements
   @BindView(R.id.addIngredientsRecyclerView) RecyclerView addIngredientsRecyclerView;
   @BindView(R.id.toolbar_whole_recipe) Toolbar toolbarRecipe;
   private AddIngredientsContract.Presenter presenter;
-  Context context;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_add_ingredients_view);
-    context = getApplicationContext();
     ButterKnife.bind(this);
 
     presenter = new AddIngredientsPresenter(this);
@@ -40,7 +38,7 @@ public class AddIngredientsActivity extends AppCompatActivity implements
 
   @Override
   public Context getContext() {
-    return context;
+    return this;
   }
 
   @Override

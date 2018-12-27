@@ -5,6 +5,7 @@ import android.Manifest.permission;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -20,6 +21,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.res.FontResourcesParserCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -39,9 +41,6 @@ import com.moje.przepisy.mojeprzepisy.utils.TimeSetDialog;
 import com.moje.przepisy.mojeprzepisy.utils.URLDialog;
 
 public class AddRecipeActivity extends AppCompatActivity implements AddRecipeContract.View{
-  private static final int MY_CAMERA_PERMISSION_CODE = 100;
-  private static final int CAMERA_REQUEST = 1888;
-  private static int GALLERY_REQUEST = 1;
   @BindView(R.id.previousActionFab) FloatingActionButton previousActionFab;
   @BindView(R.id.nextActionFab) FloatingActionButton nextActionFab;
   @BindView(R.id.recipeNameEditText) EditText recipeNameEditText;
@@ -54,11 +53,13 @@ public class AddRecipeActivity extends AppCompatActivity implements AddRecipeCon
   @BindView(R.id.cameraImageView) ImageView cameraImageView;
   @BindView(R.id.URLImageView) ImageView URLImageView;
   @BindView(R.id.toolbar_add_recipe) Toolbar recipeToolbar;
+  private static final int MY_CAMERA_PERMISSION_CODE = 100;
+  private static final int CAMERA_REQUEST = 1888;
+  private static int GALLERY_REQUEST = 1;
   private AddRecipeContract.Presenter presenter;
   private TimeSetDialog timeSetDialog = new TimeSetDialog();
   private URLDialog urlDialog = new URLDialog();
   private BitmapConverter converter = new BitmapConverter();
-  private Context context;
 
   @RequiresApi(api = VERSION_CODES.M)
   @Override
@@ -66,20 +67,46 @@ public class AddRecipeActivity extends AppCompatActivity implements AddRecipeCon
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_add_recipe);
     ButterKnife.bind(this);
-    context = getApplicationContext();
 
     presenter = new AddRecipePresenter(this);
-
-    setToolbar();
     presenter.setFirstScreen();
-    setFabListeners();
-    setTimeListeners();
-    setImageListeners();
+  }
 
+  @Override
+  public void setToolbar() {
+    recipeToolbar.setSubtitle(R.string.add_recipe_title_step_one);
+    setSupportActionBar(recipeToolbar);
+  }
+
+  @RequiresApi(api = VERSION_CODES.M)
+  @Override
+  public void setFabListeners(){
+    previousActionFab.setOnClickListener(v -> presenter.previousAction());
+    nextActionFab.setOnClickListener(v -> presenter.nextAction());
+  }
+
+  @RequiresApi(api = VERSION_CODES.M)
+  @Override
+  public void setTimeListeners(){
+    preparedTimeEditText.setOnClickListener(v -> timeSetDialog
+            .showDialog(this, preparedTimeEditText));
+    cookTimeEditText.setOnClickListener(v -> timeSetDialog
+            .showDialog(this, cookTimeEditText));
+    bakeTimeEditText.setOnClickListener(v -> timeSetDialog
+            .showDialog(this, bakeTimeEditText));
+  }
+
+  @RequiresApi(api = VERSION_CODES.M)
+  @Override
+  public  void setImageListeners(){
+    galleryImageView.setOnClickListener(v -> loadImageFromGallery());
+    cameraImageView.setOnClickListener(v -> loadImageFromCamera());
+    URLImageView.setOnClickListener(v -> urlDialog
+            .showDialog(this, mainPhotoImageView));
   }
 
   public Context getContext(){
-    return context;
+    return this;
   }
 
   @Override
@@ -133,7 +160,7 @@ public class AddRecipeActivity extends AppCompatActivity implements AddRecipeCon
   @RequiresApi(api = VERSION_CODES.M)
   @Override
   public void loadImageFromCamera() {
-    if(ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA)!= PackageManager.PERMISSION_GRANTED){
+    if(ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)!= PackageManager.PERMISSION_GRANTED){
       requestPermissions(new String[]{Manifest.permission.CAMERA}, MY_CAMERA_PERMISSION_CODE);
     }else {
       Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -166,7 +193,7 @@ public class AddRecipeActivity extends AppCompatActivity implements AddRecipeCon
   @RequiresApi(api = VERSION_CODES.M)
   @Override
   public void loadImageFromGallery() {
-    if(ContextCompat.checkSelfPermission(context, permission.READ_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED){
+    if(ContextCompat.checkSelfPermission(this, permission.READ_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED){
       requestPermissions(new String[]{permission.READ_EXTERNAL_STORAGE}, GALLERY_REQUEST);
     }else {
       Intent galleryIntent = new Intent(Intent.ACTION_PICK,
@@ -205,48 +232,16 @@ public class AddRecipeActivity extends AppCompatActivity implements AddRecipeCon
     }
   }
 
-  private void setToolbar() {
-    recipeToolbar.setSubtitle(R.string.add_recipe_title_step_one);
-    setSupportActionBar(recipeToolbar);
-  }
-
-  @RequiresApi(api = VERSION_CODES.M)
-  private void setFabListeners(){
-    previousActionFab.setOnClickListener(v -> navigateToPreviousPage());
-    nextActionFab.setOnClickListener(v -> {
-      if(!checkIfValueIsEmpty()){
-        presenter.setRecipeValueInFile();
-        navigateToNextPage();
-      }
-    });
-  }
-
-  @RequiresApi(api = VERSION_CODES.M)
-  private void setTimeListeners(){
-    preparedTimeEditText.setOnClickListener(v -> timeSetDialog
-            .showDialog(AddRecipeActivity.this, preparedTimeEditText));
-    cookTimeEditText.setOnClickListener(v -> timeSetDialog
-            .showDialog(AddRecipeActivity.this, cookTimeEditText));
-    bakeTimeEditText.setOnClickListener(v -> timeSetDialog
-            .showDialog(AddRecipeActivity.this, bakeTimeEditText));
-  }
-
-  @RequiresApi(api = VERSION_CODES.M)
-  private void setImageListeners(){
-    galleryImageView.setOnClickListener(v -> loadImageFromGallery());
-    cameraImageView.setOnClickListener(v -> loadImageFromCamera());
-    URLImageView.setOnClickListener(v -> urlDialog
-            .showDialog(AddRecipeActivity.this, mainPhotoImageView));
-  }
-
-  private void navigateToPreviousPage(){
-    Intent intent = new Intent (AddRecipeActivity.this, MainCardsActivity.class);
+  @Override
+  public void navigateToPreviousPage(){
+    Intent intent = new Intent (this, MainCardsActivity.class);
     intent.putExtra("isLogged",true);
     startActivity(intent);
   }
 
-  private void navigateToNextPage(){
-    Intent intent = new Intent (AddRecipeActivity.this, AddIngredientsActivity.class);
+  @Override
+  public void navigateToNextPage(){
+    Intent intent = new Intent (this, AddIngredientsActivity.class);
     startActivity(intent);
   }
 

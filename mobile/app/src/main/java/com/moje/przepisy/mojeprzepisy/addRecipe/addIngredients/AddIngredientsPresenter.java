@@ -14,7 +14,7 @@ public class AddIngredientsPresenter implements AddIngredientsContract.Presenter
   private PojoFileConverter pojoFileConverter;
   private PojoJsonConverter pojoJsonConverter = new PojoJsonConverter();
 
-  public AddIngredientsPresenter(AddIngredientsContract.View ingredientsView){
+  AddIngredientsPresenter(AddIngredientsContract.View ingredientsView){
     this.ingredientsView = ingredientsView;
     pojoFileConverter = new PojoFileConverter(ingredientsView.getContext());
   }

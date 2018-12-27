@@ -10,6 +10,11 @@ import java.util.List;
 
 public interface AddRecipeContract {
   interface View{
+    void setToolbar();
+    void setFabListeners();
+    void setTimeListeners();
+    void setImageListeners();
+    Boolean checkIfValueIsEmpty();
     Context getContext();
     void setRecipeNameEditText(String recipeName);
     void setMainPhotoImageView(String bitmapString);
@@ -25,11 +30,14 @@ public interface AddRecipeContract {
     String getPrepareTime();
     String getCookTime();
     String getBakeTime();
+    void navigateToPreviousPage();
+    void navigateToNextPage();
   }
 
   interface Presenter{
+    void previousAction();
+    void nextAction();
     void setRecipeValueOnScreen();
-    void setRecipeValueInFile();
     void setFirstScreen();
   }
 }

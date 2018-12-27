@@ -3,6 +3,7 @@ package com.moje.przepisy.mojeprzepisy.utils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.moje.przepisy.mojeprzepisy.data.model.Ingredient;
+import com.moje.przepisy.mojeprzepisy.data.model.Recipe;
 import com.moje.przepisy.mojeprzepisy.data.model.Step;
 import java.lang.reflect.Type;
 import java.util.List;
@@ -19,8 +20,10 @@ public class PojoJsonConverter {
         Type type;
         if(classType.equals(Constant.INGREDIENTS_FILE_NAME)){
             type = new TypeToken<List<Ingredient>>() {}.getType();
-        }else {
+        }else if(classType.equals(Constant.STEPS_FILE_NAME)) {
             type = new TypeToken<List<Step>>() {}.getType();
+        }else {
+            type = new TypeToken<List<Recipe>>() {}.getType();
         }
 
         return gson.fromJson(jsonList, type);
