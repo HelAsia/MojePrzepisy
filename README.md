@@ -38,6 +38,8 @@ The application is not finished yet. It is still being developed.
  - password
 13. Kitchen Timers
 14. Delete recipe
+15. Application's description
+16. Used third-party code and it's licences
 
 ## To do:
  1. Edit recipe
@@ -45,17 +47,18 @@ The application is not finished yet. It is still being developed.
  3. Edit comment
  4. Delete comment
  5. Update timer *(alarm after finish countdown)*
- 6. Application's description
- 7. Used third-party code and it's licences
- 8. Different layout for horizontal screens
- 9. Tests (unit and integration)
+ 6. Different layout for horizontal screens
+ 7. Tests (unit and integration)
 
 ## Known bugs:
  1. Optimize loading photos and data receival from server
- 2. Wrong number of just added step
 
 ## Credits:
 #### 1. Libraries
+[RxJava](https://github.com/ReactiveX/RxJava) - used to reactive programming.
+
+[RxAndroid](https://github.com/ReactiveX/RxAndroid) - used to reactive programing in Android.
+
 [Support Library Packages](https://developer.android.com/topic/libraries/support-library/packages "Support Library Packages") - used to adjust and for better handling of list and grid views.
 
 [Butter Knife](http://jakewharton.github.io/butterknife) - used to find and automatically cast the corresponding view in layout.
