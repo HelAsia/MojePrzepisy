@@ -16,7 +16,7 @@ public class MainDetailsFragmentPagerAdapter extends FragmentPagerAdapter {
   private int recipeId;
   private Boolean isLogged;
 
-  public MainDetailsFragmentPagerAdapter(Context context, FragmentManager fm, int recipeId, Boolean isLogged){
+  MainDetailsFragmentPagerAdapter(Context context, FragmentManager fm, int recipeId, Boolean isLogged){
     super(fm);
     this.context = context;
     this.recipeId = recipeId;
@@ -36,7 +36,7 @@ public class MainDetailsFragmentPagerAdapter extends FragmentPagerAdapter {
     }
   }
 
-  public MainInfoDetailsDisplayFragment getMainInfoDetailsDisplayFragment(){
+  private MainInfoDetailsDisplayFragment getMainInfoDetailsDisplayFragment(){
     Bundle data = new Bundle();
     data.putInt("id", recipeId);
     data.putBoolean("isLogged", isLogged);
@@ -47,7 +47,7 @@ public class MainDetailsFragmentPagerAdapter extends FragmentPagerAdapter {
     return mainInfoDetailsDisplayFragment;
   }
 
-  public IngredientsDisplayFragment getIngredientsDisplayFragment(){
+  private IngredientsDisplayFragment getIngredientsDisplayFragment(){
     Bundle data = new Bundle();
     data.putInt("id", recipeId);
     data.putBoolean("isLogged", isLogged);
@@ -58,7 +58,7 @@ public class MainDetailsFragmentPagerAdapter extends FragmentPagerAdapter {
     return ingredientsDisplayFragment;
   }
 
-  public StepsDisplayFragment getStepsDisplayFragment(){
+  private StepsDisplayFragment getStepsDisplayFragment(){
     Bundle data = new Bundle();
     data.putInt("id", recipeId);
     data.putBoolean("isLogged", isLogged);
@@ -69,7 +69,7 @@ public class MainDetailsFragmentPagerAdapter extends FragmentPagerAdapter {
     return stepsDisplayFragment;
   }
 
-  public CommentDisplayFragment getCommentDisplayFragment(){
+  private CommentDisplayFragment getCommentDisplayFragment(){
     Bundle data = new Bundle();
     data.putInt("id", recipeId);
     data.putBoolean("isLogged", isLogged);

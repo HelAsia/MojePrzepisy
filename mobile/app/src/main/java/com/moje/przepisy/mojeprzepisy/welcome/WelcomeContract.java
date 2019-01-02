@@ -3,6 +3,8 @@ package com.moje.przepisy.mojeprzepisy.welcome;
 import android.content.Context;
 import android.widget.TextView;
 
+import javax.inject.Inject;
+
 public interface WelcomeContract {
 
   interface View {

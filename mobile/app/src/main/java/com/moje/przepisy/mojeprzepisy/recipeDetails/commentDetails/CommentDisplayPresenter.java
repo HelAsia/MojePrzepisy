@@ -16,7 +16,7 @@ public class CommentDisplayPresenter implements CommentDisplayContract.Presenter
   private CommentDisplayContract.View commentsDisplayView;
   private Boolean commentAddedState = false;
 
-  public CommentDisplayPresenter(CommentDisplayContract.View commentsDisplayView,
+  CommentDisplayPresenter(CommentDisplayContract.View commentsDisplayView,
       RecipeRepository recipeRepository){
     this.commentsDisplayView = commentsDisplayView;
     this.recipeRepository = recipeRepository;

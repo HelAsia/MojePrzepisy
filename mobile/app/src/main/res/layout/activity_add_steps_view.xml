@@ -35,7 +35,7 @@
     <android.support.v7.widget.RecyclerView
       android:id="@+id/addStepsRecyclerView"
       android:layout_width="match_parent"
-      android:layout_height="match_parent"
+      android:layout_height="wrap_content"
       android:scrollbars="vertical"/>
   </ScrollView>
   <android.support.design.widget.FloatingActionButton
@@ -64,7 +64,7 @@
     android:elevation="6dp"
     android:tint="@android:color/white"
     android:visibility="visible"
-    app:backgroundTint="@color/navigation_fab"
+    app:backgroundTint="@color/accent"
     app:srcCompat="@mipmap/ic_skip_previous"/>
 
   <android.support.design.widget.FloatingActionButton
@@ -79,6 +79,6 @@
     android:elevation="6dp"
     android:tint="@android:color/white"
     android:visibility="visible"
-    app:backgroundTint="@color/navigation_fab"
+    app:backgroundTint="@color/accent"
     app:srcCompat="@mipmap/ic_skip_next"/>
 </RelativeLayout>

@@ -68,7 +68,6 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="@string/load_photo"
-            android:background="@color/blue_transparent"
             android:textColor="@color/primary_text"
             android:textSize="@dimen/edit_text_size"/>
           <LinearLayout
@@ -102,99 +101,154 @@
         <LinearLayout
           android:id="@+id/first_space_layout"
           android:layout_width="match_parent"
-          android:layout_height="@dimen/space_layout_size"
+          android:layout_height="2dp"
+          android:background="@color/divider"
+          android:layout_marginBottom="@dimen/activity_vertical_margin"
           android:layout_below="@+id/loadPhotoLayout"
           android:orientation="vertical">
         </LinearLayout>
 
-        <LinearLayout
+      <LinearLayout
           android:id="@+id/chooseCategoryLayout"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:layout_below="@+id/first_space_layout"
-          android:orientation="vertical">
-          <TextView
+          android:orientation="horizontal">
+
+        <TextView
             android:id="@+id/categoryChooseTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="2"
             android:gravity="center"
             android:text="@string/choose_category"
-            android:background="@color/blue_transparent"
             android:textColor="@color/primary_text"
-            android:textSize="@dimen/edit_text_size"/>
-          <Spinner
+            android:textSize="@dimen/edit_text_size" />
+
+        <Spinner
             android:id="@+id/categoryChooseSpinner"
+            android:layout_gravity="center_vertical"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:entries="@array/recipe_category_array"/>
-        </LinearLayout>
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:entries="@array/recipe_category_array" />
+      </LinearLayout>
 
         <LinearLayout
           android:id="@+id/second_space_layout"
           android:layout_width="match_parent"
-          android:layout_height="@dimen/space_layout_size"
+          android:layout_height="2dp"
+          android:background="@color/divider"
+          android:layout_marginBottom="@dimen/activity_vertical_margin"
           android:layout_below="@+id/chooseCategoryLayout"
           android:orientation="vertical">
         </LinearLayout>
 
-        <LinearLayout
-          android:id="@+id/timeLayout"
+      <LinearLayout
+          android:id="@+id/preparedTimeLayout"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:layout_below="@+id/second_space_layout"
-          android:orientation="vertical"
-          android:scrollbars="vertical">
-          <TextView
+          android:orientation="horizontal">
+
+        <TextView
             android:id="@+id/preparedTimeTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="3"
             android:gravity="center"
             android:text="@string/input_prepare_time"
-            android:background="@color/blue_transparent"
             android:textColor="@color/primary_text"
-            android:textSize="@dimen/edit_text_size"/>
-          <TextView
+            android:textSize="@dimen/edit_text_size" />
+
+        <TextView
             android:id="@+id/preparedTimeEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:focusable="true"
             android:gravity="center"
             android:text="@string/add_time"
-            android:focusable="true"
-            android:textSize="@dimen/edit_text_size"/>
-          <TextView
+            android:layout_gravity="center_vertical"
+            android:textSize="@dimen/edit_text_size" />
+      </LinearLayout>
+
+      <LinearLayout
+          android:id="@+id/third_space_layout"
+          android:layout_width="match_parent"
+          android:layout_height="2dp"
+          android:background="@color/divider"
+          android:layout_marginBottom="@dimen/activity_vertical_margin"
+          android:layout_below="@+id/preparedTimeLayout"
+          android:orientation="vertical">
+      </LinearLayout>
+
+      <LinearLayout
+          android:id="@+id/cookTimeLayout"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_below="@+id/third_space_layout"
+          android:orientation="horizontal">
+
+        <TextView
             android:id="@+id/cookTimeTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="3"
             android:gravity="center"
             android:text="@string/input_cook_time"
-            android:background="@color/blue_transparent"
             android:textColor="@color/primary_text"
-            android:textSize="@dimen/edit_text_size"/>
-          <TextView
+            android:textSize="@dimen/edit_text_size" />
+
+        <TextView
             android:id="@+id/cookTimeEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:focusable="true"
             android:gravity="center"
             android:text="@string/add_time"
-            android:focusable="true"
-            android:textSize="@dimen/edit_text_size"/>
-          <TextView
+            android:layout_gravity="center_vertical"
+            android:textSize="@dimen/edit_text_size" />
+      </LinearLayout>
+
+      <LinearLayout
+          android:id="@+id/fourth_space_layout"
+          android:layout_width="match_parent"
+          android:layout_height="2dp"
+          android:background="@color/divider"
+          android:layout_marginBottom="@dimen/activity_vertical_margin"
+          android:layout_below="@+id/cookTimeLayout"
+          android:orientation="vertical">
+      </LinearLayout>
+
+      <LinearLayout
+          android:id="@+id/bakeTimeLayout"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_below="@+id/fourth_space_layout"
+          android:orientation="horizontal">
+
+        <TextView
             android:id="@+id/bakeTimeTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="3"
             android:gravity="center"
             android:text="@string/input_bake_time"
-            android:background="@color/blue_transparent"
             android:textColor="@color/primary_text"
-            android:textSize="@dimen/edit_text_size"/>
-          <TextView
+            android:textSize="@dimen/edit_text_size" />
+
+        <TextView
             android:id="@+id/bakeTimeEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/add_time"
+            android:layout_weight="2"
             android:focusable="true"
-            android:textSize="@dimen/edit_text_size"/>
+            android:gravity="center"
+            android:layout_gravity="center_vertical"
+            android:text="@string/add_time"
+            android:textSize="@dimen/edit_text_size" />
         </LinearLayout>
       </RelativeLayout>
   </ScrollView>
@@ -205,11 +259,12 @@
     android:layout_height="wrap_content"
     android:layout_alignParentBottom="true"
     android:layout_alignParentLeft="true"
-    android:clickable="true"
+    android:layout_alignParentStart="true"
+    android:focusable="true"
     android:elevation="6dp"
     android:tint="@android:color/white"
     android:visibility="visible"
-    app:backgroundTint="@color/navigation_fab"
+    app:backgroundTint="@color/accent"
     app:srcCompat="@mipmap/ic_skip_previous"/>
 
   <android.support.design.widget.FloatingActionButton
@@ -218,11 +273,11 @@
     android:layout_height="wrap_content"
     android:layout_alignParentBottom="true"
     android:layout_alignParentRight="true"
-    android:clickable="true"
+    android:layout_alignParentEnd="true"
+    android:focusable="true"
     android:elevation="6dp"
     android:tint="@android:color/white"
     android:visibility="visible"
-    app:backgroundTint="@color/navigation_fab"
+    app:backgroundTint="@color/accent"
     app:srcCompat="@mipmap/ic_skip_next"/>
-
 </RelativeLayout>

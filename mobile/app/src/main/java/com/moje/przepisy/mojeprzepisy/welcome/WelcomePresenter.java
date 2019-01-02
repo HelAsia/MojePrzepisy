@@ -11,7 +11,7 @@ public class WelcomePresenter implements WelcomeContract.Presenter, WelcomeRepos
   private WelcomeRepository welcomeRepository;
   private WelcomeContract.View welcomeView;
 
-  public WelcomePresenter(WelcomeContract.View welcomeView, WelcomeRepository welcomeRepository) {
+  WelcomePresenter(WelcomeContract.View welcomeView, WelcomeRepository welcomeRepository) {
     this.welcomeView = welcomeView;
     this.welcomeRepository = welcomeRepository;
   }

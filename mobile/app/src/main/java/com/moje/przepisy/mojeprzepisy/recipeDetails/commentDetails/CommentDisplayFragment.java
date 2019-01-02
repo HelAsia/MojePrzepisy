@@ -42,11 +42,10 @@ public class CommentDisplayFragment extends Fragment implements CommentDisplayCo
     setView(view);
 
     presenter = new CommentDisplayPresenter(this, new RecipeRepository(context));
-    presenter.setWholeCommentsElements();
-
     setRecipeId();
     getIsLogged();
     setCommentListeners();
+    presenter.setWholeCommentsElements();
 
     return view;
   }

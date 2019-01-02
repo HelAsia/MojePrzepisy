@@ -27,8 +27,6 @@ public class WelcomeActivity extends AppCompatActivity implements WelcomeContrac
     presenter = new WelcomePresenter(this, new WelcomeRepository(getApplicationContext()));
 
     new Handler().postDelayed(() -> presenter.validateCredentialsBeforeMainMenu(), 1500);
-
-
   }
 
   @Override

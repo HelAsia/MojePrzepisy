@@ -45,7 +45,8 @@ public class CommentDisplayAdapter extends RecyclerView.Adapter<CommentDisplayAd
   public void onBindViewHolder(@NonNull CommentDisplayAdapter.ViewHolder viewHolder, final int position) {
     viewHolder.bind(commentList.get(position));
 
-    viewHolder.deleteUserRecipeImageView.setOnClickListener(view -> recipeRepository.deleteComment(commentList.get(position).getId(),
+    viewHolder.deleteUserRecipeImageView.setOnClickListener(view ->
+            recipeRepository.deleteComment(commentList.get(position).getId(),
         new OnDeleteCommentsDetailsDisplayListener() {
           @Override
           public void onSuccess() {
@@ -70,8 +71,6 @@ public class CommentDisplayAdapter extends RecyclerView.Adapter<CommentDisplayAd
   public long getItemId(int position) {
     return commentList.get(position).getId();
   }
-
-
 
   public class ViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.userNameTextView) TextView userNameTextView;

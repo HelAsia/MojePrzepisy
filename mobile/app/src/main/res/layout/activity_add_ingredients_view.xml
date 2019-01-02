@@ -58,11 +58,10 @@
     android:layout_height="wrap_content"
     android:layout_alignParentBottom="true"
     android:layout_alignParentLeft="true"
-    android:clickable="true"
     android:elevation="6dp"
     android:tint="@android:color/white"
     android:visibility="visible"
-    app:backgroundTint="@color/navigation_fab"
+    app:backgroundTint="@color/accent"
     app:srcCompat="@mipmap/ic_skip_previous"/>
 
   <android.support.design.widget.FloatingActionButton
@@ -71,10 +70,9 @@
     android:layout_height="wrap_content"
     android:layout_alignParentBottom="true"
     android:layout_alignParentRight="true"
-    android:clickable="true"
     android:elevation="6dp"
     android:tint="@android:color/white"
     android:visibility="visible"
-    app:backgroundTint="@color/navigation_fab"
+    app:backgroundTint="@color/accent"
     app:srcCompat="@mipmap/ic_skip_next"/>
 </RelativeLayout>
