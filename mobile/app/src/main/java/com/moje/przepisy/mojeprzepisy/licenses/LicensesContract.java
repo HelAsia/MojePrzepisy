@@ -14,7 +14,7 @@ public interface LicensesContract {
   }
 
   interface Presenter{
-    List<License> getLicensesList();
+    void setFirstScreen();
   }
 
 }

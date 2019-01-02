@@ -1,6 +1,5 @@
 package com.moje.przepisy.mojeprzepisy.homePage;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -20,48 +19,40 @@ public class HomePageView extends AppCompatActivity {
   @BindView(R.id.register_button) Button registerButton;
   @BindView(R.id.login_button) Button loginButton;
   @BindView(R.id.no_login_button) Button noRegisteredButton;
-  Context context;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_home_page);
-    context = getApplicationContext();
-
     ButterKnife.bind(this);
 
-    registerButton.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View view) {
-        Intent intent = new Intent(HomePageView.this, RegisterActivity.class);
-        startActivity(intent);
-        HomePageView.this.finish();
-      }
+    setOnClickListeners();
+  }
+
+  private void setOnClickListeners(){
+    registerButton.setOnClickListener(view -> {
+      Intent intent = new Intent(this, RegisterActivity.class);
+      startActivity(intent);
+      HomePageView.this.finish();
     });
 
-    loginButton.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View view) {
-        Intent intent = new Intent(HomePageView.this, LogInActivity.class);
-        startActivity(intent);
-        HomePageView.this.finish();
-      }
+    loginButton.setOnClickListener(view -> {
+      Intent intent = new Intent(this, LogInActivity.class);
+      startActivity(intent);
+      HomePageView.this.finish();
     });
 
-    noRegisteredButton.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View view) {
-        deleteUserIdFromPreferences();
-        Intent intent = new Intent(HomePageView.this, MainCardsActivity.class);
-        intent.putExtra("LOGGED",false);
-        startActivity(intent);
-        HomePageView.this.finish();
-      }
+    noRegisteredButton.setOnClickListener(view -> {
+      deleteUserIdFromPreferences();
+      Intent intent = new Intent(this, MainCardsActivity.class);
+      intent.putExtra("isLogged",false);
+      startActivity(intent);
+      HomePageView.this.finish();
     });
   }
 
-  public void deleteUserIdFromPreferences(){
-    SharedPreferences.Editor ingredientsEditor = PreferenceManager.getDefaultSharedPreferences(context).edit();
+  private void deleteUserIdFromPreferences(){
+    SharedPreferences.Editor ingredientsEditor = PreferenceManager.getDefaultSharedPreferences(this).edit();
     ingredientsEditor.remove(Constant.PREF_USER_ID);
     ingredientsEditor.apply();
   }

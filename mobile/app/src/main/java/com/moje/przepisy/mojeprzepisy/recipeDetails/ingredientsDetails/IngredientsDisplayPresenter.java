@@ -13,7 +13,7 @@ public class IngredientsDisplayPresenter implements IngredientsDisplayContract.P
   private RecipeRepository recipeRepository;
   private IngredientsDisplayContract.View ingredientsDisplayView;
 
-  public IngredientsDisplayPresenter(IngredientsDisplayContract.View ingredientsDisplayView,
+  IngredientsDisplayPresenter(IngredientsDisplayContract.View ingredientsDisplayView,
       RecipeRepository recipeRepository){
     this.ingredientsDisplayView = ingredientsDisplayView;
     this.recipeRepository = recipeRepository;
@@ -26,18 +26,19 @@ public class IngredientsDisplayPresenter implements IngredientsDisplayContract.P
 
   @Override
   public void setIngredients(List<Ingredient> ingredientList) {
-    if(ingredientsDisplayView != null){
-      int userId = PreferenceManager
-          .getDefaultSharedPreferences(ingredientsDisplayView.getContext()).getInt(Constant.PREF_USER_ID, 0);
-      if(userId != 0){
-        if(userId == ingredientList.get(0).getUserId()){
-          ingredientsDisplayView.getEditAndDeleteRecipeRelativeLayout().setVisibility(View.VISIBLE);
-        }else {
-          ingredientsDisplayView.getEditAndDeleteRecipeRelativeLayout().setVisibility(View.GONE);
-        }
+      if (ingredientsDisplayView != null) {
+          int userId = PreferenceManager
+                  .getDefaultSharedPreferences(ingredientsDisplayView.getContext()).getInt(Constant.PREF_USER_ID, 0);
+          if (userId != 0) {
+              if (userId == ingredientList.get(0).getUserId()) {
+                  ingredientsDisplayView.setEditAndDeleteRecipeRelativeLayout(true);
+              } else {
+                  ingredientsDisplayView.setEditAndDeleteRecipeRelativeLayout(false);
+
+              }
+          }
+          ingredientsDisplayView.setIngredientsRecyclerView(ingredientList);
       }
-      ingredientsDisplayView.setIngredientsRecyclerView(ingredientList);
-    }
   }
 
   @Override

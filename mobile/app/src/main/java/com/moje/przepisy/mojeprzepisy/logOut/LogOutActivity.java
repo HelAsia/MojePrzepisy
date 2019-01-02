@@ -12,9 +12,7 @@ import com.moje.przepisy.mojeprzepisy.R;
 import com.moje.przepisy.mojeprzepisy.data.repositories.user.UserRepository;
 import com.moje.przepisy.mojeprzepisy.mainCards.MainCardsActivity;
 
-public class LogOutActivity extends AppCompatActivity implements LogOutContract.View,
-    View.OnClickListener {
-
+public class LogOutActivity extends AppCompatActivity implements LogOutContract.View {
   private LogOutContract.Presenter presenter;
   @BindView(R.id.logout_button_yes) Button yesButton;
   @BindView(R.id.logout_button_no) Button noButton;
@@ -24,47 +22,29 @@ public class LogOutActivity extends AppCompatActivity implements LogOutContract.
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_logout_view);
-
     ButterKnife.bind(this);
 
-    yesButton.setOnClickListener(this);
-    noButton.setOnClickListener(this);
-
     presenter = new LogOutPresenter(this, new UserRepository(getApplicationContext()));
+    setButtonListeners();
   }
 
-  @Override
-  protected  void onDestroy() {
-    presenter.onDestroy();
-    super.onDestroy();
-  }
-
-  @Override
-  public void onClick(View view) {
-    switch (view.getId()){
-      case R.id.logout_button_yes:
-        presenter.validateCredentials();
-        break;
-      case R.id.logout_button_no:
-        presenter.onCancel();
-        break;
-      default:
-        break;
-    }
+  private void setButtonListeners(){
+    yesButton.setOnClickListener(view -> presenter.validateCredentials());
+    noButton.setOnClickListener(view -> presenter.onCancel());
   }
 
   @Override
   public void navigateToMainLoggedCardsActivity() {
-    Intent intent = new Intent(LogOutActivity.this, MainCardsActivity.class);
-    intent.putExtra("LOGGED",true);
+    Intent intent = new Intent(this, MainCardsActivity.class);
+    intent.putExtra("isLogged",true);
     startActivity(intent);
     LogOutActivity.this.finish();
   }
 
   @Override
   public void navigateToUnLoggedMainCardsActivity() {
-    Intent intent = new Intent(LogOutActivity.this, MainCardsActivity.class);
-    intent.putExtra("LOGGED",false);
+    Intent intent = new Intent(this, MainCardsActivity.class);
+    intent.putExtra("isLogged",false);
     startActivity(intent);
     LogOutActivity.this.finish();
   }

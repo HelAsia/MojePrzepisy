@@ -20,7 +20,7 @@ import com.moje.przepisy.mojeprzepisy.data.model.License;
 import java.util.List;
 
 public class LicensesAdapter extends RecyclerView.Adapter<LicensesAdapter.ViewHolder> {
-  public Context context;
+  private Context context;
   private List<License> licensesList;
 
   LicensesAdapter(Context context, List<License> licensesList) {
@@ -28,7 +28,6 @@ public class LicensesAdapter extends RecyclerView.Adapter<LicensesAdapter.ViewHo
     this.licensesList = licensesList;
     setHasStableIds(true);
   }
-
 
   @Override
   public LicensesAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
@@ -41,12 +40,9 @@ public class LicensesAdapter extends RecyclerView.Adapter<LicensesAdapter.ViewHo
   public void onBindViewHolder(final LicensesAdapter.ViewHolder viewHolder, final int position) {
     viewHolder.bind(licensesList.get(position));
 
-    viewHolder.licenseCardViewLayout.setOnClickListener(new OnClickListener() {
-      @Override
-      public void onClick(View view) {
-        ((LicensesActivity)context).goToLicenseSource(licensesList.get(position).getLicenseUrl());
-      }
-    });
+    viewHolder.licenseCardViewLayout.setOnClickListener(view ->
+            ((LicensesActivity)context)
+                    .goToLicenseSource(licensesList.get(position).getLicenseUrl()));
 
   }
 
@@ -91,13 +87,9 @@ public class LicensesAdapter extends RecyclerView.Adapter<LicensesAdapter.ViewHo
     }
 
     void bind(License license) {
-      String licenseName = license.getLicenseName();
-      String licenseAuthor = license.getLicenseAuthor();
-      String licenseDescription = license.getLicenseDescription();
-
-      licenseNameTextView.setText(licenseName);
-      licenseAuthorTextView.setText(licenseAuthor);
-      licenseDescriptionTextView.setText(licenseDescription);
+      licenseNameTextView.setText(license.getLicenseName());
+      licenseAuthorTextView.setText(license.getLicenseAuthor());
+      licenseDescriptionTextView.setText(license.getLicenseDescription());
     }
   }
 }

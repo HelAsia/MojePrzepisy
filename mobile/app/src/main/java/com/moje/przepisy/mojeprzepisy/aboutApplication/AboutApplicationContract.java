@@ -10,26 +10,8 @@ public interface AboutApplicationContract {
   interface View{
     void setToolbar();
     Context getContext();
-    CardView getAppDescriptionTitleCardView();
-    CardView getAppAuthorTitleCardView();
-    CardView getAppVersionTitleCardView();
-    CardView getAppErrorTitleCardView();
-    CardView getAppDescriptionTextPlCardView();
-    CardView getAppAuthorTextPlCardView();
-    CardView getAppVersionTextPlCardView();
-    CardView getAppErrorTextPlCardView();
-    CardView getAppDescriptionTextAngCardView();
-    CardView getAppAuthorTextAngCardView();
-    CardView getAppVersionTextAngCardView();
-    CardView getAppErrorTextAngCardView();
-    ImageView getAppDescriptionArrowImageView();
-    ImageView getAppAuthorArrowImageView();
-    ImageView getAppVersionArrowImageView();
-    ImageView getAppErrorArrowImageView();
-    void setDetailsOnClickListeners();
-  }
-
-  interface Presenter{
+    Boolean getLogged();
+    void setLogged();
     void openAppDescriptionCardView();
     void closeAppDescriptionCardView();
     void openAppAuthorCardView();
@@ -38,12 +20,16 @@ public interface AboutApplicationContract {
     void closeAppVersionCardView();
     void openAppErrorCardView();
     void closeAppErrorCardView();
+    void setDetailsOnClickListeners();
+    void setDownArrow();
+    void setRightArrow();
+  }
+
+  interface Presenter{
+    void setFirstScreen();
     void openOrCloseAppDescriptionCardView();
     void openOrCloseAppAuthorCardView();
     void openOrCloseAppVersionCardView();
     void openOrCloseAppErrorCardView();
-    Drawable getDownArrow();
-    Drawable getRightArrow();
-
   }
 }

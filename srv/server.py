@@ -309,7 +309,8 @@ def addWholeRecipeElements():
     statusAddingRecipe, recipeId = recipe.addRecipe(userID, recipeList)
 
     starsList = params['starsList'][0]
-    statusAddingStars, messageAddingStars = star.addStars(userID, recipeId, starsList)
+    statusAddingStars, messageAddingStars = star\
+        .addStars(userID, recipeId, starsList['starsCount'], starsList['favoritesCount'])
 
     ingredientList = params['ingredientList']
     statusAddingIngredient, messageAddingIngredient = ingredient.addIngredient(recipeId, ingredientList)
@@ -531,10 +532,10 @@ def addComment():
 
     params = request.get_json()
 
-    id = params.get('id')
+    recipeId = params.get('recipeId')
     commentText = params.get('comment')
 
-    status, message = comment.addComment(id, get_user_id(), commentText)
+    status, message = comment.addComment(recipeId, get_user_id(), commentText)
 
     return jsonify({
         'status': status,

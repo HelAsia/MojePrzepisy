@@ -52,12 +52,10 @@ public class CategorySearchAdapter extends RecyclerView.Adapter<CategorySearchAd
   public void onBindViewHolder(@NonNull final CategorySearchAdapter.ViewHolder viewHolder, final int position) {
     viewHolder.bind(categoryNameList.get(position));
 
-    viewHolder.categoryImage.setOnClickListener(new OnClickListener() {
-      @Override
-      public void onClick(View view) {
-        setSortedMethod(categoryNameList.get(position));
-        callbackCategory.ShareCategoryClicked();
-      }
+    viewHolder.categoryImage.setOnClickListener(view -> {
+      setSortedMethod();
+      setCategoryNameInPreferences(categoryNameList.get(position));
+      callbackCategory.ShareCategoryClicked();
     });
   }
 
@@ -71,9 +69,15 @@ public class CategorySearchAdapter extends RecyclerView.Adapter<CategorySearchAd
     return position;
   }
 
-  public void setSortedMethod(String sortedMethod){
+  private void setSortedMethod(){
+    SharedPreferences.Editor categorySetting = PreferenceManager.getDefaultSharedPreferences(context).edit();
+    categorySetting.putString(Constant.PREF_SORTED_METHOD, "category").apply();
+    categorySetting.commit();
+  }
+
+  private void setCategoryNameInPreferences(String category){
     SharedPreferences.Editor sortingSetting = PreferenceManager.getDefaultSharedPreferences(context).edit();
-    sortingSetting.putString(Constant.PREF_SORTED_METHOD, sortedMethod).apply();
+    sortingSetting.putString(Constant.PREF_CATEGORY, category).apply();
     sortingSetting.commit();
   }
 

@@ -42,11 +42,10 @@ public class CommentDisplayFragment extends Fragment implements CommentDisplayCo
     setView(view);
 
     presenter = new CommentDisplayPresenter(this, new RecipeRepository(context));
-    presenter.setWholeCommentsElements();
-
-    getRecipeId();
+    setRecipeId();
     getIsLogged();
     setCommentListeners();
+    presenter.setWholeCommentsElements();
 
     return view;
   }
@@ -78,9 +77,12 @@ public class CommentDisplayFragment extends Fragment implements CommentDisplayCo
     }
   }
 
+  private void setRecipeId(){
+    this.recipeId = getArguments().getInt("id");
+  }
+
   @Override
   public int getRecipeId() {
-    this.recipeId = getArguments().getInt("id");
     return recipeId;
   }
 
@@ -93,7 +95,7 @@ public class CommentDisplayFragment extends Fragment implements CommentDisplayCo
   @Override
   public void setCommentsRecyclerViewAndCommentNumber(List<Comment> commentList) {
     CommentDisplayAdapter adapter = new CommentDisplayAdapter(context, commentList);
-    RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.commentsDisplayRecyclerView);
+    RecyclerView recyclerView = view.findViewById(R.id.commentsDisplayRecyclerView);
     recyclerView.setAdapter(adapter);
     recyclerView.setLayoutManager(new LinearLayoutManager(context));
     presenter.setCommentNumberOnScreen(adapter.getItemCount());

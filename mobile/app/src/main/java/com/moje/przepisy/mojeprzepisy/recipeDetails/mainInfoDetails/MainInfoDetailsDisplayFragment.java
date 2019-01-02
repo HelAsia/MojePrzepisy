@@ -105,7 +105,7 @@ public class MainInfoDetailsDisplayFragment extends Fragment implements MainInfo
   @Override
   public void goToMainCardActivity(){
     Intent intent = new Intent(context, MainCardsActivity.class);
-    intent.putExtra("LOGGED",true);
+    intent.putExtra("isLogged",true);
     startActivity(intent);
   }
 

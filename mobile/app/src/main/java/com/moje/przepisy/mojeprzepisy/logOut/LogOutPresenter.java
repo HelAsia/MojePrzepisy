@@ -1,11 +1,9 @@
 package com.moje.przepisy.mojeprzepisy.logOut;
 
-import android.view.View;
 import com.moje.przepisy.mojeprzepisy.data.repositories.user.UserRepository;
 
 public class LogOutPresenter implements LogOutContract.Presenter,
     UserRepository.OnLogoutFinishedListener {
-
   private UserRepository userRepository;
   private LogOutContract.View logoutView;
 
@@ -19,11 +17,6 @@ public class LogOutPresenter implements LogOutContract.Presenter,
     if(logoutView != null) {
       userRepository.logout(this);
     }
-  }
-
-  @Override
-  public void onDestroy() {
-    logoutView = null;
   }
 
   @Override

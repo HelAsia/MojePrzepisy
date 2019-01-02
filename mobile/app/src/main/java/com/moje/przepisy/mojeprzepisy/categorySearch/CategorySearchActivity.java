@@ -1,8 +1,8 @@
 package com.moje.przepisy.mojeprzepisy.categorySearch;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,48 +13,55 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class CategorySearchActivity extends AppCompatActivity implements
-    CategorySearchAdapter.OnShareClickedListener {
-  Context context;
-  private Boolean isLogged;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+public class CategorySearchActivity extends AppCompatActivity {
+  @BindView(R.id.toolbar_category_name) Toolbar toolbar;
+  @BindView(R.id.addCategoryNamesRecyclerView) RecyclerView recyclerView;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_category_search);
-    context = getApplicationContext();
+    ButterKnife.bind(this);
 
     setToolbar();
+    setCategoryList(getCategoryNameList());
+  }
+
+  private List<String> getCategoryNameList(){
     String[] categoryNameItems  = getResources().getStringArray(R.array.recipe_category_array);
-    List<String> categoryNameList = new ArrayList<String>(Arrays.asList(categoryNameItems));
-    setCategoryList(categoryNameList);
+    return new ArrayList<>(Arrays.asList(categoryNameItems));
   }
 
   public void setCategoryList(List<String> categoryNameList){
-    CategorySearchAdapter adapter = new CategorySearchAdapter(context, categoryNameList);
-    RecyclerView recyclerView = findViewById(R.id.addCategoryNamesRecyclerView);
+    CategorySearchAdapter adapter = new CategorySearchAdapter(this, categoryNameList);
     int numberOfColumns = 2;
-    adapter.setCategoryOnShareClickedListener(this);
-    recyclerView.setLayoutManager(new GridLayoutManager(context, numberOfColumns));
+
+    adapter.setCategoryOnShareClickedListener(() -> {
+      Intent intent = new Intent(this, MainCardsActivity.class);
+      intent.putExtra("LOGGED", getIsLogged());
+      startActivity(intent);
+      CategorySearchActivity.this.finish();
+    });
+
+    recyclerView.setLayoutManager(new GridLayoutManager(this, numberOfColumns));
     recyclerView.getLayoutManager().getPaddingRight();
     recyclerView.setAdapter(adapter);
   }
 
   public void setToolbar() {
-    Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_category_name);
     toolbar.setSubtitle(R.string.category_search_title);
     setSupportActionBar(toolbar);
-  }
-
-  @Override
-  public void ShareCategoryClicked() {
-    Intent intent = new Intent(CategorySearchActivity.this, MainCardsActivity.class);
-    intent.putExtra("LOGGED", getIsLogged());
-    startActivity(intent);
+    ActionBar actionbar = getSupportActionBar();
+    if(actionbar != null){
+      actionbar.setDisplayHomeAsUpEnabled(true);
+      actionbar.setHomeAsUpIndicator(R.drawable.ic_arrow_back);
+    }
   }
 
   public Boolean getIsLogged() {
-    this.isLogged = getIntent().getExtras().getBoolean("LOGGED");
-    return isLogged;
+    return getIntent().getExtras().getBoolean("LOGGED");
   }
 }

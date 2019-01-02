@@ -35,11 +35,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/commentsDisplayRecyclerView"
-        android:background="@color/creamy"
+        android:background="@color/white_transparent"
         android:layout_marginTop="10dp"
-        android:hint="Dodaj komentarz..."
+        android:hint="@string/add_comment"
         android:textColorHint="@color/secondary_text"
         android:ems="10"
+        android:minLines="3"
         android:inputType="textMultiLine"/>
       <Button
         android:id="@+id/addCommentButton"
@@ -47,8 +48,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/commentEditText"
         android:layout_marginTop="10dp"
-        android:background="@drawable/home_page_buttons"
-        android:text="Dodaj komentarz"/>
+        android:text="@string/send_comment"/>
     </RelativeLayout>
   </ScrollView>
 </FrameLayout>

@@ -2,6 +2,9 @@ package com.moje.przepisy.mojeprzepisy.data.network;
 
 import com.moje.przepisy.mojeprzepisy.data.model.Message;
 import com.moje.przepisy.mojeprzepisy.data.model.User;
+
+import io.reactivex.Completable;
+import io.reactivex.Single;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -13,25 +16,25 @@ import retrofit2.http.Path;
 public interface UserAPI {
 
   @POST("/login")
-  Call<Message> login(@Body User user);
+  Single<Message> login(@Body User user);
 
   @GET("/logout")
-  Call<Message> logout();
+  Completable logout();
 
   @PUT("/user")
-  Call<Message> register(@Body User user);
+  Single<Message> register(@Body User user);
 
   @GET("/user")
-  Call<User> getUser();
+  Single<User> getUser();
 
   @POST("/user/{columnName}/{columnValue}")
-  Call<Message> editUser(@Path("columnName") String columnName, @Path("columnValue") String columnValue);
+  Completable editUser(@Path("columnName") String columnName, @Path("columnValue") String columnValue);
 
   @POST("/user/photo")
-  Call<Message> editPhotoUser(@Body User user);
+  Completable editPhotoUser(@Body User user);
 
   @DELETE("/user")
-  Call<Message> deleteUser();
+  Completable deleteUser();
 
 
 

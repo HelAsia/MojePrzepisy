@@ -18,6 +18,7 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -25,34 +26,40 @@ import com.google.gson.Gson;
 import com.moje.przepisy.mojeprzepisy.R;
 import com.moje.przepisy.mojeprzepisy.data.model.Step;
 import com.moje.przepisy.mojeprzepisy.utils.BitmapConverter;
+import com.moje.przepisy.mojeprzepisy.utils.Constant;
+import com.moje.przepisy.mojeprzepisy.utils.PojoFileConverter;
 import com.moje.przepisy.mojeprzepisy.utils.URLDialog;
 import java.util.List;
 
 public class AddStepsAdapter extends RecyclerView.Adapter<AddStepsAdapter.ViewHolder> {
-  public Context context;
-  private OnShareClickedListener callbackGallery;
-  private OnShareClickedListener callbackCamera;
+  private Context context;
+  private PojoFileConverter pojoFileConverter;
+  private OnShareGalleryClickedListener callbackGallery;
+  private OnShareCameraClickedListener callbackCamera;
   private BitmapConverter converter = new BitmapConverter();
   private List<Step> stepList;
-  private Gson gson = new Gson();
 
   AddStepsAdapter(Context context, List<Step> stepList){
     this.context = context;
     this.stepList = stepList;
+    pojoFileConverter = new PojoFileConverter(this.context);
     setHasStableIds(true);
   }
 
-  public void setGalleryOnShareClickedListener(OnShareClickedListener callbackGallery) {
+  public void setGalleryOnShareClickedListener(OnShareGalleryClickedListener callbackGallery) {
     this.callbackGallery = callbackGallery;
   }
 
-  public void setCameraOnShareClickedListener(OnShareClickedListener callbackCamera) {
+  public void setCameraOnShareClickedListener(OnShareCameraClickedListener callbackCamera) {
     this.callbackCamera = callbackCamera;
   }
 
-  public interface OnShareClickedListener {
-    void ShareGalleryClicked(String massage);
-    void ShareCameraClicked(String massage);
+  public interface OnShareGalleryClickedListener {
+    void ShareGalleryClicked();
+  }
+
+  public interface OnShareCameraClickedListener {
+    void ShareCameraClicked();
   }
 
   @NonNull
@@ -67,48 +74,23 @@ public class AddStepsAdapter extends RecyclerView.Adapter<AddStepsAdapter.ViewHo
   public void onBindViewHolder(@NonNull final ViewHolder viewHolder, final int position) {
     viewHolder.bind(stepList.get(position));
 
-    viewHolder.galleryImageView.setOnClickListener(new OnClickListener() {
-      @Override
-      public void onClick(View view) {
-        new BackgroundGalleryAction(((AddStepsActivity)context), viewHolder.mainPhotoImageView, position).execute();
-      }
-    });
+    viewHolder.galleryImageView.setOnClickListener(view ->
+            new BackgroundGalleryAction(((AddStepsActivity)context), viewHolder.mainPhotoImageView, position).execute());
 
-    viewHolder.cameraImageView.setOnClickListener(new OnClickListener() {
-      @Override
-      public void onClick(View view) {
-        new BackgroundCameraAction(((AddStepsActivity)context), viewHolder.mainPhotoImageView, position).execute();
-      }
-    });
+    viewHolder.cameraImageView.setOnClickListener(view ->
+            new BackgroundCameraAction(((AddStepsActivity)context), viewHolder.mainPhotoImageView, position).execute());
 
-    viewHolder.URLImageView.setOnClickListener(new OnClickListener() {
-      @Override
-      public void onClick(View view) {
-        new BackgroundUrlImageAction(((AddStepsActivity)context), viewHolder.mainPhotoImageView, position).execute();
-      }
-    });
+    viewHolder.URLImageView.setOnClickListener(view ->
+            new BackgroundUrlImageAction(((AddStepsActivity)context), viewHolder.mainPhotoImageView, position).execute());
 
-    viewHolder.stepNumberSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
-      @Override
-      public void onItemSelected(AdapterView<?> adapterView, View view, int positionInSpinner, long id) {
-        stepList.get(position).setStepNumber(position + 1);
+    viewHolder.stepNumberTextView.setText(Integer.toString(position + 1));
+    stepList.get(position).setStepNumber(position + 1);
+    pojoFileConverter.addPojoListToFile(Constant.STEPS_FILE_NAME, stepList);
 
-        ((AddStepsActivity)context).setStepList(stepList);
-      }
-
-      @Override
-      public void onNothingSelected(AdapterView<?> adapterView) {
-        ((AddStepsActivity)context).setStepList(stepList);
-      }
-    });
-
-    viewHolder.deleteImageView.setOnClickListener(new OnClickListener() {
-      @Override
-      public void onClick(View view) {
-        stepList.remove(position);
-        notifyItemRemoved(position);
-        ((AddStepsActivity)context).setStepList(stepList);
-      }
+    viewHolder.deleteImageView.setOnClickListener(view -> {
+      stepList.remove(position);
+      notifyItemRemoved(position);
+      pojoFileConverter.addPojoListToFile(Constant.STEPS_FILE_NAME, stepList);
     });
 
     viewHolder.stepEditText.addTextChangedListener(new TextWatcher() {
@@ -119,10 +101,9 @@ public class AddStepsAdapter extends RecyclerView.Adapter<AddStepsAdapter.ViewHo
       public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
         String stepDescription = viewHolder.stepEditText.getText().toString();
 
-        Step updatedStep = stepList.get(position);
-        updatedStep.setStepDescription(stepDescription);
+        stepList.get(position).setStepDescription(stepDescription);
 
-        ((AddStepsActivity)context).setStepList(stepList);
+        pojoFileConverter.addPojoListToFile(Constant.STEPS_FILE_NAME, stepList);
       }
       @Override
       public void afterTextChanged(Editable editable) {
@@ -141,7 +122,7 @@ public class AddStepsAdapter extends RecyclerView.Adapter<AddStepsAdapter.ViewHo
   }
 
   public class ViewHolder extends RecyclerView.ViewHolder {
-    @BindView(R.id.stepNumberSpinner) Spinner stepNumberSpinner;
+    @BindView(R.id.stepNumberTextView) TextView stepNumberTextView;
     @BindView(R.id.deleteImageView) ImageView deleteImageView;
     @BindView(R.id.stepEditText) EditText stepEditText;
     @BindView(R.id.mainPhotoImageView) ImageView mainPhotoImageView;
@@ -166,7 +147,7 @@ public class AddStepsAdapter extends RecyclerView.Adapter<AddStepsAdapter.ViewHo
         Bitmap photoAfterConversion = converter.StringToBitMap(mainPhoto);
         mainPhotoImageView.setImageBitmap(photoAfterConversion);
       }
-      stepNumberSpinner.setSelection(stepNumber);
+      stepNumberTextView.setText(Integer.toString(stepNumber));
       stepEditText.setText(stepDescription);
     }
   }
@@ -210,7 +191,7 @@ public class AddStepsAdapter extends RecyclerView.Adapter<AddStepsAdapter.ViewHo
 
       stepList.get(position).setPhoto(converter.BitMapToString(picture));
 
-      ((AddStepsActivity)context).setStepList(stepList);
+      pojoFileConverter.addPojoListToFile(Constant.STEPS_FILE_NAME, stepList);
 
       Toast.makeText(activity, "DODANE", Toast.LENGTH_SHORT).show();
     }
@@ -229,7 +210,7 @@ public class AddStepsAdapter extends RecyclerView.Adapter<AddStepsAdapter.ViewHo
 
     @Override
     protected void onPreExecute() {
-      callbackGallery.ShareGalleryClicked("Gallery");
+      callbackGallery.ShareGalleryClicked();
     }
 
     @Override
@@ -257,7 +238,7 @@ public class AddStepsAdapter extends RecyclerView.Adapter<AddStepsAdapter.ViewHo
 
       stepList.get(position).setPhoto(converter.BitMapToString(picture));
 
-      ((AddStepsActivity)context).setStepList(stepList);
+      pojoFileConverter.addPojoListToFile(Constant.STEPS_FILE_NAME, stepList);
       ((AddStepsActivity)context).setPicture(null);
 
       Toast.makeText(activity, "DODANE", Toast.LENGTH_SHORT).show();
@@ -278,7 +259,7 @@ public class AddStepsAdapter extends RecyclerView.Adapter<AddStepsAdapter.ViewHo
 
     @Override
     protected void onPreExecute() {
-      callbackCamera.ShareCameraClicked("Camera");
+      callbackCamera.ShareCameraClicked();
     }
 
     @Override
@@ -305,7 +286,7 @@ public class AddStepsAdapter extends RecyclerView.Adapter<AddStepsAdapter.ViewHo
 
       stepList.get(position).setPhoto(converter.BitMapToString(picture));
 
-      ((AddStepsActivity)context).setStepList(stepList);
+      pojoFileConverter.addPojoListToFile(Constant.STEPS_FILE_NAME, stepList);
       ((AddStepsActivity)context).setPicture(null);
 
       Toast.makeText(activity, "DODANE", Toast.LENGTH_SHORT).show();

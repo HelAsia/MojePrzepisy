@@ -11,9 +11,8 @@ public interface IngredientsDisplayContract {
     Context getContext();
     int getRecipeId();
     Boolean getIsLogged();
+    void setEditAndDeleteRecipeRelativeLayout(Boolean isVisible);
     void setIngredientsRecyclerView(List<Ingredient> ingredientList);
-    RelativeLayout getEditAndDeleteRecipeRelativeLayout();
-    ImageView getEditRecipeImageView();
   }
 
   interface Presenter{

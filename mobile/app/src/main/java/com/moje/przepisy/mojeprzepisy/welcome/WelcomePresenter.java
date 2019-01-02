@@ -11,7 +11,7 @@ public class WelcomePresenter implements WelcomeContract.Presenter, WelcomeRepos
   private WelcomeRepository welcomeRepository;
   private WelcomeContract.View welcomeView;
 
-  public WelcomePresenter(WelcomeContract.View welcomeView, WelcomeRepository welcomeRepository) {
+  WelcomePresenter(WelcomeContract.View welcomeView, WelcomeRepository welcomeRepository) {
     this.welcomeView = welcomeView;
     this.welcomeRepository = welcomeRepository;
   }
@@ -25,13 +25,9 @@ public class WelcomePresenter implements WelcomeContract.Presenter, WelcomeRepos
 
   @Override
   public void onError() {
-    welcomeView.getErrorTextView().setVisibility(View.VISIBLE);
-    welcomeView.getErrorTextView().setText(R.string.server_connection_error);
-  }
-
-  @Override
-  public void onDestroy() {
-    welcomeView = null;
+    String errorMessage = welcomeView.getContext().getResources()
+            .getString(R.string.server_connection_error);
+    welcomeView.setErrorTextView(errorMessage);
   }
 
 
@@ -50,7 +46,7 @@ public class WelcomePresenter implements WelcomeContract.Presenter, WelcomeRepos
     }
   }
 
-  public void deleteUserIdFromPreferences(){
+  private void deleteUserIdFromPreferences(){
     SharedPreferences.Editor userEditor = PreferenceManager.getDefaultSharedPreferences(welcomeView.getContext()).edit();
     userEditor.remove(Constant.PREF_USER_ID);
     userEditor.apply();

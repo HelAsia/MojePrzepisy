@@ -27,24 +27,52 @@ public class MainCardsPresenter implements MainCardsContract.Presenter,
   }
 
   @Override
-  public void getSortedMethod(Context context){
-    String sortedMethodPref = PreferenceManager.getDefaultSharedPreferences(context)
-        .getString(Constant.PREF_SORTED_METHOD,"default");
-    if(sortedMethodPref.equals("default")){
-      getAllCardsSortedFromServer("default");
-    }else if(sortedMethodPref.equals("alphabetically")){
-      getAllCardsSortedFromServer("alphabetically");
-    }else if(sortedMethodPref.equals("lastAdded")){
-      getAllCardsSortedFromServer("lastAdded");
-    }else if(sortedMethodPref.equals("highestRated")){
-      getAllCardsSortedFromServer("highestRated");
-    }else if(sortedMethodPref.equals("favorite")) {
-      getAllCardsSortedFromServer("default");
-    }else if (sortedMethodPref.equals("myRecipe")){
-      getAllCardsSortedFromServer("default");
-    }else {
-      operationsOnCardRepository.getCardsSortedByCategoryQuery(this, sortedMethodPref);
+  public String getSortedMethod(Context context){
+    return PreferenceManager.getDefaultSharedPreferences(context)
+            .getString(Constant.PREF_SORTED_METHOD,"default");
+  }
+
+  private String getCategory(Context context){
+    return PreferenceManager.getDefaultSharedPreferences(context)
+            .getString(Constant.PREF_CATEGORY,"Zupy");
+  }
+
+  @Override
+  public void setSortedCards(){
+    String sortedMethodPref = getSortedMethod(cardsView.getContext());
+    switch (sortedMethodPref){
+      case "category":
+        operationsOnCardRepository.getCardsSortedByCategoryQuery(this, getCategory(cardsView.getContext()));
+        break;
+      case "alphabetically":
+        operationsOnCardRepository.getCardsSortedByChoseMethod(this, "alphabetically");
+        break;
+      case "lastAdded":
+        operationsOnCardRepository.getCardsSortedByChoseMethod(this, "lastAdded");
+        break;
+      case "highestRated":
+        operationsOnCardRepository.getCardsSortedByChoseMethod(this, "highestRated");
+        break;
+      case "favorite":
+        operationsOnCardRepository.getCardsSortedByChoseMethod(this, "favorite");
+        break;
+      case "myRecipe":
+        operationsOnCardRepository.getCardsSortedByChoseMethod(this, "myRecipe");
+        break;
+      default:
+        operationsOnCardRepository.getCardsSortedByChoseMethod(this, "default");
+        break;
     }
+  }
+
+  @Override
+  public void setFirstScreen() {
+    cardsView.setIsLoggedStatus();
+    setSortedCards();
+    cardsView.setToolbar();
+    cardsView.setDrawerLayoutListener();
+    cardsView.setNavigationViewListener(cardsView.getIsLoggedStatus());
+    cardsView.setFloatingActionButton(cardsView.getIsLoggedStatus());
   }
 
   @Override
@@ -58,25 +86,6 @@ public class MainCardsPresenter implements MainCardsContract.Presenter,
   }
 
   @Override
-  public void getAllCardsSortedFromServer(String method) {
-    if(cardsView != null) {
-      if(method.equals("default")){
-        operationsOnCardRepository.getCardsSortedByChoseMethod(this, "default");
-      }else if(method.equals("alphabetically")){
-        operationsOnCardRepository.getCardsSortedByChoseMethod(this, "alphabetically");
-      }else if(method.equals("lastAdded")){
-        operationsOnCardRepository.getCardsSortedByChoseMethod(this, "lastAdded");
-      }else if(method.equals("highestRated")){
-        operationsOnCardRepository.getCardsSortedByChoseMethod(this, "highestRated");
-      }else if(method.equals("favorite")){
-        operationsOnCardRepository.getCardsSortedByChoseMethod(this, "favorite");
-      }else if(method.equals("myRecipe")){
-        operationsOnCardRepository.getCardsSortedByChoseMethod(this, "myRecipe");
-      }
-    }
-  }
-
-  @Override
   public void getSearchedCardsFromServer(String recipeName) {
     if(cardsView != null) {
       operationsOnCardRepository.getCardsSortedBySearchedQuery(this, recipeName);
@@ -86,25 +95,11 @@ public class MainCardsPresenter implements MainCardsContract.Presenter,
   @Override
   public void setRecipesList(List<OneRecipeCard> recipesList) {
     if(cardsView != null){
+      cardsView.setErrorMessage("");
       cardsView.setRecyclerView(recipesList);
     }
   }
 
-  @Override
-  public void setNavigationViewListener(NavigationView navigationView, boolean ifLogged) {
-    if(ifLogged) {
-      cardsView.setNavigationViewListenerWithRegistration(navigationView);
-    }else {
-      cardsView.setNavigationViewListenerWithoutRegistration(navigationView);
-    }
-  }
-
-  @Override
-  public void setFloatingActionButton(FloatingActionButton floatingActionButton, boolean ifLogged) {
-    if(ifLogged) {
-      cardsView.getFloatingActionButton().setVisibility(View.VISIBLE);
-    }
-  }
 
   @Override
   public void setSortedMethod(Context context, String sortedMethod){
@@ -114,38 +109,18 @@ public class MainCardsPresenter implements MainCardsContract.Presenter,
   }
 
   @Override
-  public void setDrawerLayoutListener(DrawerLayout drawerLayout) {
-    drawerLayout.addDrawerListener(
-        new DrawerLayout.DrawerListener() {
-          @Override
-          public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
-          }
-          @Override
-          public void onDrawerOpened(@NonNull View drawerView) {
-          }
-          @Override
-          public void onDrawerClosed(@NonNull View drawerView) {
-          }
-          @Override
-          public void onDrawerStateChanged(int newState) {
-          }
-        }
-    );
-  }
-
-  @Override
-  public void onDestroy() {
-    cardsView = null;
-  }
-
-  @Override
   public void refreshCardsAction() {
-    getSortedMethod(cardsView.getContext());
+    setSortedCards();
   }
 
   @Override
   public void setUpdatedCardFromServer(OneRecipeCard updatedCard, int position) {
     cardsView.setUpdatedCard(updatedCard, position);
+  }
+
+  @Override
+  public void onError(String message) {
+    cardsView.setErrorMessage(message);
   }
 
   @Override

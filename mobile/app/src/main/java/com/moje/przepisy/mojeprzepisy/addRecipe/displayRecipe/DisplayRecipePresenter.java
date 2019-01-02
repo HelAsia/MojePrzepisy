@@ -194,13 +194,6 @@ public class DisplayRecipePresenter implements DisplayRecipeContract.Presenter,
       setStepList(stepList);
       recipeElementsView.setStepsRecyclerView(stepList);
     }else {
-      Toast.makeText(recipeElementsView.getContext(), "Nie udało się pobrać składników!", Toast.LENGTH_SHORT).show();
-    }
-
-    if(stepList != null){
-      setStepList(stepList);
-      recipeElementsView.setStepsRecyclerView(stepList);
-    }else {
       Toast.makeText(recipeElementsView.getContext(), "Nie udało się pobrać kroków!", Toast.LENGTH_SHORT).show();
     }
   }
@@ -208,11 +201,9 @@ public class DisplayRecipePresenter implements DisplayRecipeContract.Presenter,
   @Override
   public void saved() {
     addWholeElementsToServer();
-    Log.i("Presenter ", "DisplayRecipePresenter.saved(): After addWholeElementsToServer()");
     while (!isWholeRecipeAdded){
 
     }
-    Log.i("Presenter", "DisplayRecipePresenter.saved(): After while (!isWholeRecipeAdded)");
   }
 
   @Override
@@ -263,9 +254,7 @@ public class DisplayRecipePresenter implements DisplayRecipeContract.Presenter,
     @Override
     protected Void doInBackground(Void... arg0) {
       try {
-        Log.i("BackgroundActions", ".doInBackground(): Before saved()");
         saved();
-        Log.i("BackgroundActions", ".doInBackground(): After saved()");
         Thread.sleep(5000);
       } catch (InterruptedException e) {
         e.printStackTrace();
@@ -294,9 +283,7 @@ public class DisplayRecipePresenter implements DisplayRecipeContract.Presenter,
     @Override
     protected Void doInBackground(Void... arg0) {
       try {
-        Log.i("BackgroundActions", ".doInBackground(): Before saved()");
         addPhotosNumberToElements();
-        Log.i("BackgroundActions", ".doInBackground(): After saved()");
         Thread.sleep(5000);
       } catch (InterruptedException e) {
         e.printStackTrace();
@@ -325,7 +312,6 @@ public class DisplayRecipePresenter implements DisplayRecipeContract.Presenter,
         Recipe recipeWithPhotoNumber = new Recipe(recipe.getName(), photoNumber,
             recipe.getCategory(), recipe.getPrepareTime(), recipe.getCookTime(),
             recipe.getBakeTime());
-        Log.d("addPhotoToElements", "addPhotosNumberToElements() After added recipe photo. ");
         recipeListWithPhotoNumber.add(recipeWithPhotoNumber);
         photoNumber = -1;
       }
@@ -345,14 +331,12 @@ public class DisplayRecipePresenter implements DisplayRecipeContract.Presenter,
         }
         Step stepWithPhotoNumber = new Step(step.getStepNumber(),
             step.getStepDescription());
-        Log.d("addPhotoToElements)", "addPhotosNumberToElements() After added step photo. ");
         stepListWithPhotoNumber.add(stepWithPhotoNumber);
         photoNumber = -1;
       }
       else {
         Step stepWithPhotoNumber = new Step(photoNumber, step.getStepNumber(),
             step.getStepDescription());
-        Log.d("addPhotoToElements)", "addPhotosNumberToElements() After added step photo. ");
         stepListWithPhotoNumber.add(stepWithPhotoNumber);
       }
     }
@@ -361,12 +345,9 @@ public class DisplayRecipePresenter implements DisplayRecipeContract.Presenter,
   @Override
   public void addWholeElementsToServer() {
     Stars stars = new Stars(-1, 0, 0);
-    Log.i("Presenter ", "DisplayRecipePresenter.addWholeElementsToServer(): After created new Stars Object");
     starsList.add(stars);
-    Log.i("Presenter", "DisplayRecipePresenter.addWholeElementsToServer(): After added new Stars Object to starsList");
     RecipeAllElements recipeAllElements = new RecipeAllElements(recipeListWithPhotoNumber, ingredientList, stepListWithPhotoNumber, starsList);
 
     recipeRepository.addWholeRecipeElements(recipeAllElements, this);
-    Log.i("Presenter", "DisplayRecipePresenter.addWholeElementsToServer():After addWholeRecipeElements()");
   }
 }

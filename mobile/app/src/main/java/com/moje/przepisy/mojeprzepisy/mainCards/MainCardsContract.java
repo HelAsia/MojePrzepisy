@@ -10,28 +10,28 @@ import java.util.List;
 public interface MainCardsContract {
   interface View {
     Context getContext();
-    NavigationView getNavigationView();
-    DrawerLayout getDrawerLayout();
-    FloatingActionButton getFloatingActionButton();
+    void setIsLoggedStatus();
+    boolean getIsLoggedStatus();
+    void setNavigationViewListener(boolean isLogged);
+    void setFloatingActionButton(boolean isLogged);
+    void setDrawerLayoutListener();
     void setRecyclerView(List<OneRecipeCard> cardList);
     void setToolbar();
     void setNavigationViewListenerWithRegistration(NavigationView navigationView);
     void setNavigationViewListenerWithoutRegistration(NavigationView navigationView);
     void goToRecipeDetails(int recipeId);
     void setUpdatedCard(OneRecipeCard oneRecipeCard, int position);
+    void setErrorMessage(String message);
   }
 
   interface Presenter {
+    String getSortedMethod(Context context);
     void sentStars(int recipeId, int starRate, int position);
     void sentHeart(int recipeId, int favorite, int position);
-    void getAllCardsSortedFromServer(String method);
-    void getSortedMethod(Context context);
+    void setSortedCards();
+    void setFirstScreen();
     void setSortedMethod(Context context, String sortedMethod);
-    void setDrawerLayoutListener(DrawerLayout drawerLayout);
-    void setFloatingActionButton(FloatingActionButton floatingActionButton, boolean ifLogged);
     void getSearchedCardsFromServer(String recipeName);
-    void setNavigationViewListener(NavigationView navigationView, boolean ifLogged);
-    void onDestroy();
     void refreshCardsAction();
   }
 }

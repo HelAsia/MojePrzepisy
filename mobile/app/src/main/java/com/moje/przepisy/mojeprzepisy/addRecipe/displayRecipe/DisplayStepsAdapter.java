@@ -51,7 +51,7 @@ public class DisplayStepsAdapter extends RecyclerView.Adapter<DisplayStepsAdapte
 
 
   public class ViewHolder extends RecyclerView.ViewHolder {
-    @BindView(R.id.stepNumberTextView) TextView stepNumberTextView;
+    @BindView(R.id.stepNameTextView) TextView stepNumberTextView;
     @BindView(R.id.stepDescriptionTextView) TextView stepDescriptionTextView;
     @BindView(R.id.stepImageView) ImageView stepImageView;
 

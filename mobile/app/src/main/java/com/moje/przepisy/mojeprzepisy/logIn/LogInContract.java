@@ -7,16 +7,13 @@ import android.widget.TextView;
 public interface LogInContract {
   interface View {
     void navigateToMainRegisteredActivity();
-    TextView getErrorMessageTextView();
-    EditText getLoginEditText();
-    EditText getPasswordEditText();
+    void setErrorMessageTextView(String errorMessage);
+    String getLogin();
+    String getPassword();
     Context getContext();
   }
 
   interface Presenter {
     void validateCredentials();
-    void onDestroy();
-    String getLogin();
-    String getPassword();
   }
 }

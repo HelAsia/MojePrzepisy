@@ -1,6 +1,5 @@
 package com.moje.przepisy.mojeprzepisy.recipeDetails.ingredientsDetails;
 
-
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -16,15 +15,18 @@ import com.moje.przepisy.mojeprzepisy.data.model.Ingredient;
 import com.moje.przepisy.mojeprzepisy.data.repositories.recipe.RecipeRepository;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * A simple {@link Fragment} subclass.
  */
 public class IngredientsDisplayFragment extends Fragment implements IngredientsDisplayContract.View {
-  private IngredientsDisplayContract.Presenter presenter;
-  Context context;
-  int recipeId;
-  Boolean isLogged;
-  View view;
+  @BindView(R.id.ingredientsDisplayRecyclerView) RecyclerView recyclerView;
+  @BindView(R.id.editAndDeleteRecipeRelativeLayout) RelativeLayout relativeLayout;
+  @BindView(R.id.editUserRecipeImageView) ImageView editUserRecipeImageView;
+  private Context context;
+  private View view;
 
   public IngredientsDisplayFragment() {
   }
@@ -37,7 +39,9 @@ public class IngredientsDisplayFragment extends Fragment implements IngredientsD
     View view = inflater.inflate(R.layout.fragment_ingredients_display, container, false);
     setView(view);
 
-    presenter = new IngredientsDisplayPresenter(this, new RecipeRepository(context));
+    ButterKnife.bind(this, view);
+
+    IngredientsDisplayContract.Presenter presenter = new IngredientsDisplayPresenter(this, new RecipeRepository(context));
     presenter.setWholeRecipeElements();
 
     return view;
@@ -50,30 +54,26 @@ public class IngredientsDisplayFragment extends Fragment implements IngredientsD
   @Override
   public void setIngredientsRecyclerView(List<Ingredient> ingredientList) {
     IngredientsDisplayAdapter adapter = new IngredientsDisplayAdapter(context, ingredientList);
-    RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.ingredientsDisplayRecyclerView);
     recyclerView.setAdapter(adapter);
     recyclerView.setLayoutManager(new LinearLayoutManager(context));
   }
 
   @Override
   public int getRecipeId() {
-    this.recipeId = getArguments().getInt("id");
-    return recipeId;
+    return getArguments().getInt("id");
   }
 
   @Override
   public Boolean getIsLogged() {
-    this.isLogged = getArguments().getBoolean("isLogged");
-    return isLogged;
+    return getArguments().getBoolean("isLogged");
   }
 
   @Override
-  public RelativeLayout getEditAndDeleteRecipeRelativeLayout() {
-    return (RelativeLayout)getView().findViewById(R.id.editAndDeleteRecipeRelativeLayout);
-  }
-
-  @Override
-  public ImageView getEditRecipeImageView() {
-    return (ImageView)getView().findViewById(R.id.editUserRecipeImageView);
+  public void setEditAndDeleteRecipeRelativeLayout(Boolean isVisible) {
+    if(isVisible){
+      relativeLayout.setVisibility(View.VISIBLE);
+    }else {
+      relativeLayout.setVisibility(View.GONE);
+    }
   }
 }

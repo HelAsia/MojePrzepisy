@@ -14,7 +14,7 @@ import com.moje.przepisy.mojeprzepisy.data.repositories.user.UserRepository;
 import com.moje.przepisy.mojeprzepisy.R;
 import com.moje.przepisy.mojeprzepisy.mainCards.MainCardsActivity;
 
-public class RegisterActivity extends AppCompatActivity implements RegisterContract.View, View.OnClickListener {
+public class RegisterActivity extends AppCompatActivity implements RegisterContract.View {
   private RegisterContract.Presenter presenter;
   @BindView(R.id.errorMessageTextView)TextView errorMessageTextView;
   @BindView(R.id.register_action_button) Button registerButton;
@@ -25,43 +25,29 @@ public class RegisterActivity extends AppCompatActivity implements RegisterContr
   @BindView(R.id.repeated_password_editText) EditText repeatedPasswordEditText;
   @BindView(R.id.email_editText) EditText emailEditText;
   @BindView(R.id.repeated_email_editText) EditText repeatedEmailEditText;
-  Context context;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_register);
-    context = getApplicationContext();
-
     ButterKnife.bind(this);
 
-    registerButton.setOnClickListener(this);
+    registerButton.setOnClickListener(view -> presenter.validateCredentials());
 
     presenter = new RegisterPresenter(this, new UserRepository(getApplicationContext()));
-  }
-
-  @Override protected  void onDestroy() {
-    presenter.onDestroy();
-    super.onDestroy();
-  }
-
-  @Override
-  public void onClick(View view) {
-    presenter.validateCredentials(getName(),getLastName(),getLogin(),getPassword(),getEmail());
   }
 
   @Override
   public void navigateToMainRegisteredActivity() {
     Intent intent = new Intent(RegisterActivity.this, MainCardsActivity.class);
-    intent.putExtra("LOGGED",true);
+    intent.putExtra("isLogged",true);
     startActivity(intent);
     RegisterActivity.this.finish();
-
   }
 
   @Override
   public Context getContext() {
-    return context;
+    return this;
   }
 
   @Override
@@ -100,38 +86,7 @@ public class RegisterActivity extends AppCompatActivity implements RegisterContr
   }
 
   @Override
-  public void showLoginError() {
-    errorMessageTextView.setText("Podany login istnieje już w bazie!");
-
-  }
-
-  @Override
-  public void showPasswordError() {
-    errorMessageTextView.setText("Podane hasła nie są identyczne");
-  }
-
-  @Override
-  public void showValidatePasswordError() {
-    errorMessageTextView.setText("Hasło musi zawierać małą literę, dużą literę i znak specjalny oraz musi mieć przynajmniej 8 znaków!");
-  }
-
-  @Override
-  public void showValidateEmailError() {
-    errorMessageTextView.setText("Podany email nie jest poprawny");
-  }
-
-  @Override
-  public void showOtherError(String message) {
+  public void setErrorTextView(String message) {
     errorMessageTextView.setText(message);
-  }
-
-  @Override
-  public void showEmailError() {
-    errorMessageTextView.setText("Podane emaile nie są identyczne");
-  }
-
-  @Override
-  public void onResume() {
-    super.onResume();
   }
 }

@@ -11,6 +11,10 @@ import java.util.List;
 public interface AddRecipeContract {
   interface View{
     void setToolbar();
+    void setFabListeners();
+    void setTimeListeners();
+    void setImageListeners();
+    Boolean checkIfValueIsEmpty();
     Context getContext();
     void setRecipeNameEditText(String recipeName);
     void setMainPhotoImageView(String bitmapString);
@@ -18,25 +22,22 @@ public interface AddRecipeContract {
     void setPreparedTimeEditText(String time);
     void setCookTimeEditText(String time);
     void setBakeTimeEditText(String time);
-    EditText getRecipeNameEditText();
-    ImageView getMainPhotoImageView();
-    Spinner getCategoryChooseSpinner();
-    TextView getPreparedTimeEditText();
-    TextView getCookTimeEditText();
-    TextView getBakeTimeEditText();
     void loadImageFromCamera();
     void loadImageFromGallery();
-    void setListeners();
+    String getRecipeName();
+    String getMainPhoto();
+    String getRecipeCategory();
+    String getPrepareTime();
+    String getCookTime();
+    String getBakeTime();
+    void navigateToPreviousPage();
+    void navigateToNextPage();
   }
 
   interface Presenter{
-    void setRecipe(List<Recipe> recipeList);
-    String convertPojoToJsonString(List<Recipe> recipeList);
-    String getPojoListFromFile(Context context);
-    List<Recipe> getRecipeAfterChangeScreen(String jsonList);
+    void previousAction();
+    void nextAction();
     void setRecipeValueOnScreen();
-    void setRecipeValueInFile();
     void setFirstScreen();
-    Boolean checkIfValueIsEmpty();
   }
 }

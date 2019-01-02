@@ -39,18 +39,22 @@
         android:clickable="false"
         android:src="@drawable/ic_menu"/>
       <TextView
-        android:id="@+id/stepNumberTextView"
+        android:id="@+id/stepNameTextView"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:layout_weight="0.1"
-        android:text="Krok"/>
-      <Spinner
-        android:id="@+id/stepNumberSpinner"
+        android:textColor="@color/primary_text"
+        android:textSize="20sp"
+        android:text="Krok: "
+        android:layout_weight="0.1"/>
+      <TextView
+        android:id="@+id/stepNumberTextView"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:entries="@array/step_number"/>
+        android:textColor="@color/primary_text"
+        android:textSize="20sp"
+        android:text="1"/>
       <ImageView
         android:id="@+id/deleteImageView"
         android:layout_width="wrap_content"

@@ -48,7 +48,6 @@ public interface RecipeRepositoryInterface {
   interface OnCommentsDetailsDisplayListener{
     void setComment(List<Comment> commentList);
     void onCommentError();
-    void setCommentId(String message);
     void setCommentAddedState(Boolean state);
   }
 

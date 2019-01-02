@@ -23,16 +23,6 @@ public class Comment {
     this.comment = comment;
   }
 
-  public Comment(int id, int recipeId, int userId, String comment, String authorName,
-                 String createdDate) {
-    this.id = id;
-    this.recipeId = recipeId;
-    this.userId = userId;
-    this.comment = comment;
-    this.authorName = authorName;
-    this.createdDate = createdDate;
-  }
-
   public int getId() {
     return id;
   }

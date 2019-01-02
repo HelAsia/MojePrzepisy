@@ -45,9 +45,6 @@
   <string name="available_option">Dostępne opcje</string>
   <string name="my_profile">Mój profil</string>
 
-  <!-- TODO: Remove or change this placeholder text -->
-  <string name="hello_blank_fragment">Hello blank fragment</string>
-
   <string name="login_password_error_message">Podany login lub hasło są błędne</string>
   <string name="logout_error_message">Błąd wylogowania</string>
   <string name="server_connection_error">Błąd połączenia z serwerem!</string>
@@ -61,12 +58,11 @@
   <string name="add_description">Dodaj jednolity opis</string>
   <string name="add_main_photo">Dodaj zdjęcie główne</string>
   <string name="add_photo">Dodaj zdjęcie</string>
-  <string name="add_group">Dodaj nazwę grupy składników</string>
   <string name="recipe_details">Szczegóły przepisu</string>
 
   <string name="recipe_name">Nazwa przepisu</string>
   <string name="recipe_category">Kategoria przepisu</string>
-  <string name="choose_category_text_view">Wybierz kategorię przepisu</string>
+  <string name="choose_category_text_view">Wybierz kategoria przepisu</string>
   <string name="ingredients_title">Dodawanie składników</string>
 
   <string name="snacks_and_starters">Przekąski i przystawki</string>
@@ -99,10 +95,10 @@
   <string name="user_profile">Dane użytkownika</string>
 
   <string name="load_photo">Załaduj zdjęcie</string>
-  <string name="choose_category">Wybierz kategorię przepisu</string>
-  <string name="input_prepare_time">Wprowadź czas przygotowania</string>
-  <string name="input_cook_time">Wprowadź czas gotowania</string>
-  <string name="input_bake_time">Wprowadź czas pieczenia</string>
+  <string name="choose_category">Kategoria przepisu</string>
+  <string name="input_prepare_time">Czas przygotowania</string>
+  <string name="input_cook_time">Czas gotowania</string>
+  <string name="input_bake_time">Czas pieczenia</string>
 
   <string name="set_time_title">Ustaw czas (HH:MM)</string>
   <string name="set_time">Ustaw</string>
@@ -126,11 +122,14 @@
   <string name="steps">Kroki</string>
   <string name="comments">Komentarz</string>
 
-  <string name="user_login">Twój login:</string>
-  <string name="user_first_name">Twoje imię:</string>
-  <string name="user_last_name">Twoje nazwisko:</string>
-  <string name="user_email">Twój email:</string>
-  <string name="user_password">Twoje hasło:</string>
+  <string name="send_comment">Wyślij</string>
+  <string name="add_comment">Napisz komentarz...</string>
+
+  <string name="user_login">Login:</string>
+  <string name="user_first_name">Imię:</string>
+  <string name="user_last_name">Nazwisko:</string>
+  <string name="user_email">Email:</string>
+  <string name="user_password">Hasło:</string>
   <string name="user_repeat_password">Powtórzone hasło</string>
 
   <string name="info_about_shopping_list">Naciśnij na składnik, aby skreślić go na liście zakupów. </string>
@@ -231,4 +230,7 @@
   <string name="user_profile_password_error">Podane hasła nie są identyczne!</string>
   <string name="user_profile_validate_password_error">Hasło musi zawierać małą literę, dużą literę i znak specjalny oraz musi mieć przynajmniej 8 znaków!</string>
   <string name="user_profile_validate_email_error">Podany email nie jest poprawny!</string>
+
+  <string name="first_time_setting">00:00:00</string>
+  <string name="first_time_pattern">HH:MM</string>
 </resources>

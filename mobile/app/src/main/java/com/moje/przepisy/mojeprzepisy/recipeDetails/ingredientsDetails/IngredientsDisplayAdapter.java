@@ -41,24 +41,21 @@ public class IngredientsDisplayAdapter extends RecyclerView.Adapter<IngredientsD
   public void onBindViewHolder(@NonNull final IngredientsDisplayAdapter.ViewHolder viewHolder, int position) {
     viewHolder.bind(ingredientList.get(position));
 
-    viewHolder.ingredientsCardViewLayout.setOnClickListener(new OnClickListener() {
-      @Override
-      public void onClick(View view) {
-        if(isCrossed){
-          viewHolder.ingredientsCardViewLayout.setCardBackgroundColor(Color.parseColor("#ffffff"));
-          viewHolder.ingredientsTableRow.setBackgroundColor(Color.parseColor("#ffffff"));
-          viewHolder.nameIngredientTextView.setPaintFlags(viewHolder.nameIngredientTextView.getPaintFlags()& (~Paint.STRIKE_THRU_TEXT_FLAG));
-          viewHolder.quantityTextView.setPaintFlags(viewHolder.nameIngredientTextView.getPaintFlags()& (~Paint.STRIKE_THRU_TEXT_FLAG));
-          viewHolder.unitTextView.setPaintFlags(viewHolder.nameIngredientTextView.getPaintFlags()& (~Paint.STRIKE_THRU_TEXT_FLAG));
-          isCrossed = false;
-        }else {
-          viewHolder.ingredientsCardViewLayout.setCardBackgroundColor(Color.parseColor("#757575"));
-          viewHolder.ingredientsTableRow.setBackgroundColor(Color.parseColor("#757575"));
-          viewHolder.nameIngredientTextView.setPaintFlags(viewHolder.nameIngredientTextView.getPaintFlags()| Paint.STRIKE_THRU_TEXT_FLAG);
-          viewHolder.quantityTextView.setPaintFlags(viewHolder.nameIngredientTextView.getPaintFlags()| Paint.STRIKE_THRU_TEXT_FLAG);
-          viewHolder.unitTextView.setPaintFlags(viewHolder.nameIngredientTextView.getPaintFlags()| Paint.STRIKE_THRU_TEXT_FLAG);
-          isCrossed = true;
-        }
+    viewHolder.ingredientsCardViewLayout.setOnClickListener(view -> {
+      if(isCrossed){
+        viewHolder.ingredientsCardViewLayout.setCardBackgroundColor(Color.parseColor("#ffffff"));
+        viewHolder.ingredientsTableRow.setBackgroundColor(Color.parseColor("#ffffff"));
+        viewHolder.nameIngredientTextView.setPaintFlags(viewHolder.nameIngredientTextView.getPaintFlags()& (~Paint.STRIKE_THRU_TEXT_FLAG));
+        viewHolder.quantityTextView.setPaintFlags(viewHolder.nameIngredientTextView.getPaintFlags()& (~Paint.STRIKE_THRU_TEXT_FLAG));
+        viewHolder.unitTextView.setPaintFlags(viewHolder.nameIngredientTextView.getPaintFlags()& (~Paint.STRIKE_THRU_TEXT_FLAG));
+        isCrossed = false;
+      }else {
+        viewHolder.ingredientsCardViewLayout.setCardBackgroundColor(Color.parseColor("#757575"));
+        viewHolder.ingredientsTableRow.setBackgroundColor(Color.parseColor("#757575"));
+        viewHolder.nameIngredientTextView.setPaintFlags(viewHolder.nameIngredientTextView.getPaintFlags()| Paint.STRIKE_THRU_TEXT_FLAG);
+        viewHolder.quantityTextView.setPaintFlags(viewHolder.nameIngredientTextView.getPaintFlags()| Paint.STRIKE_THRU_TEXT_FLAG);
+        viewHolder.unitTextView.setPaintFlags(viewHolder.nameIngredientTextView.getPaintFlags()| Paint.STRIKE_THRU_TEXT_FLAG);
+        isCrossed = true;
       }
     });
   }
@@ -70,7 +67,7 @@ public class IngredientsDisplayAdapter extends RecyclerView.Adapter<IngredientsD
 
   @Override
   public long getItemId(int position) {
-    return ingredientList.get(position).getIngredientId();
+    return ingredientList.get(position).getId();
   }
 
   public class ViewHolder extends RecyclerView.ViewHolder {
@@ -86,9 +83,9 @@ public class IngredientsDisplayAdapter extends RecyclerView.Adapter<IngredientsD
     }
 
     void bind(Ingredient ingredient) {
-      int ingredientQuantity = ingredient.getIngredientQuantity();
-      String ingredientUnit = ingredient.getIngredientUnit();
-      String ingredientName = ingredient.getIngredientName();
+      int ingredientQuantity = ingredient.getQuantity();
+      String ingredientUnit = ingredient.getUnit();
+      String ingredientName = ingredient.getName();
 
       if(ingredientQuantity != 0){
         quantityTextView.setText(Integer.toString(ingredientQuantity));
@@ -103,7 +100,7 @@ public class IngredientsDisplayAdapter extends RecyclerView.Adapter<IngredientsD
       if(ingredientName != null){
         nameIngredientTextView.setText(ingredientName);
       }else {
-        nameIngredientTextView.setText("Bran nazwy");
+        nameIngredientTextView.setText("Brak nazwy");
       }
     }
   }

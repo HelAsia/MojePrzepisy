@@ -13,7 +13,6 @@ public class LicensesPresenter implements LicensesContract.Presenter {
     this.licensesView = licensesView;
   }
 
-  @Override
   public List<License> getLicensesList(){
     License licenseOne = new License(1,
         licensesView.getContext().getResources().getString(R.string.license_one_name),
@@ -86,6 +85,9 @@ public class LicensesPresenter implements LicensesContract.Presenter {
     return licensesList;
   }
 
-
-
+  @Override
+  public void setFirstScreen() {
+    licensesView.setToolbar();
+    licensesView.setRecyclerView(getLicensesList());
+  }
 }

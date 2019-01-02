@@ -32,18 +32,20 @@ import com.moje.przepisy.mojeprzepisy.addRecipe.displayRecipe.DisplayRecipeActiv
 import com.moje.przepisy.mojeprzepisy.data.model.Step;
 import java.util.List;
 
-public class AddStepsActivity extends AppCompatActivity implements AddStepContract.View,
-    View.OnClickListener, AddStepsAdapter.OnShareClickedListener {
-  private static final int MY_CAMERA_PERMISSION_CODE = 100;
-  private static final int CAMERA_REQUEST = 1888;
-  private static int GALLERY_REQUEST = 1;
+public class AddStepsActivity extends AppCompatActivity implements AddStepContract.View {
   @BindView(R.id.addStepFab) FloatingActionButton addStepFab;
   @BindView(R.id.previousActionFab) FloatingActionButton previousActionFab;
   @BindView(R.id.nextActionFab) FloatingActionButton nextActionFab;
+  @BindView(R.id.addStepsRecyclerView) RecyclerView recyclerView;
+  @BindView(R.id.toolbar_add_step) Toolbar toolbar;
+  private static final int MY_CAMERA_PERMISSION_CODE = 100;
+  private static final int CAMERA_REQUEST = 1888;
+  private static int GALLERY_REQUEST = 1;
+
   private AddStepContract.Presenter presenter;
-  String imgDecodableString;
-  Context context;
-  public Bitmap picture = null;
+  private String imgDecodableString;
+  private Context context;
+  private Bitmap picture = null;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -54,17 +56,15 @@ public class AddStepsActivity extends AppCompatActivity implements AddStepContra
 
     presenter = new AddStepPresenter(this);
 
-    setListeners();
-    setToolbar();
     presenter.setFirstScreen();
   }
 
+  @RequiresApi(api = VERSION_CODES.M)
   @Override
   public void setRecyclerView(List<Step> stepList) {
     AddStepsAdapter adapter = new AddStepsAdapter(this, stepList);
-    RecyclerView recyclerView = (RecyclerView) findViewById(R.id.addStepsRecyclerView);
-    adapter.setGalleryOnShareClickedListener(this);
-    adapter.setCameraOnShareClickedListener(this);
+    adapter.setGalleryOnShareClickedListener(this::loadImageFromGallery);
+    adapter.setCameraOnShareClickedListener(this::loadImageFromCamera);
     recyclerView.setAdapter(adapter);
     recyclerView.setLayoutManager(new LinearLayoutManager(this));
   }
@@ -72,11 +72,6 @@ public class AddStepsActivity extends AppCompatActivity implements AddStepContra
   @Override
   public Context getContext() {
     return context;
-  }
-
-  @Override
-  public List<Step> setStepList(List<Step> stepList) {
-    return stepList;
   }
 
   public Bitmap getPicture() {
@@ -89,28 +84,12 @@ public class AddStepsActivity extends AppCompatActivity implements AddStepContra
 
   @Override
   public void setListeners(){
-    addStepFab.setOnClickListener(this);
-    previousActionFab.setOnClickListener(this);
-    nextActionFab.setOnClickListener(this);
-  }
-
-  @Override
-  public void onClick(View view) {
-    if(view.getId() == R.id.addStepFab){
-      presenter.setNextStep();
-
-    }else if(view.getId() == R.id.previousActionFab){
-      presenter.addPojoListToFile();
-      navigateToPreviousPage();
-
-    }else if(view.getId() == R.id.nextActionFab) {
-      presenter.addPojoListToFile();
-      navigateToNextPage();
-    }
+    addStepFab.setOnClickListener(v -> presenter.setNextStep());
+    previousActionFab.setOnClickListener(v -> presenter.previousAction());
+    nextActionFab.setOnClickListener(v -> presenter.nextAction());
   }
 
   @RequiresApi(api = VERSION_CODES.M)
-
   public void loadImageFromCamera() {
     if(ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA)!= PackageManager.PERMISSION_GRANTED){
       requestPermissions(new String[]{Manifest.permission.CAMERA}, MY_CAMERA_PERMISSION_CODE);
@@ -185,7 +164,6 @@ public class AddStepsActivity extends AppCompatActivity implements AddStepContra
   }
 
   public void setToolbar() {
-    Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_add_step);
     toolbar.setSubtitle(R.string.add_recipe_title_step_three);
     setSupportActionBar(toolbar);
   }
@@ -198,17 +176,5 @@ public class AddStepsActivity extends AppCompatActivity implements AddStepContra
   public void navigateToNextPage(){
     Intent intent = new Intent(AddStepsActivity.this, DisplayRecipeActivity.class);
     startActivity(intent);
-  }
-
-  @RequiresApi(api = VERSION_CODES.M)
-  @Override
-  public void ShareGalleryClicked(String massage) {
-    loadImageFromGallery();
-  }
-
-  @RequiresApi(api = VERSION_CODES.M)
-  @Override
-  public void ShareCameraClicked(String massage) {
-    loadImageFromCamera();
   }
 }
