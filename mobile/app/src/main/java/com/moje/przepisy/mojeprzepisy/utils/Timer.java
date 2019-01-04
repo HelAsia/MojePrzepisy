@@ -1,6 +1,11 @@
 package com.moje.przepisy.mojeprzepisy.utils;
 
+import android.content.Context;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.CountDownTimer;
+import android.os.Vibrator;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -27,7 +32,20 @@ public class Timer {
         return value + "";
     }
 
-    public void startTimer(int countDownTime) {
+    private void turnOnSound(Context context){
+        Uri notificationSoundUri = RingtoneManager
+                .getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        Ringtone ringtone = RingtoneManager
+                .getRingtone(context, notificationSoundUri);
+        ringtone.play();
+    }
+
+    private void turnOnVibrate(Context context){
+        ((Vibrator)context.getSystemService(
+                Context.VIBRATOR_SERVICE)).vibrate(1000);
+    }
+
+    public void startTimer(int countDownTime,Context context) {
         isPausedTimer = false;
         isCanceledTimer = false;
         playImage.setEnabled(false);
@@ -58,6 +76,8 @@ public class Timer {
 
             @Override
             public void onFinish() {
+                turnOnSound(context);
+                turnOnVibrate(context);
                 timerText.setText("DONE");
                 playImage.setEnabled(true);
                 pauseImage.setEnabled(false);
@@ -74,7 +94,7 @@ public class Timer {
         stopImage.setEnabled(false);
     }
 
-    public void restartTimer() {
+    public void restartTimer(Context context) {
         isPausedTimer = false;
         isCanceledTimer = false;
 
@@ -106,6 +126,8 @@ public class Timer {
 
             @Override
             public void onFinish() {
+                turnOnSound(context);
+                turnOnVibrate(context);
                 timerText.setText("DONE");
                 playImage.setEnabled(true);
                 pauseImage.setEnabled(false);

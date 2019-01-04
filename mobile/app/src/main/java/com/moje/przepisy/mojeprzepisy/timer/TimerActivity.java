@@ -119,9 +119,9 @@ public class TimerActivity extends AppCompatActivity implements TimerContract.Vi
   public void setFirstTimerActions(){
     playImageViewFirstTimer.setOnClickListener(view -> {
       if(pauseImageViewFirstTimer.isEnabled()&& stopImageViewFirstTimer.isEnabled()){
-        firstTimer.startTimer(presenter.getCountDownTime());
+        firstTimer.startTimer(presenter.getCountDownTime(), this);
       }else{
-        firstTimer.restartTimer();
+        firstTimer.restartTimer(this);
       }
     });
     pauseImageViewFirstTimer.setOnClickListener(view -> firstTimer.pauseTimer());
@@ -132,9 +132,9 @@ public class TimerActivity extends AppCompatActivity implements TimerContract.Vi
   public void setSecondTimerActions() {
     playImageViewSecondTimer.setOnClickListener(view -> {
       if(pauseImageViewSecondTimer.isEnabled()&& stopImageViewSecondTimer.isEnabled()){
-        secondTimer.startTimer(presenter.getCountDownTime());
+        secondTimer.startTimer(presenter.getCountDownTime(), this);
       }else{
-        secondTimer.restartTimer();
+        secondTimer.restartTimer(this);
       }
     });
     pauseImageViewSecondTimer.setOnClickListener(view -> secondTimer.pauseTimer());
@@ -145,9 +145,9 @@ public class TimerActivity extends AppCompatActivity implements TimerContract.Vi
   public void setThirdTimerActions() {
     playImageViewThirdTimer.setOnClickListener(view -> {
       if(pauseImageViewThirdTimer.isEnabled()&& stopImageViewThirdTimer.isEnabled()){
-        thirdTimer.startTimer(presenter.getCountDownTime());
+        thirdTimer.startTimer(presenter.getCountDownTime(), this);
       }else{
-        thirdTimer.restartTimer();
+        thirdTimer.restartTimer(this);
       }
     });
     pauseImageViewThirdTimer.setOnClickListener(view -> thirdTimer.pauseTimer());

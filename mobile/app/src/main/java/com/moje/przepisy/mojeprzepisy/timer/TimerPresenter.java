@@ -11,7 +11,7 @@ public class TimerPresenter implements TimerContract.Presenter{
   public void setFirstScreen() {
     timerView.setToolbar();
     timerView.setListeners();
-    timerView.setFirstIconEnabledStatus();;
+    timerView.setFirstIconEnabledStatus();
     timerView.setMinAndMaxHourValueAndWheelSelector();
     timerView.setMinAndMaxMinuteValueAndWheelSelector();
     timerView.setMinAndMaxSecondValueAndWheelSelector();

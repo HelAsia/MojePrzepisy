@@ -7,12 +7,15 @@ import com.moje.przepisy.mojeprzepisy.R;
 import com.moje.przepisy.mojeprzepisy.data.repositories.user.UserRepository;
 import com.moje.przepisy.mojeprzepisy.utils.Constant;
 
+import javax.inject.Inject;
+
 public class LogInPresenter implements LogInContract.Presenter,
         UserRepository.OnLoginFinishedListener {
   private UserRepository userRepository;
   private LogInContract.View loginView;
 
-  public LogInPresenter(LogInContract.View loginView, UserRepository userRepository) {
+  @Inject
+  LogInPresenter(LogInContract.View loginView, UserRepository userRepository) {
     this.loginView = loginView;
     this.userRepository = userRepository;
   }
