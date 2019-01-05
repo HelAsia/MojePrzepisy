@@ -96,6 +96,15 @@ class Cards:
         MainQueryReult = self.getAllCardsBasedMethod(userID, recipeQuery)
         return self.removeNotFavoriteCards(MainQueryReult, userID)
 
+    def getNewCards(self, userID):
+        recipeQuery = u"SELECT recipe_id AS id, recipe_name AS name, user_id AS userId, " \
+                      u"photo_id as mainPictureNumber, recipe_created_date_time as Date " \
+                      u"FROM recipes " \
+                      u"WHERE recipe_created_date_time > now() " \
+                      u"GROUP BY recipe_id "
+
+        return self.getAllCardsBasedMethod(userID, recipeQuery)
+
     def getAllCardsBasedMethod(self, userID, recipeQuery):
         recipeQueryResult = self.database.query(recipeQuery)
 

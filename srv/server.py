@@ -282,6 +282,25 @@ def getSortedCards(sorted_method):
         Logger.fail("There were no cards returned!")
     return jsonify(cards)
 
+@app.route('/cards/new', methods=['GET'])
+def getNewCards():
+    card = Cards(get_database())
+    userID = get_user_id()
+    if not userID:
+        userID = -1
+
+    cards = card.getNewCards(userID)
+
+    if not cards:
+        return jsonify({
+            'status': 404,
+            'message': u'There are no new cards! '
+        })
+    else:
+        return jsonify({
+            'status': 200,
+            'message': u'There are new cards!'
+        })
 
 @app.route('/recipe/<int:id>', methods=['GET'])
 def getRecipe(id):
@@ -317,15 +336,6 @@ def addWholeRecipeElements():
 
     stepList = params['stepList']
     statusAddingStep, messageAddingStep = step.addStep(recipeId,stepList)
-
-    Logger.dbg(statusAddingRecipe)
-    Logger.dbg(recipeId)
-    Logger.dbg(statusAddingStars)
-    Logger.dbg(messageAddingStars)
-    Logger.dbg(statusAddingIngredient)
-    Logger.dbg(messageAddingIngredient)
-    Logger.dbg(statusAddingStep)
-    Logger.dbg(messageAddingStep)
 
     if statusAddingRecipe == 200 and statusAddingIngredient == 200 and statusAddingStep == 200 and statusAddingStars == 200:
         return jsonify({

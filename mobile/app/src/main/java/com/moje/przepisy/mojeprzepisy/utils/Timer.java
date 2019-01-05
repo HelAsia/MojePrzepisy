@@ -45,7 +45,23 @@ public class Timer {
                 Context.VIBRATOR_SERVICE)).vibrate(1000);
     }
 
-    public void startTimer(int countDownTime,Context context) {
+    private void setCountDownTimerText(long millisUntilFinished){
+        long seconds = millisUntilFinished/1000;
+        long minutes = seconds / 60;
+        long hours = minutes / 60;
+
+        if(minutes > 0)
+            seconds = seconds % 60;
+        if(hours > 0)
+            minutes = minutes % 60;
+        String time = formatNumber(hours) + ":" + formatNumber(minutes) + ":" +
+                formatNumber(seconds);
+        timerText.setText(time);
+
+        timeRemainingTimer = millisUntilFinished;
+    }
+
+    public void startTimer(int countDownTime, Context context) {
         isPausedTimer = false;
         isCanceledTimer = false;
         playImage.setEnabled(false);
@@ -55,22 +71,10 @@ public class Timer {
         countDownTimer = new CountDownTimer(countDownTime, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
-                long seconds = millisUntilFinished/1000;
-                long minutes = seconds / 60;
-                long hours = minutes / 60;
-
                 if(isPausedTimer || isCanceledTimer){
                     cancel();
                 }else {
-                    if(minutes > 0)
-                        seconds = seconds % 60;
-                    if(hours > 0)
-                        minutes = minutes % 60;
-                    String time = formatNumber(hours) + ":" + formatNumber(minutes) + ":" +
-                            formatNumber(seconds);
-                    timerText.setText(time);
-
-                    timeRemainingTimer = millisUntilFinished;
+                    setCountDownTimerText(millisUntilFinished);
                 }
             }
 
@@ -78,7 +82,7 @@ public class Timer {
             public void onFinish() {
                 turnOnSound(context);
                 turnOnVibrate(context);
-                timerText.setText("DONE");
+                timerText.setText("00:00:00");
                 playImage.setEnabled(true);
                 pauseImage.setEnabled(false);
                 stopImage.setEnabled(false);
@@ -105,22 +109,10 @@ public class Timer {
         countDownTimer = new CountDownTimer(timeRemainingTimer, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
-                long seconds = millisUntilFinished/1000;
-                long minutes = seconds / 60;
-                long hours = minutes / 60;
-
                 if(isPausedTimer || isCanceledTimer){
                     cancel();
                 }else {
-                    if(minutes > 0)
-                        seconds = seconds % 60;
-                    if(hours > 0)
-                        minutes = minutes % 60;
-                    String time = formatNumber(hours) + ":" + formatNumber(minutes) + ":" +
-                            formatNumber(seconds);
-                    timerText.setText(time);
-
-                    timeRemainingTimer = millisUntilFinished;
+                    setCountDownTimerText(millisUntilFinished);
                 }
             }
 
@@ -128,7 +120,7 @@ public class Timer {
             public void onFinish() {
                 turnOnSound(context);
                 turnOnVibrate(context);
-                timerText.setText("DONE");
+                timerText.setText("00:00:00");
                 playImage.setEnabled(true);
                 pauseImage.setEnabled(false);
                 stopImage.setEnabled(false);
@@ -142,7 +134,6 @@ public class Timer {
         playImage.setEnabled(true);
         pauseImage.setEnabled(false);
         stopImage.setEnabled(false);
-
         timerText.setText("00:00:00");
     }
 }

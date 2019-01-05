@@ -1,6 +1,14 @@
 package com.moje.przepisy.mojeprzepisy.timer;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.ImageView;
@@ -120,6 +128,7 @@ public class TimerActivity extends AppCompatActivity implements TimerContract.Vi
     playImageViewFirstTimer.setOnClickListener(view -> {
       if(pauseImageViewFirstTimer.isEnabled()&& stopImageViewFirstTimer.isEnabled()){
         firstTimer.startTimer(presenter.getCountDownTime(), this);
+        displayNotificationMessage("Timer - odliczanie");
       }else{
         firstTimer.restartTimer(this);
       }
@@ -152,5 +161,37 @@ public class TimerActivity extends AppCompatActivity implements TimerContract.Vi
     });
     pauseImageViewThirdTimer.setOnClickListener(view -> thirdTimer.pauseTimer());
     stopImageViewThirdTimer.setOnClickListener(view -> thirdTimer.stopTimer());
+  }
+
+  private void displayNotificationMessage(String message) {
+    NotificationManager notificationManager = (NotificationManager) this
+            .getSystemService(Context.NOTIFICATION_SERVICE);
+    NotificationCompat.Builder notificationBuilder;
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+      String chanelId = "3000";
+      CharSequence name = "Channel Name";
+      String description = "Chanel Description";
+      int importance = NotificationManager.IMPORTANCE_LOW;
+      NotificationChannel mChannel = new NotificationChannel(chanelId, name, importance);
+      mChannel.setDescription(description);
+      mChannel.enableLights(true);
+      mChannel.setLightColor(Color.BLUE);
+      notificationManager.createNotificationChannel(mChannel);
+      notificationBuilder = new NotificationCompat.Builder(this, chanelId);
+    } else {
+      notificationBuilder = new NotificationCompat.Builder(this);
+    }
+    notificationBuilder
+            .setSmallIcon(R.drawable.logo)
+            .setContentTitle("Przepisy domowe Helasia")
+            .setContentText(message);
+
+    Intent notificationIntent = new Intent(this, TimerActivity.class);
+    PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT);
+    notificationBuilder.setContentIntent(contentIntent);
+
+
+    notificationManager.notify(0, notificationBuilder.build());
   }
 }
