@@ -1,6 +1,5 @@
 package com.moje.przepisy.mojeprzepisy.addRecipe.addIngredients;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -17,16 +16,12 @@ import butterknife.ButterKnife;
 import com.jakewharton.rxbinding.widget.RxTextView;
 import com.moje.przepisy.mojeprzepisy.R;
 import com.moje.przepisy.mojeprzepisy.data.model.Ingredient;
-import com.moje.przepisy.mojeprzepisy.utils.Constant;
-import com.moje.przepisy.mojeprzepisy.utils.PojoFileConverter;
 import java.util.List;
 
 public class AddIngredientsAdapter extends RecyclerView.Adapter<AddIngredientsAdapter.ViewHolder> {
   private List<Ingredient> ingredientList;
-  private PojoFileConverter pojoFileConverter;
 
-  AddIngredientsAdapter(Context context, List<Ingredient> ingredientList){
-    pojoFileConverter = new PojoFileConverter(context);
+  AddIngredientsAdapter(List<Ingredient> ingredientList){
     this.ingredientList = ingredientList;
     setHasStableIds(true);
   }
@@ -46,7 +41,6 @@ public class AddIngredientsAdapter extends RecyclerView.Adapter<AddIngredientsAd
     viewHolder.deleteImageView.setOnClickListener(it -> {
       ingredientList.remove(position);
       notifyItemRemoved(position);
-      pojoFileConverter.addPojoListToFile(Constant.INGREDIENTS_FILE_NAME, ingredientList);
     });
 
     RxTextView.textChanges(viewHolder.ingredientQuantityEditText)
@@ -55,8 +49,6 @@ public class AddIngredientsAdapter extends RecyclerView.Adapter<AddIngredientsAd
       Ingredient updatedIngredient = new Ingredient(ingredientQuantity,
               ingredientList.get(position).getUnit(), ingredientList.get(position).getName());
       ingredientList.set(position, updatedIngredient);
-
-      pojoFileConverter.addPojoListToFile(Constant.INGREDIENTS_FILE_NAME, ingredientList);
     });
 
     RxTextView.textChanges(viewHolder.ingredientNameEditText)
@@ -64,7 +56,6 @@ public class AddIngredientsAdapter extends RecyclerView.Adapter<AddIngredientsAd
         String ingredientName = s.toString();
         Ingredient updatedIngredient = new Ingredient(ingredientList.get(position).getQuantity(), ingredientList.get(position).getUnit(), ingredientName);
         ingredientList.set(position, updatedIngredient);
-        pojoFileConverter.addPojoListToFile(Constant.INGREDIENTS_FILE_NAME, ingredientList);
     });
 
 
@@ -76,7 +67,6 @@ public class AddIngredientsAdapter extends RecyclerView.Adapter<AddIngredientsAd
                     new Ingredient(ingredientList.get(position).getQuantity(),
                             ingredientUnit, ingredientList.get(position).getName());
             ingredientList.set(position, updatedIngredient);
-            pojoFileConverter.addPojoListToFile(Constant.INGREDIENTS_FILE_NAME, ingredientList);
         }
         @Override
         public void onNothingSelected(AdapterView<?> adapterView) {

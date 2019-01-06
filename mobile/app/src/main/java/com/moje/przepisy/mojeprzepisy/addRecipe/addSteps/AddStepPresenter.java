@@ -1,24 +1,9 @@
 package com.moje.przepisy.mojeprzepisy.addRecipe.addSteps;
 
-import android.content.Context;
-import android.os.AsyncTask;
-import android.util.Log;
-import android.widget.Toast;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import com.moje.przepisy.mojeprzepisy.data.model.Ingredient;
 import com.moje.przepisy.mojeprzepisy.data.model.Step;
 import com.moje.przepisy.mojeprzepisy.utils.Constant;
 import com.moje.przepisy.mojeprzepisy.utils.PojoFileConverter;
 import com.moje.przepisy.mojeprzepisy.utils.PojoJsonConverter;
-
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,13 +20,13 @@ public class AddStepPresenter implements AddStepContract.Presenter {
 
   @Override
   public void previousAction(){
-    pojoFileConverter.addPojoListToFile(Constant.INGREDIENTS_FILE_NAME, stepList);
+    pojoFileConverter.addPojoListToFile(Constant.STEPS_FILE_NAME, stepList);
     stepsView.navigateToPreviousPage();
   }
 
   @Override
   public void nextAction() {
-    pojoFileConverter.addPojoListToFile(Constant.INGREDIENTS_FILE_NAME, stepList);
+    pojoFileConverter.addPojoListToFile(Constant.STEPS_FILE_NAME, stepList);
     stepsView.navigateToNextPage();
   }
 

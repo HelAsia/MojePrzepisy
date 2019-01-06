@@ -62,8 +62,9 @@ public class AddIngredientsPresenter implements AddIngredientsContract.Presenter
   }
 
   private List<Ingredient> getIngredientFirstList(){
-    return pojoJsonConverter.convertJsonToPojo(pojoFileConverter
-            .getPojoListFromFile(Constant.INGREDIENTS_FILE_NAME), Constant.INGREDIENTS_FILE_NAME);
+    return pojoJsonConverter.convertJsonToPojo(
+            pojoFileConverter.getPojoListFromFile(Constant.INGREDIENTS_FILE_NAME),
+            Constant.INGREDIENTS_FILE_NAME);
   }
 }
 

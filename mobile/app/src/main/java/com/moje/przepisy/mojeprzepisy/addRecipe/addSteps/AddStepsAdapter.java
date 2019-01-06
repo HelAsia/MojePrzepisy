@@ -75,13 +75,16 @@ public class AddStepsAdapter extends RecyclerView.Adapter<AddStepsAdapter.ViewHo
     viewHolder.bind(stepList.get(position));
 
     viewHolder.galleryImageView.setOnClickListener(view ->
-            new BackgroundGalleryAction(((AddStepsActivity)context), viewHolder.mainPhotoImageView, position).execute());
+            new BackgroundGalleryAction(((AddStepsActivity)context),
+                    viewHolder.mainPhotoImageView, position).execute());
 
     viewHolder.cameraImageView.setOnClickListener(view ->
-            new BackgroundCameraAction(((AddStepsActivity)context), viewHolder.mainPhotoImageView, position).execute());
+            new BackgroundCameraAction(((AddStepsActivity)context),
+                    viewHolder.mainPhotoImageView, position).execute());
 
     viewHolder.URLImageView.setOnClickListener(view ->
-            new BackgroundUrlImageAction(((AddStepsActivity)context), viewHolder.mainPhotoImageView, position).execute());
+            new BackgroundUrlImageAction(((AddStepsActivity)context),
+                    viewHolder.mainPhotoImageView, position).execute());
 
     viewHolder.stepNumberTextView.setText(Integer.toString(position + 1));
     stepList.get(position).setStepNumber(position + 1);
@@ -190,9 +193,6 @@ public class AddStepsAdapter extends RecyclerView.Adapter<AddStepsAdapter.ViewHo
       Bitmap picture = drawable.getBitmap();
 
       stepList.get(position).setPhoto(converter.BitMapToString(picture));
-
-      pojoFileConverter.addPojoListToFile(Constant.STEPS_FILE_NAME, stepList);
-
       Toast.makeText(activity, "DODANE", Toast.LENGTH_SHORT).show();
     }
   }
@@ -237,8 +237,6 @@ public class AddStepsAdapter extends RecyclerView.Adapter<AddStepsAdapter.ViewHo
       Bitmap picture = drawable.getBitmap();
 
       stepList.get(position).setPhoto(converter.BitMapToString(picture));
-
-      pojoFileConverter.addPojoListToFile(Constant.STEPS_FILE_NAME, stepList);
       ((AddStepsActivity)context).setPicture(null);
 
       Toast.makeText(activity, "DODANE", Toast.LENGTH_SHORT).show();
@@ -285,8 +283,6 @@ public class AddStepsAdapter extends RecyclerView.Adapter<AddStepsAdapter.ViewHo
       Bitmap picture = drawable.getBitmap();
 
       stepList.get(position).setPhoto(converter.BitMapToString(picture));
-
-      pojoFileConverter.addPojoListToFile(Constant.STEPS_FILE_NAME, stepList);
       ((AddStepsActivity)context).setPicture(null);
 
       Toast.makeText(activity, "DODANE", Toast.LENGTH_SHORT).show();
