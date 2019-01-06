@@ -282,14 +282,16 @@ def getSortedCards(sorted_method):
         Logger.fail("There were no cards returned!")
     return jsonify(cards)
 
-@app.route('/cards/new', methods=['GET'])
-def getNewCards():
+
+@app.route('/cards/new/<int:maxDate>', methods=['GET'])
+def getNewCards(maxDate):
     card = Cards(get_database())
     userID = get_user_id()
     if not userID:
         userID = -1
 
-    cards = card.getNewCards(userID)
+    Logger.dbg("Received following maxDate: {}".format(maxDate))
+    cards = card.getNewCards(userID, maxDate)
 
     if not cards:
         return jsonify({
@@ -301,6 +303,7 @@ def getNewCards():
             'status': 200,
             'message': u'There are new cards!'
         })
+
 
 @app.route('/recipe/<int:id>', methods=['GET'])
 def getRecipe(id):

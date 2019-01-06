@@ -1,4 +1,5 @@
 from Logger import *
+from utils import *
 import json
 from decimal import Decimal as D
 import re
@@ -21,7 +22,7 @@ class Cards:
         u"photo_id as mainPictureNumber, recipe_created_date_time as Date "\
         u"FROM recipes; "
 
-        return self.getAllCardsBasedMethod(userID,recipeQuery)
+        return self.getAllCardsBasedMethod(userID, recipeQuery)
 
 
     def getAllCardsSortedAlphabetically(self, userID):
@@ -38,14 +39,14 @@ class Cards:
                       u"FROM recipes " \
                       u"ORDER BY Date; "
 
-        return self.getAllCardsBasedMethod(userID,recipeQuery)
+        return self.getAllCardsBasedMethod(userID, recipeQuery)
 
     def getAllCardsSortedByHighestRated(self, userID):
         recipeQuery =   u"SELECT recipe_id AS id, recipe_name AS name, user_id AS userId, "\
                         u"photo_id as mainPictureNumber, recipe_created_date_time as Date "\
                         u"FROM recipes; "
 
-        result = self.getAllCardsBasedMethod(userID,recipeQuery)
+        result = self.getAllCardsBasedMethod(userID, recipeQuery)
         newList = sorted(result, key=lambda k : k['starsCount'], reverse=True)
         Logger.dbg(newList)
 
@@ -96,12 +97,12 @@ class Cards:
         MainQueryReult = self.getAllCardsBasedMethod(userID, recipeQuery)
         return self.removeNotFavoriteCards(MainQueryReult, userID)
 
-    def getNewCards(self, userID):
+    def getNewCards(self, userID, maxDate):
         recipeQuery = u"SELECT recipe_id AS id, recipe_name AS name, user_id AS userId, " \
                       u"photo_id as mainPictureNumber, recipe_created_date_time as Date " \
                       u"FROM recipes " \
-                      u"WHERE recipe_created_date_time > now() " \
-                      u"GROUP BY recipe_id "
+                      u"WHERE {} < " \
+                      u"UNIX_TIMESTAMP(recipe_created_date_time) ".format(maxDate)
 
         return self.getAllCardsBasedMethod(userID, recipeQuery)
 
@@ -117,7 +118,7 @@ class Cards:
             favoriteQueryResult = []
 
         Logger.dbg(recipeQueryResult)
-        mainQueryResult = list(recipeQueryResult[:])
+        mainQueryResult = list(changeDateFormat(recipeQueryResult[:]))
 
         if mainQueryResult:
             mainQueryResultWithUser = self.addUserToMainQueryResult(mainQueryResult, userQueryResult)

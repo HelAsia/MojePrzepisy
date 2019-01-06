@@ -23,14 +23,8 @@ public class Constant {
  public static final String STEPS_FILE_NAME = "StepsData.txt";
  public static final String RECIPE_FILE_NAME = "RecipeData.txt";
 
-  public static final int NOTIFICATION_TIMER_COUNTDOWN = 1;
-  public static final int NOTIFICATION_TIMER_EXPIRED = 2;
+ public static final String PREF_NOTIFICATION = "PREF_NOTIFICATION";
+ public static final String PREF_MAX_DATE = "PREF_MAX_DATE";
 
-  public static final String ACTION_SHOW_ALARM
-      = "com.android.example.clockwork.timer.ACTION_SHOW";
-  public static final String ACTION_DELETE_ALARM
-      = "com.android.example.clockwork.timer.ACTION_DELETE";
-  public static final String ACTION_RESTART_ALARM
-      = "com.android.example.clockwork.timer.ACTION_RESTART";
 }
 

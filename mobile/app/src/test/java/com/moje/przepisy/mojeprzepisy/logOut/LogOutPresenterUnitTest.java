@@ -46,7 +46,7 @@ public class LogOutPresenterUnitTest {
     Intent startedIntent = shadowActivity.getNextStartedActivity();
     assertThat(startedIntent.getComponent().getClassName(),
         equalTo(MainCardsActivity.class.getName()));
-    assertThat(startedIntent.getBooleanExtra("LOGGED", false),
+    assertThat(startedIntent.getBooleanExtra("isLogged", false),
         equalTo(true));
   }
 
@@ -58,7 +58,7 @@ public class LogOutPresenterUnitTest {
     Intent startedIntent = shadowActivity.getNextStartedActivity();
     assertThat(startedIntent.getComponent().getClassName(),
         equalTo(MainCardsActivity.class.getName()));
-    assertThat(startedIntent.getBooleanExtra("LOGGED", false),
+    assertThat(startedIntent.getBooleanExtra("isLogged", false),
         equalTo(false));
   }
 

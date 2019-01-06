@@ -41,6 +41,7 @@ import com.moje.przepisy.mojeprzepisy.logIn.LogInActivity;
 import com.moje.przepisy.mojeprzepisy.logOut.LogOutActivity;
 import com.moje.przepisy.mojeprzepisy.recipeDetails.recipeDisplay.MainDetailsTabActivity;
 import com.moje.przepisy.mojeprzepisy.register.RegisterActivity;
+import com.moje.przepisy.mojeprzepisy.setting.SettingsActivity;
 import com.moje.przepisy.mojeprzepisy.timer.TimerActivity;
 import com.moje.przepisy.mojeprzepisy.mainCards.MainCardsAdapter.OnShareHeartClickedListener;
 import com.moje.przepisy.mojeprzepisy.userProfile.UserProfileActivity;
@@ -73,7 +74,7 @@ public class MainCardsActivity extends AppCompatActivity implements
     presenter.setFirstScreen();
 
     floatingActionButton.setOnClickListener(v -> {
-      Intent intent = new Intent(MainCardsActivity.this, AddRecipeActivity.class);
+      Intent intent = new Intent(this, AddRecipeActivity.class);
       startActivity(intent);
     });
   }
@@ -126,6 +127,7 @@ public class MainCardsActivity extends AppCompatActivity implements
     }
   }
 
+  @SuppressLint("RestrictedApi")
   @Override
   public void setFloatingActionButton(boolean isLogged) {
     if(isLogged) {
@@ -177,7 +179,9 @@ public class MainCardsActivity extends AppCompatActivity implements
           drawerLayout.closeDrawers();
           int id = menuItem.getItemId();
 
-          if (id == R.id.category_nav){
+          if (id == R.id.settings){
+            goToSettingsActivity();
+          }else if(id == R.id.category_nav){
             goToCategorySearchActivity();
           }else if (id == R.id.add_nav) {
             goToAddRecipeActivity();
@@ -209,7 +213,7 @@ public class MainCardsActivity extends AppCompatActivity implements
           menuItem.setChecked(true);
           drawerLayout.closeDrawers();
           int id = menuItem.getItemId();
-
+            goToSettingsActivity();
           if( id == R.id.register_nav){
             goToRegisterActivity();
           }else if( id == R.id.login_nav){
@@ -226,6 +230,11 @@ public class MainCardsActivity extends AppCompatActivity implements
           return false;
         }
     );
+  }
+
+  private void goToSettingsActivity(){
+    Intent intent = new Intent(this, SettingsActivity.class);
+    startActivity(intent);
   }
 
   private void goToRegisterActivity(){

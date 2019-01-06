@@ -1,12 +1,26 @@
 package com.moje.przepisy.mojeprzepisy.data.repositories.cards;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.util.Log;
+
+import com.moje.przepisy.mojeprzepisy.data.model.Message;
 import com.moje.przepisy.mojeprzepisy.data.model.OneRecipeCard;
 import com.moje.przepisy.mojeprzepisy.data.network.CardAPI;
 import com.moje.przepisy.mojeprzepisy.data.network.RetrofitSingleton;
+import com.moje.przepisy.mojeprzepisy.utils.Constant;
+import com.moje.przepisy.mojeprzepisy.utils.TimeSetDialog;
+
+import java.lang.ref.PhantomReference;
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
+import io.reactivex.CompletableObserver;
 import io.reactivex.Scheduler;
 import io.reactivex.Single;
 import io.reactivex.SingleObserver;
@@ -54,6 +68,7 @@ public class OperationsOnCardRepository implements OperationsOnCardRepositoryInt
               @Override
               public void onSuccess(List<OneRecipeCard> oneRecipeCards) {
                 cardsListener.setRecipesList(oneRecipeCards);
+                cardsListener.setMaxDateInPreferences(getMaxDate(oneRecipeCards));
               }
 
               @Override
@@ -78,6 +93,7 @@ public class OperationsOnCardRepository implements OperationsOnCardRepositoryInt
               @Override
               public void onSuccess(List<OneRecipeCard> oneRecipeCards) {
                 cardsListener.setRecipesList(oneRecipeCards);
+                cardsListener.setMaxDateInPreferences(getMaxDate(oneRecipeCards));
               }
 
               @Override
@@ -102,6 +118,7 @@ public class OperationsOnCardRepository implements OperationsOnCardRepositoryInt
               @Override
               public void onSuccess(List<OneRecipeCard> oneRecipeCards) {
                 cardsListener.setRecipesList(oneRecipeCards);
+                cardsListener.setMaxDateInPreferences(getMaxDate(oneRecipeCards));
               }
 
               @Override
@@ -134,4 +151,39 @@ public class OperationsOnCardRepository implements OperationsOnCardRepositoryInt
             });
   }
 
+    @Override
+    public void getNewCards(final OnNewCardsListener newCardsListener, int maxDate) {
+      cardAPI.getNewCards(maxDate)
+             .subscribeOn(Schedulers.io())
+             .observeOn(AndroidSchedulers.mainThread())
+             .subscribe(new SingleObserver<Message>() {
+                 @Override
+                 public void onSubscribe(Disposable d) {
+
+                 }
+
+                 @Override
+                 public void onSuccess(Message message) {
+                     Log.i("onSuccess", message.message);
+                     if(message.status == 200){
+                         newCardsListener.setNewCardsNotification();
+                     }
+                 }
+
+                 @Override
+                 public void onError(Throwable e) {
+
+                 }
+             });
+    }
+
+    private int getMaxDate(List<OneRecipeCard> oneRecipeCardList){
+        int maxDate = oneRecipeCardList.get(0).getDate();
+        for(OneRecipeCard oneRecipeCard : oneRecipeCardList){
+            if(maxDate < oneRecipeCard.getDate()){
+                maxDate = oneRecipeCard.getDate();
+            }
+        }
+        return maxDate;
+    }
 }

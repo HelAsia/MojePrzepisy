@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
+  <item
+      android:id="@+id/settings"
+      android:icon="@drawable/ic_settings_2x"
+      android:title="@string/title_activity_settings"/>
+
   <item android:title="@string/available_option">
     <menu>
       <group

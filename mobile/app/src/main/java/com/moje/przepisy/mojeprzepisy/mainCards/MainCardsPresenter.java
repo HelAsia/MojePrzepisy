@@ -3,11 +3,6 @@ package com.moje.przepisy.mojeprzepisy.mainCards;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.NavigationView;
-import android.support.v4.widget.DrawerLayout;
-import android.view.View;
 import com.moje.przepisy.mojeprzepisy.data.model.OneRecipeCard;
 import com.moje.przepisy.mojeprzepisy.data.repositories.cards.OperationsOnCardRepository;
 import com.moje.przepisy.mojeprzepisy.data.repositories.recipe.RecipeRepository;
@@ -20,7 +15,7 @@ public class MainCardsPresenter implements MainCardsContract.Presenter,
   private MainCardsContract.View cardsView;
   private RecipeRepository recipeRepository;
 
-  public MainCardsPresenter(MainCardsContract.View cardsView, OperationsOnCardRepository operationsOnCardRepository, RecipeRepository recipeRepository) {
+  MainCardsPresenter(MainCardsContract.View cardsView, OperationsOnCardRepository operationsOnCardRepository, RecipeRepository recipeRepository) {
     this.cardsView = cardsView;
     this.operationsOnCardRepository = operationsOnCardRepository;
     this.recipeRepository = recipeRepository;
@@ -100,7 +95,6 @@ public class MainCardsPresenter implements MainCardsContract.Presenter,
     }
   }
 
-
   @Override
   public void setSortedMethod(Context context, String sortedMethod){
     SharedPreferences.Editor sortingSetting = PreferenceManager.getDefaultSharedPreferences(context).edit();
@@ -121,6 +115,14 @@ public class MainCardsPresenter implements MainCardsContract.Presenter,
   @Override
   public void onError(String message) {
     cardsView.setErrorMessage(message);
+  }
+
+  @Override
+  public void setMaxDateInPreferences(int maxDate) {
+    SharedPreferences.Editor preferences =
+            PreferenceManager.getDefaultSharedPreferences(cardsView.getContext()).edit();
+    preferences.putInt(Constant.PREF_MAX_DATE, maxDate).apply();
+    preferences.commit();
   }
 
   @Override

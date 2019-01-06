@@ -1,8 +1,12 @@
 package com.moje.przepisy.mojeprzepisy.data.network;
 
+import com.moje.przepisy.mojeprzepisy.data.model.Message;
 import com.moje.przepisy.mojeprzepisy.data.model.OneRecipeCard;
+
+import java.sql.Timestamp;
 import java.util.List;
 
+import io.reactivex.Completable;
 import io.reactivex.Single;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -38,4 +42,7 @@ public interface CardAPI {
 
   @GET("/cards/{id}")
   Single<List<OneRecipeCard>> getUpdatedCard(@Path("id") int recipeId);
+
+  @GET("/cards/new/{maxDate}")
+  Single<Message> getNewCards(@Path("maxDate") int maxDate);
 }

@@ -31,7 +31,7 @@ public class WelcomeActivity extends AppCompatActivity implements WelcomeContrac
 
   @Override
   public void navigateToMainRegisteredActivity() {
-    Intent intent = new Intent(WelcomeActivity.this, MainCardsActivity.class);
+    Intent intent = new Intent(this, MainCardsActivity.class);
     intent.putExtra("isLogged",true);
     startActivity(intent);
     WelcomeActivity.this.finish();
@@ -39,7 +39,7 @@ public class WelcomeActivity extends AppCompatActivity implements WelcomeContrac
 
   @Override
   public void navigateToHomePage() {
-    Intent intent = new Intent(WelcomeActivity.this, HomePageView.class);
+    Intent intent = new Intent(this, HomePageView.class);
     WelcomeActivity.this.startActivity(intent);
     WelcomeActivity.this.finish();
   }

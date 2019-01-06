@@ -65,7 +65,7 @@ public class AboutApplicationActivity extends AppCompatActivity implements
 
   public boolean onOptionsItemSelected(MenuItem item){
     Intent intent = new Intent(this, MainCardsActivity.class);
-    intent.putExtra("LOGGED", isLogged);
+    intent.putExtra("isLogged", isLogged);
     startActivity(intent);
     AboutApplicationActivity.this.finish();
     return true;
@@ -74,7 +74,7 @@ public class AboutApplicationActivity extends AppCompatActivity implements
   @Override
   public void onBackPressed() {
     Intent intent = new Intent(this, MainCardsActivity.class);
-    intent.putExtra("LOGGED", isLogged);
+    intent.putExtra("isLogged", isLogged);
     startActivity(intent);
     AboutApplicationActivity.this.finish();
   }
@@ -92,7 +92,7 @@ public class AboutApplicationActivity extends AppCompatActivity implements
   @Override
   public void setLogged() {
     if(getIntent().getExtras() != null){
-      isLogged = getIntent().getExtras().getBoolean("LOGGED");
+      isLogged = getIntent().getExtras().getBoolean("isLogged");
     }
   }
 

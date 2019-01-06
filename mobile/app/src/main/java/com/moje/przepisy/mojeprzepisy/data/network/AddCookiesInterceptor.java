@@ -12,7 +12,7 @@ import okhttp3.Response;
 public class AddCookiesInterceptor implements Interceptor {
   private Context context;
 
-  public AddCookiesInterceptor(Context context) {
+  AddCookiesInterceptor(Context context) {
     this.context = context;
   }
 
@@ -20,8 +20,8 @@ public class AddCookiesInterceptor implements Interceptor {
   public Response intercept(Interceptor.Chain chain) throws IOException {
     Request.Builder builder = chain.request().newBuilder();
 
-    String cookiePreferences = (String) PreferenceManager.getDefaultSharedPreferences(context)
-        .getString(Constant.PREF_COOKIES, new String());
+    String cookiePreferences = PreferenceManager.getDefaultSharedPreferences(context)
+        .getString(Constant.PREF_COOKIES, "");
 
       builder.addHeader("Cookie", cookiePreferences);
       Log.i("AddCookiesInterceptor ",":intercept(): DEB Using cookie in request: " + cookiePreferences);
