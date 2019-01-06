@@ -37,7 +37,6 @@ public class DisplayRecipePresenter implements DisplayRecipeContract.Presenter,
   private List<Recipe> recipeListWithPhotoNumber = new ArrayList<>();
   private List<Step> stepListWithPhotoNumber = new ArrayList<>();
   private List<Stars> starsList = new ArrayList<>();
-  private Gson gson = new Gson();
   private int photoNumber = -1;
   private Boolean isWholeRecipeAdded = false;
 
@@ -71,97 +70,49 @@ public class DisplayRecipePresenter implements DisplayRecipeContract.Presenter,
     recipeElementsView.navigateToEditSteps();
   }
 
-  @Override
-  public void setRecipeList(List<Recipe> recipeList) {
-    this.recipeList = recipeList;
-  }
-
-  @Override
-  public List<Ingredient> getIngredientList(){
-    return ingredientList;
-  }
-
-  @Override
-  public void setIngredientList(List<Ingredient> ingredientList) {
-    this.ingredientList = ingredientList;
-  }
-
-  @Override
-  public List<Step> getStepList() {
-    return stepList;
-  }
-
-  @Override
-  public void setStepList(List<Step> stepList) {
-    this.stepList = stepList;
-  }
-
-  @Override
-  public List<Ingredient> getIngredientListAfterChangeScreen(String jsonList) {
-    Type type = new TypeToken<List<Ingredient>>() {}.getType();
-    return gson.fromJson(jsonList, type);
-  }
-
-  @Override
-  public List<Recipe> getRecipeListAfterChangeScreen(String jsonList) {
-    Type type = new TypeToken<List<Recipe>>() {}.getType();
-    return gson.fromJson(jsonList, type);
-  }
-
-  @Override
-  public List<Step> getStepListAfterChangeScreen(String jsonList) {
-    Type type = new TypeToken<List<Step>>() {}.getType();
-    return gson.fromJson(jsonList, type);
-  }
-
-  @Override
-  public void deleteAllSharedPreferences() {
+  private void deleteAllSharedPreferences() {
     recipeElementsView.getContext().deleteFile("StepsData.txt");
     recipeElementsView.getContext().deleteFile("IngredientsData.txt");
     recipeElementsView.getContext().deleteFile("RecipeData.txt");
   }
 
-  @Override
-  public void setRecipeDetailsScreen() {
+  private void setRecipeDetailsScreen() {
     recipeList = pojoJsonConverter.convertJsonToPojo(pojoFileConverter
             .getPojoListFromFile(Constant.RECIPE_FILE_NAME), Constant.RECIPE_FILE_NAME);
 
     if(recipeList != null){
-      setRecipeList(recipeList);
       recipeElementsView.setRecipeRecyclerView(recipeList);
     }else {
-      Toast.makeText(recipeElementsView.getContext(), "Nie udało się pobrać głównych informacji o przepisie!", Toast.LENGTH_SHORT).show();
+      Toast.makeText(recipeElementsView.getContext(),
+              "Nie udało się pobrać głównych informacji o przepisie!", Toast.LENGTH_SHORT).show();
     }
   }
 
-  @Override
-  public void setIngredientsDetailScreen() {
+  private void setIngredientsDetailScreen() {
     ingredientList = pojoJsonConverter.convertJsonToPojo(pojoFileConverter
               .getPojoListFromFile(Constant.INGREDIENTS_FILE_NAME), Constant.INGREDIENTS_FILE_NAME);
 
     if(ingredientList != null){
-      setIngredientList(ingredientList);
       recipeElementsView.setIngredientsRecyclerView(ingredientList);
     }else {
-      Toast.makeText(recipeElementsView.getContext(), "Nie udało się pobrać składników!", Toast.LENGTH_SHORT).show();
+      Toast.makeText(recipeElementsView.getContext(),
+              "Nie udało się pobrać składników!", Toast.LENGTH_SHORT).show();
     }
   }
 
-  @Override
-  public void setStepsDetailsScreen() {
+  private void setStepsDetailsScreen() {
     stepList = pojoJsonConverter.convertJsonToPojo(pojoFileConverter
             .getPojoListFromFile(Constant.STEPS_FILE_NAME), Constant.STEPS_FILE_NAME);
 
     if(stepList != null){
-      setStepList(stepList);
       recipeElementsView.setStepsRecyclerView(stepList);
     }else {
-      Toast.makeText(recipeElementsView.getContext(), "Nie udało się pobrać kroków!", Toast.LENGTH_SHORT).show();
+      Toast.makeText(recipeElementsView.getContext(),
+              "Nie udało się pobrać kroków!", Toast.LENGTH_SHORT).show();
     }
   }
 
-  @Override
-  public void saved() {
+  private void saved() {
     addWholeElementsToServer();
     while (!isWholeRecipeAdded){
 
@@ -171,7 +122,8 @@ public class DisplayRecipePresenter implements DisplayRecipeContract.Presenter,
   @Override
   public void onRecipeError() {
     if(recipeElementsView != null){
-      recipeElementsView.setInformationTextView("Wystąpił błąd podczas dodawania przepisu. Spróbuj ponownie.");
+      recipeElementsView
+              .setInformationTextView("Wystąpił błąd podczas dodawania przepisu. Spróbuj ponownie.");
     }
   }
 
@@ -185,15 +137,14 @@ public class DisplayRecipePresenter implements DisplayRecipeContract.Presenter,
     new BackgroundActions(activity).execute();
   }
 
-  @Override
-  public void startBackgroundAddingPhoto(Activity activity){
+  private void startBackgroundAddingPhoto(Activity activity){
     new BackgroundAddingPhoto(activity).execute();
   }
 
-
   @Override
   public void onPhotoError() {
-    Toast.makeText(recipeElementsView.getContext(), "Nie udało się dodać zdjęcia!", Toast.LENGTH_SHORT).show();
+    Toast.makeText(recipeElementsView.getContext(),
+            "Nie udało się dodać zdjęcia!", Toast.LENGTH_SHORT).show();
   }
 
   @Override
@@ -257,55 +208,59 @@ public class DisplayRecipePresenter implements DisplayRecipeContract.Presenter,
       Toast.makeText(activity, "Zdjęcia wysłane na serwer!", Toast.LENGTH_SHORT).show();
     }
   }
-
-  @Override
-  public void sendPhotoToServer(String photo){
+  
+  private void sendPhotoToServer(String photo){
     recipeRepository.addPhoto(photo, this);
   }
 
-  @Override
-  public void addPhotosNumberToElements() {
-    for(Recipe recipe : recipeList){
-      if(recipe.getMainPicture() != null){
-        sendPhotoToServer(recipe.getMainPicture());
-        while(photoNumber == -1){
-
-        }
-        Recipe recipeWithPhotoNumber = new Recipe(recipe.getName(), photoNumber,
-            recipe.getCategory(), recipe.getPrepareTime(), recipe.getCookTime(),
-            recipe.getBakeTime());
-        recipeListWithPhotoNumber.add(recipeWithPhotoNumber);
-        photoNumber = -1;
-      }
-      else {
-        Recipe recipeWithPhotoNumber = new Recipe(recipe.getName(),
-            recipe.getCategory(), recipe.getPrepareTime(), recipe.getCookTime(),
-            recipe.getBakeTime());
-        recipeListWithPhotoNumber.add(recipeWithPhotoNumber);
-      }
-    }
-
-    for(Step step : stepList){
-      if(step.getPhoto() != null){
-        sendPhotoToServer(step.getPhoto());
-        while(photoNumber == -1){
-
-        }
-        Step stepWithPhotoNumber = new Step(step.getStepNumber(),
-            step.getStepDescription());
-        stepListWithPhotoNumber.add(stepWithPhotoNumber);
-        photoNumber = -1;
-      }
-      else {
-        Step stepWithPhotoNumber = new Step(photoNumber, step.getStepNumber(),
-            step.getStepDescription());
-        stepListWithPhotoNumber.add(stepWithPhotoNumber);
-      }
-    }
+  private void addPhotosNumberToElements() {
+    addPhotoToRecipe();
+    addPhotoToSteps();
   }
 
-  @Override
-  public void addWholeElementsToServer() {
+  private void addPhotoToRecipe(){
+      for(Recipe recipe : recipeList){
+          if(recipe.getMainPicture() != null){
+              sendPhotoToServer(recipe.getMainPicture());
+              while(photoNumber == -1){
+
+              }
+              Recipe recipeWithPhotoNumber = new Recipe(recipe.getName(), photoNumber,
+                      recipe.getCategory(), recipe.getPrepareTime(), recipe.getCookTime(),
+                      recipe.getBakeTime());
+              recipeListWithPhotoNumber.add(recipeWithPhotoNumber);
+              photoNumber = -1;
+          }
+          else {
+              Recipe recipeWithPhotoNumber = new Recipe(recipe.getName(),
+                      recipe.getCategory(), recipe.getPrepareTime(), recipe.getCookTime(),
+                      recipe.getBakeTime());
+              recipeListWithPhotoNumber.add(recipeWithPhotoNumber);
+          }
+      }
+  }
+
+  private void addPhotoToSteps(){
+      for(Step step : stepList){
+          if(step.getPhoto() != null){
+              sendPhotoToServer(step.getPhoto());
+              while(photoNumber == -1){
+
+              }
+              Step stepWithPhotoNumber = new Step(step.getStepNumber(),
+                      step.getStepDescription());
+              stepListWithPhotoNumber.add(stepWithPhotoNumber);
+              photoNumber = -1;
+          }
+          else {
+              Step stepWithPhotoNumber = new Step(photoNumber, step.getStepNumber(),
+                      step.getStepDescription());
+              stepListWithPhotoNumber.add(stepWithPhotoNumber);
+          }
+      }
+  }
+
+  private void addWholeElementsToServer() {
     Stars stars = new Stars(-1, 0, 0);
     starsList.add(stars);
     RecipeAllElements recipeAllElements =

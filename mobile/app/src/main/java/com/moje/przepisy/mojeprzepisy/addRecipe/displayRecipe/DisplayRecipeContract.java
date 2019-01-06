@@ -26,26 +26,9 @@ public interface DisplayRecipeContract {
 
   interface Presenter {
     void setFirstScreen();
-    void addWholeElementsToServer();
-    void setRecipeList(List<Recipe> recipeList);
-    List<Ingredient> getIngredientList();
-    void setIngredientList(List<Ingredient> ingredientList);
-    List<Step> getStepList();
-    void setStepList(List<Step> stepList);
-    List<Ingredient> getIngredientListAfterChangeScreen(String jsonList);
-    List<Recipe> getRecipeListAfterChangeScreen(String jsonList);
-    List<Step> getStepListAfterChangeScreen(String jsonList);
-    void deleteAllSharedPreferences();
-    void setRecipeDetailsScreen();
-    void setIngredientsDetailScreen();
-    void setStepsDetailsScreen();
-    void saved();
     void setEditRecipeIconAction();
     void setEditIngredientsIconAction();
     void setEditStepsIconAction();
-    void sendPhotoToServer(String photo);
-    void addPhotosNumberToElements();
     void startBackgroundActions(Activity activity);
-    void startBackgroundAddingPhoto(Activity activity);
   }
 }
