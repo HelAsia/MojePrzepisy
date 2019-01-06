@@ -65,9 +65,9 @@ public class NewRecipeService extends Service implements
     }
 
     private void checkNewRecipe(boolean notificationOn){
-        int maxDate = PreferenceManager.getDefaultSharedPreferences(this)
-                .getInt(Constant.PREF_MAX_DATE, 0);
         while(notificationOn){
+            int maxDate = PreferenceManager.getDefaultSharedPreferences(this)
+                    .getInt(Constant.PREF_MAX_DATE, 0);
             notificationOn = PreferenceManager.getDefaultSharedPreferences(this)
                     .getBoolean(Constant.PREF_NOTIFICATION, false);
             operationsOnCardRepository.getNewCards(this, maxDate);
