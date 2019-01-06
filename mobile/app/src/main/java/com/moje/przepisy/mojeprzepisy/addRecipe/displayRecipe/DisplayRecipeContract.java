@@ -17,7 +17,7 @@ public interface DisplayRecipeContract {
     void setRecipeRecyclerView(List<Recipe> recipeList);
     void setIngredientsRecyclerView(List<Ingredient> ingredientList);
     void setStepsRecyclerView(List<Step> stepList);
-    TextView getInformationTextView();
+    void setInformationTextView(String message);
     void navigateToMainCardsScreen();
     void navigateToEditRecipeInformation();
     void navigateToEditIngredients();
@@ -25,6 +25,7 @@ public interface DisplayRecipeContract {
   }
 
   interface Presenter {
+    void setFirstScreen();
     void addWholeElementsToServer();
     void setRecipeList(List<Recipe> recipeList);
     List<Ingredient> getIngredientList();

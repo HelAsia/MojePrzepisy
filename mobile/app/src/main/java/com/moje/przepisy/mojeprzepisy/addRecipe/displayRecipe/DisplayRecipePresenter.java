@@ -12,6 +12,10 @@ import com.moje.przepisy.mojeprzepisy.data.model.RecipeAllElements;
 import com.moje.przepisy.mojeprzepisy.data.model.Stars;
 import com.moje.przepisy.mojeprzepisy.data.model.Step;
 import com.moje.przepisy.mojeprzepisy.data.repositories.recipe.RecipeRepository;
+import com.moje.przepisy.mojeprzepisy.utils.Constant;
+import com.moje.przepisy.mojeprzepisy.utils.PojoFileConverter;
+import com.moje.przepisy.mojeprzepisy.utils.PojoJsonConverter;
+
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -25,6 +29,8 @@ public class DisplayRecipePresenter implements DisplayRecipeContract.Presenter,
     RecipeRepository.OnWholeRecipeElementsFinishedListener, RecipeRepository.OnAddPhotoFinishedListener{
   private RecipeRepository recipeRepository;
   private DisplayRecipeContract.View recipeElementsView;
+  private PojoJsonConverter pojoJsonConverter = new PojoJsonConverter();
+  private PojoFileConverter pojoFileConverter;
   private List<Ingredient> ingredientList = new ArrayList<>();
   private List<Recipe> recipeList = new ArrayList<>();
   private List<Step> stepList = new ArrayList<>();
@@ -35,9 +41,19 @@ public class DisplayRecipePresenter implements DisplayRecipeContract.Presenter,
   private int photoNumber = -1;
   private Boolean isWholeRecipeAdded = false;
 
-  public DisplayRecipePresenter(DisplayRecipeContract.View recipeElementsView, RecipeRepository recipeRepository){
+  DisplayRecipePresenter(DisplayRecipeContract.View recipeElementsView, RecipeRepository recipeRepository){
     this.recipeElementsView = recipeElementsView;
     this.recipeRepository = recipeRepository;
+    pojoFileConverter = new PojoFileConverter(recipeElementsView.getContext());
+  }
+
+  @Override
+  public void setFirstScreen() {
+    recipeElementsView.setToolbar();
+    recipeElementsView.setOnClickListeners();
+    setRecipeDetailsScreen();
+    setIngredientsDetailScreen();
+    setStepsDetailsScreen();
   }
 
   @Override
@@ -107,26 +123,8 @@ public class DisplayRecipePresenter implements DisplayRecipeContract.Presenter,
 
   @Override
   public void setRecipeDetailsScreen() {
-    try {
-      FileInputStream fileToRead = recipeElementsView.getContext().openFileInput("RecipeData.txt");
-      StringBuffer fileToReadBuffer = new StringBuffer();
-      BufferedReader dataIO = new BufferedReader(new InputStreamReader(fileToRead));
-
-      String recipeListPojo;
-      while ((recipeListPojo = dataIO.readLine()) != null){
-        fileToReadBuffer.append(recipeListPojo + "\n");
-      }
-      dataIO.close();
-      fileToRead.close();
-      recipeList = getRecipeListAfterChangeScreen(fileToReadBuffer.toString());
-
-    } catch (FileNotFoundException e) {
-      e.printStackTrace();
-      recipeList = null;
-    } catch (IOException e) {
-      e.printStackTrace();
-      recipeList = null;
-    }
+    recipeList = pojoJsonConverter.convertJsonToPojo(pojoFileConverter
+            .getPojoListFromFile(Constant.RECIPE_FILE_NAME), Constant.RECIPE_FILE_NAME);
 
     if(recipeList != null){
       setRecipeList(recipeList);
@@ -138,26 +136,8 @@ public class DisplayRecipePresenter implements DisplayRecipeContract.Presenter,
 
   @Override
   public void setIngredientsDetailScreen() {
-    try {
-      FileInputStream fileToRead = recipeElementsView.getContext().openFileInput("IngredientsData.txt");
-      StringBuffer fileToReadBuffer = new StringBuffer();
-      BufferedReader dataIO = new BufferedReader(new InputStreamReader(fileToRead));
-
-      String ingredientsListPojo;
-      while ((ingredientsListPojo = dataIO.readLine()) != null){
-        fileToReadBuffer.append(ingredientsListPojo + "\n");
-      }
-      dataIO.close();
-      fileToRead.close();
-      ingredientList = getIngredientListAfterChangeScreen(fileToReadBuffer.toString());
-
-    } catch (FileNotFoundException e) {
-      e.printStackTrace();
-      ingredientList = null;
-    } catch (IOException e) {
-      e.printStackTrace();
-      ingredientList = null;
-    }
+    ingredientList = pojoJsonConverter.convertJsonToPojo(pojoFileConverter
+              .getPojoListFromFile(Constant.INGREDIENTS_FILE_NAME), Constant.INGREDIENTS_FILE_NAME);
 
     if(ingredientList != null){
       setIngredientList(ingredientList);
@@ -169,26 +149,8 @@ public class DisplayRecipePresenter implements DisplayRecipeContract.Presenter,
 
   @Override
   public void setStepsDetailsScreen() {
-    try {
-      FileInputStream fileToRead = recipeElementsView.getContext().openFileInput("StepsData.txt");
-      StringBuffer fileToReadBuffer = new StringBuffer();
-      BufferedReader dataIO = new BufferedReader(new InputStreamReader(fileToRead));
-
-      String stepsListPojo;
-      while ((stepsListPojo = dataIO.readLine()) != null){
-        fileToReadBuffer.append(stepsListPojo + "\n");
-      }
-      dataIO.close();
-      fileToRead.close();
-      stepList = getStepListAfterChangeScreen(fileToReadBuffer.toString());
-
-    } catch (FileNotFoundException e) {
-      e.printStackTrace();
-      stepList = null;
-    } catch (IOException e) {
-      e.printStackTrace();
-      stepList = null;
-    }
+    stepList = pojoJsonConverter.convertJsonToPojo(pojoFileConverter
+            .getPojoListFromFile(Constant.STEPS_FILE_NAME), Constant.STEPS_FILE_NAME);
 
     if(stepList != null){
       setStepList(stepList);
@@ -209,7 +171,7 @@ public class DisplayRecipePresenter implements DisplayRecipeContract.Presenter,
   @Override
   public void onRecipeError() {
     if(recipeElementsView != null){
-      recipeElementsView.getInformationTextView().setText("Wystąpił błąd podczas dodawania przepisu. Spróbuj ponownie.");
+      recipeElementsView.setInformationTextView("Wystąpił błąd podczas dodawania przepisu. Spróbuj ponownie.");
     }
   }
 
@@ -346,7 +308,9 @@ public class DisplayRecipePresenter implements DisplayRecipeContract.Presenter,
   public void addWholeElementsToServer() {
     Stars stars = new Stars(-1, 0, 0);
     starsList.add(stars);
-    RecipeAllElements recipeAllElements = new RecipeAllElements(recipeListWithPhotoNumber, ingredientList, stepListWithPhotoNumber, starsList);
+    RecipeAllElements recipeAllElements =
+            new RecipeAllElements(recipeListWithPhotoNumber, ingredientList,
+                    stepListWithPhotoNumber, starsList);
 
     recipeRepository.addWholeRecipeElements(recipeAllElements, this);
   }

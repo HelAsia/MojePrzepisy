@@ -65,7 +65,7 @@ public class DisplayStepsAdapter extends RecyclerView.Adapter<DisplayStepsAdapte
       String stepDescription = step.getStepDescription();
       String photoId = step.getPhoto();
 
-      stepNumberTextView.setText(Integer.toString(stepNumber));
+      stepNumberTextView.setText(Integer.toString(stepNumber) + ".   ");
       stepDescriptionTextView.setText(stepDescription);
       if(photoId == null || photoId.equals("https://img.freepik.com/free-icon/gallery_318-131678.jpg?size=338c&ext=jpg")){
         stepImageView.setVisibility(View.GONE);

@@ -169,12 +169,14 @@ public class AddStepsActivity extends AppCompatActivity implements AddStepContra
   }
 
   public void navigateToPreviousPage(){
-    Intent intent = new Intent(AddStepsActivity.this, AddIngredientsActivity.class);
+    Intent intent = new Intent(this, AddIngredientsActivity.class);
     startActivity(intent);
+    AddStepsActivity.this.finish();
   }
 
   public void navigateToNextPage(){
-    Intent intent = new Intent(AddStepsActivity.this, DisplayRecipeActivity.class);
+    Intent intent = new Intent(this, DisplayRecipeActivity.class);
     startActivity(intent);
+    AddStepsActivity.this.finish();
   }
 }

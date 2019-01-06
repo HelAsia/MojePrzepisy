@@ -66,7 +66,7 @@ public class StepsDisplayAdapter extends RecyclerView.Adapter<StepsDisplayAdapte
       int photo = step.getPhotoNumber();
 
       if (stepNumber != 0) {
-        stepNumberTextView.setText(Integer.toString(stepNumber));
+        stepNumberTextView.setText(Integer.toString(stepNumber) + ".  ");
       }else{
         stepNumberTextView.setText("0");
       }

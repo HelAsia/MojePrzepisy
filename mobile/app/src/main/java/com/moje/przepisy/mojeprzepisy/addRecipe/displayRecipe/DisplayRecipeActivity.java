@@ -29,30 +29,28 @@ import com.moje.przepisy.mojeprzepisy.mainCards.MainCardsActivity;
 import java.util.List;
 
 public class DisplayRecipeActivity extends AppCompatActivity implements
-    DisplayRecipeContract.View, OnClickListener{
+    DisplayRecipeContract.View{
   public static final int PLEASE_WAIT_DIALOG = 1;
   @BindView(R.id.saveRecipeImageView)ImageView saveRecipeImageView;
   @BindView(R.id.informationTextView)TextView informationTextView;
   @BindView(R.id.recipeEditImageView) ImageView recipeEditImageView;
   @BindView(R.id.ingredientsEditImageView) ImageView ingredientsEditImageView;
   @BindView(R.id.stepsEditImageView) ImageView stepsEditImageView;
+  @BindView(R.id.addMainRecipeInfoRecyclerView) RecyclerView addMainRecipeInfoRecyclerView;
+  @BindView(R.id.addIngredientsRecyclerView) RecyclerView addIngredientsRecyclerView;
+  @BindView(R.id.addStepsRecyclerView) RecyclerView addStepsRecyclerView;
+  @BindView(R.id.toolbar_whole_recipe) Toolbar toolbar;
   private DisplayRecipeContract.Presenter presenter;
-  Context context;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_display_all_recipe_elements_view);
-    context = getApplicationContext();
     ButterKnife.bind(this);
 
-    presenter = new DisplayRecipePresenter(this, new RecipeRepository(context));
+    presenter = new DisplayRecipePresenter(this, new RecipeRepository(this));
 
-    setToolbar();
-    setOnClickListeners();
-    presenter.setRecipeDetailsScreen();
-    presenter.setIngredientsDetailScreen();
-    presenter.setStepsDetailsScreen();
+    presenter.setFirstScreen();
   }
 
   @Override
@@ -73,71 +71,56 @@ public class DisplayRecipeActivity extends AppCompatActivity implements
 
   @Override
   public void setOnClickListeners() {
-    saveRecipeImageView.setOnClickListener(this);
-    recipeEditImageView.setOnClickListener(this);
-    ingredientsEditImageView.setOnClickListener(this);
-    stepsEditImageView.setOnClickListener(this);
-  }
-
-  @Override
-  public void onClick(View view) {
-    if(view.getId() == R.id.saveRecipeImageView){
-      Log.i("onClick.saveRecipeImageView:", "Before startBackgroundActions()");
-      presenter.startBackgroundActions(DisplayRecipeActivity.this);
-      Log.i("onClick.saveRecipeImageView:", "After startBackgroundActions()");
-    }else if(view.getId() == R.id.recipeEditImageView){
-      presenter.setEditRecipeIconAction();
-    }else if(view.getId() == R.id.ingredientsEditImageView){
-      presenter.setEditIngredientsIconAction();
-    }else if(view.getId() == R.id.stepsEditImageView){
-      presenter.setEditStepsIconAction();
-    }
+    saveRecipeImageView.setOnClickListener(view ->
+            presenter.startBackgroundActions(this));
+    recipeEditImageView.setOnClickListener(view ->
+            presenter.setEditRecipeIconAction());
+    ingredientsEditImageView.setOnClickListener(view ->
+            presenter.setEditIngredientsIconAction());
+    stepsEditImageView.setOnClickListener(view ->
+            presenter.setEditStepsIconAction());
   }
 
   @Override
   public void setToolbar() {
-    Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_whole_recipe);
     toolbar.setSubtitle("Krok 4: Sprawdź wprowdzone informacje");
     setSupportActionBar(toolbar);
   }
 
   @Override
   public Context getContext() {
-    return context;
+    return this;
   }
 
   @Override
   public void setRecipeRecyclerView(List<Recipe> recipeList) {
     DisplayMainInfoAdapter adapter = new DisplayMainInfoAdapter(this, recipeList);
-    RecyclerView recyclerView = (RecyclerView) findViewById(R.id.addMainRecipeInfoRecyclerView);
-    recyclerView.setAdapter(adapter);
-    recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    addMainRecipeInfoRecyclerView.setAdapter(adapter);
+    addMainRecipeInfoRecyclerView.setLayoutManager(new LinearLayoutManager(this));
   }
 
   @Override
   public void setIngredientsRecyclerView(List<Ingredient> ingredientList) {
     DisplayIngredientsAdapter adapter = new DisplayIngredientsAdapter(this, ingredientList);
-    RecyclerView recyclerView = (RecyclerView) findViewById(R.id.addIngredientsRecyclerView);
-    recyclerView.setAdapter(adapter);
-    recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    addIngredientsRecyclerView.setAdapter(adapter);
+    addIngredientsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
   }
 
   @Override
   public void setStepsRecyclerView(List<Step> stepList) {
     DisplayStepsAdapter adapter = new DisplayStepsAdapter(this, stepList);
-    RecyclerView recyclerView = (RecyclerView) findViewById(R.id.addStepsRecyclerView);
-    recyclerView.setAdapter(adapter);
-    recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    addStepsRecyclerView.setAdapter(adapter);
+    addStepsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
   }
 
   @Override
-  public TextView getInformationTextView() {
-    return informationTextView;
+  public void setInformationTextView(String message) {
+    informationTextView.setText(message);
   }
 
   @Override
   public void navigateToMainCardsScreen() {
-    Intent intent = new Intent(DisplayRecipeActivity.this, MainCardsActivity.class);
+    Intent intent = new Intent(this, MainCardsActivity.class);
     intent.putExtra("isLogged",true);
     startActivity(intent);
     DisplayRecipeActivity.this.finish();
@@ -145,19 +128,22 @@ public class DisplayRecipeActivity extends AppCompatActivity implements
 
   @Override
   public void navigateToEditRecipeInformation() {
-    Intent intent = new Intent(DisplayRecipeActivity.this, AddRecipeActivity.class);
+    Intent intent = new Intent(this, AddRecipeActivity.class);
     startActivity(intent);
+    DisplayRecipeActivity.this.finish();
   }
 
   @Override
   public void navigateToEditIngredients() {
-    Intent intent = new Intent(DisplayRecipeActivity.this, AddIngredientsActivity.class);
+    Intent intent = new Intent(this, AddIngredientsActivity.class);
     startActivity(intent);
+    DisplayRecipeActivity.this.finish();
   }
 
   @Override
   public void navigateToEditSteps() {
-    Intent intent = new Intent(DisplayRecipeActivity.this, AddStepsActivity.class);
+    Intent intent = new Intent(this, AddStepsActivity.class);
     startActivity(intent);
+    DisplayRecipeActivity.this.finish();
   }
 }

@@ -26,7 +26,12 @@
   <string-array name="ingredients_unit_array">
     <item>dag</item>
     <item>kg</item>
+    <item>g</item>
     <item>szkl</item>
+    <item>łyżka</item>
+    <item>łyżeczka</item>
+    <item>szczypta</item>
+    <item>brak</item>
   </string-array>
 
   <string-array name="step_number">

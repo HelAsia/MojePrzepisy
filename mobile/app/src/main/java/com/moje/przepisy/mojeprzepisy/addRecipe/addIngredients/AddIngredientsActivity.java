@@ -67,11 +67,13 @@ public class AddIngredientsActivity extends AppCompatActivity implements
   public void navigateToPreviousPage(){
     Intent intent = new Intent(this, AddRecipeActivity.class);
     startActivity(intent);
+    AddIngredientsActivity.this.finish();
   }
 
   @Override
   public void navigateToNextPage(){
     Intent intent = new Intent(this, AddStepsActivity.class);
     startActivity(intent);
+    AddIngredientsActivity.this.finish();
   }
 }

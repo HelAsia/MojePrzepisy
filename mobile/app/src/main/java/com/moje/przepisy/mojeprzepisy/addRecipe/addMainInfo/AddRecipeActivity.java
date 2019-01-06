@@ -237,12 +237,14 @@ public class AddRecipeActivity extends AppCompatActivity implements AddRecipeCon
     Intent intent = new Intent (this, MainCardsActivity.class);
     intent.putExtra("isLogged",true);
     startActivity(intent);
+    AddRecipeActivity.this.finish();
   }
 
   @Override
   public void navigateToNextPage(){
     Intent intent = new Intent (this, AddIngredientsActivity.class);
     startActivity(intent);
+    AddRecipeActivity.this.finish();
   }
 
   public String getRecipeName(){
