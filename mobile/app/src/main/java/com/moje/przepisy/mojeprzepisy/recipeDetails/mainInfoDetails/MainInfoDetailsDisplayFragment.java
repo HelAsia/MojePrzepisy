@@ -3,6 +3,7 @@ package com.moje.przepisy.mojeprzepisy.recipeDetails.mainInfoDetails;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -17,17 +18,38 @@ import android.widget.TextView;
 import com.moje.przepisy.mojeprzepisy.R;
 import com.moje.przepisy.mojeprzepisy.data.repositories.recipe.RecipeRepository;
 import com.moje.przepisy.mojeprzepisy.mainCards.MainCardsActivity;
+import com.squareup.picasso.Picasso;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+import static com.moje.przepisy.mojeprzepisy.utils.Constant.BASE_URL;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MainInfoDetailsDisplayFragment extends Fragment implements MainInfoDetailsDisplayContract.View,
-    OnClickListener {
+public class MainInfoDetailsDisplayFragment extends Fragment
+        implements MainInfoDetailsDisplayContract.View {
+  @BindView(R.id.recipeNameTextView) TextView recipeNameTextView;
+  @BindView(R.id.recipeImageView) ImageView recipeImageView;
+  @BindView(R.id.recipeCategoryTextView) TextView recipeCategoryTextView;
+  @BindView(R.id.preparedTimeTextView) TextView preparedTimeTextView;
+  @BindView(R.id.cookTimeTextView) TextView cookTimeTextView;
+  @BindView(R.id.bakeTimeTextView) TextView bakeTimeTextView;
+  @BindView(R.id.starImageView) ImageView starImageView;
+  @BindView(R.id.text_view_star_count) TextView starCountTextView;
+  @BindView(R.id.heart_image_view) ImageView heartImageView;
+  @BindView(R.id.text_view_favorites_count) TextView favoritesCountTextView;
+  @BindView(R.id.ratingBarStars) RatingBar ratingBarStars;
+  @BindView(R.id.editAndDeleteRecipeRelativeLayout) RelativeLayout editAndDeleteRecipeRelativeLayout;
+  @BindView(R.id.editUserRecipeImageView) ImageView editUserRecipeImageView;
+  @BindView(R.id.deleteUserRecipeImageView) ImageView deleteUserRecipeImageView;
   private MainInfoDetailsDisplayContract.Presenter presenter;
+  private Boolean favorite = null;
   private int recipeId = 0;
   private Boolean isLogged;
-  Context context;
-  View view;
+  private Context context;
+  private View view;
 
   public MainInfoDetailsDisplayFragment() {
   }
@@ -40,6 +62,8 @@ public class MainInfoDetailsDisplayFragment extends Fragment implements MainInfo
     View view = inflater.inflate(R.layout.fragment_main_info_details_display, container, false);
     setView(view);
 
+    ButterKnife.bind(this, view);
+
     presenter = new MainInfoDetailsDisplayPresenter(this, new RecipeRepository(context));
 
     if(getRecipeId() == 0){
@@ -47,7 +71,6 @@ public class MainInfoDetailsDisplayFragment extends Fragment implements MainInfo
     }
     getIsLogged();
     presenter.setWholeRecipeElements();
-    setRecipeListeners();
 
     return view;
   }
@@ -63,17 +86,6 @@ public class MainInfoDetailsDisplayFragment extends Fragment implements MainInfo
   }
 
   @Override
-  public void onClick(View view) {
-    if(view.getId() == R.id.starImageView){
-      presenter.setRatingBarStarsVisibility();
-    }else if(view.getId() == R.id.heart_image_view){
-      presenter.setFavoriteImageAndGetFavoriteState();
-    }else if(view.getId() == R.id.deleteUserRecipeImageView){
-      presenter.setDeleteRecipeAction();
-    }
-  }
-
-  @Override
   public Context getContext(){
     return context;
   }
@@ -81,10 +93,43 @@ public class MainInfoDetailsDisplayFragment extends Fragment implements MainInfo
   @Override
   public void setRecipeListeners() {
     if(isLogged){
-      getStarImageView().setOnClickListener(this);
-      getFavoritesImageView().setOnClickListener(this);
-      getDeleteRecipeImageView().setOnClickListener(this);
+      starImageView.setOnClickListener(view ->
+      setRatingBarStarsVisibility());
+      heartImageView.setOnClickListener(view ->
+      setFavoriteImageAndGetFavoriteState());
+      deleteUserRecipeImageView.setOnClickListener(view ->
+      presenter.setDeleteRecipeAction());
     }
+  }
+
+  private void setFavoriteImageAndGetFavoriteState() {
+    Drawable heartBorder = this.getResources().getDrawable(R.mipmap.ic_favorite_border);
+    Drawable heartSolid =  this.getResources().getDrawable(R.mipmap.ic_favorite);
+
+    if(!favorite){
+      heartImageView.setImageDrawable(heartBorder);
+      presenter.sendFavouriteToServer(1);
+    }else {
+      heartImageView.setImageDrawable(heartSolid);
+      presenter.sendFavouriteToServer(0);
+    }
+  }
+
+  private void setRatingBarStarsVisibility(){
+    if(ratingBarStars.getVisibility() == View.INVISIBLE){
+      ratingBarStars.setVisibility(View.VISIBLE);
+      setRatingChangeListener();
+    }else {
+      ratingBarStars.setVisibility(View.INVISIBLE);
+    }
+  }
+
+  private void setRatingChangeListener() {
+    ratingBarStars.setOnRatingBarChangeListener((ratingBar, v, b) -> {
+      int rate = (int)v;
+      presenter.sendStarsToServer(rate);
+      ratingBarStars.setVisibility(View.INVISIBLE);
+    });
   }
 
   @Override
@@ -103,6 +148,11 @@ public class MainInfoDetailsDisplayFragment extends Fragment implements MainInfo
   }
 
   @Override
+  public void setRecipeNameTextView(String name) {
+    recipeNameTextView.setText(name);
+  }
+
+  @Override
   public void goToMainCardActivity(){
     Intent intent = new Intent(context, MainCardsActivity.class);
     intent.putExtra("isLogged",true);
@@ -110,72 +160,61 @@ public class MainInfoDetailsDisplayFragment extends Fragment implements MainInfo
   }
 
   @Override
-  public TextView getRecipeNameTextView() {
-    return (TextView)getView().findViewById(R.id.recipeNameTextView);
+  public void setRecipeImageView(String path) {
+    Picasso.get().load(path).into(recipeImageView);
   }
 
   @Override
-  public ImageView getRecipeImageView() {
-    return (ImageView)getView().findViewById(R.id.recipeImageView);
+  public void setRecipeCategoryTextView(String category) {
+    recipeCategoryTextView.setText(category);
   }
 
   @Override
-  public TextView getRecipeCategoryTextView() {
-    return (TextView)getView().findViewById(R.id.recipeCategoryTextView);
+  public void setPreparedTimeTextView(String time) {
+    preparedTimeTextView.setText(time);
   }
 
   @Override
-  public TextView getPreparedTimeTextView() {
-    return (TextView)getView().findViewById(R.id.preparedTimeTextView);
+  public void setCookTimeTextView(String time) {
+    cookTimeTextView.setText(time);
   }
 
   @Override
-  public TextView getCookTimeTextView() {
-    return (TextView)getView().findViewById(R.id.cookTimeTextView);
+  public void setBakeTimeTextView(String time) {
+    bakeTimeTextView.setText(time);
   }
 
   @Override
-  public TextView getBakeTimeTextView() {
-    return (TextView)getView().findViewById(R.id.bakeTimeTextView);
+  public void setStarCountTextView(String count) {
+    starCountTextView.setText(count);
   }
 
   @Override
-  public ImageView getStarImageView() {
-    return (ImageView)getView().findViewById(R.id.starImageView);
+  public void setFavoritesCountTextView(String count) {
+    favoritesCountTextView.setText(count);
   }
 
   @Override
-  public TextView getStarCountTextView() {
-    return (TextView)getView().findViewById(R.id.text_view_star_count);
+  public void setFavoriteImage(Boolean favorites) {
+    Drawable heartBorder = this.getResources().getDrawable(R.mipmap.ic_favorite_border);
+    Drawable heartSolid =  this.getResources().getDrawable(R.mipmap.ic_favorite);
+
+    if(!favorites){
+      heartImageView.setImageDrawable(heartBorder);
+      favorite = false;
+    }else {
+      heartImageView.setImageDrawable(heartSolid);
+      favorite = true;
+    }
   }
 
   @Override
-  public ImageView getFavoritesImageView() {
-    return (ImageView)getView().findViewById(R.id.heart_image_view);
+  public void setRelativeLayoutVisible() {
+    editAndDeleteRecipeRelativeLayout.setVisibility(View.VISIBLE);
   }
 
   @Override
-  public TextView getFavoritesCountTextView() {
-    return (TextView)getView().findViewById(R.id.text_view_favorites_count);
-  }
-
-  @Override
-  public RatingBar getRatingBarStars() {
-    return (RatingBar)getView().findViewById(R.id.ratingBarStars);
-  }
-
-  @Override
-  public RelativeLayout getEditAndDeleteRecipeRelativeLayout() {
-    return (RelativeLayout)getView().findViewById(R.id.editAndDeleteRecipeRelativeLayout);
-  }
-
-  @Override
-  public ImageView getEditRecipeImageView() {
-    return (ImageView)getView().findViewById(R.id.editUserRecipeImageView);
-  }
-
-  @Override
-  public ImageView getDeleteRecipeImageView() {
-    return (ImageView)getView().findViewById(R.id.deleteUserRecipeImageView);
+  public void setRelativeLayoutGone() {
+    editAndDeleteRecipeRelativeLayout.setVisibility(View.GONE);
   }
 }

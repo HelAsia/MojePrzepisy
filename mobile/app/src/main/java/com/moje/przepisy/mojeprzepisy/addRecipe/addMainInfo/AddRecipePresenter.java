@@ -48,7 +48,7 @@ public class AddRecipePresenter implements AddRecipeContract.Presenter{
   private void setInitialRecipe(){
     Recipe emptyRecipe = new Recipe("Nazwa przepisu",
             "https://img.freepik.com/free-icon/gallery_318-131678.jpg?size=338c&ext=jpg",
-            "Przekąski", "00:00:00", "00:00:00", "00:00:00");
+            "Przekąski", "00:00", "00:00", "00:00");
     recipeList.add(emptyRecipe);
     setRecipeList(recipeList);
   }

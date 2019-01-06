@@ -12,8 +12,8 @@ public interface StepDisplayContract {
     int getRecipeId();
     Boolean getIsLogged();
     void setStepsRecyclerView(List<Step> stepList);
-    RelativeLayout getEditAndDeleteRecipeRelativeLayout();
-    ImageView getEditRecipeImageView();
+    void setRelativeLayoutVisible();
+    void setRelativeLayoutGone();
   }
   interface Presenter{
     void setWholeRecipeElements();

@@ -16,15 +16,16 @@ import com.moje.przepisy.mojeprzepisy.data.model.Step;
 import com.moje.przepisy.mojeprzepisy.data.repositories.recipe.RecipeRepository;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * A simple {@link Fragment} subclass.
  */
 public class StepsDisplayFragment extends Fragment implements StepDisplayContract.View {
-  private StepDisplayContract.Presenter presenter;
-  Context context;
-  int recipeId;
-  Boolean isLogged;
-  View view;
+  @BindView(R.id.stepsDisplayRecyclerView) RecyclerView stepsDisplayRecyclerView;
+  @BindView(R.id.editAndDeleteRecipeRelativeLayout) RelativeLayout editAndDeleteRecipeRelativeLayout;
+  private Context context;
 
   public StepsDisplayFragment() {
   }
@@ -35,45 +36,39 @@ public class StepsDisplayFragment extends Fragment implements StepDisplayContrac
     context = getActivity();
 
     View view = inflater.inflate(R.layout.fragment_steps_display, container, false);
-    setView(view);
 
-    presenter = new StepDisplayPresenter(this, new RecipeRepository(context));
+    ButterKnife.bind(this, view);
+
+    StepDisplayContract.Presenter presenter = new StepDisplayPresenter(this, new RecipeRepository(context));
     presenter.setWholeRecipeElements();
 
     return view;
   }
 
-  public void setView(View view) {
-    this.view = view;
-  }
-
   @Override
   public int getRecipeId() {
-    this.recipeId = getArguments().getInt("id");
-    return recipeId;
+    return getArguments().getInt("id");
   }
 
   @Override
   public Boolean getIsLogged() {
-    this.isLogged = getArguments().getBoolean("isLogged");
-    return isLogged;
+    return getArguments().getBoolean("isLogged");
   }
 
   @Override
   public void setStepsRecyclerView(List<Step> stepList) {
     StepsDisplayAdapter adapter = new StepsDisplayAdapter(context, stepList);
-    RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.stepsDisplayRecyclerView);
-    recyclerView.setAdapter(adapter);
-    recyclerView.setLayoutManager(new LinearLayoutManager(context));
+    stepsDisplayRecyclerView.setAdapter(adapter);
+    stepsDisplayRecyclerView.setLayoutManager(new LinearLayoutManager(context));
   }
 
   @Override
-  public RelativeLayout getEditAndDeleteRecipeRelativeLayout() {
-    return (RelativeLayout)getView().findViewById(R.id.editAndDeleteRecipeRelativeLayout);
+  public void setRelativeLayoutVisible() {
+    editAndDeleteRecipeRelativeLayout.setVisibility(View.VISIBLE);
   }
 
   @Override
-  public ImageView getEditRecipeImageView() {
-    return (ImageView)getView().findViewById(R.id.editUserRecipeImageView);
+  public void setRelativeLayoutGone() {
+    editAndDeleteRecipeRelativeLayout.setVisibility(View.GONE);
   }
 }

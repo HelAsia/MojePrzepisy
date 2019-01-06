@@ -21,10 +21,8 @@ public class MainInfoDetailsDisplayPresenter implements MainInfoDetailsDisplayCo
     RecipeRepository.OnDeleteRecipeDetailsDisplayListener {
   private RecipeRepository recipeRepository;
   private MainInfoDetailsDisplayContract.View mainInfoDetailsDisplayView;
-  private Boolean favorite = null;
 
-
-  public MainInfoDetailsDisplayPresenter(MainInfoDetailsDisplayContract.View mainInfoDetailsDisplayView, RecipeRepository recipeRepository){
+  MainInfoDetailsDisplayPresenter(MainInfoDetailsDisplayContract.View mainInfoDetailsDisplayView, RecipeRepository recipeRepository){
     this.mainInfoDetailsDisplayView = mainInfoDetailsDisplayView;
     this.recipeRepository = recipeRepository;
   }
@@ -34,129 +32,104 @@ public class MainInfoDetailsDisplayPresenter implements MainInfoDetailsDisplayCo
   }
 
   @Override
-  public void setMainInfoRecipe(Recipe recipe) {
-    if(mainInfoDetailsDisplayView != null) {
-      int userId = PreferenceManager
-          .getDefaultSharedPreferences(mainInfoDetailsDisplayView.getContext()).getInt(Constant.PREF_USER_ID, 0);
-      if(userId != 0){
-        if(userId == recipe.getUserId()){
-          mainInfoDetailsDisplayView.getEditAndDeleteRecipeRelativeLayout().setVisibility(View.VISIBLE);
-        }else {
-          mainInfoDetailsDisplayView.getEditAndDeleteRecipeRelativeLayout().setVisibility(View.GONE);
-        }
-      }
-      if (mainInfoDetailsDisplayView.getRecipeNameTextView() != null) {
-        mainInfoDetailsDisplayView.getRecipeNameTextView().setText(recipe.getName());
-      } else {
-        mainInfoDetailsDisplayView.getRecipeNameTextView().setText("Brak nazwy przepisu");
-      }
-      if (mainInfoDetailsDisplayView.getRecipeImageView() != null) {
-        Picasso.get().load(BASE_URL + "recipe/photo/" + recipe.getMainPictureNumber()).
-            into(mainInfoDetailsDisplayView.getRecipeImageView());
-      }
-      if (mainInfoDetailsDisplayView.getRecipeCategoryTextView() != null) {
-        mainInfoDetailsDisplayView.getRecipeCategoryTextView().setText(recipe.getCategory());
-      } else {
-        mainInfoDetailsDisplayView.getRecipeCategoryTextView().setText("Brak kategorii przepisu");
-      }
-      if (mainInfoDetailsDisplayView.getPreparedTimeTextView() != null) {
-        mainInfoDetailsDisplayView.getPreparedTimeTextView().setText(recipe.getPrepareTime());
-      } else {
-        mainInfoDetailsDisplayView.getPreparedTimeTextView().setText("Brak czasu przygotowania");
-      }
-      if (mainInfoDetailsDisplayView.getCookTimeTextView() != null) {
-        mainInfoDetailsDisplayView.getCookTimeTextView().setText(recipe.getCookTime());
-      } else {
-        mainInfoDetailsDisplayView.getCookTimeTextView().setText("Brak czasu gotowania");
-      }
-      if (mainInfoDetailsDisplayView.getBakeTimeTextView() != null) {
-        mainInfoDetailsDisplayView.getBakeTimeTextView().setText(recipe.getBakeTime());
-      } else {
-        mainInfoDetailsDisplayView.getBakeTimeTextView().setText("Brak czasu pieczenia");
-      }
-    }
-  }
-
-  @Override
-  public void setStars(Stars stars) {
-    if(mainInfoDetailsDisplayView != null){
-      mainInfoDetailsDisplayView.getStarCountTextView().setText(String.valueOf(stars.getStarsCount()));
-      mainInfoDetailsDisplayView.getFavoritesCountTextView().setText(String.valueOf(stars.getFavoritesCount()));
-      setFavoriteImage(stars.getFavorites());
-    }
-  }
-
-  @Override
-  public void onRecipeError() {
-    Toast.makeText(mainInfoDetailsDisplayView.getContext(), "Błąd podczas pobierania przepisu!",
-        Toast.LENGTH_SHORT).show();
-  }
-
-  @Override
-  public void onStarsError() {
-    Toast.makeText(mainInfoDetailsDisplayView.getContext(), "Błąd podczas pobierania gwiazdek!",
-        Toast.LENGTH_SHORT).show();
-  }
-
-  @Override
   public void setWholeRecipeElements() {
     recipeRepository.getRecipe(mainInfoDetailsDisplayView.getRecipeId(), this);
     recipeRepository.getRecipeDetailsStars(mainInfoDetailsDisplayView.getRecipeId(), this);
   }
 
   @Override
-  public void setRatingBarStarsVisibility() {
-    mainInfoDetailsDisplayView.getStarImageView().setOnClickListener(new OnClickListener() {
-      @Override
-      public void onClick(View view) {
-        if(mainInfoDetailsDisplayView.getRatingBarStars().getVisibility() == View.INVISIBLE){
-          mainInfoDetailsDisplayView.getRatingBarStars().setVisibility(View.VISIBLE);
-          getRatingAndSetVisibility();
-        }else {
-          mainInfoDetailsDisplayView.getRatingBarStars().setVisibility(View.INVISIBLE);
-        }
-      }
-    });
-  }
+  public void setMainInfoRecipe(Recipe recipe) {
+    if(mainInfoDetailsDisplayView != null) {
+      setRelativeLayout(recipe);
+      setRecipeName(recipe);
+      setMainPicture(recipe);
+      setCategory(recipe);
+      setPrepareTime(recipe);
+      setCookTime(recipe);
+      setBakeTime(recipe);
 
-  @Override
-  public void getRatingAndSetVisibility() {
-    mainInfoDetailsDisplayView.getRatingBarStars().setOnRatingBarChangeListener(new OnRatingBarChangeListener() {
-      @Override
-      public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
-        int rate = (int)v;
-        sendStarsToServer(rate);
-        mainInfoDetailsDisplayView.getRatingBarStars().setVisibility(View.INVISIBLE);
-      }
-    });
-  }
-
-  @Override
-  public void setFavoriteImageAndGetFavoriteState() {
-    Drawable heartBorder = mainInfoDetailsDisplayView.getContext().getResources().getDrawable(R.mipmap.ic_favorite_border);
-    Drawable heartSolid =  mainInfoDetailsDisplayView.getContext().getResources().getDrawable(R.mipmap.ic_favorite);
-
-    if(!favorite){
-      mainInfoDetailsDisplayView.getFavoritesImageView().setImageDrawable(heartBorder);
-      sendFavouriteToServer(1);
-    }else {
-      mainInfoDetailsDisplayView.getFavoritesImageView().setImageDrawable(heartSolid);
-      sendFavouriteToServer(0);
+      mainInfoDetailsDisplayView.setRecipeListeners();
     }
   }
 
   @Override
-  public void setFavoriteImage(Boolean favorites) {
-    Drawable heartBorder = mainInfoDetailsDisplayView.getContext().getResources().getDrawable(R.mipmap.ic_favorite_border);
-    Drawable heartSolid =  mainInfoDetailsDisplayView.getContext().getResources().getDrawable(R.mipmap.ic_favorite);
-
-    if(!favorites){
-      mainInfoDetailsDisplayView.getFavoritesImageView().setImageDrawable(heartBorder);
-      favorite = favorites;
-    }else {
-      mainInfoDetailsDisplayView.getFavoritesImageView().setImageDrawable(heartSolid);
-      favorite = favorites;
+  public void setStars(Stars stars) {
+    if(mainInfoDetailsDisplayView != null){
+      mainInfoDetailsDisplayView.setStarCountTextView(String.valueOf(stars.getStarsCount()));
+      mainInfoDetailsDisplayView.setFavoritesCountTextView(String.valueOf(stars.getFavoritesCount()));
+      mainInfoDetailsDisplayView.setFavoriteImage(stars.getFavorites());
     }
+  }
+
+  private void setRelativeLayout(Recipe recipe){
+    int userId = PreferenceManager
+            .getDefaultSharedPreferences(mainInfoDetailsDisplayView.getContext()).getInt(Constant.PREF_USER_ID, 0);
+    if(userId != 0){
+      if(userId == recipe.getUserId()){
+        mainInfoDetailsDisplayView.setRelativeLayoutVisible();
+      }else {
+        mainInfoDetailsDisplayView.setRelativeLayoutGone();
+      }
+    }
+  }
+
+  private void setRecipeName(Recipe recipe){
+    if (recipe.getName() != null) {
+      mainInfoDetailsDisplayView.setRecipeNameTextView(recipe.getName());
+    } else {
+      mainInfoDetailsDisplayView.setRecipeNameTextView("Brak nazwy przepisu");
+    }
+  }
+
+  private void setMainPicture(Recipe recipe){
+    if (recipe.getMainPictureNumber() != 0) {
+      mainInfoDetailsDisplayView.setRecipeImageView(BASE_URL + "recipe/photo/"
+              + recipe.getMainPictureNumber());
+    }
+  }
+
+  private void setCategory(Recipe recipe){
+    if (recipe.getCategory() != null) {
+      mainInfoDetailsDisplayView.setRecipeCategoryTextView(recipe.getCategory());
+    } else {
+      mainInfoDetailsDisplayView.setRecipeCategoryTextView("Brak kategorii przepisu");
+    }
+  }
+
+  private void setPrepareTime(Recipe recipe){
+    if (recipe.getPrepareTime() != null) {
+      mainInfoDetailsDisplayView.setPreparedTimeTextView(recipe.getPrepareTime());
+    } else {
+      mainInfoDetailsDisplayView.setPreparedTimeTextView("Brak czasu przygotowania");
+    }
+  }
+
+  private void setCookTime(Recipe recipe){
+    if (recipe.getCookTime() != null) {
+      mainInfoDetailsDisplayView.setCookTimeTextView(recipe.getCookTime());
+    } else {
+      mainInfoDetailsDisplayView.setCookTimeTextView("Brak czasu gotowania");
+    }
+  }
+
+  private void setBakeTime(Recipe recipe){
+    if (recipe.getBakeTime() != null) {
+      mainInfoDetailsDisplayView.setBakeTimeTextView(recipe.getBakeTime());
+    } else {
+      mainInfoDetailsDisplayView.setBakeTimeTextView("Brak czasu pieczenia");
+    }
+  }
+
+  @Override
+  public void onRecipeError() {
+    Toast.makeText(mainInfoDetailsDisplayView.getContext(),
+            "Błąd podczas pobierania przepisu!", Toast.LENGTH_SHORT).show();
+  }
+
+  @Override
+  public void onStarsError() {
+    Toast.makeText(mainInfoDetailsDisplayView.getContext(),
+            "Błąd podczas pobierania gwiazdek!", Toast.LENGTH_SHORT).show();
   }
 
   @Override
@@ -166,22 +139,26 @@ public class MainInfoDetailsDisplayPresenter implements MainInfoDetailsDisplayCo
 
   @Override
   public void sendStarsToServer(int rate) {
-    recipeRepository.editStarsAndHeartInRecipe(mainInfoDetailsDisplayView.getRecipeId(), "stars", rate, this);
+    recipeRepository.editStarsAndHeartInRecipe(mainInfoDetailsDisplayView.getRecipeId(),
+            "stars", rate, this);
   }
 
   @Override
   public void sendFavouriteToServer(int favorite) {
-    recipeRepository.editStarsAndHeartInRecipe(mainInfoDetailsDisplayView.getRecipeId(), "favorite", favorite, this);
+    recipeRepository.editStarsAndHeartInRecipe(mainInfoDetailsDisplayView.getRecipeId(),
+            "favorite", favorite, this);
   }
 
   @Override
   public void onSuccess() {
-    Toast.makeText(mainInfoDetailsDisplayView.getContext(), "Przepis został usunięty!", Toast.LENGTH_SHORT).show();
+    Toast.makeText(mainInfoDetailsDisplayView.getContext(),
+            "Przepis został usunięty!", Toast.LENGTH_SHORT).show();
     mainInfoDetailsDisplayView.goToMainCardActivity();
   }
 
   @Override
   public void onError() {
-    Toast.makeText(mainInfoDetailsDisplayView.getContext(), "Błąd podczas usuwania przepisu!", Toast.LENGTH_SHORT).show();
+    Toast.makeText(mainInfoDetailsDisplayView.getContext(),
+            "Błąd podczas usuwania przepisu!", Toast.LENGTH_SHORT).show();
   }
 }

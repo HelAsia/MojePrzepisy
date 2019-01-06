@@ -231,7 +231,7 @@
     <string name="user_profile_validate_password_error">Hasło musi zawierać małą literę, dużą literę i znak specjalny oraz musi mieć przynajmniej 8 znaków!</string>
     <string name="user_profile_validate_email_error">Podany email nie jest poprawny!</string>
 
-    <string name="first_time_setting">00:00:00</string>
+    <string name="first_time_setting">00:00</string>
     <string name="first_time_pattern">HH:MM</string>
     <string name="title_activity_settings">Ustawienia</string>
 

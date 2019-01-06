@@ -12,31 +12,24 @@ public interface MainInfoDetailsDisplayContract {
     void setRecipeListeners();
     int getRecipeId();
     Boolean getIsLogged();
-    TextView getRecipeNameTextView();
-    ImageView getRecipeImageView();
-    TextView getRecipeCategoryTextView();
-    TextView getPreparedTimeTextView();
-    TextView getCookTimeTextView();
-    TextView getBakeTimeTextView();
-    ImageView getStarImageView();
-    TextView getStarCountTextView();
-    ImageView getFavoritesImageView();
-    TextView getFavoritesCountTextView();
-    RatingBar getRatingBarStars();
-    RelativeLayout getEditAndDeleteRecipeRelativeLayout();
-    ImageView getEditRecipeImageView();
-    ImageView getDeleteRecipeImageView();
+    void setRecipeNameTextView(String name);
+    void setRecipeImageView(String path);
+    void setRecipeCategoryTextView(String category);
+    void setPreparedTimeTextView(String time);
+    void setCookTimeTextView(String time);
+    void setBakeTimeTextView(String time);
+    void setStarCountTextView(String count);
+    void setFavoritesCountTextView(String count);
+    void setFavoriteImage(Boolean favorites);
+    void setRelativeLayoutVisible();
+    void setRelativeLayoutGone();
     void goToMainCardActivity();
   }
 
   interface Presenter{
     void setWholeRecipeElements();
-    void setRatingBarStarsVisibility();
-    void getRatingAndSetVisibility();
-    void setFavoriteImageAndGetFavoriteState();
     void sendStarsToServer(int rate);
     void sendFavouriteToServer(int favorite);
-    void setFavoriteImage(Boolean favorites);
     void setDeleteRecipeAction();
   }
 }

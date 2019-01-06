@@ -45,7 +45,7 @@ class TimeSetDialog {
             }
             minute = Integer.toString(minuteInt)
             dialog.dismiss()
-            textViewToSet.text = "$hour:$minute:00"
+            textViewToSet.text = "$hour:$minute"
         }
         dialog.show()
     }

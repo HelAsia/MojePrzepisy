@@ -13,7 +13,7 @@ public class StepDisplayPresenter implements StepDisplayContract.Presenter,
   private RecipeRepository recipeRepository;
   private StepDisplayContract.View stepDisplayView;
 
-  public StepDisplayPresenter(StepDisplayContract.View stepDisplayView,
+  StepDisplayPresenter(StepDisplayContract.View stepDisplayView,
       RecipeRepository recipeRepository){
     this.stepDisplayView = stepDisplayView;
     this.recipeRepository = recipeRepository;
@@ -31,9 +31,9 @@ public class StepDisplayPresenter implements StepDisplayContract.Presenter,
           .getDefaultSharedPreferences(stepDisplayView.getContext()).getInt(Constant.PREF_USER_ID, 0);
       if(userId != 0){
         if(userId == stepList.get(0).getUserId()){
-          stepDisplayView.getEditAndDeleteRecipeRelativeLayout().setVisibility(View.VISIBLE);
+          stepDisplayView.setRelativeLayoutVisible();
         }else {
-          stepDisplayView.getEditAndDeleteRecipeRelativeLayout().setVisibility(View.GONE);
+          stepDisplayView.setRelativeLayoutGone();
         }
       }
       stepDisplayView.setStepsRecyclerView(stepList);
