@@ -1,4 +1,4 @@
-package com.moje.przepisy.mojeprzepisy.mainCards;
+package com.moje.przepisy.mojeprzepisy.setting;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -15,17 +15,21 @@ import android.os.Build;
 import android.os.IBinder;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
+import android.service.notification.StatusBarNotification;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import com.moje.przepisy.mojeprzepisy.R;
 import com.moje.przepisy.mojeprzepisy.data.repositories.cards.OperationsOnCardRepository;
 import com.moje.przepisy.mojeprzepisy.data.repositories.cards.OperationsOnCardRepositoryInterface;
+import com.moje.przepisy.mojeprzepisy.mainCards.MainCardsActivity;
 import com.moje.przepisy.mojeprzepisy.utils.Constant;
 
 public class NewRecipeService extends Service implements
         OperationsOnCardRepositoryInterface.OnNewCardsListener {
     private NotificationManager notificationManager;
+    private NotificationCompat.Builder notificationBuilder;
     private ThreadGroup myThreads = new ThreadGroup("ServiceWorker");
 
     private OperationsOnCardRepository operationsOnCardRepository =
@@ -77,15 +81,42 @@ public class NewRecipeService extends Service implements
     @Override
     public void onDestroy() {
         super.onDestroy();
+        Intent broadcastIntent = new Intent(this, RestartServiceBroadcastReceiver.class);
+
+        sendBroadcast(broadcastIntent);
+
         myThreads.interrupt();
         notificationManager.cancelAll();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void setNewCardsNotification() {
         notificationManager = (NotificationManager) this
                 .getSystemService(Context.NOTIFICATION_SERVICE);
-        NotificationCompat.Builder notificationBuilder;
+
+        createNotificationBuilderWithChannel();
+        setNotificationBuilder();
+
+        StatusBarNotification[] notifications = notificationManager.getActiveNotifications();
+        if(notifications.length != 0){
+            for (StatusBarNotification notification : notifications) {
+                if (notification.getId() != 0) {
+                    notificationManager.notify(0, notificationBuilder.build());
+                    turnOnSound();
+                    turnOnVibrate();
+                }
+            }
+        }
+        else{
+            notificationManager.notify(0, notificationBuilder.build());
+            turnOnSound();
+            turnOnVibrate();
+        }
+
+    }
+
+    private void createNotificationBuilderWithChannel(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             String chanelId = "3000";
             CharSequence name = "Channel Name";
@@ -100,10 +131,14 @@ public class NewRecipeService extends Service implements
         } else {
             notificationBuilder = new NotificationCompat.Builder(this);
         }
+    }
+
+    private void setNotificationBuilder(){
         notificationBuilder
                 .setSmallIcon(R.drawable.logo)
                 .setContentTitle("Przepisy domowe Helasia")
-                .setContentText("Sprawdź nowe przepisy!");
+                .setContentText("Sprawdź nowe przepisy!")
+                .setAutoCancel(true);
 
         Intent notificationIntent = new Intent(this, MainCardsActivity.class);
         notificationIntent.putExtra("isLogged", true);
@@ -111,10 +146,6 @@ public class NewRecipeService extends Service implements
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT);
         notificationBuilder.setContentIntent(contentIntent);
-
-        notificationManager.notify(0, notificationBuilder.build());
-        turnOnSound();
-        turnOnVibrate();
     }
 
     private void turnOnSound(){

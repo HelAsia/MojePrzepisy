@@ -48,7 +48,7 @@
         <activity android:name=".licenses.WebViewActivity" />
         <activity android:name=".aboutApplication.AboutApplicationActivity" />
 
-        <service android:name=".mainCards.NewRecipeService"/>
+        <service android:name=".setting.NewRecipeService"/>
 
         <activity
             android:name=".setting.SettingsActivity"/>

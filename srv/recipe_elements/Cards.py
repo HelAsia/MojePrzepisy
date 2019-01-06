@@ -37,7 +37,7 @@ class Cards:
         recipeQuery = u"SELECT recipe_id AS id, recipe_name AS name, user_id AS userId, " \
                       u"photo_id as mainPictureNumber, recipe_created_date_time as Date " \
                       u"FROM recipes " \
-                      u"ORDER BY Date; "
+                      u"ORDER BY Date desc; "
 
         return self.getAllCardsBasedMethod(userID, recipeQuery)
 
