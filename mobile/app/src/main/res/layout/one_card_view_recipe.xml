@@ -55,6 +55,7 @@
         android:layout_height="200dp"
         android:layout_below="@+id/card_name_layout"
         android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
         android:layout_gravity="center"
         android:layout_marginTop="0dp"
         android:src="@mipmap/ic_image" />

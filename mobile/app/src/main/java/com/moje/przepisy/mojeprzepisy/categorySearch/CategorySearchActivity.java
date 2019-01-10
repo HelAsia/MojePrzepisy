@@ -33,10 +33,10 @@ public class CategorySearchActivity extends AppCompatActivity {
 
     setToolbar();
     setCategoryList(getCategoryNameList());
-    setLogged();
+    setIsLogged();
   }
 
-  public void setLogged() {
+  public void setIsLogged() {
     if(getIntent().getExtras() != null){
       isLogged = getIntent().getExtras().getBoolean("isLogged");
     }

@@ -9,6 +9,7 @@ public interface LicensesContract {
   interface View{
     Context getContext();
     void setToolbar();
+    void setIsLogged();
     void setRecyclerView(List<License> licenseList);
     void goToLicenseSource(String licenseUrl);
   }
@@ -16,5 +17,4 @@ public interface LicensesContract {
   interface Presenter{
     void setFirstScreen();
   }
-
 }

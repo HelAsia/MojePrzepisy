@@ -1,6 +1,7 @@
 package com.moje.przepisy.mojeprzepisy.mainCards;
 
 import android.annotation.SuppressLint;
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -80,7 +81,7 @@ public class MainCardsActivity extends AppCompatActivity implements
 
   @Override
   public void setFABListener() {
-    floatingActionButton.setOnClickListener(v -> {
+    floatingActionButton.setOnClickListener(view -> {
       Intent intent = new Intent(this, AddRecipeActivity.class);
       startActivity(intent);
     });
@@ -97,14 +98,12 @@ public class MainCardsActivity extends AppCompatActivity implements
   protected void onRestart(){
     super.onRestart();
     presenter.setFirstScreen();
-//    presenter.setSortedMethod(this,"default");
   }
 
   @Override
   protected void onResume(){
     super.onResume();
     presenter.setFirstScreen();
-//    presenter.setSortedMethod(this,"default");
   }
 
   @Override
@@ -270,6 +269,7 @@ public class MainCardsActivity extends AppCompatActivity implements
 
   private void goToTimerActivity() {
     Intent intent = new Intent(this, TimerActivity.class);
+    intent.putExtra("isLogged", isLogged);
     startActivity(intent);
     MainCardsActivity.this.finish();
   }

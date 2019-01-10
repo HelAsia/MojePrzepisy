@@ -20,27 +20,21 @@ public class URLDialog {
     dialog.setCancelable(false);
     dialog.setContentView(R.layout.url_dialog);
 
+
     final EditText urlAddressEditText = dialog.findViewById(R.id.setURL_EditText);
 
-    Button cancelUrlButton = (Button) dialog.findViewById(R.id.set_url_cancel_button);
-    cancelUrlButton.setOnClickListener(new OnClickListener() {
-      @Override
-      public void onClick(View view) {
-        dialog.dismiss();
-      }
-    });
 
-    Button setUrlButton = (Button) dialog.findViewById(R.id.set_url_button);
-    setUrlButton.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        urlStringValue = urlAddressEditText.getText().toString();
+    Button cancelUrlButton = dialog.findViewById(R.id.set_url_cancel_button);
+    cancelUrlButton.setOnClickListener(view -> dialog.dismiss());
 
-        if(!urlStringValue.isEmpty())
-        Picasso.get().load(urlStringValue).into(imageView);
-        imageView.setVisibility(View.VISIBLE);
-        dialog.dismiss();
-      }
+    Button setUrlButton = dialog.findViewById(R.id.set_url_button);
+    setUrlButton.setOnClickListener(v -> {
+      urlStringValue = urlAddressEditText.getText().toString();
+
+      if(!urlStringValue.isEmpty())
+      Picasso.get().load(urlStringValue).into(imageView);
+      imageView.setVisibility(View.VISIBLE);
+      dialog.dismiss();
     });
     dialog.show();
   }

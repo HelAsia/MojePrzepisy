@@ -28,7 +28,7 @@
     android:inputType="textPersonName"
     android:background="@color/aqua_transparent"
     android:textColor="@color/black"
-    android:textColorHint="@color/black"
+    android:textColorHint="@color/grey"
     android:hint="@string/your_login"
     android:ems="10"
     android:layout_below="@+id/login_textView"
@@ -52,7 +52,7 @@
     android:inputType="textPassword"
     android:background="@color/aqua_transparent"
     android:textColor="@color/black"
-    android:textColorHint="@color/black"
+    android:textColorHint="@color/grey"
     android:hint="@string/your_password"
     android:ems="10"
     android:layout_below="@+id/password_textView"
@@ -61,7 +61,8 @@
     android:id="@+id/password_editText"/>
   <Button
     android:text="@string/login"
-    android:background="@drawable/blue_buttons"
+    android:textColor="@color/white"
+    android:background="@drawable/black_button"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_below="@+id/password_editText"

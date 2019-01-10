@@ -9,11 +9,18 @@ public class LicensesPresenter implements LicensesContract.Presenter {
   private LicensesContract.View licensesView;
   private List<License> licensesList = new ArrayList<>();
 
-  public LicensesPresenter(LicensesContract.View licensesView){
+  LicensesPresenter(LicensesContract.View licensesView){
     this.licensesView = licensesView;
   }
 
-  public List<License> getLicensesList(){
+  @Override
+  public void setFirstScreen() {
+    licensesView.setToolbar();
+    licensesView.setRecyclerView(getLicensesList());
+    licensesView.setIsLogged();
+  }
+
+  private List<License> getLicensesList(){
     License licenseOne = new License(1,
         licensesView.getContext().getResources().getString(R.string.license_one_name),
         licensesView.getContext().getResources().getString(R.string.license_one_author),
@@ -83,11 +90,5 @@ public class LicensesPresenter implements LicensesContract.Presenter {
     licensesList.add(licenseEleven);
 
     return licensesList;
-  }
-
-  @Override
-  public void setFirstScreen() {
-    licensesView.setToolbar();
-    licensesView.setRecyclerView(getLicensesList());
   }
 }

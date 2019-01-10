@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:tools="http://schemas.android.com/tools"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  tools:context=".recipeDetails.commentDetails.CommentDisplayFragment">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    tools:context=".recipeDetails.commentDetails.CommentDisplayFragment">
 
   <ScrollView
     android:id="@+id/scrollViewLayout"
@@ -20,35 +21,49 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="0 komentarzy"
-        android:background="@color/creamy"
         android:layout_marginBottom="10dp"
-        android:layout_alignParentLeft="true"/>
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
       <android.support.v7.widget.RecyclerView
         android:id="@+id/commentsDisplayRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_margin="5dp"
         android:layout_below="@+id/commentQtyTextView">
       </android.support.v7.widget.RecyclerView>
-      <EditText
-        android:id="@+id/commentEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/commentsDisplayRecyclerView"
-        android:background="@color/white_transparent"
-        android:layout_marginTop="10dp"
-        android:hint="@string/add_comment"
-        android:textColorHint="@color/secondary_text"
-        android:ems="10"
-        android:minLines="3"
-        android:inputType="textMultiLine"/>
+
+      <android.support.v7.widget.CardView
+          android:id="@+id/commentCard"
+          android:layout_margin="5dp"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          card_view:cardElevation="5dp"
+          android:layout_below="@+id/commentsDisplayRecyclerView">
+
+        <EditText
+            android:id="@+id/commentEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:background="@color/white_transparent"
+            android:ems="10"
+            android:hint="@string/add_comment"
+            android:inputType="textMultiLine"
+            android:minLines="3"
+            android:textColorHint="@color/secondary_text" />
+      </android.support.v7.widget.CardView>
+
       <Button
         android:id="@+id/addCommentButton"
+        android:background="@drawable/black_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/commentEditText"
-        android:layout_marginTop="10dp"
-        android:text="@string/send_comment"/>
+        android:layout_below="@+id/commentCard"
+        android:layout_margin="10dp"
+        android:text="@string/send_comment"
+        android:textColor="@color/white"/>
     </RelativeLayout>
   </ScrollView>
 </FrameLayout>

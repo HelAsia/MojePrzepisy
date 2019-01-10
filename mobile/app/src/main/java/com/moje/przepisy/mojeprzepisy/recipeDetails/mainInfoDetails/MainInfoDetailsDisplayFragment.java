@@ -103,8 +103,8 @@ public class MainInfoDetailsDisplayFragment extends Fragment
   }
 
   private void setFavoriteImageAndGetFavoriteState() {
-    Drawable heartBorder = this.getResources().getDrawable(R.mipmap.ic_favorite_border);
-    Drawable heartSolid =  this.getResources().getDrawable(R.mipmap.ic_favorite);
+    Drawable heartBorder = this.getResources().getDrawable(R.drawable.ic_favorite_border);
+    Drawable heartSolid =  this.getResources().getDrawable(R.drawable.ic_favorite);
 
     if(!favorite){
       heartImageView.setImageDrawable(heartBorder);
@@ -196,8 +196,8 @@ public class MainInfoDetailsDisplayFragment extends Fragment
 
   @Override
   public void setFavoriteImage(Boolean favorites) {
-    Drawable heartBorder = this.getResources().getDrawable(R.mipmap.ic_favorite_border);
-    Drawable heartSolid =  this.getResources().getDrawable(R.mipmap.ic_favorite);
+    Drawable heartBorder = this.getResources().getDrawable(R.drawable.ic_favorite_border);
+    Drawable heartSolid =  this.getResources().getDrawable(R.drawable.ic_favorite);
 
     if(!favorites){
       heartImageView.setImageDrawable(heartBorder);
