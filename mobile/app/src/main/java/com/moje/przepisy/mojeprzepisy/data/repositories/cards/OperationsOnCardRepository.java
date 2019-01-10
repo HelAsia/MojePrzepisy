@@ -93,7 +93,6 @@ public class OperationsOnCardRepository implements OperationsOnCardRepositoryInt
               @Override
               public void onSuccess(List<OneRecipeCard> oneRecipeCards) {
                 cardsListener.setRecipesList(oneRecipeCards);
-                cardsListener.setMaxDateInPreferences(getMaxDate(oneRecipeCards));
               }
 
               @Override
@@ -118,7 +117,6 @@ public class OperationsOnCardRepository implements OperationsOnCardRepositoryInt
               @Override
               public void onSuccess(List<OneRecipeCard> oneRecipeCards) {
                 cardsListener.setRecipesList(oneRecipeCards);
-                cardsListener.setMaxDateInPreferences(getMaxDate(oneRecipeCards));
               }
 
               @Override

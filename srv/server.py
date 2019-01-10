@@ -239,8 +239,10 @@ def getCategoryCards():
     cards = card.getCategoryCardsSortedByDefault(category, userID)
 
     if not cards:
+        return jsonify([])
         Logger.fail("There were no cards returned!")
-    return jsonify(cards)
+    else:
+        return jsonify(cards)
 
 
 @app.route('/cards/<int:id>', methods=['GET'])

@@ -41,7 +41,7 @@ public class CategorySearchActivity extends AppCompatActivity {
 
     adapter.setCategoryOnShareClickedListener(() -> {
       Intent intent = new Intent(this, MainCardsActivity.class);
-      intent.putExtra("LOGGED", getIsLogged());
+      intent.putExtra("isLogged", getIsLogged());
       startActivity(intent);
       CategorySearchActivity.this.finish();
     });
@@ -62,6 +62,6 @@ public class CategorySearchActivity extends AppCompatActivity {
   }
 
   public Boolean getIsLogged() {
-    return getIntent().getExtras().getBoolean("LOGGED");
+    return getIntent().getExtras().getBoolean("isLogged");
   }
 }

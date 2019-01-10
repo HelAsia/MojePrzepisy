@@ -49,6 +49,7 @@
         <activity android:name=".aboutApplication.AboutApplicationActivity" />
 
         <service android:name=".setting.NewRecipeService"/>
+        <receiver android:name=".setting.RestartServiceBroadcastReceiver"/>
 
         <activity
             android:name=".setting.SettingsActivity"/>

@@ -12,6 +12,7 @@ public interface WelcomeContract {
     void navigateToHomePage();
     void setErrorTextView(String errorMessage);
     Context getContext();
+    void setNotificationSettings(boolean isChecked);
   }
 
   interface Presenter {

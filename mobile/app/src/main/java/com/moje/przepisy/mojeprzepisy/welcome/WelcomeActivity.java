@@ -1,5 +1,6 @@
 package com.moje.przepisy.mojeprzepisy.welcome;
 
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import com.moje.przepisy.mojeprzepisy.data.repositories.welcome.WelcomeRepositor
 import com.moje.przepisy.mojeprzepisy.homePage.HomePageView;
 import com.moje.przepisy.mojeprzepisy.R;
 import com.moje.przepisy.mojeprzepisy.mainCards.MainCardsActivity;
+import com.moje.przepisy.mojeprzepisy.setting.NewRecipeService;
 
 public class WelcomeActivity extends AppCompatActivity implements WelcomeContract.View {
   @BindView(R.id.errorTextView) TextView errorTextView;
@@ -53,5 +55,28 @@ public class WelcomeActivity extends AppCompatActivity implements WelcomeContrac
   @Override
   public Context getContext() {
     return this;
+  }
+
+  @Override
+  public void setNotificationSettings(boolean isChecked) {
+    if(isChecked){
+      NewRecipeService newRecipeService = new NewRecipeService();
+      Intent serviceIntent = new Intent(this, newRecipeService.getClass());
+      if (!isMyServiceRunning(newRecipeService.getClass())) {
+        startService(serviceIntent);
+      }
+    }else{
+      stopService(new Intent(this, NewRecipeService.class));
+    }
+  }
+
+  private boolean isMyServiceRunning(Class<?> serviceClass){
+    ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+    for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)){
+      if(serviceClass.getName().equals(service.service.getClassName())){
+        return true;
+      }
+    }
+    return false;
   }
 }

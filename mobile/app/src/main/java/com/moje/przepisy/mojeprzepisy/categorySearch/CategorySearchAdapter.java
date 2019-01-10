@@ -54,7 +54,8 @@ public class CategorySearchAdapter extends RecyclerView.Adapter<CategorySearchAd
 
     viewHolder.categoryImage.setOnClickListener(view -> {
       setSortedMethod();
-      setCategoryNameInPreferences(categoryNameList.get(position));
+      String testingCategory = categoryNameList.get(position);
+      setCategoryNameInPreferences(testingCategory);
       callbackCategory.ShareCategoryClicked();
     });
   }

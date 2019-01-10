@@ -72,7 +72,7 @@ public class NewRecipeService extends Service implements
                     .getBoolean(Constant.PREF_NOTIFICATION, false);
             operationsOnCardRepository.getNewCards(this, maxDate);
             try{
-                Thread.sleep(10000);
+                Thread.sleep(3600000);
             }catch (InterruptedException e){
                 Log.i("NewRecipeService", "InterruptedException");
             }
@@ -86,7 +86,9 @@ public class NewRecipeService extends Service implements
         sendBroadcast(broadcastIntent);
 
         myThreads.interrupt();
-        notificationManager.cancelAll();
+        if(notificationManager != null){
+            notificationManager.cancelAll();
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)

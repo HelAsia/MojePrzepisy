@@ -72,15 +72,18 @@ public class MainCardsActivity extends AppCompatActivity implements
 
     presenter = new MainCardsPresenter(this, new OperationsOnCardRepository(this), new RecipeRepository(this));
     presenter.setFirstScreen();
-
-    floatingActionButton.setOnClickListener(v -> {
-      Intent intent = new Intent(this, AddRecipeActivity.class);
-      startActivity(intent);
-    });
   }
 
   public Context getContext() {
     return this;
+  }
+
+  @Override
+  public void setFABListener() {
+    floatingActionButton.setOnClickListener(v -> {
+      Intent intent = new Intent(this, AddRecipeActivity.class);
+      startActivity(intent);
+    });
   }
 
   @Override
@@ -93,13 +96,15 @@ public class MainCardsActivity extends AppCompatActivity implements
   @Override
   protected void onRestart(){
     super.onRestart();
-    presenter.setSortedMethod(this,"default");
+    presenter.setFirstScreen();
+//    presenter.setSortedMethod(this,"default");
   }
 
   @Override
   protected void onResume(){
     super.onResume();
-    presenter.setSortedMethod(this,"default");
+    presenter.setFirstScreen();
+//    presenter.setSortedMethod(this,"default");
   }
 
   @Override
@@ -235,64 +240,76 @@ public class MainCardsActivity extends AppCompatActivity implements
   private void goToSettingsActivity(){
     Intent intent = new Intent(this, SettingsActivity.class);
     startActivity(intent);
+    MainCardsActivity.this.finish();
   }
 
   private void goToRegisterActivity(){
     Intent intent = new Intent(this, RegisterActivity.class);
     startActivity(intent);
+    MainCardsActivity.this.finish();
   }
 
   private void goToLogInActivity(){
     Intent intent = new Intent(this, LogInActivity.class);
     startActivity(intent);
+    MainCardsActivity.this.finish();
   }
 
   private void goToCategorySearchActivity() {
     Intent intent = new Intent(this, CategorySearchActivity.class);
     intent.putExtra("isLogged", isLogged);
     startActivity(intent);
+    MainCardsActivity.this.finish();
   }
 
   private void goToAddRecipeActivity() {
     Intent intent = new Intent(this, AddRecipeActivity.class);
     startActivity(intent);
+    MainCardsActivity.this.finish();
   }
 
   private void goToTimerActivity() {
     Intent intent = new Intent(this, TimerActivity.class);
     startActivity(intent);
+    MainCardsActivity.this.finish();
   }
 
   private void goToUserProfileActivity() {
     Intent intent = new Intent(this, UserProfileActivity.class);
     startActivity(intent);
+    MainCardsActivity.this.finish();
   }
 
   private void goToMyRecipe(){
     presenter.setSortedMethod(this,"myRecipe");
     presenter.setSortedCards();
+    MainCardsActivity.this.finish();
   }
 
   private void goToFavourite(){
     presenter.setSortedMethod(this,"favorite");
     presenter.setSortedCards();
+    MainCardsActivity.this.finish();
   }
 
   private void goToAboutApplicationActivity(){
     Intent intent = new Intent(this, AboutApplicationActivity.class);
     intent.putExtra("isLogged", isLogged);
     startActivity(intent);
+    MainCardsActivity.this.finish();
   }
 
   private void goToLicensesActivity(){
     Intent intent = new Intent(this, LicensesActivity.class);
     intent.putExtra("isLogged", isLogged);
     startActivity(intent);
+    MainCardsActivity.this.finish();
   }
 
   private void goToLogOutActivity(){
     Intent intent = new Intent(this, LogOutActivity.class);
     startActivity(intent);
+    MainCardsActivity.this.finish();
   }
 
   @SuppressLint("CheckResult")

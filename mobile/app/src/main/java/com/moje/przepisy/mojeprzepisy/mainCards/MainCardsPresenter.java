@@ -68,6 +68,7 @@ public class MainCardsPresenter implements MainCardsContract.Presenter,
     cardsView.setDrawerLayoutListener();
     cardsView.setNavigationViewListener(cardsView.getIsLoggedStatus());
     cardsView.setFloatingActionButton(cardsView.getIsLoggedStatus());
+    cardsView.setFABListener();
   }
 
   @Override
@@ -90,8 +91,12 @@ public class MainCardsPresenter implements MainCardsContract.Presenter,
   @Override
   public void setRecipesList(List<OneRecipeCard> recipesList) {
     if(cardsView != null){
-      cardsView.setErrorMessage("");
-      cardsView.setRecyclerView(recipesList);
+      if(!recipesList.isEmpty()){
+        cardsView.setErrorMessage("");
+        cardsView.setRecyclerView(recipesList);
+      }else{
+        cardsView.setErrorMessage("Brak przepisów do wyświetlenia!");
+      }
     }
   }
 

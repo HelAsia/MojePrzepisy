@@ -35,6 +35,7 @@ public class WelcomePresenter implements WelcomeContract.Presenter, WelcomeRepos
   public void onLogged() {
     if(welcomeView != null){
       welcomeView.navigateToMainRegisteredActivity();
+      welcomeView.setNotificationSettings(getNotificationSetting());
     }
   }
 
@@ -50,5 +51,10 @@ public class WelcomePresenter implements WelcomeContract.Presenter, WelcomeRepos
     SharedPreferences.Editor userEditor = PreferenceManager.getDefaultSharedPreferences(welcomeView.getContext()).edit();
     userEditor.remove(Constant.PREF_USER_ID);
     userEditor.apply();
+  }
+
+  private boolean getNotificationSetting(){
+    return PreferenceManager.getDefaultSharedPreferences(welcomeView.getContext())
+            .getBoolean(Constant.PREF_NOTIFICATION, false);
   }
 }
