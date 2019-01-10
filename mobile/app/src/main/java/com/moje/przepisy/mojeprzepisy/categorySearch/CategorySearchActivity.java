@@ -7,8 +7,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
+
 import com.moje.przepisy.mojeprzepisy.R;
 import com.moje.przepisy.mojeprzepisy.mainCards.MainCardsActivity;
+import com.moje.przepisy.mojeprzepisy.userProfile.UserProfileActivity;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -19,6 +23,17 @@ import butterknife.ButterKnife;
 public class CategorySearchActivity extends AppCompatActivity {
   @BindView(R.id.toolbar_category_name) Toolbar toolbar;
   @BindView(R.id.addCategoryNamesRecyclerView) RecyclerView recyclerView;
+  private boolean isLogged = false;
+
+  public boolean getIsLogged() {
+    return isLogged;
+  }
+
+  public void setLogged() {
+    if(getIntent().getExtras() != null){
+      isLogged = getIntent().getExtras().getBoolean("isLogged");
+    }
+  }
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +43,7 @@ public class CategorySearchActivity extends AppCompatActivity {
 
     setToolbar();
     setCategoryList(getCategoryNameList());
+    setLogged();
   }
 
   private List<String> getCategoryNameList(){
@@ -61,7 +77,19 @@ public class CategorySearchActivity extends AppCompatActivity {
     }
   }
 
-  public Boolean getIsLogged() {
-    return getIntent().getExtras().getBoolean("isLogged");
+  public boolean onOptionsItemSelected(MenuItem item){
+    Intent intent = new Intent(this, MainCardsActivity.class);
+    intent.putExtra("isLogged", getIsLogged());
+    startActivity(intent);
+    CategorySearchActivity.this.finish();
+    return true;
+  }
+
+  @Override
+  public void onBackPressed() {
+    Intent intent = new Intent(this, MainCardsActivity.class);
+    intent.putExtra("isLogged", getIsLogged());
+    startActivity(intent);
+    CategorySearchActivity.this.finish();
   }
 }

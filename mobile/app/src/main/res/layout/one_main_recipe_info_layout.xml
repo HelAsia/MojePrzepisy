@@ -32,18 +32,18 @@
 
           <ImageView
               android:id="@+id/imageView3"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
+              android:layout_width="20dp"
+              android:layout_height="20dp"
               android:layout_weight="0.5"
               card_view:srcCompat="@mipmap/ic_local_offer_black_18dp" />
 
-          <TextView
-              android:id="@+id/recipeCategoryTextView"
-              android:layout_width="wrap_content"
-              android:layout_height="match_parent"
-              android:layout_weight="0.5"
-              android:gravity="center"
-              android:text="TextView" />
+        <TextView
+            android:id="@+id/recipeCategoryTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
+            android:gravity="center"
+            android:text="TextView" />
       </LinearLayout>
 
       <ImageView

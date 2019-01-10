@@ -23,9 +23,16 @@ public class UserProfilePresenter implements UserProfileContract.Presenter, User
   private UserRepository userRepository;
   private BitmapConverter converter = new BitmapConverter();
 
-  public UserProfilePresenter(UserProfileContract.View userView, UserRepository userRepository) {
+  UserProfilePresenter(UserProfileContract.View userView, UserRepository userRepository) {
     this.userView = userView;
     this.userRepository = userRepository;
+  }
+
+  @Override
+  public void setFirstScreen() {
+    getUserData();
+    userView.setOnClickListeners();
+    userView.setToolbar();
   }
 
   @Override
@@ -34,18 +41,24 @@ public class UserProfilePresenter implements UserProfileContract.Presenter, User
   }
 
   @Override
-  public void sendEditDataToServer(String columnName, EditText columnValueEditText) {
-    String dataToChange = columnValueEditText.getText().toString();
-    if(columnValueEditText == userView.getEmailEditText()){
-      if(onValidateEmailError(dataToChange)){
-        userRepository.editUser(columnName, dataToChange, this);
-      }
-    }else if(columnValueEditText == userView.getPasswordEditText()){
-      if(onPasswordError() && onValidatePasswordError(dataToChange)){
-        userRepository.editUser(columnName, dataToChange, this);
-      }
-    }else {
-      userRepository.editUser(columnName, dataToChange, this);
+  public void sendEditDataToServer(String columnName) {
+    switch (columnName) {
+      case "email":
+        if (!onValidateEmailError(userView.getEmail())) {
+          userRepository.editUser(columnName, userView.getEmail(), this);
+        }
+        break;
+      case "user_password":
+        if (!onPasswordError() && !onValidatePasswordError(userView.getPassword())) {
+          userRepository.editUser(columnName, userView.getLastName(), this);
+        }
+        break;
+      case "first_name":
+        userRepository.editUser(columnName, userView.getName(), this);
+        break;
+      case "last_name":
+        userRepository.editUser(columnName, userView.getPassword(), this);
+        break;
     }
   }
 
@@ -59,77 +72,75 @@ public class UserProfilePresenter implements UserProfileContract.Presenter, User
 
   @Override
   public void showLoginError() {
-    userView.getErrorMessageTextView().setText(userView.getContext().getResources()
-        .getString(R.string.user_profile_login_error));
-
+    String message = userView.getContext().getResources()
+            .getString(R.string.user_profile_login_error);
+    userView.setErrorMessageTextView(message);
   }
 
   @Override
   public void showPasswordError() {
-    userView.getErrorMessageTextView().setText(userView.getContext().getResources()
-        .getString(R.string.user_profile_password_error));
+    String message = userView.getContext().getResources()
+            .getString(R.string.user_profile_password_error);
+    userView.setErrorMessageTextView(message);
   }
 
   @Override
   public void showValidatePasswordError() {
-    userView.getErrorMessageTextView().setText(userView.getContext().getResources()
-        .getString(R.string.user_profile_validate_password_error));
+    String message = userView.getContext().getResources()
+            .getString(R.string.user_profile_validate_password_error);
+    userView.setErrorMessageTextView(message);
   }
 
   @Override
   public void showValidateEmailError() {
-    userView.getErrorMessageTextView().setText(userView.getContext().getResources()
-        .getString(R.string.user_profile_validate_email_error));
+    String message = userView.getContext().getResources()
+            .getString(R.string.user_profile_validate_email_error);
+    userView.setErrorMessageTextView(message);
   }
-
-  @Override
-  public void showRepeatPassword(LinearLayout layout) {
-    userView.getEditRepeatPasswordLinearLayout().setVisibility(View.VISIBLE);
-  }
-
 
   @Override
   public void onError() {
-    Toast.makeText(userView.getContext(), "Błąd pobierania danych użytkownika!", Toast.LENGTH_SHORT)
-        .show();
+    String message = "Błąd pobierania danych użytkownika!";
+    userView.setToastMessage(message);
   }
 
   @Override
   public void setUserValue(User user) {
-    userView.getLoginTextView().setText(user.getLogin());
-    userView.getNameEditText().setText(user.getFirstName());
-    userView.getLastNameEditText().setText(user.getLastName());
-    userView.getEmailEditText().setText(user.getEmail());
-    userView.getPasswordEditText().setText(user.getPassword());
-    userView.getRepeatPasswordEditText().setText(user.getPassword());
+    userView.setLoginTextView(user.getLogin());
+    userView.setNameEditText(user.getFirstName());
+    userView.setLastNameEditText(user.getLastName());
+    userView.setEmailEditText(user.getEmail());
+    userView.setPasswordEditText(user.getPassword());
+    userView.setRepeatPasswordEditText(user.getPassword());
     if(user.getPhotoId() != 0){
-      Picasso.get().load(BASE_URL + "recipe/photo/" + user.getPhotoId()).into(userView.getMainUserPhotoImageView());
+      String path = BASE_URL + "recipe/photo/" + user.getPhotoId();
+      userView.setMainUserPhotoImageView(path);
     }
   }
 
   @Override
   public void onEditAndSendDataError() {
-    Toast.makeText(userView.getContext(), "Błąd podczas wysyłąnia danych użytkownika!", Toast.LENGTH_SHORT)
-        .show();
+    String message = "Błąd podczas wysyłąnia danych użytkownika!";
+    userView.setToastMessage(message);
   }
 
   @Override
   public void onSuccess() {
-    Toast.makeText(userView.getContext(), "Zapisano zmiany w danych użytkownika!", Toast.LENGTH_SHORT)
-        .show();
+    String message = "Zapisano zmiany w danych użytkownika!";
+    userView.setToastMessage(message);
   }
 
   @Override
   public boolean onPasswordError() {
     if(userView != null) {
-      if(!userView.getPasswordEditText().getText().toString().equals(userView.getRepeatPasswordEditText().getText().toString())){
+      if(!userView.getPassword().equals(userView.getRepeatPassword())){
         showPasswordError();
-        return false;
-      }else {
         return true;
+      }else {
+        return false;
       }
     }
-    return false;
+    return true;
   }
 
   @Override
@@ -142,12 +153,12 @@ public class UserProfilePresenter implements UserProfileContract.Presenter, User
 
       if(!matcher.matches()){
         showValidatePasswordError();
-        return false;
-      }else {
         return true;
+      }else {
+        return false;
       }
     }
-    return false;
+    return true;
   }
 
   @Override
@@ -160,23 +171,23 @@ public class UserProfilePresenter implements UserProfileContract.Presenter, User
 
       if(!matcher.matches()){
         showValidateEmailError();
-        return false;
-      }else {
         return true;
+      }else {
+        return false;
       }
     }
-    return false;
+    return true;
   }
 
   @Override
   public void onEditAndSendPhotoError() {
-    Toast.makeText(userView.getContext(), "Błąd podczas wysyłania zdjęcia użytkownika!", Toast.LENGTH_SHORT)
-        .show();
+    String message = "Błąd podczas wysyłania zdjęcia użytkownika!";
+    userView.setToastMessage(message);
   }
 
   @Override
   public void onPhotoSuccess() {
-    Toast.makeText(userView.getContext(), "Zapisano zmiany w zdjęciu użytkownika!", Toast.LENGTH_SHORT)
-        .show();
+    String message = "Zapisano zmiany w zdjęciu użytkownika!";
+    userView.setToastMessage(message);
   }
 }

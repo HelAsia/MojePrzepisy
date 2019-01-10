@@ -5,7 +5,6 @@ import android.Manifest.permission;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -21,10 +20,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.content.res.FontResourcesParserCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -37,6 +34,7 @@ import com.moje.przepisy.mojeprzepisy.R;
 import com.moje.przepisy.mojeprzepisy.addRecipe.addIngredients.AddIngredientsActivity;
 import com.moje.przepisy.mojeprzepisy.mainCards.MainCardsActivity;
 import com.moje.przepisy.mojeprzepisy.utils.BitmapConverter;
+import com.moje.przepisy.mojeprzepisy.utils.Constant;
 import com.moje.przepisy.mojeprzepisy.utils.TimeSetDialog;
 import com.moje.przepisy.mojeprzepisy.utils.URLDialog;
 
@@ -46,16 +44,13 @@ public class AddRecipeActivity extends AppCompatActivity implements AddRecipeCon
   @BindView(R.id.recipeNameEditText) EditText recipeNameEditText;
   @BindView(R.id.mainPhotoImageView) ImageView mainPhotoImageView;
   @BindView(R.id.categoryChooseSpinner) Spinner categoryChooseSpinner;
-  @BindView(R.id.preparedTimeEditText) TextView preparedTimeEditText;
-  @BindView(R.id.cookTimeEditText) TextView cookTimeEditText;
-  @BindView(R.id.bakeTimeEditText) TextView bakeTimeEditText;
+  @BindView(R.id.preparedTimeTextView) TextView preparedTimeEditText;
+  @BindView(R.id.cookTimeTextView) TextView cookTimeEditText;
+  @BindView(R.id.bakeTimeTextView) TextView bakeTimeEditText;
   @BindView(R.id.galleryImageView) ImageView galleryImageView;
   @BindView(R.id.cameraImageView) ImageView cameraImageView;
   @BindView(R.id.URLImageView) ImageView URLImageView;
   @BindView(R.id.toolbar_add_recipe) Toolbar recipeToolbar;
-  private static final int MY_CAMERA_PERMISSION_CODE = 100;
-  private static final int CAMERA_REQUEST = 1888;
-  private static int GALLERY_REQUEST = 1;
   private AddRecipeContract.Presenter presenter;
   private TimeSetDialog timeSetDialog = new TimeSetDialog();
   private URLDialog urlDialog = new URLDialog();
@@ -161,29 +156,29 @@ public class AddRecipeActivity extends AppCompatActivity implements AddRecipeCon
   @Override
   public void loadImageFromCamera() {
     if(ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)!= PackageManager.PERMISSION_GRANTED){
-      requestPermissions(new String[]{Manifest.permission.CAMERA}, MY_CAMERA_PERMISSION_CODE);
+      requestPermissions(new String[]{Manifest.permission.CAMERA}, Constant.CAMERA_REQUEST);
     }else {
       Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-      startActivityForResult(cameraIntent, CAMERA_REQUEST);
+      startActivityForResult(cameraIntent, Constant.CAMERA_REQUEST);
     }
   }
 
   @Override
   public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
     super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-    if (requestCode == MY_CAMERA_PERMISSION_CODE) {
+    if (requestCode == Constant.CAMERA_REQUEST) {
       if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
         Intent cameraIntent = new
             Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(cameraIntent, CAMERA_REQUEST);
+        startActivityForResult(cameraIntent, Constant.CAMERA_REQUEST);
       } else {
         Toast.makeText(this, "Brak pozwolenia na użycie aparatu.", Toast.LENGTH_LONG).show();
       }
-    }else if(requestCode == GALLERY_REQUEST){
+    }else if(requestCode == Constant.GALLERY_REQUEST){
       if (grantResults[0] == PackageManager.PERMISSION_GRANTED){
         Intent galleryIntent = new Intent(Intent.ACTION_PICK,
             Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(galleryIntent, GALLERY_REQUEST);
+        startActivityForResult(galleryIntent, Constant.GALLERY_REQUEST);
       }else {
         Toast.makeText(this, "Brak pozwolenia na użycie galerii.", Toast.LENGTH_LONG).show();
       }
@@ -194,11 +189,11 @@ public class AddRecipeActivity extends AppCompatActivity implements AddRecipeCon
   @Override
   public void loadImageFromGallery() {
     if(ContextCompat.checkSelfPermission(this, permission.READ_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED){
-      requestPermissions(new String[]{permission.READ_EXTERNAL_STORAGE}, GALLERY_REQUEST);
+      requestPermissions(new String[]{permission.READ_EXTERNAL_STORAGE}, Constant.GALLERY_REQUEST);
     }else {
       Intent galleryIntent = new Intent(Intent.ACTION_PICK,
           Media.EXTERNAL_CONTENT_URI);
-      startActivityForResult(galleryIntent, GALLERY_REQUEST);
+      startActivityForResult(galleryIntent, Constant.GALLERY_REQUEST);
     }
   }
 
@@ -206,7 +201,7 @@ public class AddRecipeActivity extends AppCompatActivity implements AddRecipeCon
   public void onActivityResult(int requestCode, int resultCode, Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
     try{
-      if(requestCode == GALLERY_REQUEST && resultCode == RESULT_OK
+      if(requestCode == Constant.GALLERY_REQUEST && resultCode == RESULT_OK
           && null != data){
         Uri selectedImage = data.getData();
         String[] filePathColumn = {MediaStore.Images.Media.DATA};
@@ -221,7 +216,7 @@ public class AddRecipeActivity extends AppCompatActivity implements AddRecipeCon
         cursor.close();
         mainPhotoImageView.setImageBitmap(BitmapFactory.decodeFile(imgDecodableString));
 
-      }else if(requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
+      }else if(requestCode == Constant.CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
         Bitmap photo = (Bitmap) data.getExtras().get("data");
         mainPhotoImageView.setImageBitmap(photo);
       }else {

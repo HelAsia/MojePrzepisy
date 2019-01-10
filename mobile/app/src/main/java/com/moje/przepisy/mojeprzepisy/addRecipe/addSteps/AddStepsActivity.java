@@ -30,6 +30,8 @@ import com.moje.przepisy.mojeprzepisy.R;
 import com.moje.przepisy.mojeprzepisy.addRecipe.addIngredients.AddIngredientsActivity;
 import com.moje.przepisy.mojeprzepisy.addRecipe.displayRecipe.DisplayRecipeActivity;
 import com.moje.przepisy.mojeprzepisy.data.model.Step;
+import com.moje.przepisy.mojeprzepisy.utils.Constant;
+
 import java.util.List;
 
 public class AddStepsActivity extends AppCompatActivity implements AddStepContract.View {
@@ -38,9 +40,6 @@ public class AddStepsActivity extends AppCompatActivity implements AddStepContra
   @BindView(R.id.nextActionFab) FloatingActionButton nextActionFab;
   @BindView(R.id.addStepsRecyclerView) RecyclerView recyclerView;
   @BindView(R.id.toolbar_add_step) Toolbar toolbar;
-  private static final int MY_CAMERA_PERMISSION_CODE = 100;
-  private static final int CAMERA_REQUEST = 1888;
-  private static int GALLERY_REQUEST = 1;
 
   private AddStepContract.Presenter presenter;
   private String imgDecodableString;
@@ -92,29 +91,29 @@ public class AddStepsActivity extends AppCompatActivity implements AddStepContra
   @RequiresApi(api = VERSION_CODES.M)
   public void loadImageFromCamera() {
     if(ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA)!= PackageManager.PERMISSION_GRANTED){
-      requestPermissions(new String[]{Manifest.permission.CAMERA}, MY_CAMERA_PERMISSION_CODE);
+      requestPermissions(new String[]{Manifest.permission.CAMERA}, Constant.CAMERA_REQUEST);
     }else {
       Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-      startActivityForResult(cameraIntent, CAMERA_REQUEST);
+      startActivityForResult(cameraIntent, Constant.CAMERA_REQUEST);
     }
   }
 
   @Override
   public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
     super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-    if (requestCode == MY_CAMERA_PERMISSION_CODE) {
+    if (requestCode == Constant.CAMERA_REQUEST) {
       if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
         Intent cameraIntent = new
             Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(cameraIntent, CAMERA_REQUEST);
+        startActivityForResult(cameraIntent, Constant.CAMERA_REQUEST);
       } else {
         Toast.makeText(this, "Brak pozwolenia na użycie aparatu.", Toast.LENGTH_LONG).show();
       }
-    }else if(requestCode == GALLERY_REQUEST){
+    }else if(requestCode == Constant.GALLERY_REQUEST){
       if (grantResults[0] == PackageManager.PERMISSION_GRANTED){
         Intent galleryIntent = new Intent(Intent.ACTION_PICK,
             Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(galleryIntent, GALLERY_REQUEST);
+        startActivityForResult(galleryIntent, Constant.GALLERY_REQUEST);
       }else {
         Toast.makeText(this, "Brak pozwolenia na użycie galerii.", Toast.LENGTH_LONG).show();
       }
@@ -125,11 +124,11 @@ public class AddStepsActivity extends AppCompatActivity implements AddStepContra
   @Override
   public void loadImageFromGallery() {
     if(ContextCompat.checkSelfPermission(context, permission.READ_CONTACTS)!= PackageManager.PERMISSION_GRANTED){
-      requestPermissions(new String[]{permission.READ_EXTERNAL_STORAGE}, GALLERY_REQUEST);
+      requestPermissions(new String[]{permission.READ_EXTERNAL_STORAGE}, Constant.GALLERY_REQUEST);
     }else {
       Intent galleryIntent = new Intent(Intent.ACTION_PICK,
           Media.EXTERNAL_CONTENT_URI);
-      startActivityForResult(galleryIntent, GALLERY_REQUEST);
+      startActivityForResult(galleryIntent, Constant.GALLERY_REQUEST);
     }
   }
 
@@ -137,7 +136,7 @@ public class AddStepsActivity extends AppCompatActivity implements AddStepContra
   public void onActivityResult(int requestCode, int resultCode, Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
     try{
-      if(requestCode == GALLERY_REQUEST && resultCode == Activity.RESULT_OK
+      if(requestCode == Constant.GALLERY_REQUEST && resultCode == Activity.RESULT_OK
           && null != data){
         Uri selectedImage = data.getData();
         String[] filePathColumn = {MediaStore.Images.Media.DATA};
@@ -152,7 +151,7 @@ public class AddStepsActivity extends AppCompatActivity implements AddStepContra
         cursor.close();
         picture = BitmapFactory.decodeFile(imgDecodableString);
 
-      }else if(requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
+      }else if(requestCode == Constant.CAMERA_REQUEST && resultCode == RESULT_OK) {
         picture = (Bitmap) data.getExtras().get("data");
 
       }else {
