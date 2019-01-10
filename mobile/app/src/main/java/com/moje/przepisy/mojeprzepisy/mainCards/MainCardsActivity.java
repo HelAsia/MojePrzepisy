@@ -283,13 +283,11 @@ public class MainCardsActivity extends AppCompatActivity implements
   private void goToMyRecipe(){
     presenter.setSortedMethod(this,"myRecipe");
     presenter.setSortedCards();
-    MainCardsActivity.this.finish();
   }
 
   private void goToFavourite(){
     presenter.setSortedMethod(this,"favorite");
     presenter.setSortedCards();
-    MainCardsActivity.this.finish();
   }
 
   private void goToAboutApplicationActivity(){

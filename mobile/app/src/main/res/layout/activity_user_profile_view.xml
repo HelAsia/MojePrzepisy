@@ -33,60 +33,89 @@
 
     <RelativeLayout
       android:layout_width="match_parent"
-      android:layout_height="match_parent">
+      android:layout_height="wrap_content">
+
+      <LinearLayout
+          android:id="@+id/editLoginLinearLayout"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/LoginDataNameTextView"
+            style="@style/UserInformation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:gravity="center"
+            android:text="@string/user_login" />
+
+        <TextView
+            android:id="@+id/editLoginTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:textColor="@color/primary_text"
+            android:textSize="18sp" />
+
+      </LinearLayout>
 
       <LinearLayout
         android:id="@+id/loadPhotoLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+          android:layout_below="@+id/editLoginLinearLayout"
         android:orientation="vertical">
-        <ImageView
-          android:id="@+id/mainUserPhotoImageView"
-          android:layout_width="200dp"
-          android:layout_height="200dp"
-          android:layout_gravity="center"
-          app:srcCompat="@android:drawable/ic_menu_gallery"/>
-        <ImageView
-            android:id="@+id/saveUserPictureImageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_gravity="end"
-            app:srcCompat="@android:drawable/ic_menu_save"/>
-        <TextView
-          android:id="@+id/loadPictureTextView"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:gravity="center"
-          android:text="@string/load_photo"
-          android:textColor="@color/primary_text"
-          android:textSize="@dimen/edit_text_size"/>
+
         <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="60dp"
-          android:orientation="horizontal">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
           <ImageView
-            android:id="@+id/galleryImageView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:src="@mipmap/ic_image"/>
+              android:id="@+id/mainUserPhotoImageView"
+              android:layout_width="200dp"
+              android:layout_height="200dp"
+              android:layout_gravity="center"
+              android:layout_weight="1"
+              app:srcCompat="@android:drawable/ic_menu_gallery" />
 
           <ImageView
-            android:id="@+id/cameraImageView"
+              android:id="@+id/saveUserPictureImageView"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_gravity="end"
+              android:layout_marginEnd="20dp"
+              android:layout_marginRight="20dp"
+              app:srcCompat="@android:drawable/ic_menu_save" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:src="@mipmap/ic_camera_alt"/>
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
           <ImageView
-            android:id="@+id/URLImageView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:src="@mipmap/ic_find_in_page"/>
+              android:id="@+id/galleryImageView"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_weight="1"
+              android:src="@mipmap/ic_image" />
+
+          <ImageView
+              android:id="@+id/cameraImageView"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_weight="1"
+              android:src="@mipmap/ic_camera_alt" />
+
+          <ImageView
+              android:id="@+id/URLImageView"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_weight="1"
+              android:src="@mipmap/ic_find_in_page" />
         </LinearLayout>
         <TextView
           android:id="@+id/anyErrorMessageTextView"
@@ -97,46 +126,10 @@
       </LinearLayout>
 
       <LinearLayout
-        android:id="@+id/editLoginLinearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/loadPhotoLayout">
-
-        <TextView
-          android:id="@+id/LoginDataNameTextView"
-          android:layout_width="wrap_content"
-          android:layout_height="match_parent"
-          android:layout_weight="2"
-          android:layout_marginBottom="4dp"
-          android:layout_marginLeft="4dp"
-          android:ems="10"
-          android:gravity="center"
-          android:text="@string/user_login"
-          style="@style/UserInformation"/>
-
-        <TextView
-          android:id="@+id/editLoginTextView"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:ems="10"
-          android:layout_marginBottom="4dp"
-          android:gravity="center"
-          android:textColor="@color/primary_text"
-          android:textSize="18sp"/>
-
-        <ImageView
-            android:id="@+id/saveLoginImageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="invisible"
-            app:srcCompat="@android:drawable/ic_menu_save"/>
-      </LinearLayout>
-
-      <LinearLayout
         android:id="@+id/editNameLinearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/editLoginLinearLayout">
+        android:layout_below="@+id/loadPhotoLayout">
 
         <TextView
           android:id="@+id/NameDataNameTextView"
