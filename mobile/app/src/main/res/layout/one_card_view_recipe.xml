@@ -23,7 +23,6 @@
     android:layout_margin="10dp"
     android:background="@color/white"
     android:orientation="vertical"
-    android:transitionName="layout_transition"
     android:weightSum="1">
 
     <LinearLayout
@@ -49,60 +48,61 @@
         android:textColor="@color/black"
         android:textSize="15sp"/>
     </LinearLayout>
+
     <ImageView
-      android:id="@+id/image_view_photo_recipe"
-      android:layout_width="match_parent"
-      android:layout_height="200dp"
-      android:layout_below="@+id/card_name_layout"
-      android:layout_gravity="center"
-      android:src="@mipmap/ic_image"/>
+        android:id="@+id/image_view_photo_recipe"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_below="@+id/card_name_layout"
+        android:layout_alignParentStart="true"
+        android:layout_gravity="center"
+        android:layout_marginTop="0dp"
+        android:src="@mipmap/ic_image" />
 
     <LinearLayout
-      android:id="@+id/starAndHeartLayout"
-      android:layout_width="match_parent"
-      android:layout_height="30dp"
-      android:layout_below="@+id/image_view_photo_recipe"
-      android:layout_gravity="center"
-      android:background="@color/white">
+        android:id="@+id/starAndHeartLayout"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/image_view_photo_recipe"
+        android:background="@color/white">
+
+      <TextView
+          android:id="@+id/text_view_star_count"
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:layout_marginEnd="1dp"
+          android:layout_marginRight="1dp"
+          android:text="5"
+          android:textSize="18sp" />
 
       <ImageView
-        android:id="@+id/starImageView"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_weight="0.25"
-        card_view:srcCompat="@mipmap/ic_star"/>
+          android:id="@+id/starImageView"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginEnd="10dp"
+          android:layout_marginRight="10dp"
+          card_view:srcCompat="@mipmap/ic_star" />
+
       <TextView
-        android:id="@+id/text_view_star_count"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_weight="0.25"
-        android:gravity="center"
-        android:text="5"
-        android:textSize="18sp"/>
-      <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_weight="0.25"
-        />
+          android:id="@+id/text_view_favorites_count"
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:layout_marginEnd="1dp"
+          android:layout_marginRight="1dp"
+          android:text="5"
+          android:textColor="@color/black"
+          android:textSize="18sp" />
+
       <ImageView
-        android:id="@+id/heart_image_view"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_weight="0.25"
-        android:layout_gravity="center"
-        android:scaleX="0.5"
-        android:scaleY="0.5"
-        android:src="@drawable/ic_favorite_border"/>
-      <TextView
-        android:id="@+id/text_view_favorites_count"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_weight="0.25"
-        android:gravity="center"
-        android:text="5"
-        android:textColor="@color/black"
-        android:textSize="18sp"/>
+          android:id="@+id/heart_image_view"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginEnd="10dp"
+          android:layout_marginRight="10dp"
+          android:src="@drawable/ic_favorite_border" />
+
     </LinearLayout>
     <RatingBar
       android:id="@+id/ratingBarStars"

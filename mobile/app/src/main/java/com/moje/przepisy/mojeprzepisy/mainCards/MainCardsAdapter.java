@@ -44,7 +44,7 @@ public class MainCardsAdapter extends RecyclerView.Adapter<MainCardsAdapter.View
     setHasStableIds(true);
   }
 
-  public void setHeartOnShareClickedListener(OnShareHeartClickedListener callbackHeart) {
+  void setHeartOnShareClickedListener(OnShareHeartClickedListener callbackHeart) {
     this.callbackHeart = callbackHeart;
   }
 
@@ -52,7 +52,7 @@ public class MainCardsAdapter extends RecyclerView.Adapter<MainCardsAdapter.View
     void shareHeartClicked(int recipeId, int favorite, int position);
   }
 
-  public void setStarsOnShareClickedListener(OnShareStarsClickedListener callbackStars) {
+  void setStarsOnShareClickedListener(OnShareStarsClickedListener callbackStars) {
     this.callbackStars = callbackStars;
   }
 
@@ -60,7 +60,7 @@ public class MainCardsAdapter extends RecyclerView.Adapter<MainCardsAdapter.View
     void shareStarsClicked(int recipeId, int starRate, int position);
   }
 
-  public void setCallbackRecipeIdOnShareClickedListener(OnShareRecipeIdClickedListener callbackRecipeId) {
+  void setCallbackRecipeIdOnShareClickedListener(OnShareRecipeIdClickedListener callbackRecipeId) {
     this.callbackRecipeId = callbackRecipeId;
   }
 
@@ -107,8 +107,8 @@ public class MainCardsAdapter extends RecyclerView.Adapter<MainCardsAdapter.View
 
       viewHolder.heartImageView.setOnClickListener(v -> {
           int recipeId = (int)getItemId(position);
-          Drawable heartBorder = context.getResources().getDrawable(R.mipmap.ic_favorite_border);
-          Drawable heartSolid = context.getResources().getDrawable(R.mipmap.ic_favorite);
+          Drawable heartBorder = context.getResources().getDrawable(R.drawable.ic_favorite_border);
+          Drawable heartSolid = context.getResources().getDrawable(R.drawable.ic_favorite);
           Boolean favorite = cardsList.get(position).getFavorite();
 
           if(!favorite){
@@ -127,7 +127,7 @@ public class MainCardsAdapter extends RecyclerView.Adapter<MainCardsAdapter.View
       return cardsList.size();
   }
 
-  public void updateFavoriteOnCard(OneRecipeCard updatedCard, int list_position) {
+  void updateFavoriteOnCard(OneRecipeCard updatedCard, int list_position) {
     cardsList.get(list_position).setFavorite(updatedCard.getFavorite());
     cardsList.get(list_position).setFavoritesCount(updatedCard.getFavoritesCount());
     cardsList.get(list_position).setStarsCount(updatedCard.getStarsCount());
@@ -135,7 +135,7 @@ public class MainCardsAdapter extends RecyclerView.Adapter<MainCardsAdapter.View
   }
 
   @RequiresApi(api = VERSION_CODES.LOLLIPOP)
-  public void animateCircularReveal(View view) {
+  private void animateCircularReveal(View view) {
     int centerX = 0;
     int centerY = 0;
     int startRadius = 0;
@@ -190,8 +190,8 @@ public class MainCardsAdapter extends RecyclerView.Adapter<MainCardsAdapter.View
       ratingBarStars.setRating(starsCount);
       favoritesCountTextView.setText(favoritesCountString);
 
-      Drawable heartBorder = context.getResources().getDrawable(R.mipmap.ic_favorite_border);
-      Drawable heartSolid = context.getResources().getDrawable(R.mipmap.ic_favorite);
+      Drawable heartBorder = context.getResources().getDrawable(R.drawable.ic_favorite_border);
+      Drawable heartSolid = context.getResources().getDrawable(R.drawable.ic_favorite);
 
       if(favourite){
         heartImageView.setImageDrawable(heartSolid);
