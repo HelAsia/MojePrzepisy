@@ -8,15 +8,14 @@ public interface MainDetailsDisplayContract {
   interface View{
     Context getContext();
     MainDetailsFragmentPagerAdapter getMainDetailsFragmentPagerAdapter();
-    ViewPager getViewPager();
-    TabLayout getTabLayout();
-    int getRecipeId();
-    Boolean getIsLogged();
+    void setToolbar();
+    void setViewPager();
+    void setTabLayout();
+    void setRecipeId();
+    void setIsLogged();
   }
 
   interface Presenter{
-    void setViewPager();
-    void setTabLayout();
+    void setFirstScreen();
   }
-
 }

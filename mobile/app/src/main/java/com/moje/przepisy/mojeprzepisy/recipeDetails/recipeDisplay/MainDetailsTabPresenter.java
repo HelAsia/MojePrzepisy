@@ -8,12 +8,11 @@ public class MainDetailsTabPresenter implements MainDetailsDisplayContract.Prese
   }
 
   @Override
-  public void setViewPager() {
-    mainDetailsTabView.getViewPager().setAdapter(mainDetailsTabView.getMainDetailsFragmentPagerAdapter());
-  }
-
-  @Override
-  public void setTabLayout() {
-    mainDetailsTabView.getTabLayout().setupWithViewPager(mainDetailsTabView.getViewPager());
+  public void setFirstScreen() {
+    mainDetailsTabView.setRecipeId();
+    mainDetailsTabView.setIsLogged();
+    mainDetailsTabView.setToolbar();
+    mainDetailsTabView.setViewPager();
+    mainDetailsTabView.setTabLayout();
   }
 }

@@ -1,68 +1,96 @@
 package com.moje.przepisy.mojeprzepisy.recipeDetails.recipeDisplay;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
+
 import com.moje.przepisy.mojeprzepisy.R;
+import com.moje.przepisy.mojeprzepisy.categorySearch.CategorySearchActivity;
+import com.moje.przepisy.mojeprzepisy.mainCards.MainCardsActivity;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class MainDetailsTabActivity extends AppCompatActivity implements MainDetailsDisplayContract.View {
-  MainDetailsDisplayContract.Presenter presenter;
-  Context context;
-  int recipeId;
-  Boolean isLogged;
+  @BindView(R.id.toolbar_recipe_details_tab) Toolbar toolbar;
+  @BindView(R.id.viewpager) ViewPager viewPager;
+  @BindView(R.id.sliding_tabs) TabLayout tabLayout;
+  private int recipeId;
+  private Boolean isLogged = false;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_recipe_details_tab_view);
-    context = getApplicationContext();
+    ButterKnife.bind(this);
 
-    presenter = new MainDetailsTabPresenter(this);
+    MainDetailsDisplayContract.Presenter presenter = new MainDetailsTabPresenter(this);
 
-    presenter.setViewPager();
-    presenter.setTabLayout();
-    setToolbar();
+    presenter.setFirstScreen();
+  }
+
+  public void setIsLogged() {
+    if(getIntent().getExtras() != null){
+      isLogged = getIntent().getExtras().getBoolean("isLogged");
+    }
+  }
+
+  public void setRecipeId() {
+    if(getIntent().getExtras() != null){
+      recipeId = getIntent().getExtras().getInt("id");
+    }
   }
 
   @Override
   public Context getContext() {
-    return context;
+    return this;
   }
 
   @Override
   public MainDetailsFragmentPagerAdapter getMainDetailsFragmentPagerAdapter() {
     return new
-        MainDetailsFragmentPagerAdapter(this, getSupportFragmentManager(), getRecipeId(), getIsLogged());
+        MainDetailsFragmentPagerAdapter(this, getSupportFragmentManager(),
+            recipeId, isLogged);
   }
 
   @Override
-  public ViewPager getViewPager() {
-    return (ViewPager) findViewById(R.id.viewpager);
+  public void setViewPager() {
+    viewPager.setAdapter(getMainDetailsFragmentPagerAdapter());
   }
 
   @Override
-  public TabLayout getTabLayout() {
-    return (TabLayout) findViewById(R.id.sliding_tabs);
-  }
-
-  @Override
-  public int getRecipeId() {
-    this.recipeId = getIntent().getExtras().getInt("id");
-    return recipeId;
-  }
-
-  @Override
-  public Boolean getIsLogged() {
-    this.isLogged = getIntent().getExtras().getBoolean("isLogged");
-    return isLogged;
+  public void setTabLayout() {
+    tabLayout.setupWithViewPager(viewPager);
   }
 
   public void setToolbar() {
-    Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_recipe_details_tab);
     toolbar.setSubtitle(R.string.user_profile);
-    setSupportActionBar(toolbar);
+    ActionBar actionbar = getSupportActionBar();
+    if(actionbar != null){
+      actionbar.setDisplayHomeAsUpEnabled(true);
+      actionbar.setHomeAsUpIndicator(R.drawable.ic_arrow_back);
+    }
+  }
+
+  public boolean onOptionsItemSelected(MenuItem item){
+    Intent intent = new Intent(this, MainCardsActivity.class);
+    intent.putExtra("isLogged", isLogged);
+    startActivity(intent);
+    MainDetailsTabActivity.this.finish();
+    return true;
+  }
+
+  @Override
+  public void onBackPressed() {
+    Intent intent = new Intent(this, MainCardsActivity.class);
+    intent.putExtra("isLogged", isLogged);
+    startActivity(intent);
+    MainDetailsTabActivity.this.finish();
   }
 }

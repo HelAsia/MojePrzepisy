@@ -25,16 +25,6 @@ public class CategorySearchActivity extends AppCompatActivity {
   @BindView(R.id.addCategoryNamesRecyclerView) RecyclerView recyclerView;
   private boolean isLogged = false;
 
-  public boolean getIsLogged() {
-    return isLogged;
-  }
-
-  public void setLogged() {
-    if(getIntent().getExtras() != null){
-      isLogged = getIntent().getExtras().getBoolean("isLogged");
-    }
-  }
-
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -44,6 +34,12 @@ public class CategorySearchActivity extends AppCompatActivity {
     setToolbar();
     setCategoryList(getCategoryNameList());
     setLogged();
+  }
+
+  public void setLogged() {
+    if(getIntent().getExtras() != null){
+      isLogged = getIntent().getExtras().getBoolean("isLogged");
+    }
   }
 
   private List<String> getCategoryNameList(){
@@ -57,7 +53,7 @@ public class CategorySearchActivity extends AppCompatActivity {
 
     adapter.setCategoryOnShareClickedListener(() -> {
       Intent intent = new Intent(this, MainCardsActivity.class);
-      intent.putExtra("isLogged", getIsLogged());
+      intent.putExtra("isLogged", isLogged);
       startActivity(intent);
       CategorySearchActivity.this.finish();
     });
@@ -79,7 +75,7 @@ public class CategorySearchActivity extends AppCompatActivity {
 
   public boolean onOptionsItemSelected(MenuItem item){
     Intent intent = new Intent(this, MainCardsActivity.class);
-    intent.putExtra("isLogged", getIsLogged());
+    intent.putExtra("isLogged", isLogged);
     startActivity(intent);
     CategorySearchActivity.this.finish();
     return true;
@@ -88,7 +84,7 @@ public class CategorySearchActivity extends AppCompatActivity {
   @Override
   public void onBackPressed() {
     Intent intent = new Intent(this, MainCardsActivity.class);
-    intent.putExtra("isLogged", getIsLogged());
+    intent.putExtra("isLogged", isLogged);
     startActivity(intent);
     CategorySearchActivity.this.finish();
   }
