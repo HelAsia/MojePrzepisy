@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.helper.ItemTouchHelper;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -51,7 +52,10 @@ public class AddIngredientsActivity extends AppCompatActivity implements
 
   @Override
   public void setRecyclerView(List<Ingredient> ingredientList) {
-    AddIngredientsAdapter adapter = new AddIngredientsAdapter( ingredientList);
+    AddIngredientsAdapter adapter = new AddIngredientsAdapter(ingredientList);
+    ItemTouchHelper.Callback callback = new ItemMoveCallback(adapter);
+    ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
+    touchHelper.attachToRecyclerView(addIngredientsRecyclerView);
     addIngredientsRecyclerView.setAdapter(adapter);
     addIngredientsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
   }

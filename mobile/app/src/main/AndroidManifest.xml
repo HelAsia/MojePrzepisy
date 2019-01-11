@@ -47,13 +47,19 @@
         <activity android:name=".userProfile.UserProfileActivity" />
         <activity android:name=".licenses.WebViewActivity" />
         <activity android:name=".aboutApplication.AboutApplicationActivity" />
+        <activity android:name=".setting.SettingsActivity" />
+        <activity android:name=".recipeDetails.commentDetails.commentEdit.CommentEditActivity"/>
 
         <service android:name=".setting.NewRecipeService" />
 
-        <receiver android:name=".setting.RestartServiceBroadcastReceiver" />
+        <receiver android:name=".setting.RestartServiceBroadcastReceiver"
+            android:permission="">
+            <intent-filter>
+                <action android:name="com.moje.przepisy.mojeprzepisy.STOP_SERVICE_INTENT">
+                </action>
+            </intent-filter>
+        </receiver>
 
-        <activity android:name=".setting.SettingsActivity" />
-        <activity android:name=".recipeDetails.commentDetails.commentEdit.CommentEditActivity"></activity>
     </application>
 
 </manifest>

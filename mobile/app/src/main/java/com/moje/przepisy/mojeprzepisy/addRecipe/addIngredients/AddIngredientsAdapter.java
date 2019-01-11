@@ -1,6 +1,8 @@
 package com.moje.przepisy.mojeprzepisy.addRecipe.addIngredients;
 
+import android.graphics.Color;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,9 +18,12 @@ import butterknife.ButterKnife;
 import com.jakewharton.rxbinding.widget.RxTextView;
 import com.moje.przepisy.mojeprzepisy.R;
 import com.moje.przepisy.mojeprzepisy.data.model.Ingredient;
+
+import java.util.Collections;
 import java.util.List;
 
-public class AddIngredientsAdapter extends RecyclerView.Adapter<AddIngredientsAdapter.ViewHolder> {
+public class AddIngredientsAdapter extends RecyclerView.Adapter<AddIngredientsAdapter.ViewHolder>
+                                    implements ItemMoveCallback.ItemTouchHelperContract{
   private List<Ingredient> ingredientList;
 
   AddIngredientsAdapter(List<Ingredient> ingredientList){
@@ -54,7 +59,8 @@ public class AddIngredientsAdapter extends RecyclerView.Adapter<AddIngredientsAd
     RxTextView.textChanges(viewHolder.ingredientNameEditText)
     .subscribe( s -> {
         String ingredientName = s.toString();
-        Ingredient updatedIngredient = new Ingredient(ingredientList.get(position).getQuantity(), ingredientList.get(position).getUnit(), ingredientName);
+        Ingredient updatedIngredient = new Ingredient(ingredientList.get(position).getQuantity(),
+                ingredientList.get(position).getUnit(), ingredientName);
         ingredientList.set(position, updatedIngredient);
     });
 
@@ -84,13 +90,38 @@ public class AddIngredientsAdapter extends RecyclerView.Adapter<AddIngredientsAd
     return ingredientList.get(position).getId();
   }
 
+  @Override
+  public void onRowMoved(int fromPosition, int toPosition) {
+    if (fromPosition < toPosition) {
+      for (int i = fromPosition; i < toPosition; i++) {
+        Collections.swap(ingredientList, i, i + 1);
+      }
+    } else {
+      for (int i = fromPosition; i > toPosition; i--) {
+        Collections.swap(ingredientList, i, i - 1);
+      }
+    }
+    notifyItemMoved(fromPosition, toPosition);
+  }
+
+  @Override
+  public void onRowSelected(ViewHolder myViewHolder) {
+    myViewHolder.ingredientCardView.setBackgroundColor(Color.GRAY);
+  }
+
+  @Override
+  public void onRowClear(ViewHolder myViewHolder) {
+    myViewHolder.ingredientCardView.setBackgroundColor(Color.WHITE);
+  }
+
   public class ViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.ingredientQuantityEditText) EditText ingredientQuantityEditText;
     @BindView(R.id.ingredientUnitSpinner) Spinner ingredientUnitSpinner;
     @BindView(R.id.ingredientNameEditText) EditText ingredientNameEditText;
     @BindView(R.id.deleteImageView) ImageView deleteImageView;
+    @BindView(R.id.ingredient_my_card_view_layout) CardView ingredientCardView;
 
-    ViewHolder(View v) {
+    public ViewHolder(View v) {
       super(v);
       ButterKnife.bind(this, v);
     }

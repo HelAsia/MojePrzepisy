@@ -20,6 +20,8 @@ import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
+import android.view.View;
+
 import com.moje.przepisy.mojeprzepisy.R;
 import com.moje.przepisy.mojeprzepisy.data.repositories.cards.OperationsOnCardRepository;
 import com.moje.przepisy.mojeprzepisy.data.repositories.cards.OperationsOnCardRepositoryInterface;
@@ -81,14 +83,19 @@ public class NewRecipeService extends Service implements
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Intent broadcastIntent = new Intent(this, RestartServiceBroadcastReceiver.class);
 
-        sendBroadcast(broadcastIntent);
+        broadcastIntent();
 
         myThreads.interrupt();
         if(notificationManager != null){
             notificationManager.cancelAll();
         }
+    }
+
+    public void broadcastIntent() {
+        Intent intent = new Intent();
+        intent.setAction("com.moje.przepisy.mojeprzepisy.STOP_SERVICE_INTENT");
+        sendBroadcast(intent);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
