@@ -1,10 +1,9 @@
-package com.moje.przepisy.mojeprzepisy.recipeDetails.commentDetails;
+package com.moje.przepisy.mojeprzepisy.recipeDetails.commentDetails.commentDisplay;
 
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,7 +11,6 @@ import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,7 +21,7 @@ import com.moje.przepisy.mojeprzepisy.R;
 import com.moje.przepisy.mojeprzepisy.data.model.Comment;
 import com.moje.przepisy.mojeprzepisy.data.repositories.recipe.RecipeRepository;
 import com.moje.przepisy.mojeprzepisy.data.repositories.recipe.RecipeRepositoryInterface;
-import com.moje.przepisy.mojeprzepisy.recipeDetails.recipeDisplay.MainDetailsTabActivity;
+import com.moje.przepisy.mojeprzepisy.recipeDetails.commentDetails.commentEdit.CommentEditActivity;
 
 import java.util.List;
 

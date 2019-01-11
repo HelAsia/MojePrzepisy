@@ -53,7 +53,7 @@
         <receiver android:name=".setting.RestartServiceBroadcastReceiver" />
 
         <activity android:name=".setting.SettingsActivity" />
-        <activity android:name=".recipeDetails.commentDetails.CommentEditActivity"></activity>
+        <activity android:name=".recipeDetails.commentDetails.commentEdit.CommentEditActivity"></activity>
     </application>
 
 </manifest>

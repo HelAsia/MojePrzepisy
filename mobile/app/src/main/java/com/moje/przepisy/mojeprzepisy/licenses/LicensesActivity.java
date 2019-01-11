@@ -59,19 +59,13 @@ public class LicensesActivity extends AppCompatActivity implements LicensesContr
   }
 
   public boolean onOptionsItemSelected(MenuItem item){
-    Intent intent = new Intent(this, MainCardsActivity.class);
-    intent.putExtra("isLogged", isLogged);
-    startActivity(intent);
-    LicensesActivity.this.finish();
+    goToMainCardsActivity();
     return true;
   }
 
   @Override
   public void onBackPressed() {
-    Intent intent = new Intent(this, MainCardsActivity.class);
-    intent.putExtra("isLogged", isLogged);
-    startActivity(intent);
-    LicensesActivity.this.finish();
+    goToMainCardsActivity();
   }
   @Override
   public void setRecyclerView(List<License> licenseList){
@@ -84,5 +78,12 @@ public class LicensesActivity extends AppCompatActivity implements LicensesContr
     Intent intent = new Intent(this, WebViewActivity.class);
     intent.putExtra("url", licenseUrl);
     startActivity(intent);
+  }
+
+  private void goToMainCardsActivity(){
+    Intent intent = new Intent(this, MainCardsActivity.class);
+    intent.putExtra("isLogged", isLogged);
+    startActivity(intent);
+    LicensesActivity.this.finish();
   }
 }

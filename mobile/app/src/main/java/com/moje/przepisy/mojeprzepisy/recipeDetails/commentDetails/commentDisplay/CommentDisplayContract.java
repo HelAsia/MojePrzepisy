@@ -1,4 +1,4 @@
-package com.moje.przepisy.mojeprzepisy.recipeDetails.commentDetails;
+package com.moje.przepisy.mojeprzepisy.recipeDetails.commentDetails.commentDisplay;
 
 import android.content.Context;
 import android.widget.Button;

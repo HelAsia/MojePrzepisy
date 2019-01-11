@@ -6,7 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import com.moje.przepisy.mojeprzepisy.R;
-import com.moje.przepisy.mojeprzepisy.recipeDetails.commentDetails.CommentDisplayFragment;
+import com.moje.przepisy.mojeprzepisy.recipeDetails.commentDetails.commentDisplay.CommentDisplayFragment;
 import com.moje.przepisy.mojeprzepisy.recipeDetails.ingredientsDetails.IngredientsDisplayFragment;
 import com.moje.przepisy.mojeprzepisy.recipeDetails.mainInfoDetails.MainInfoDetailsDisplayFragment;
 import com.moje.przepisy.mojeprzepisy.recipeDetails.stepsDetails.StepsDisplayFragment;

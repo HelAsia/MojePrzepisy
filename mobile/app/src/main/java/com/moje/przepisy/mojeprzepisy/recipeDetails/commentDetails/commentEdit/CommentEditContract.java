@@ -1,4 +1,4 @@
-package com.moje.przepisy.mojeprzepisy.recipeDetails.commentDetails;
+package com.moje.przepisy.mojeprzepisy.recipeDetails.commentDetails.commentEdit;
 
 public interface CommentEditContract {
 

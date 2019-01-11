@@ -1,4 +1,4 @@
-package com.moje.przepisy.mojeprzepisy.recipeDetails.commentDetails;
+package com.moje.przepisy.mojeprzepisy.recipeDetails.commentDetails.commentDisplay;
 
 import android.os.AsyncTask;
 import com.moje.przepisy.mojeprzepisy.data.model.Comment;

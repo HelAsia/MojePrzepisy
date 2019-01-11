@@ -43,7 +43,6 @@ public class LicensesAdapter extends RecyclerView.Adapter<LicensesAdapter.ViewHo
     viewHolder.licenseCardViewLayout.setOnClickListener(view ->
             ((LicensesActivity)context)
                     .goToLicenseSource(licensesList.get(position).getLicenseUrl()));
-
   }
 
   @Override
@@ -52,7 +51,7 @@ public class LicensesAdapter extends RecyclerView.Adapter<LicensesAdapter.ViewHo
   }
 
   @RequiresApi(api = VERSION_CODES.LOLLIPOP)
-  public void animateCircularReveal(View view) {
+  private void animateCircularReveal(View view) {
     int centerX = 0;
     int centerY = 0;
     int startRadius = 0;
