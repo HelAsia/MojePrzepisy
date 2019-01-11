@@ -558,12 +558,12 @@ def addComment():
     })
 
 
-@app.route('/recipe/comment/<int:id>/<string:columnName>/<string:columnValue>/', methods=['POST'])
+@app.route('/recipe/comment/<int:id>/<string:columnValue>', methods=['POST'])
 @authorized
-def editComment(id, columnName, columnValue):
+def editComment(id, columnValue):
     comment = Comments(get_database())
 
-    status, message = comment.editComment(columnName, columnValue, id)
+    status, message = comment.editComment(columnValue, id)
 
     return jsonify({
         'status': status,

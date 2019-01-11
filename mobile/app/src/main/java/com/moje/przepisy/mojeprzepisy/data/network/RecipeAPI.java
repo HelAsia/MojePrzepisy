@@ -73,9 +73,8 @@ public interface RecipeAPI {
   @GET("recipe/{id}/comment")
   Single<List<Comment>> getComment(@Path("id") int id);
 
-  @POST("recipe/comment/{id}/{columnName}/{columnValue}")
-  Completable editComment(@Path("id") int id, @Path("columnName") String columnName,
-                                  @Path("columnValue") String columnValue);
+  @POST("recipe/comment/{id}/{columnValue}")
+  Completable editComment(@Path("id") int id, @Path("columnValue") String columnValue);
 
   @PUT("recipe/comment")
   Completable addComment(@Body Comment comment);

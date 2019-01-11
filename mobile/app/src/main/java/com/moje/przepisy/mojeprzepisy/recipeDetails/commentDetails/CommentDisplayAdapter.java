@@ -6,30 +6,32 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.moje.przepisy.mojeprzepisy.R;
 import com.moje.przepisy.mojeprzepisy.data.model.Comment;
-import com.moje.przepisy.mojeprzepisy.data.repositories.recipe.RecipeRepository;
-import com.moje.przepisy.mojeprzepisy.data.repositories.recipe.RecipeRepositoryInterface.OnDeleteCommentsDetailsDisplayListener;
 import com.moje.przepisy.mojeprzepisy.utils.Constant;
 import java.util.List;
 
 public class CommentDisplayAdapter extends RecyclerView.Adapter<CommentDisplayAdapter.ViewHolder> {
-  public Context context;
+  private Context context;
   private List<Comment> commentList;
-  private RecipeRepository recipeRepository;
+  private CommentDisplayAdapter.OnMenuClickedListener callbackMenu;
+
+  void setMenuClickedListener(CommentDisplayAdapter.OnMenuClickedListener callbackMenu) {
+    this.callbackMenu = callbackMenu;
+  }
+
+  public interface OnMenuClickedListener {
+    void menuClicked(int id, RelativeLayout commentRelativeLayout, String comment);
+  }
 
   CommentDisplayAdapter(Context context, List<Comment> commentList){
     this.context = context;
     this.commentList = commentList;
-    recipeRepository = new RecipeRepository(context);
     setHasStableIds(true);
   }
 
@@ -45,21 +47,16 @@ public class CommentDisplayAdapter extends RecyclerView.Adapter<CommentDisplayAd
   public void onBindViewHolder(@NonNull CommentDisplayAdapter.ViewHolder viewHolder, final int position) {
     viewHolder.bind(commentList.get(position));
 
-    viewHolder.deleteUserRecipeImageView.setOnClickListener(view ->
-            recipeRepository.deleteComment(commentList.get(position).getId(),
-        new OnDeleteCommentsDetailsDisplayListener() {
-          @Override
-          public void onSuccess() {
-            Toast.makeText(context, "Komentarz został usunięty!", Toast.LENGTH_SHORT).show();
-            commentList.remove(position);
-            notifyItemRemoved(position);
-          }
+    int userIdFromPreferences = PreferenceManager
+            .getDefaultSharedPreferences(context).getInt(Constant.PREF_USER_ID, 0);
 
-          @Override
-          public void onError() {
-            Toast.makeText(context, "Błąd podczas usuwania komentarza!", Toast.LENGTH_SHORT).show();
-          }
-        }));
+    if(commentList.get(position).getUserId() == userIdFromPreferences){
+      viewHolder.commentTextView.setOnLongClickListener(v -> {
+        callbackMenu.menuClicked(commentList.get(position).getId(),
+                viewHolder.commentRelativeLayout, commentList.get(position).getComment());
+        return false;
+      });
+    }
   }
 
   @Override
@@ -76,9 +73,7 @@ public class CommentDisplayAdapter extends RecyclerView.Adapter<CommentDisplayAd
     @BindView(R.id.userNameTextView) TextView userNameTextView;
     @BindView(R.id.createTimeTextView) TextView createTimeTextView;
     @BindView(R.id.commentTextView) TextView commentTextView;
-    @BindView(R.id.editAndDeleteRecipeRelativeLayout) RelativeLayout editAndDeleteRecipeRelativeLayout;
-    @BindView(R.id.editUserRecipeImageView) ImageView editUserRecipeImageView;
-    @BindView(R.id.deleteUserRecipeImageView) ImageView deleteUserRecipeImageView;
+    @BindView(R.id.commentRelativeLayout) RelativeLayout commentRelativeLayout;
 
     ViewHolder(View v) {
       super(v);
@@ -89,16 +84,6 @@ public class CommentDisplayAdapter extends RecyclerView.Adapter<CommentDisplayAd
       String authorName = comment.getAuthorName();
       String createTime = comment.getCreatedDate();
       String commentText = comment.getComment();
-      int userId = comment.getUserId();
-
-      int userIdFromPreferences = PreferenceManager
-          .getDefaultSharedPreferences(context).getInt(Constant.PREF_USER_ID, 0);
-
-      if(userId == userIdFromPreferences){
-        editAndDeleteRecipeRelativeLayout.setVisibility(View.VISIBLE);
-      }else {
-        editAndDeleteRecipeRelativeLayout.setVisibility(View.GONE);
-      }
 
       if (authorName != null) {
         userNameTextView.setText(authorName);

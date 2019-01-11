@@ -59,15 +59,15 @@ class Comments:
             Logger.fail("NOT OK. Comment hasn't been added")
             return 404, u'Forwarded data are not correct'
 
-    def editComment(self, columnName, columnValue, id):
+    def editComment(self, columnValue, id):
         query = u"UPDATE comments " \
-                u"SET {} = '{}'" \
-                u"WHERE comment_id = {};".format(columnName, columnValue, id)
+                u"SET comment = '{}', created_date = now() " \
+                u"WHERE comment_id = {};".format(columnValue, id)
         queryResult = self.database.query(query)
 
         if queryResult:
             Logger.dbg(str(tuple(queryResult)))
-            return 200, u'Your changed {}={}'.format(columnName, columnValue)
+            return 200, u'Your changed {}={}'.format(columnValue)
         else:
             return 404, u'Forwarded data to check are not correct'
 

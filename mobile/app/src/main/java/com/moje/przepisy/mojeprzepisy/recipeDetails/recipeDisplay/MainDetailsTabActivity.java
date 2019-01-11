@@ -71,6 +71,7 @@ public class MainDetailsTabActivity extends AppCompatActivity implements MainDet
 
   public void setToolbar() {
     toolbar.setSubtitle(R.string.user_profile);
+    setSupportActionBar(toolbar);
     ActionBar actionbar = getSupportActionBar();
     if(actionbar != null){
       actionbar.setDisplayHomeAsUpEnabled(true);

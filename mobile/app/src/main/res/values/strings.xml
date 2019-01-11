@@ -93,6 +93,7 @@
     <string name="category_search_title">Kategorie przepisów</string>
     <string name="set_timer">Ustaw czasomierz</string>
     <string name="user_profile">Dane użytkownika</string>
+    <string name="edit_comment">Edycja komentarza</string>
 
     <string name="load_photo">Załaduj zdjęcie</string>
     <string name="choose_category">Kategoria przepisu</string>
@@ -237,4 +238,7 @@
 
     <string name="notification_settings_on">Powiadomienia o nowych przepisach włączone.</string>
     <string name="notification_settings_off">Powiadomienia o nowych przepisach wyłączone.</string>
+
+    <string name="delete">Usuń</string>
+    <string name="update">Aktualizuj</string>
 </resources>

@@ -26,7 +26,6 @@ public class IngredientsDisplayFragment extends Fragment implements IngredientsD
   @BindView(R.id.editAndDeleteRecipeRelativeLayout) RelativeLayout relativeLayout;
   @BindView(R.id.editUserRecipeImageView) ImageView editUserRecipeImageView;
   private Context context;
-  private View view;
 
   public IngredientsDisplayFragment() {
   }
@@ -37,7 +36,6 @@ public class IngredientsDisplayFragment extends Fragment implements IngredientsD
     context = getActivity();
 
     View view = inflater.inflate(R.layout.fragment_ingredients_display, container, false);
-    setView(view);
 
     ButterKnife.bind(this, view);
 
@@ -45,10 +43,6 @@ public class IngredientsDisplayFragment extends Fragment implements IngredientsD
     presenter.setWholeRecipeElements();
 
     return view;
-  }
-
-  public void setView(View view) {
-    this.view = view;
   }
 
   @Override

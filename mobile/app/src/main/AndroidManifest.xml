@@ -48,11 +48,12 @@
         <activity android:name=".licenses.WebViewActivity" />
         <activity android:name=".aboutApplication.AboutApplicationActivity" />
 
-        <service android:name=".setting.NewRecipeService"/>
-        <receiver android:name=".setting.RestartServiceBroadcastReceiver"/>
+        <service android:name=".setting.NewRecipeService" />
 
-        <activity
-            android:name=".setting.SettingsActivity"/>
+        <receiver android:name=".setting.RestartServiceBroadcastReceiver" />
+
+        <activity android:name=".setting.SettingsActivity" />
+        <activity android:name=".recipeDetails.commentDetails.CommentEditActivity"></activity>
     </application>
 
 </manifest>

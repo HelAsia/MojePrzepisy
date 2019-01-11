@@ -154,7 +154,30 @@ public class RecipeRepository implements RecipeRepositoryInterface{
                  });
   }
 
-  @Override
+    @Override
+    public void editComment(int id, String columnValue, final OnEditCommentsDetailsDisplayListener listener) {
+        recipeAPI.editComment(id, columnValue)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new CompletableObserver() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        listener.onSuccess();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        listener.onError();
+                    }
+                });
+    }
+
+    @Override
   public void getRecipe(int recipeId, final OnMainInfoDetailsDisplayListener listener) {
     recipeAPI.getRecipe(recipeId)
       .subscribeOn(Schedulers.io())

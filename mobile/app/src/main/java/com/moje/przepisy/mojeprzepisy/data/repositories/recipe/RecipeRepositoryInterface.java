@@ -61,11 +61,17 @@ public interface RecipeRepositoryInterface {
     void onError();
   }
 
+  interface OnEditCommentsDetailsDisplayListener{
+    void onSuccess();
+    void onError();
+  }
+
   void addPhoto(String photo, OnAddPhotoFinishedListener listener);
   void addWholeRecipeElements(RecipeAllElements recipeAllElements, OnWholeRecipeElementsFinishedListener listener);
   void addComment(Comment comment, OnCommentsDetailsDisplayListener listener);
   void editStarsAndHeart(int recipeId, String columnName, int columnValue, OnStarsEditListener listener, int position);
   void editStarsAndHeartInRecipe(final int recipeId, String columnName, int columnValue, OnStarsEditInRecipeListener listener);
+  void editComment(int id, String columnValue, OnEditCommentsDetailsDisplayListener listener);
   void getRecipe(int recipeId, final OnMainInfoDetailsDisplayListener listener);
   void getIngredients(int recipeId, final OnIngredientsDetailsDisplayListener listener);
   void getSteps(int recipeId, final OnStepsDetailsDisplayListener listener);
