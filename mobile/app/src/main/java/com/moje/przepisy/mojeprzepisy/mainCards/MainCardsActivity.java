@@ -11,6 +11,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -60,7 +61,8 @@ public class MainCardsActivity extends AppCompatActivity implements
   @BindView(R.id.activity_main_cards) DrawerLayout drawerLayout;
   @BindView(R.id.nav_view) NavigationView navigationView;
   @BindView(R.id.errorMessage_mainCards) TextView errorMessageTextView;
-
+  @BindView(R.id.swipe_refresh_layout) SwipeRefreshLayout swipeRefreshLayout;
+  private LinearLayoutManager linearLayoutManager;
   private MainCardsContract.Presenter presenter;
   private MainCardsAdapter adapter;
   private Boolean isLogged;
@@ -110,8 +112,11 @@ public class MainCardsActivity extends AppCompatActivity implements
   public void setRecyclerView(List<OneRecipeCard> cardList){
     adapter = new MainCardsAdapter(this, cardList);
     recyclerView.setAdapter(adapter);
-    recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    linearLayoutManager = new LinearLayoutManager(this);
+    recyclerView.setLayoutManager(linearLayoutManager);
+    swipeRefreshLayout.setRefreshing(false);
     setCallbacksOnAdapter();
+    setSwipeRefreshLayoutEnabledStatus();
   }
 
   private void setCallbacksOnAdapter(){
@@ -120,6 +125,33 @@ public class MainCardsActivity extends AppCompatActivity implements
     adapter.setHeartOnShareClickedListener((int recipeId, int favorite, int position) ->
             presenter.sentHeart(recipeId, favorite, position));
     adapter.setCallbackRecipeIdOnShareClickedListener(this::goToRecipeDetails);
+  }
+
+  @Override
+  public void setSwipeRefreshLayoutEnabledStatus(){
+    if(linearLayoutManager != null){
+      recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        @Override
+        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+          super.onScrolled(recyclerView, dx, dy);
+          if(linearLayoutManager.findFirstVisibleItemPosition() == 0){
+            swipeRefreshLayout.setEnabled(true);
+          }else{
+            swipeRefreshLayout.setEnabled(false);
+          }
+        }
+      });
+    }
+  }
+
+  @Override
+  public void setSwipeRefreshLayout() {
+    swipeRefreshLayout.setOnRefreshListener(() ->
+            presenter.refreshCardsAction());
+    swipeRefreshLayout.setColorSchemeResources(R.color.primary,
+            android.R.color.holo_green_dark,
+            android.R.color.holo_orange_dark,
+            android.R.color.holo_blue_dark);
   }
 
   @Override

@@ -69,6 +69,7 @@ public class MainCardsPresenter implements MainCardsContract.Presenter,
     cardsView.setNavigationViewListener(cardsView.getIsLoggedStatus());
     cardsView.setFloatingActionButton(cardsView.getIsLoggedStatus());
     cardsView.setFABListener();
+    cardsView.setSwipeRefreshLayout();
   }
 
   @Override

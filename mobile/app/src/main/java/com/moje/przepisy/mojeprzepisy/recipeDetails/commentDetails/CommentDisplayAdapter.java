@@ -51,7 +51,7 @@ public class CommentDisplayAdapter extends RecyclerView.Adapter<CommentDisplayAd
             .getDefaultSharedPreferences(context).getInt(Constant.PREF_USER_ID, 0);
 
     if(commentList.get(position).getUserId() == userIdFromPreferences){
-      viewHolder.commentTextView.setOnLongClickListener(v -> {
+      viewHolder.commentRelativeLayout.setOnLongClickListener(v -> {
         callbackMenu.menuClicked(commentList.get(position).getId(),
                 viewHolder.commentRelativeLayout, commentList.get(position).getComment());
         return false;

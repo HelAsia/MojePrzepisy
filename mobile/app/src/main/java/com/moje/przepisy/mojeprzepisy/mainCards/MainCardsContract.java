@@ -23,6 +23,8 @@ public interface MainCardsContract {
     void goToRecipeDetails(int recipeId);
     void setUpdatedCard(OneRecipeCard oneRecipeCard, int position);
     void setErrorMessage(String message);
+    void setSwipeRefreshLayoutEnabledStatus();
+    void setSwipeRefreshLayout();
   }
 
   interface Presenter {
