@@ -7,9 +7,9 @@ import java.io.ByteArrayOutputStream;
 
 public class BitmapConverter {
   public String BitMapToString(Bitmap bitmap) {
-    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-    bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
-    byte[] b = baos.toByteArray();
+    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+    bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+    byte[] b = byteArrayOutputStream.toByteArray();
     return Base64.encodeToString(b, Base64.DEFAULT);
   }
 

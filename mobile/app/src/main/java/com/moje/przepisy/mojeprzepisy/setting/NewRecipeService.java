@@ -1,5 +1,6 @@
 package com.moje.przepisy.mojeprzepisy.setting;
 
+import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -67,6 +68,11 @@ public class NewRecipeService extends Service implements
     }
 
     private void checkNewRecipe(boolean notificationOn){
+        notificationManager = (NotificationManager) this
+                .getSystemService(Context.NOTIFICATION_SERVICE);
+        createNotificationBuilderWithChannel();
+        setNotificationBuilder();
+
         while(notificationOn){
             int maxDate = PreferenceManager.getDefaultSharedPreferences(this)
                     .getInt(Constant.PREF_MAX_DATE, 0);
@@ -101,12 +107,6 @@ public class NewRecipeService extends Service implements
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void setNewCardsNotification() {
-        notificationManager = (NotificationManager) this
-                .getSystemService(Context.NOTIFICATION_SERVICE);
-
-        createNotificationBuilderWithChannel();
-        setNotificationBuilder();
-
         StatusBarNotification[] notifications = notificationManager.getActiveNotifications();
         if(notifications.length != 0){
             for (StatusBarNotification notification : notifications) {
@@ -127,14 +127,17 @@ public class NewRecipeService extends Service implements
 
     private void createNotificationBuilderWithChannel(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            String chanelId = "3000";
-            CharSequence name = "Channel Name";
-            String description = "Chanel Description";
-            int importance = NotificationManager.IMPORTANCE_LOW;
+            String chanelId = "1";
+            CharSequence name = "Nowe przepisy";
+            String description = "Powiadomienia, w momencie, gdy w aplikacji pojawią się nowe przepisy.";
+            int importance = NotificationManager.IMPORTANCE_HIGH;
             NotificationChannel mChannel = new NotificationChannel(chanelId, name, importance);
             mChannel.setDescription(description);
             mChannel.enableLights(true);
             mChannel.setLightColor(Color.BLUE);
+            mChannel.setSound(RingtoneManager
+                    .getDefaultUri(RingtoneManager.TYPE_NOTIFICATION),
+                    Notification.AUDIO_ATTRIBUTES_DEFAULT);
             notificationManager.createNotificationChannel(mChannel);
             notificationBuilder = new NotificationCompat.Builder(this, chanelId);
         } else {

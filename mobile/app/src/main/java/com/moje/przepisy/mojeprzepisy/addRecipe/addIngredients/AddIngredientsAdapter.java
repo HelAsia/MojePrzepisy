@@ -43,27 +43,31 @@ public class AddIngredientsAdapter extends RecyclerView.Adapter<AddIngredientsAd
   public void onBindViewHolder(@NonNull AddIngredientsAdapter.ViewHolder viewHolder, int position) {
     viewHolder.bind(ingredientList.get(position));
 
-    viewHolder.deleteImageView.setOnClickListener(it -> {
+    viewHolder.deleteImageView.setOnClickListener(view -> {
       ingredientList.remove(position);
       notifyItemRemoved(position);
+      notifyDataSetChanged();
     });
 
     RxTextView.textChanges(viewHolder.ingredientQuantityEditText)
     .subscribe( s -> {
-      int ingredientQuantity = Integer.valueOf(s.toString());
-      Ingredient updatedIngredient = new Ingredient(ingredientQuantity,
-              ingredientList.get(position).getUnit(), ingredientList.get(position).getName());
-      ingredientList.set(position, updatedIngredient);
+      if(s.toString().length() > 0){
+        int ingredientQuantity = Integer.valueOf(s.toString());
+        Ingredient updatedIngredient = new Ingredient(ingredientQuantity,
+                ingredientList.get(position).getUnit(), ingredientList.get(position).getName());
+        ingredientList.set(position, updatedIngredient);
+      }
     });
 
     RxTextView.textChanges(viewHolder.ingredientNameEditText)
     .subscribe( s -> {
+      if(s.toString().length() > 0){
         String ingredientName = s.toString();
         Ingredient updatedIngredient = new Ingredient(ingredientList.get(position).getQuantity(),
                 ingredientList.get(position).getUnit(), ingredientName);
         ingredientList.set(position, updatedIngredient);
+      }
     });
-
 
     viewHolder.ingredientUnitSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
         @Override

@@ -48,7 +48,7 @@ public class AddRecipePresenter implements AddRecipeContract.Presenter{
   private void setInitialRecipe(){
     Recipe emptyRecipe = new Recipe("Nazwa przepisu",
             "https://img.freepik.com/free-icon/gallery_318-131678.jpg?size=338c&ext=jpg",
-            "Przekąski", "00:00", "00:00", "00:00");
+            "Zupy", "00:00", "00:00", "00:00");
     recipeList.add(emptyRecipe);
     setRecipeList(recipeList);
   }
@@ -73,6 +73,7 @@ public class AddRecipePresenter implements AddRecipeContract.Presenter{
     recipeView.setTimeListeners();
     recipeView.setImageListeners();
     setFirstList();
+    setRecipeValueOnScreen();
   }
 
   private void setRecipeList(List<Recipe> recipeList){

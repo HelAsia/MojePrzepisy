@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string-array name="recipe_category_array">
-    <item>@string/snacks_and_starters</item>
     <item>@string/soups</item>
+    <item>@string/snacks_and_starters</item>
     <item>@string/pasta</item>
     <item>@string/pastes</item>
     <item>@string/chicken_dishes</item>

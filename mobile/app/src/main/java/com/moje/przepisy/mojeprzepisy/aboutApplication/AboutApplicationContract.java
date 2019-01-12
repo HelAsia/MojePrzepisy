@@ -10,7 +10,6 @@ public interface AboutApplicationContract {
   interface View{
     void setToolbar();
     Context getContext();
-    Boolean getLogged();
     void setLogged();
     void openAppDescriptionCardView();
     void closeAppDescriptionCardView();

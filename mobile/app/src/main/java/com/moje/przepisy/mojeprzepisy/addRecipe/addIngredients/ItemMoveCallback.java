@@ -54,8 +54,8 @@ public class ItemMoveCallback extends ItemTouchHelper.Callback {
     }
 
     @Override
-    public void clearView(RecyclerView recyclerView,
-                          RecyclerView.ViewHolder viewHolder){
+    public void clearView(@NonNull RecyclerView recyclerView,
+                          @NonNull RecyclerView.ViewHolder viewHolder){
         super.clearView(recyclerView, viewHolder);
 
         if (viewHolder instanceof AddIngredientsAdapter.ViewHolder) {
@@ -70,6 +70,5 @@ public class ItemMoveCallback extends ItemTouchHelper.Callback {
         void onRowMoved(int fromPosition, int toPosition);
         void onRowSelected(AddIngredientsAdapter.ViewHolder myViewHolder);
         void onRowClear(AddIngredientsAdapter.ViewHolder myViewHolder);
-
     }
 }

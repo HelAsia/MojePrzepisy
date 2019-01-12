@@ -34,16 +34,19 @@ class TimeSetDialog {
         val dialogButton = dialog.findViewById<Button>(R.id.set_time_button)
         dialogButton.setOnClickListener {
             hourInt = hourPicker.value
-            if (hourInt < 10) {
-                hour = "0" + Integer.toString(hourInt)
+            hour = if (hourInt < 10) {
+                "0" + Integer.toString(hourInt)
+            }else{
+                Integer.toString(hourInt)
             }
-            hour = Integer.toString(hourInt)
 
             minuteInt = minutePicker.value
-            if (minuteInt < 10) {
-                minute = "0" + Integer.toString(minuteInt)
+            minute = if (minuteInt < 10) {
+                "0" + Integer.toString(minuteInt)
+            }else{
+                Integer.toString(minuteInt)
             }
-            minute = Integer.toString(minuteInt)
+
             dialog.dismiss()
             textViewToSet.text = "$hour:$minute"
         }

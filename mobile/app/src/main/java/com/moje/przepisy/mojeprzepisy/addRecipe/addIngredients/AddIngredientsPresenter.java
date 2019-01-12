@@ -20,20 +20,14 @@ public class AddIngredientsPresenter implements AddIngredientsContract.Presenter
   }
 
   @Override
-  public void previousAction(){
-    pojoFileConverter.addPojoListToFile(Constant.INGREDIENTS_FILE_NAME, ingredientList);
-    ingredientsView.navigateToPreviousPage();
-  }
-
-  @Override
-  public void nextAction() {
-    pojoFileConverter.addPojoListToFile(Constant.INGREDIENTS_FILE_NAME, ingredientList);
-    ingredientsView.navigateToNextPage();
+  public void setFirstScreen() {
+    ingredientsView.setToolbar();
+    ingredientsView.setListeners();
+    setFirstList();
   }
 
   private void setFirstList(){
     List<Ingredient> ingredientFirstList = getIngredientFirstList();
-
     if(ingredientFirstList != null){
       ingredientList = ingredientFirstList;
       ingredientsView.setRecyclerView(ingredientList);
@@ -42,17 +36,10 @@ public class AddIngredientsPresenter implements AddIngredientsContract.Presenter
     }
   }
 
-  @Override
-  public void setFirstScreen() {
-    ingredientsView.setToolbar();
-    ingredientsView.setListeners();
-    setFirstList();
-  }
-
-  @Override
-  public void setNextIngredient() {
-    setInitialIngredient();
-    pojoFileConverter.addPojoListToFile(Constant.INGREDIENTS_FILE_NAME, ingredientList);
+  private List<Ingredient> getIngredientFirstList(){
+    String jsonList = pojoFileConverter.getPojoListFromFile(Constant.INGREDIENTS_FILE_NAME);
+    String classType = Constant.INGREDIENTS_FILE_NAME;
+    return pojoJsonConverter.convertJsonToPojo(jsonList, classType);
   }
 
   private void setInitialIngredient(){
@@ -61,10 +48,27 @@ public class AddIngredientsPresenter implements AddIngredientsContract.Presenter
     ingredientsView.setRecyclerView(ingredientList);
   }
 
-  private List<Ingredient> getIngredientFirstList(){
-    return pojoJsonConverter.convertJsonToPojo(
-            pojoFileConverter.getPojoListFromFile(Constant.INGREDIENTS_FILE_NAME),
-            Constant.INGREDIENTS_FILE_NAME);
+  @Override
+  public void previousAction(){
+    savePojoList();
+    ingredientsView.navigateToPreviousPage();
+  }
+
+  @Override
+  public void nextAction() {
+    savePojoList();
+    ingredientsView.navigateToNextPage();
+  }
+
+  @Override
+  public void setNextIngredient() {
+    setInitialIngredient();
+    savePojoList();
+  }
+
+  private void savePojoList(){
+    String fileName = Constant.INGREDIENTS_FILE_NAME;
+    pojoFileConverter.addPojoListToFile(fileName, ingredientList);
   }
 }
 

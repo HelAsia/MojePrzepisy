@@ -26,13 +26,11 @@ public class AddIngredientsActivity extends AppCompatActivity implements
   @BindView(R.id.addIngredientsRecyclerView) RecyclerView addIngredientsRecyclerView;
   @BindView(R.id.toolbar_whole_recipe) Toolbar toolbarRecipe;
   private AddIngredientsContract.Presenter presenter;
-  private Context context;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_add_ingredients_view);
-    context = getApplicationContext();
     ButterKnife.bind(this);
 
     presenter = new AddIngredientsPresenter(this);
@@ -41,7 +39,7 @@ public class AddIngredientsActivity extends AppCompatActivity implements
 
   @Override
   public Context getContext() {
-    return context;
+    return this;
   }
 
   @Override
@@ -53,18 +51,25 @@ public class AddIngredientsActivity extends AppCompatActivity implements
   @Override
   public void setRecyclerView(List<Ingredient> ingredientList) {
     AddIngredientsAdapter adapter = new AddIngredientsAdapter(ingredientList);
-    ItemTouchHelper.Callback callback = new ItemMoveCallback(adapter);
-    ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
-    touchHelper.attachToRecyclerView(addIngredientsRecyclerView);
+    addTouchHelperToAdapter(adapter);
     addIngredientsRecyclerView.setAdapter(adapter);
     addIngredientsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
   }
 
+  private void addTouchHelperToAdapter(AddIngredientsAdapter adapter){
+    ItemTouchHelper.Callback callback = new ItemMoveCallback(adapter);
+    ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
+    touchHelper.attachToRecyclerView(addIngredientsRecyclerView);
+  }
+
   @Override
   public void setListeners() {
-    addIngredientFab.setOnClickListener(v -> presenter.setNextIngredient());
-    previousActionFab.setOnClickListener(v -> presenter.previousAction());
-    nextActionFab.setOnClickListener(v -> presenter.nextAction());
+    addIngredientFab.setOnClickListener(v ->
+            presenter.setNextIngredient());
+    previousActionFab.setOnClickListener(v ->
+            presenter.previousAction());
+    nextActionFab.setOnClickListener(v ->
+            presenter.nextAction());
   }
 
   @Override

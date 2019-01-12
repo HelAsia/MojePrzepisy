@@ -7,7 +7,7 @@ public class AboutApplicationPresenter implements AboutApplicationContract.Prese
   private Boolean isVersionInfoOpen = false;
   private Boolean isErrorInfoOpen = false;
 
-  public AboutApplicationPresenter(AboutApplicationContract.View aboutApplicationView){
+  AboutApplicationPresenter(AboutApplicationContract.View aboutApplicationView){
     this.aboutApplicationView = aboutApplicationView;
   }
 

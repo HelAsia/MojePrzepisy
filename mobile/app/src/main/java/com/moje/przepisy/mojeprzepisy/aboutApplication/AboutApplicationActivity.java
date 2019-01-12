@@ -85,11 +85,6 @@ public class AboutApplicationActivity extends AppCompatActivity implements
   }
 
   @Override
-  public Boolean getLogged() {
-    return isLogged;
-  }
-
-  @Override
   public void setLogged() {
     if(getIntent().getExtras() != null){
       isLogged = getIntent().getExtras().getBoolean("isLogged");
@@ -98,66 +93,70 @@ public class AboutApplicationActivity extends AppCompatActivity implements
 
   @Override
   public void openAppDescriptionCardView() {
-    descriptionPlayArrow.setImageDrawable(getDownArrow());
+    descriptionPlayArrow.setImageDrawable(downArrow);
     descriptionTextPl.setVisibility(View.VISIBLE);
     descriptionTextAng.setVisibility(View.VISIBLE);
   }
 
   @Override
   public void closeAppDescriptionCardView() {
-    descriptionPlayArrow.setImageDrawable(getRightArrow());
+    descriptionPlayArrow.setImageDrawable(rightArrow);
     descriptionTextPl.setVisibility(View.GONE);
     descriptionTextAng.setVisibility(View.GONE);
   }
 
   @Override
   public void openAppAuthorCardView() {
-    authorPlayArrow.setImageDrawable(getDownArrow());
+    authorPlayArrow.setImageDrawable(downArrow);
     authorTextPl.setVisibility(View.VISIBLE);
     authorTextAng.setVisibility(View.VISIBLE);
   }
 
   @Override
   public void closeAppAuthorCardView() {
-    authorPlayArrow.setImageDrawable(getRightArrow());
+    authorPlayArrow.setImageDrawable(rightArrow);
     authorTextPl.setVisibility(View.GONE);
     authorTextAng.setVisibility(View.GONE);
   }
 
   @Override
   public void openAppVersionCardView() {
-    versionPlayArrow.setImageDrawable(getDownArrow());
+    versionPlayArrow.setImageDrawable(downArrow);
     versionTextPl.setVisibility(View.VISIBLE);
     versionTextAng.setVisibility(View.VISIBLE);
   }
 
   @Override
   public void closeAppVersionCardView() {
-    versionPlayArrow.setImageDrawable(getRightArrow());
+    versionPlayArrow.setImageDrawable(rightArrow);
     versionTextPl.setVisibility(View.GONE);
     versionTextAng.setVisibility(View.GONE);
   }
 
   @Override
   public void openAppErrorCardView() {
-    errorPlayArrow.setImageDrawable(getDownArrow());
+    errorPlayArrow.setImageDrawable(downArrow);
     errorTextPl.setVisibility(View.VISIBLE);
     errorTextAng.setVisibility(View.VISIBLE);
   }
 
   @Override
   public void closeAppErrorCardView() {
-    errorPlayArrow.setImageDrawable(getRightArrow());
+    errorPlayArrow.setImageDrawable(rightArrow);
     errorTextPl.setVisibility(View.GONE);
     errorTextAng.setVisibility(View.GONE);
   }
 
   @Override
   public void setDetailsOnClickListeners() {
-    descriptionTitle.setOnClickListener(v -> presenter.openOrCloseAppDescriptionCardView());
-    authorTitle.setOnClickListener(v -> presenter.openOrCloseAppAuthorCardView());
-    versionTitle.setOnClickListener(v -> presenter.openOrCloseAppVersionCardView());
-    errorTitle.setOnClickListener(v -> presenter.openOrCloseAppErrorCardView());
+    descriptionTitle.setOnClickListener(v ->
+            presenter.openOrCloseAppDescriptionCardView());
+    authorTitle.setOnClickListener(v ->
+            presenter.openOrCloseAppAuthorCardView());
+    versionTitle.setOnClickListener(v ->
+            presenter.openOrCloseAppVersionCardView());
+    errorTitle.setOnClickListener(v ->
+            presenter.openOrCloseAppErrorCardView());
   }
 
   @Override
@@ -168,13 +167,5 @@ public class AboutApplicationActivity extends AppCompatActivity implements
   @Override
   public void setRightArrow() {
     rightArrow = this.getResources().getDrawable(R.drawable.ic_play_arrow_black_24dp);
-  }
-
-  private Drawable getDownArrow() {
-    return downArrow;
-  }
-
-  private Drawable getRightArrow() {
-    return rightArrow;
   }
 }
