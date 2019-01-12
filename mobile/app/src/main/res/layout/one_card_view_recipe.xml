@@ -70,8 +70,8 @@
 
     <ImageView
         android:id="@+id/image_view_photo_recipe"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
         android:layout_below="@+id/card_name_layout"
         android:layout_centerHorizontal="true"
         android:src="@mipmap/ic_image" />
