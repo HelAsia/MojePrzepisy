@@ -27,10 +27,11 @@ public interface RecipeAPI {
   @GET("recipe/{id}")
   Single<Recipe> getRecipe(@Path("id") int id);
 
-  @POST("recipe/{id}/{columnName}/{columnValue}")
-  Completable editRecipe(@Path("id") int id, @Path("columnName") String columnName, @Path("columnValue") String columnValue);
+  @PUT("recipe/{id}/{columnName}/{columnValue}")
+  Completable editRecipe(@Path("id") int id, @Path("columnName") String columnName,
+                         @Path("columnValue") String columnValue);
 
-  @PUT("recipe")
+  @POST("recipe")
   Completable addWholeRecipeElements(@Body RecipeAllElements recipeAllElements);
 
   @DELETE("recipe/{id}")
@@ -38,10 +39,10 @@ public interface RecipeAPI {
 
 
   @FormUrlEncoded
-  @PUT("recipe/photo")
+  @POST("recipe/photo")
   Single<Message> addPhoto(@Field("photo") String photoString);
 
-  @POST("recipe/photo/{id}")
+  @PUT("recipe/photo/{id}")
   Completable editPhoto(@Path("id") int id, @Body Photo photo);
 
   @DELETE("recipe/photo/{id}")
@@ -51,7 +52,7 @@ public interface RecipeAPI {
   @GET("recipe/{id}/step")
   Single<List<Step>> getStep(@Path("id") int recipeId);
 
-  @POST("recipe/step/{id}/{columnName}/{columnValue}")
+  @PUT("recipe/step/{id}/{columnName}/{columnValue}")
   Completable editStep(@Path("id") int id, @Path("columnName") String columnName,
                             @Path("columnValue") String columnValue);
 
@@ -62,7 +63,7 @@ public interface RecipeAPI {
   @GET("recipe/{id}/ingredient")
   Single<List<Ingredient>> getIngredient(@Path("id") int id);
 
-  @POST("recipe/ingredient/{id}/{columnName}/{columnValue}")
+  @PUT("recipe/ingredient/{id}/{columnName}/{columnValue}")
   Completable editIngredient(@Path("id") int id, @Path("columnName") String columnName,
                                         @Path("columnValue") String columnValue);
 
@@ -73,10 +74,10 @@ public interface RecipeAPI {
   @GET("recipe/{id}/comment")
   Single<List<Comment>> getComment(@Path("id") int id);
 
-  @POST("recipe/comment/{id}/{columnValue}")
+  @PUT("recipe/comment/{id}/{columnValue}")
   Completable editComment(@Path("id") int id, @Path("columnValue") String columnValue);
 
-  @PUT("recipe/comment")
+  @POST("recipe/comment")
   Completable addComment(@Body Comment comment);
 
   @DELETE("recipe/comment/{id}")
@@ -85,7 +86,7 @@ public interface RecipeAPI {
   @GET("recipe/{id}/stars/detail")
   Single<List<Stars>> getRecipeDetailsStars(@Path("id") int id);
 
-  @POST("recipe/{id}/stars/{columnName}/{columnValue}")
+  @PUT("recipe/{id}/stars/{columnName}/{columnValue}")
   Completable editStarsAndHeart(@Path("id") int recipeId, @Path("columnName") String columnName,
                                 @Path("columnValue") int columnValue);
 }

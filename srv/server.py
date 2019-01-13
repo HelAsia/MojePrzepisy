@@ -141,7 +141,7 @@ def logout_method():
     })
 
 
-@app.route('/user', methods=['PUT'])
+@app.route('/user', methods=['POST'])
 def registration():
     user = Users(get_database())
     params = request.get_json()
@@ -180,7 +180,7 @@ def profile_method():
         })
 
 
-@app.route('/user/<string:columnName>/<string:columnValue>', methods=['POST'])
+@app.route('/user/<string:columnName>/<string:columnValue>', methods=['PUT'])
 @authorized
 def editUser(columnName, columnValue):
     user = Users(get_database())
@@ -193,7 +193,7 @@ def editUser(columnName, columnValue):
     })
 
 
-@app.route('/user/photo', methods=['POST'])
+@app.route('/user/photo', methods=['PUT'])
 @authorized
 def editUserPhoto():
     user = Users(get_database())
@@ -209,7 +209,7 @@ def editUserPhoto():
     })
 
 
-@app.route('/cards/searched', methods=['POST'])
+@app.route('/cards/searched', methods=['GET'])
 def getSearchedCards():
     card = Cards(get_database())
     params = request.get_json()
@@ -226,7 +226,7 @@ def getSearchedCards():
     return jsonify(cards)
 
 
-@app.route('/cards/category', methods=['POST'])
+@app.route('/cards/category', methods=['GET'])
 def getCategoryCards():
     card = Cards(get_database())
     params = request.get_json()
@@ -318,7 +318,7 @@ def getRecipe(id):
     return jsonify(recipes)
 
 
-@app.route('/recipe', methods=['PUT'])
+@app.route('/recipe', methods=['POST'])
 @authorized
 def addWholeRecipeElements():
     recipe = Recipes(get_database())
@@ -354,7 +354,7 @@ def addWholeRecipeElements():
         })
 
 
-@app.route('/recipe/<int:id>/<string:columnName>/<string:columnValue>/', methods=['POST'])
+@app.route('/recipe/<int:id>/<string:columnName>/<string:columnValue>/', methods=['PUT'])
 @authorized
 def editRecipe(id, columnName, columnValue):
     recipe = Recipes(get_database())
@@ -388,7 +388,7 @@ def getPhoto(id):
         Logger.fail("There was no photo returned!")
     return photos
 
-@app.route('/recipe/photo/<int:id>/', methods=['POST'])
+@app.route('/recipe/photo/<int:id>/', methods=['PUT'])
 @authorized
 def editPhoto(id):
     photo = Photo(get_database())
@@ -418,7 +418,7 @@ def deletePhoto(id):
     })
 
 
-@app.route('/recipe/photo', methods=['PUT'])
+@app.route('/recipe/photo', methods=['POST'])
 @authorized
 def addPhoto():
     photo = Photo(get_database())
@@ -456,7 +456,7 @@ def deleteStep(id):
     })
 
 
-@app.route('/recipe/step/<int:id>/<string:columnName>/<string:columnValue>/', methods=['POST'])
+@app.route('/recipe/step/<int:id>/<string:columnName>/<string:columnValue>/', methods=['PUT'])
 @authorized
 def editStep(id, columnName, columnValue):
     step = Steps(get_database())
@@ -493,7 +493,7 @@ def deleteIngredient(ingredientId):
     })
 
 
-@app.route('/recipe/ingredient/<int:id>/<string:columnName>/<string:columnValue>/', methods=['POST'])
+@app.route('/recipe/ingredient/<int:id>/<string:columnName>/<string:columnValue>/', methods=['PUT'])
 @authorized
 def editIngredient(id, columnName, columnValue):
     ingredient = Ingredients(get_database())
@@ -558,7 +558,7 @@ def addComment():
     })
 
 
-@app.route('/recipe/comment/<int:id>/<string:columnValue>', methods=['POST'])
+@app.route('/recipe/comment/<int:id>/<string:columnValue>', methods=['PUT'])
 @authorized
 def editComment(id, columnValue):
     comment = Comments(get_database())
@@ -593,6 +593,7 @@ def getFavorite(id):
         Logger.fail("There was no stars returned!")
     return jsonify(favorite)
 
+
 @app.route('/recipe/<int:id>/stars/detail', methods=['GET'])
 def getRecipeDetailsStars(id):
     star = Stars(get_database())
@@ -622,7 +623,7 @@ def deleteStars(id):
     })
 
 
-@app.route('/recipe/stars', methods=['PUT'])
+@app.route('/recipe/stars', methods=['POST'])
 @authorized
 def addStars():
     star = Stars(get_database())
@@ -642,7 +643,7 @@ def addStars():
     })
 
 
-@app.route('/recipe/<int:id>/stars/<string:columnName>/<int:columnValue>', methods=['POST'])
+@app.route('/recipe/<int:id>/stars/<string:columnName>/<int:columnValue>', methods=['PUT'])
 @authorized
 def editStars(id, columnName, columnValue):
     star = Stars(get_database())

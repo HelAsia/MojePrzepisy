@@ -21,16 +21,16 @@ public interface UserAPI {
   @GET("/logout")
   Completable logout();
 
-  @PUT("/user")
+  @POST("/user")
   Single<Message> register(@Body User user);
 
   @GET("/user")
   Single<User> getUser();
 
-  @POST("/user/{columnName}/{columnValue}")
+  @PUT("/user/{columnName}/{columnValue}")
   Completable editUser(@Path("columnName") String columnName, @Path("columnValue") String columnValue);
 
-  @POST("/user/photo")
+  @PUT("/user/photo")
   Completable editPhotoUser(@Body User user);
 
   @DELETE("/user")

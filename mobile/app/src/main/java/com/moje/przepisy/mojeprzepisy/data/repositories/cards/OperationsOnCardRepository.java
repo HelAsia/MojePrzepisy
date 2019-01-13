@@ -43,19 +43,26 @@ public class OperationsOnCardRepository implements OperationsOnCardRepositoryInt
   @Override
   public void getCardsSortedByChoseMethod(final OnCardsListener cardsListener, String method) {
     Single<List<OneRecipeCard>> resp;
-    if (method.equals("alphabetically")){
-      resp = cardAPI.getCardsSortedAlphabetically();
-    }else if (method.equals("lastAdded")){
-      resp = cardAPI.getCardsSortedByLastAdded();
-    }else if (method.equals("highestRated")){
-      resp = cardAPI.getCardsSortedByHighestRated();
-    }else if (method.equals("favorite")){
-      resp = cardAPI.getCardsSortedByFavorite();
-    }else if (method.equals("myRecipe")){
-      resp = cardAPI.getUserCards();
-    }else{
-      resp = cardAPI.getCards();
-    }
+      switch (method) {
+          case "alphabetically":
+              resp = cardAPI.getCardsSortedAlphabetically();
+              break;
+          case "lastAdded":
+              resp = cardAPI.getCardsSortedByLastAdded();
+              break;
+          case "highestRated":
+              resp = cardAPI.getCardsSortedByHighestRated();
+              break;
+          case "favorite":
+              resp = cardAPI.getCardsSortedByFavorite();
+              break;
+          case "myRecipe":
+              resp = cardAPI.getUserCards();
+              break;
+          default:
+              resp = cardAPI.getCards();
+              break;
+      }
 
     resp.subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
