@@ -30,6 +30,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import com.bumptech.glide.Glide;
 import com.moje.przepisy.mojeprzepisy.R;
 import com.moje.przepisy.mojeprzepisy.data.repositories.user.UserRepository;
 import com.moje.przepisy.mojeprzepisy.mainCards.MainCardsActivity;
@@ -210,7 +212,7 @@ public class UserProfileActivity extends AppCompatActivity implements UserProfil
 
   @Override
   public void setMainUserPhotoImageView(String photo) {
-    Picasso.get().load(photo).into(mainUserPhotoImageView);
+    Glide.with(context).load(photo).into(mainUserPhotoImageView);
   }
 
   @Override

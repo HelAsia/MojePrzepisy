@@ -16,6 +16,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import com.bumptech.glide.Glide;
 import com.moje.przepisy.mojeprzepisy.R;
 import com.moje.przepisy.mojeprzepisy.utils.Constant;
 import com.squareup.picasso.Picasso;
@@ -95,7 +97,7 @@ public class CategorySearchAdapter extends RecyclerView.Adapter<CategorySearchAd
     void bind(String oneCategoryName) {
       categoryName.setText(oneCategoryName);
       int photoNumber = (int)getItemId()+ 1;
-      Picasso.get().load(BASE_URL + "recipe/photo/" + photoNumber).into(categoryImage);
+      Glide.with(context).load(BASE_URL + "recipe/photo/" + photoNumber).into(categoryImage);
     }
   }
 

@@ -21,6 +21,8 @@ import android.widget.RatingBar.OnRatingBarChangeListener;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import com.bumptech.glide.Glide;
 import com.moje.przepisy.mojeprzepisy.R;
 import com.moje.przepisy.mojeprzepisy.data.model.OneRecipeCard;
 import com.moje.przepisy.mojeprzepisy.utils.Constant;
@@ -183,7 +185,8 @@ public class MainCardsAdapter extends RecyclerView.Adapter<MainCardsAdapter.View
       String favoritesCountString = String.valueOf(favoritesCount);
       Boolean favourite = card.getFavorite();
 
-      Picasso.get().load(BASE_URL + "recipe/photo/" + recipeMainPictureNumber).into(recipeImageView);
+      Glide.with(context).load(BASE_URL + "recipe/photo/" + recipeMainPictureNumber)
+              .into(recipeImageView);
       recipeNameTextView.setText(recipeName);
       recipeAuthorTextView.setText(recipeAuthor);
       starsCountTextView.setText(starsCountString);

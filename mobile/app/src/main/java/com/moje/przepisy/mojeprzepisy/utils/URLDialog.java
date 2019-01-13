@@ -8,6 +8,8 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+
+import com.bumptech.glide.Glide;
 import com.moje.przepisy.mojeprzepisy.R;
 import com.squareup.picasso.Picasso;
 
@@ -32,7 +34,7 @@ public class URLDialog {
       urlStringValue = urlAddressEditText.getText().toString();
 
       if(!urlStringValue.isEmpty())
-      Picasso.get().load(urlStringValue).into(imageView);
+      Glide.with(activity).load(urlStringValue).into(imageView);
       imageView.setVisibility(View.VISIBLE);
       dialog.dismiss();
     });

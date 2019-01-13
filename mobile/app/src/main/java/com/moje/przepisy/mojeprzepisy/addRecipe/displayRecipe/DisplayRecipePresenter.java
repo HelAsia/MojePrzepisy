@@ -247,7 +247,7 @@ public class DisplayRecipePresenter implements DisplayRecipeContract.Presenter,
               while(photoNumber == -1){
 
               }
-              Step stepWithPhotoNumber = new Step(step.getStepNumber(),
+              Step stepWithPhotoNumber = new Step(photoNumber, step.getStepNumber(),
                       step.getStepDescription());
               stepListWithPhotoNumber.add(stepWithPhotoNumber);
               photoNumber = -1;

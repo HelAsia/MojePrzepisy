@@ -46,11 +46,11 @@ public class AddStepsAdapter extends RecyclerView.Adapter<AddStepsAdapter.ViewHo
     setHasStableIds(true);
   }
 
-  public void setGalleryOnShareClickedListener(OnShareGalleryClickedListener callbackGallery) {
+  void setGalleryOnShareClickedListener(OnShareGalleryClickedListener callbackGallery) {
     this.callbackGallery = callbackGallery;
   }
 
-  public void setCameraOnShareClickedListener(OnShareCameraClickedListener callbackCamera) {
+  void setCameraOnShareClickedListener(OnShareCameraClickedListener callbackCamera) {
     this.callbackCamera = callbackCamera;
   }
 
@@ -162,7 +162,7 @@ public class AddStepsAdapter extends RecyclerView.Adapter<AddStepsAdapter.ViewHo
     private URLDialog urlDialog = new URLDialog();
 
 
-    public BackgroundUrlImageAction(Activity activity, ImageView imageView, int position) {
+    BackgroundUrlImageAction(Activity activity, ImageView imageView, int position) {
       this.activity = activity;
       this.imageView = imageView;
       this.position = position;
