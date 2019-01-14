@@ -15,7 +15,9 @@ public class MainCardsPresenter implements MainCardsContract.Presenter,
   private MainCardsContract.View cardsView;
   private RecipeRepository recipeRepository;
 
-  MainCardsPresenter(MainCardsContract.View cardsView, OperationsOnCardRepository operationsOnCardRepository, RecipeRepository recipeRepository) {
+  MainCardsPresenter(MainCardsContract.View cardsView,
+                     OperationsOnCardRepository operationsOnCardRepository,
+                     RecipeRepository recipeRepository) {
     this.cardsView = cardsView;
     this.operationsOnCardRepository = operationsOnCardRepository;
     this.recipeRepository = recipeRepository;

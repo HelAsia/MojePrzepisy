@@ -1,7 +1,6 @@
 package com.moje.przepisy.mojeprzepisy.mainCards;
 
 import android.annotation.SuppressLint;
-import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,15 +21,13 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-
 import com.moje.przepisy.mojeprzepisy.R;
 import com.moje.przepisy.mojeprzepisy.addRecipe.addMainInfo.AddRecipeActivity;
 import com.moje.przepisy.mojeprzepisy.aboutApplication.AboutApplicationActivity;
@@ -45,11 +42,7 @@ import com.moje.przepisy.mojeprzepisy.recipeDetails.recipeDisplay.MainDetailsTab
 import com.moje.przepisy.mojeprzepisy.register.RegisterActivity;
 import com.moje.przepisy.mojeprzepisy.setting.SettingsActivity;
 import com.moje.przepisy.mojeprzepisy.timer.TimerActivity;
-import com.moje.przepisy.mojeprzepisy.mainCards.MainCardsAdapter.OnShareHeartClickedListener;
 import com.moje.przepisy.mojeprzepisy.userProfile.UserProfileActivity;
-
-import org.reactivestreams.Subscriber;
-
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -62,6 +55,7 @@ public class MainCardsActivity extends AppCompatActivity implements
   @BindView(R.id.nav_view) NavigationView navigationView;
   @BindView(R.id.errorMessage_mainCards) TextView errorMessageTextView;
   @BindView(R.id.swipe_refresh_layout) SwipeRefreshLayout swipeRefreshLayout;
+  @BindView(R.id.progressBar) ProgressBar progressBar;
   private LinearLayoutManager linearLayoutManager;
   private MainCardsContract.Presenter presenter;
   private MainCardsAdapter adapter;

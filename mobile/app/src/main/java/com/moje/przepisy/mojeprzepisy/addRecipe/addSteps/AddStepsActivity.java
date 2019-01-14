@@ -54,7 +54,6 @@ public class AddStepsActivity extends AppCompatActivity implements AddStepContra
     ButterKnife.bind(this);
 
     presenter = new AddStepPresenter(this);
-
     presenter.setFirstScreen();
   }
 

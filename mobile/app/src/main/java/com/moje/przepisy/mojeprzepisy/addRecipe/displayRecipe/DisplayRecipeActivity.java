@@ -9,9 +9,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.BindView;
@@ -41,6 +38,7 @@ public class DisplayRecipeActivity extends AppCompatActivity implements
   @BindView(R.id.addStepsRecyclerView) RecyclerView addStepsRecyclerView;
   @BindView(R.id.toolbar_whole_recipe) Toolbar toolbar;
   private DisplayRecipeContract.Presenter presenter;
+  ProgressDialog dialog;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -57,10 +55,11 @@ public class DisplayRecipeActivity extends AppCompatActivity implements
   public Dialog onCreateDialog(int dialogId) {
     switch (dialogId) {
       case PLEASE_WAIT_DIALOG:
-        ProgressDialog dialog = new ProgressDialog(this);
+        dialog = new ProgressDialog(this);
+        dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
         dialog.setTitle("Zapisywanie");
         dialog.setMessage("Proszę czekać....");
-        dialog.setCancelable(true);
+        dialog.setCancelable(false);
         return dialog;
 
       default:
@@ -68,6 +67,12 @@ public class DisplayRecipeActivity extends AppCompatActivity implements
     }
     return null;
   }
+
+  @Override
+  public void setProgressInDialog(int progress){
+    dialog.setProgress(progress);
+  }
+
 
   @Override
   public void setOnClickListeners() {

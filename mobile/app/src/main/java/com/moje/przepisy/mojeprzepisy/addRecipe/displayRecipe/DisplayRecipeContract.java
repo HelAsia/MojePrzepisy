@@ -22,6 +22,7 @@ public interface DisplayRecipeContract {
     void navigateToEditRecipeInformation();
     void navigateToEditIngredients();
     void navigateToEditSteps();
+    void setProgressInDialog(int progress);
   }
 
   interface Presenter {

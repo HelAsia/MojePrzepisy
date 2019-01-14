@@ -2,10 +2,7 @@ package com.moje.przepisy.mojeprzepisy.addRecipe.displayRecipe;
 
 import android.app.Activity;
 import android.os.AsyncTask;
-import android.util.Log;
 import android.widget.Toast;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.moje.przepisy.mojeprzepisy.data.model.Ingredient;
 import com.moje.przepisy.mojeprzepisy.data.model.Recipe;
 import com.moje.przepisy.mojeprzepisy.data.model.RecipeAllElements;
@@ -15,13 +12,6 @@ import com.moje.przepisy.mojeprzepisy.data.repositories.recipe.RecipeRepository;
 import com.moje.przepisy.mojeprzepisy.utils.Constant;
 import com.moje.przepisy.mojeprzepisy.utils.PojoFileConverter;
 import com.moje.przepisy.mojeprzepisy.utils.PojoJsonConverter;
-
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -162,12 +152,14 @@ public class DisplayRecipePresenter implements DisplayRecipeContract.Presenter,
     @Override
     protected void onPreExecute() {
       activity.showDialog(DisplayRecipeActivity.PLEASE_WAIT_DIALOG);
+      recipeElementsView.setProgressInDialog(20);
       startBackgroundAddingPhoto(activity);
     }
     @Override
     protected Void doInBackground(Void... arg0) {
       try {
         saved();
+        recipeElementsView.setProgressInDialog(100);
         Thread.sleep(5000);
       } catch (InterruptedException e) {
         e.printStackTrace();
@@ -205,6 +197,7 @@ public class DisplayRecipePresenter implements DisplayRecipeContract.Presenter,
     }
     @Override
     protected void onPostExecute(Void result) {
+      recipeElementsView.setProgressInDialog(80);
       Toast.makeText(activity, "Zdjęcia wysłane na serwer!", Toast.LENGTH_SHORT).show();
     }
   }
@@ -238,6 +231,7 @@ public class DisplayRecipePresenter implements DisplayRecipeContract.Presenter,
               recipeListWithPhotoNumber.add(recipeWithPhotoNumber);
           }
       }
+    recipeElementsView.setProgressInDialog(40);
   }
 
   private void addPhotoToSteps(){
@@ -258,6 +252,7 @@ public class DisplayRecipePresenter implements DisplayRecipeContract.Presenter,
               stepListWithPhotoNumber.add(stepWithPhotoNumber);
           }
       }
+    recipeElementsView.setProgressInDialog(60);
   }
 
   private void addWholeElementsToServer() {

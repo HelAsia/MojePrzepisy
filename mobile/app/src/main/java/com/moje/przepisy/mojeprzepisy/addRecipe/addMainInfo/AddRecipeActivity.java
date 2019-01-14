@@ -163,13 +163,24 @@ public class AddRecipeActivity extends AppCompatActivity implements AddRecipeCon
     }
   }
 
+  @RequiresApi(api = VERSION_CODES.M)
+  @Override
+  public void loadImageFromGallery() {
+    if(ContextCompat.checkSelfPermission(this, permission.READ_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED){
+      requestPermissions(new String[]{permission.READ_EXTERNAL_STORAGE}, Constant.GALLERY_REQUEST);
+    }else {
+      Intent galleryIntent = new Intent(Intent.ACTION_PICK,
+              Media.EXTERNAL_CONTENT_URI);
+      startActivityForResult(galleryIntent, Constant.GALLERY_REQUEST);
+    }
+  }
+
   @Override
   public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
     super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     if (requestCode == Constant.CAMERA_REQUEST) {
       if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-        Intent cameraIntent = new
-            Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(cameraIntent, Constant.CAMERA_REQUEST);
       } else {
         Toast.makeText(this, "Brak pozwolenia na użycie aparatu.", Toast.LENGTH_LONG).show();
@@ -182,18 +193,6 @@ public class AddRecipeActivity extends AppCompatActivity implements AddRecipeCon
       }else {
         Toast.makeText(this, "Brak pozwolenia na użycie galerii.", Toast.LENGTH_LONG).show();
       }
-    }
-  }
-
-  @RequiresApi(api = VERSION_CODES.M)
-  @Override
-  public void loadImageFromGallery() {
-    if(ContextCompat.checkSelfPermission(this, permission.READ_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED){
-      requestPermissions(new String[]{permission.READ_EXTERNAL_STORAGE}, Constant.GALLERY_REQUEST);
-    }else {
-      Intent galleryIntent = new Intent(Intent.ACTION_PICK,
-          Media.EXTERNAL_CONTENT_URI);
-      startActivityForResult(galleryIntent, Constant.GALLERY_REQUEST);
     }
   }
 

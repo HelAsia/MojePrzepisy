@@ -540,7 +540,7 @@ def deleteAllComments(id):
         'message': message
     })
 
-@app.route('/recipe/comment', methods=['PUT'])
+@app.route('/recipe/comment', methods=['POST'])
 @authorized
 def addComment():
     comment = Comments(get_database())
