@@ -209,34 +209,30 @@ def editUserPhoto():
     })
 
 
-@app.route('/cards/searched', methods=['GET'])
-def getSearchedCards():
+@app.route('/cards/searched/<string:recipeName>', methods=['GET'])
+def getSearchedCards(recipeName):
     card = Cards(get_database())
-    params = request.get_json()
-    searchedQuery = params.get('name')
 
     userID = get_user_id()
     if not userID:
         userID = -1
 
-    cards = card.getSearchedCardsSortedByDefault(searchedQuery, userID)
+    cards = card.getSearchedCardsSortedByDefault(recipeName, userID)
 
     if not cards:
         Logger.fail("There were no cards returned!")
     return jsonify(cards)
 
 
-@app.route('/cards/category', methods=['GET'])
-def getCategoryCards():
+@app.route('/cards/category/<string:categoryName>', methods=['GET'])
+def getCategoryCards(categoryName):
     card = Cards(get_database())
-    params = request.get_json()
-    category = params.get('category')
 
     userID = get_user_id()
     if not userID:
         userID = -1
 
-    cards = card.getCategoryCardsSortedByDefault(category, userID)
+    cards = card.getCategoryCardsSortedByDefault(categoryName, userID)
 
     if not cards:
         return jsonify([])

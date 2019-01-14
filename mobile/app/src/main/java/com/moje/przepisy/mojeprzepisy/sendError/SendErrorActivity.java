@@ -1,7 +1,9 @@
 package com.moje.przepisy.mojeprzepisy.sendError;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,9 +13,6 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.moje.przepisy.mojeprzepisy.R;
-import com.moje.przepisy.mojeprzepisy.aboutApplication.AboutApplicationActivity;
-import com.moje.przepisy.mojeprzepisy.aboutApplication.AboutApplicationContract;
-import com.moje.przepisy.mojeprzepisy.aboutApplication.AboutApplicationPresenter;
 import com.moje.przepisy.mojeprzepisy.mainCards.MainCardsActivity;
 
 import butterknife.BindView;
@@ -22,7 +21,7 @@ import butterknife.ButterKnife;
 public class SendErrorActivity extends AppCompatActivity
         implements SendErrorContract.View{
     @BindView(R.id.toolbar_send_error) Toolbar toolbar;
-    @BindView(R.id.send_email_button) Button sendEmaiButton;
+    @BindView(R.id.send_email_button) Button sendEmailButton;
     private Boolean isLogged;
 
     @Override
@@ -48,12 +47,14 @@ public class SendErrorActivity extends AppCompatActivity
 
     @Override
     public void setButtonListener() {
-        sendEmaiButton.setOnClickListener(view -> goToEmailApp());
+        sendEmailButton.setOnClickListener(view -> goToEmailApp());
     }
 
+    @SuppressLint("IntentReset")
     private void goToEmailApp(){
-        Intent i = new Intent(Intent.ACTION_SEND);
+        Intent i = new Intent(Intent.ACTION_SENDTO);
         i.setType("message/rfc822");
+        i.setData(Uri.parse("mailto:"));
         i.putExtra(Intent.EXTRA_EMAIL  , new String[]{"recipient@example.com"});
         i.putExtra(Intent.EXTRA_SUBJECT, "Błąd w aplikacji Moje Przepisy HelAsia");
         try {

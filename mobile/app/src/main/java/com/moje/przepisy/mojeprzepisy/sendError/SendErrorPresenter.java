@@ -10,6 +10,5 @@ public class SendErrorPresenter implements SendErrorContract.Presenter{
     public void setFirstScreen() {
         sendErrorView.setToolbar();
         sendErrorView.setButtonListener();
-
     }
 }

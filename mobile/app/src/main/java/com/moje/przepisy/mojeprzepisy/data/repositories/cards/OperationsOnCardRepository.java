@@ -87,8 +87,7 @@ public class OperationsOnCardRepository implements OperationsOnCardRepositoryInt
 
   @Override
   public void getCardsSortedBySearchedQuery(final OnCardsListener cardsListener, String recipeName) {
-    OneRecipeCard oneRecipeCard = new OneRecipeCard(recipeName, 1);
-    cardAPI.getCardsSortedBySearchedQuery(oneRecipeCard)
+    cardAPI.getCardsSortedBySearchedQuery(recipeName)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new SingleObserver<List<OneRecipeCard>>() {
@@ -111,8 +110,7 @@ public class OperationsOnCardRepository implements OperationsOnCardRepositoryInt
 
   @Override
   public void getCardsSortedByCategoryQuery(final OnCardsListener cardsListener, String recipeCategory) {
-    OneRecipeCard oneRecipeCard = new OneRecipeCard(recipeCategory, 2);
-    cardAPI.getCardsSortedByCategoryQuery(oneRecipeCard)
+    cardAPI.getCardsSortedByCategoryQuery(recipeCategory)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new SingleObserver<List<OneRecipeCard>>() {

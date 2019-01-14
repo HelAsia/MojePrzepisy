@@ -34,7 +34,7 @@ public class CategorySearchAdapter extends RecyclerView.Adapter<CategorySearchAd
     setHasStableIds(true);
   }
 
-  public void setCategoryOnShareClickedListener(CategorySearchAdapter.OnShareClickedListener callbackCategory) {
+  void setCategoryOnShareClickedListener(CategorySearchAdapter.OnShareClickedListener callbackCategory) {
     this.callbackCategory = callbackCategory;
   }
 

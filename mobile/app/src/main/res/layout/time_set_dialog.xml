@@ -69,7 +69,8 @@
       android:layout_height="wrap_content"
       android:layout_below="@+id/second_space_layout"
       android:layout_centerHorizontal="true"
-      android:background="@drawable/dark_buttons"
+      android:background="@drawable/black_button"
+      android:textColor="@color/white"
       android:text="@string/set_time"/>
 
     <LinearLayout

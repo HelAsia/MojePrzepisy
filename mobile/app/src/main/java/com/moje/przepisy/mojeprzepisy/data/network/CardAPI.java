@@ -31,11 +31,11 @@ public interface CardAPI {
   @GET("/cards/favorite")
   Single<List<OneRecipeCard>> getCardsSortedByFavorite();
 
-  @GET("cards/searched")
-  Single<List<OneRecipeCard>> getCardsSortedBySearchedQuery(@Body OneRecipeCard oneRecipeCard);
+  @GET("cards/searched/{recipeName}")
+  Single<List<OneRecipeCard>> getCardsSortedBySearchedQuery(@Path("recipeName") String recipeName);
 
-  @GET("cards/category")
-  Single<List<OneRecipeCard>> getCardsSortedByCategoryQuery(@Body OneRecipeCard oneRecipeCard);
+  @GET("cards/category/{categoryName}")
+  Single<List<OneRecipeCard>> getCardsSortedByCategoryQuery(@Path("categoryName") String categoryName);
 
   @GET("/cards/user")
   Single<List<OneRecipeCard>> getUserCards();
