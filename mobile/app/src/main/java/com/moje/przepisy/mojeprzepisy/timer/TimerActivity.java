@@ -17,7 +17,6 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.moje.przepisy.mojeprzepisy.R;
-import com.moje.przepisy.mojeprzepisy.utils.Timer;
 
 public class TimerActivity extends AppCompatActivity implements TimerContract.View{
   @BindView(R.id.toolbar_timer) Toolbar toolbar;

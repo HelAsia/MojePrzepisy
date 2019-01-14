@@ -40,6 +40,7 @@ import com.moje.przepisy.mojeprzepisy.logIn.LogInActivity;
 import com.moje.przepisy.mojeprzepisy.logOut.LogOutActivity;
 import com.moje.przepisy.mojeprzepisy.recipeDetails.recipeDisplay.MainDetailsTabActivity;
 import com.moje.przepisy.mojeprzepisy.register.RegisterActivity;
+import com.moje.przepisy.mojeprzepisy.sendError.SendErrorActivity;
 import com.moje.przepisy.mojeprzepisy.setting.SettingsActivity;
 import com.moje.przepisy.mojeprzepisy.timer.TimerActivity;
 import com.moje.przepisy.mojeprzepisy.userProfile.UserProfileActivity;
@@ -55,7 +56,6 @@ public class MainCardsActivity extends AppCompatActivity implements
   @BindView(R.id.nav_view) NavigationView navigationView;
   @BindView(R.id.errorMessage_mainCards) TextView errorMessageTextView;
   @BindView(R.id.swipe_refresh_layout) SwipeRefreshLayout swipeRefreshLayout;
-  @BindView(R.id.progressBar) ProgressBar progressBar;
   private LinearLayoutManager linearLayoutManager;
   private MainCardsContract.Presenter presenter;
   private MainCardsAdapter adapter;
@@ -229,6 +229,8 @@ public class MainCardsActivity extends AppCompatActivity implements
             goToLicensesActivity();
           }else if (id == R.id.logout_nav) {
             goToLogOutActivity();
+          }else if (id == R.id.send_error){
+            goToErrorAxtivity();
           }
           return false;
         }
@@ -256,6 +258,8 @@ public class MainCardsActivity extends AppCompatActivity implements
             goToAboutApplicationActivity();
           }else if (id == R.id.licences_nav) {
             goToLicensesActivity();
+          }else if (id == R.id.send_error){
+            goToErrorAxtivity();
           }
           return false;
         }
@@ -332,6 +336,13 @@ public class MainCardsActivity extends AppCompatActivity implements
 
   private void goToLogOutActivity(){
     Intent intent = new Intent(this, LogOutActivity.class);
+    startActivity(intent);
+    MainCardsActivity.this.finish();
+  }
+
+  private void goToErrorAxtivity(){
+    Intent intent = new Intent(this, SendErrorActivity.class);
+    intent.putExtra("isLogged", isLogged);
     startActivity(intent);
     MainCardsActivity.this.finish();
   }

@@ -45,14 +45,14 @@ public class LogInPresenterUnitTest {
     Intent startedIntent = shadowActivity.getNextStartedActivity();
     assertThat(startedIntent.getComponent().getClassName(),
         equalTo(MainCardsActivity.class.getName()));
-    assertThat(startedIntent.getBooleanExtra("LOGGED", false),
+    assertThat(startedIntent.getBooleanExtra("isLogged", false),
         equalTo(true));
   }
 
   @Test
   public void onLoginAndPasswordError_shouldShowErrorMessage(){
     mockPresenter.onLoginAndPasswordError();
-    TextView errorMessage = (TextView) logInActivity.findViewById(R.id.errorMessageTextView);
+    TextView errorMessage = logInActivity.findViewById(R.id.errorMessageTextView);
 
     assertThat(errorMessage.getText().toString(), equalTo(logInActivity.getResources()
         .getString(R.string.login_password_error_message)));

@@ -224,8 +224,8 @@
 
     <string name="app_version_text_ang">Application version: 1.1 </string>
     <string name="app_version_text_pl">Wersja aplikacji: 1.1 </string>
-    <string name="app_error_text_ang">If You found error in my application, I would be grateful for the information on the email: xxx </string>
-    <string name="app_error_text_pl">Jeśli udało Ci się znaleźć błąd w mojej aplikacji, będę wdzięczna za informację na e-maila: xxx </string>
+    <string name="app_error_text_ang">If You found error in my application, I would be grateful for the information. </string>
+    <string name="app_error_text_pl">Jeśli udało Ci się znaleźć błąd w mojej aplikacji, będę wdzięczna za informację. </string>
 
     <string name="user_profile_login_error">Podany login istnieje już w bazie!</string>
     <string name="user_profile_password_error">Podane hasła nie są identyczne!</string>
@@ -241,4 +241,8 @@
 
     <string name="delete">Usuń</string>
     <string name="update">Aktualizuj</string>
+    <string name="my_photo">Moje zdjęcie</string>
+    <string name="logo">Logo</string>
+
+    <string name="send_email">Wyślij email</string>
 </resources>

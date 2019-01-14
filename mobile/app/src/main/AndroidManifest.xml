@@ -21,7 +21,7 @@
         android:icon="@drawable/logo"
         android:label="@string/app_name"
         android:largeHeap="true"
-        android:supportsRtl="true"
+        android:screenOrientation="portrait"
         android:theme="@style/MyAppTheme">
         <activity android:name=".welcome.WelcomeActivity">
             <intent-filter>
@@ -48,18 +48,19 @@
         <activity android:name=".licenses.WebViewActivity" />
         <activity android:name=".aboutApplication.AboutApplicationActivity" />
         <activity android:name=".setting.SettingsActivity" />
-        <activity android:name=".recipeDetails.commentDetails.commentEdit.CommentEditActivity"/>
+        <activity android:name=".recipeDetails.commentDetails.commentEdit.CommentEditActivity" />
 
         <service android:name=".setting.NewRecipeService" />
 
-        <receiver android:name=".setting.RestartServiceBroadcastReceiver"
-            android:permission="">
+        <receiver
+            android:name=".setting.RestartServiceBroadcastReceiver"
+            android:exported="false">
             <intent-filter>
-                <action android:name="com.moje.przepisy.mojeprzepisy.STOP_SERVICE_INTENT">
-                </action>
+                <action android:name="com.moje.przepisy.mojeprzepisy.STOP_SERVICE_INTENT"></action>
             </intent-filter>
         </receiver>
 
+        <activity android:name=".sendError.SendErrorActivity"></activity>
     </application>
 
 </manifest>

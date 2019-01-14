@@ -66,7 +66,7 @@ public class LogOutPresenterUnitTest {
   public void onLogoutError_shouldShowErrorMessage(){
     mockPresenter.onLogoutError(anyString());
 
-    TextView errorMessage = (TextView) logOutActivity.findViewById(R.id.textViewErrorMessage);
+    TextView errorMessage = logOutActivity.findViewById(R.id.textViewErrorMessage);
 
     assertThat(errorMessage.getText().toString(), equalTo(anyString()));
     assertThat(errorMessage.getVisibility(), equalTo(View.VISIBLE));

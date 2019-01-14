@@ -65,6 +65,10 @@
     </menu>
   </item>
 
+  <item
+      android:id="@+id/send_error"
+      android:title="@string/app_error_title"
+      android:icon="@mipmap/ic_error_black_18dp"/>
 
   <group
     android:id="@+id/logout_group"

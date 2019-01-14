@@ -11,24 +11,9 @@ public interface AboutApplicationContract {
     void setToolbar();
     Context getContext();
     void setLogged();
-    void openAppDescriptionCardView();
-    void closeAppDescriptionCardView();
-    void openAppAuthorCardView();
-    void closeAppAuthorCardView();
-    void openAppVersionCardView();
-    void closeAppVersionCardView();
-    void openAppErrorCardView();
-    void closeAppErrorCardView();
-    void setDetailsOnClickListeners();
-    void setDownArrow();
-    void setRightArrow();
   }
 
   interface Presenter{
     void setFirstScreen();
-    void openOrCloseAppDescriptionCardView();
-    void openOrCloseAppAuthorCardView();
-    void openOrCloseAppVersionCardView();
-    void openOrCloseAppErrorCardView();
   }
 }

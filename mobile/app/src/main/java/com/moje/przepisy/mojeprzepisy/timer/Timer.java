@@ -1,4 +1,4 @@
-package com.moje.przepisy.mojeprzepisy.utils;
+package com.moje.przepisy.mojeprzepisy.timer;
 
 import android.content.Context;
 import android.media.Ringtone;
