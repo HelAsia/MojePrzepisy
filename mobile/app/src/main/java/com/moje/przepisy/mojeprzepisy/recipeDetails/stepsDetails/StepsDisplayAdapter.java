@@ -81,7 +81,7 @@ public class StepsDisplayAdapter extends RecyclerView.Adapter<StepsDisplayAdapte
         stepImageView.setVisibility(View.GONE);
       }else {
         stepImageView.setVisibility(View.VISIBLE);
-        Picasso.get().load(BASE_URL + "recipe/photo/" + photo).into(stepImageView);
+        Glide.with(context).load(BASE_URL + "recipe/photo/" + photo).into(stepImageView);
       }
     }
   }

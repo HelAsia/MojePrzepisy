@@ -20,9 +20,10 @@
       android:id="@+id/recipeNameTextView"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
+        android:background="@color/black"
       android:gravity="center"
       android:text="TextView"
-      android:textColor="@color/primary_text"
+      android:textColor="@color/white"
       android:textSize="24sp"/>
 
       <LinearLayout

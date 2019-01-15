@@ -163,7 +163,7 @@ public class MainInfoDetailsDisplayFragment extends Fragment
 
   @Override
   public void setRecipeImageView(String path) {
-    Picasso.get().load(path).into(recipeImageView);
+    Glide.with(context).load(path).into(recipeImageView);
   }
 
   @Override
