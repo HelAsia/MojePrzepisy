@@ -13,9 +13,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.ImageView;
 import android.widget.NumberPicker;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.netopen.hotbitmapgg.library.view.RingProgressBar;
+
 import com.moje.przepisy.mojeprzepisy.R;
 
 public class TimerActivity extends AppCompatActivity implements TimerContract.View{
@@ -35,10 +38,16 @@ public class TimerActivity extends AppCompatActivity implements TimerContract.Vi
   @BindView(R.id.playImageViewThirdTimer) ImageView playImageViewThirdTimer;
   @BindView(R.id.pauseImageViewThirdTimer) ImageView pauseImageViewThirdTimer;
   @BindView(R.id.stopImageViewThirdTimer) ImageView stopImageViewThirdTimer;
+  @BindView(R.id.progressBar1) RingProgressBar progressBar1;
+  @BindView(R.id.progressBar2) RingProgressBar progressBar2;
+  @BindView(R.id.progressBar3) RingProgressBar progressBar3;
   private TimerContract.Presenter presenter;
   private Timer firstTimer;
   private Timer secondTimer;
   private Timer thirdTimer;
+  private NotificationManager notificationManager = (NotificationManager) this
+          .getSystemService(Context.NOTIFICATION_SERVICE);
+  private NotificationCompat.Builder notificationBuilder;
 
 
   @Override
@@ -69,11 +78,11 @@ public class TimerActivity extends AppCompatActivity implements TimerContract.Vi
 
   private void createTimerObjects(){
     firstTimer = new Timer(playImageViewFirstTimer, pauseImageViewFirstTimer,
-            stopImageViewFirstTimer, timerOneTextView);
+            stopImageViewFirstTimer, timerOneTextView, progressBar1);
     secondTimer = new Timer(playImageViewSecondTimer, pauseImageViewSecondTimer,
-            stopImageViewSecondTimer, timerTwoTextView);
+            stopImageViewSecondTimer, timerTwoTextView, progressBar2);
     thirdTimer = new Timer(playImageViewThirdTimer, pauseImageViewSecondTimer,
-            stopImageViewSecondTimer, timerThreeTextView);
+            stopImageViewSecondTimer, timerThreeTextView, progressBar3);
   }
 
   @Override
@@ -127,13 +136,16 @@ public class TimerActivity extends AppCompatActivity implements TimerContract.Vi
     playImageViewFirstTimer.setOnClickListener(view -> {
       if(pauseImageViewFirstTimer.isEnabled()&& stopImageViewFirstTimer.isEnabled()){
         firstTimer.startTimer(presenter.getCountDownTime(), this);
-        displayNotificationMessage("Timer - odliczanie");
+        displayNotificationMessage("Timer - odliczanie", 1);
       }else{
         firstTimer.restartTimer(this);
       }
     });
     pauseImageViewFirstTimer.setOnClickListener(view -> firstTimer.pauseTimer());
-    stopImageViewFirstTimer.setOnClickListener(view -> firstTimer.stopTimer());
+    stopImageViewFirstTimer.setOnClickListener(view -> {
+      firstTimer.stopTimer();
+      cancelNotificationMessage(1);
+    });
   }
 
   @Override
@@ -141,12 +153,16 @@ public class TimerActivity extends AppCompatActivity implements TimerContract.Vi
     playImageViewSecondTimer.setOnClickListener(view -> {
       if(pauseImageViewSecondTimer.isEnabled()&& stopImageViewSecondTimer.isEnabled()){
         secondTimer.startTimer(presenter.getCountDownTime(), this);
+        displayNotificationMessage("Timer - odliczanie", 2);
       }else{
         secondTimer.restartTimer(this);
       }
     });
     pauseImageViewSecondTimer.setOnClickListener(view -> secondTimer.pauseTimer());
-    stopImageViewSecondTimer.setOnClickListener(view -> secondTimer.stopTimer());
+    stopImageViewSecondTimer.setOnClickListener(view -> {
+      secondTimer.stopTimer();
+      cancelNotificationMessage(2);
+    });
   }
 
   @Override
@@ -154,32 +170,21 @@ public class TimerActivity extends AppCompatActivity implements TimerContract.Vi
     playImageViewThirdTimer.setOnClickListener(view -> {
       if(pauseImageViewThirdTimer.isEnabled()&& stopImageViewThirdTimer.isEnabled()){
         thirdTimer.startTimer(presenter.getCountDownTime(), this);
+        displayNotificationMessage("Timer - odliczanie", 3);
       }else{
         thirdTimer.restartTimer(this);
       }
     });
     pauseImageViewThirdTimer.setOnClickListener(view -> thirdTimer.pauseTimer());
-    stopImageViewThirdTimer.setOnClickListener(view -> thirdTimer.stopTimer());
+    stopImageViewThirdTimer.setOnClickListener(view -> {
+      thirdTimer.stopTimer();
+      cancelNotificationMessage(3);
+    });
   }
 
-  private void displayNotificationMessage(String message) {
-    NotificationManager notificationManager = (NotificationManager) this
-            .getSystemService(Context.NOTIFICATION_SERVICE);
-    NotificationCompat.Builder notificationBuilder;
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-      String chanelId = "3000";
-      CharSequence name = "Channel Name";
-      String description = "Chanel Description";
-      int importance = NotificationManager.IMPORTANCE_LOW;
-      NotificationChannel mChannel = new NotificationChannel(chanelId, name, importance);
-      mChannel.setDescription(description);
-      mChannel.enableLights(true);
-      mChannel.setLightColor(Color.BLUE);
-      notificationManager.createNotificationChannel(mChannel);
-      notificationBuilder = new NotificationCompat.Builder(this, chanelId);
-    } else {
-      notificationBuilder = new NotificationCompat.Builder(this);
-    }
+  private void displayNotificationMessage(String message, int id) {
+    createChannel();
+
     notificationBuilder
             .setSmallIcon(R.drawable.logo)
             .setContentTitle("Przepisy domowe Helasia")
@@ -190,7 +195,27 @@ public class TimerActivity extends AppCompatActivity implements TimerContract.Vi
             PendingIntent.FLAG_UPDATE_CURRENT);
     notificationBuilder.setContentIntent(contentIntent);
 
+    notificationManager.notify(id, notificationBuilder.build());
+  }
 
-    notificationManager.notify(0, notificationBuilder.build());
+  private void createChannel(){
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+      String chanelId = "1";
+      CharSequence name = "Timer";
+      String description = "Powiadomienia o starcie i końcu odliczania";
+      int importance = NotificationManager.IMPORTANCE_LOW;
+      NotificationChannel mChannel = new NotificationChannel(chanelId, name, importance);
+      mChannel.setDescription(description);
+      mChannel.enableLights(true);
+      mChannel.setLightColor(Color.BLUE);
+      notificationManager.createNotificationChannel(mChannel);
+      notificationBuilder = new NotificationCompat.Builder(this, chanelId);
+    } else {
+      notificationBuilder = new NotificationCompat.Builder(this);
+    }
+  }
+
+  private void cancelNotificationMessage(int id){
+    notificationManager.cancel(id);
   }
 }

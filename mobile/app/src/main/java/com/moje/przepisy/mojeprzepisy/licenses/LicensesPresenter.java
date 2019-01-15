@@ -76,6 +76,16 @@ public class LicensesPresenter implements LicensesContract.Presenter {
         licensesView.getContext().getResources().getString(R.string.license_eleven_author),
         licensesView.getContext().getResources().getString(R.string.license_eleven_description),
         licensesView.getContext().getResources().getString(R.string.license_eleven_url));
+    License licenseTwelve = new License(12,
+            licensesView.getContext().getResources().getString(R.string.license_twelve_name),
+            licensesView.getContext().getResources().getString(R.string.license_twelve_author),
+            licensesView.getContext().getResources().getString(R.string.license_twelve_description),
+            licensesView.getContext().getResources().getString(R.string.license_twelve_url));
+    License licenseThirteen = new License(13,
+            licensesView.getContext().getResources().getString(R.string.license_thirteen_name),
+            licensesView.getContext().getResources().getString(R.string.license_thirteen_author),
+            licensesView.getContext().getResources().getString(R.string.license_thirteen_description),
+            licensesView.getContext().getResources().getString(R.string.license_thirteen_url));
 
     licensesList.add(licenseOne);
     licensesList.add(licenseTwo);
@@ -88,6 +98,8 @@ public class LicensesPresenter implements LicensesContract.Presenter {
     licensesList.add(licenseNine);
     licensesList.add(licenseTen);
     licensesList.add(licenseEleven);
+    licensesList.add(licenseTwelve);
+    licensesList.add(licenseThirteen);
 
     return licensesList;
   }

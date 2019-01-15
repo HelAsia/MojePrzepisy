@@ -7,23 +7,29 @@ import android.net.Uri;
 import android.os.CountDownTimer;
 import android.os.Vibrator;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
-public class Timer {
-    private CountDownTimer countDownTimer;
+import io.netopen.hotbitmapgg.library.view.RingProgressBar;
+
+class Timer {
     private boolean isPausedTimer = false;
     private boolean isCanceledTimer = false;
     private long timeRemainingTimer = 0;
+    private int countDownTime = 0;
     private ImageView playImage;
     private ImageView pauseImage;
     private ImageView stopImage;
     private TextView timerText;
+    private RingProgressBar progressBar;
 
-    public Timer(ImageView playImage, ImageView pauseImage, ImageView stopImage, TextView timerText){
+    Timer(ImageView playImage, ImageView pauseImage, ImageView stopImage, TextView timerText,
+          RingProgressBar progressBar){
         this.playImage = playImage;
         this.pauseImage = pauseImage;
         this.stopImage = stopImage;
         this.timerText = timerText;
+        this.progressBar = progressBar;
     }
 
     private String formatNumber(long value){
@@ -58,17 +64,21 @@ public class Timer {
                 formatNumber(seconds);
         timerText.setText(time);
 
+        int progress = ((int)millisUntilFinished * 100)/countDownTime;
+        progressBar.setProgress(progress);
+
         timeRemainingTimer = millisUntilFinished;
     }
 
-    public void startTimer(int countDownTime, Context context) {
+    void startTimer(int countDownTime, Context context) {
         isPausedTimer = false;
         isCanceledTimer = false;
         playImage.setEnabled(false);
         pauseImage.setEnabled(true);
         stopImage.setEnabled(true);
+        this.countDownTime = countDownTime;
 
-        countDownTimer = new CountDownTimer(countDownTime, 1000) {
+        new CountDownTimer(countDownTime, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 if(isPausedTimer || isCanceledTimer){
@@ -82,6 +92,7 @@ public class Timer {
             public void onFinish() {
                 turnOnSound(context);
                 turnOnVibrate(context);
+                progressBar.setProgress(0);
                 timerText.setText("00:00:00");
                 playImage.setEnabled(true);
                 pauseImage.setEnabled(false);
@@ -90,7 +101,7 @@ public class Timer {
         }.start();
     }
 
-    public void pauseTimer() {
+    void pauseTimer() {
         isPausedTimer = true;
 
         playImage.setEnabled(true);
@@ -98,7 +109,7 @@ public class Timer {
         stopImage.setEnabled(false);
     }
 
-    public void restartTimer(Context context) {
+    void restartTimer(Context context) {
         isPausedTimer = false;
         isCanceledTimer = false;
 
@@ -106,7 +117,7 @@ public class Timer {
         pauseImage.setEnabled(true);
         playImage.setEnabled(true);
 
-        countDownTimer = new CountDownTimer(timeRemainingTimer, 1000) {
+        new CountDownTimer(timeRemainingTimer, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 if(isPausedTimer || isCanceledTimer){
@@ -120,6 +131,7 @@ public class Timer {
             public void onFinish() {
                 turnOnSound(context);
                 turnOnVibrate(context);
+                progressBar.setProgress(0);
                 timerText.setText("00:00:00");
                 playImage.setEnabled(true);
                 pauseImage.setEnabled(false);
@@ -128,12 +140,13 @@ public class Timer {
         }.start();
     }
 
-    public void stopTimer() {
+    void stopTimer() {
         isCanceledTimer = true;
 
         playImage.setEnabled(true);
         pauseImage.setEnabled(false);
         stopImage.setEnabled(false);
+        progressBar.setProgress(0);
         timerText.setText("00:00:00");
     }
 }

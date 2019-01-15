@@ -192,6 +192,16 @@
     <string name="license_eleven_description">Used to convert image Bitmap to String and String to image Bitmap. </string>
     <string name="license_eleven_url">http://vinayandroid.blogspot.com/2015/02/convert-image-bitmap-to-string.html</string>
 
+    <string name="license_twelve_name">Glide</string>
+    <string name="license_twelve_author">Bump Technologies</string>
+    <string name="license_twelve_description">Used to speed up loading of images.  </string>
+    <string name="license_twelve_url">https://github.com/bumptech/glide</string>
+
+    <string name="license_thirteen_name">RingProgressBar</string>
+    <string name="license_thirteen_author">HotBitmapGG</string>
+    <string name="license_thirteen_description">Used to countdown time in timer. </string>
+    <string name="license_thirteen_url">https://github.com/HotBitmapGG/RingProgressBar</string>
+
     <string name="app_description">Opis aplikacji</string>
 
     <string name="app_description_title">O aplikacji</string>

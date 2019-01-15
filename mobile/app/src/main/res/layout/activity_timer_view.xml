@@ -40,113 +40,184 @@
       android:paddingLeft="@dimen/activity_horizontal_margin"
       android:paddingRight="@dimen/activity_horizontal_margin">
 
-      <TableRow
-        android:id="@+id/timerOneRow"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white">
-        <TextView
-          android:id="@+id/timerOneTextView"
+      <LinearLayout
+          android:id="@+id/timer_one_linear_layout"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:layout_weight="1"
-          android:text="00:00:00"
-          android:textColor="@color/primary_text"
+          android:orientation="vertical">
 
-          android:textSize="50sp"/>
-        <ImageView
-          android:id="@+id/playImageViewFirstTimer"
-          android:layout_width="wrap_content"
-          android:layout_height="match_parent"
-          android:layout_weight="1"
-          app:srcCompat="@mipmap/ic_play_arrow"/>
-        <ImageView
-          android:id="@+id/pauseImageViewFirstTimer"
-          android:layout_width="wrap_content"
-          android:layout_height="match_parent"
-          android:layout_weight="1"
-          app:srcCompat="@mipmap/ic_pause"/>
-        <ImageView
-          android:id="@+id/stopImageViewFirstTimer"
-          android:layout_width="wrap_content"
-          android:layout_height="match_parent"
-          android:layout_weight="1"
-          app:srcCompat="@mipmap/ic_stop"/>
-      </TableRow>
+        <io.netopen.hotbitmapgg.library.view.RingProgressBar
+            android:id="@+id/progressBar1"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:max="100"
+            android:layout_gravity="center"
+            app:ringColor="@color/black"
+            app:ringProgressColor="@color/aqua"
+            app:ringWidth="3dp"
+            app:style="FILL"
+            app:textColor="@color/black"
+            app:textIsShow="true"
+            app:textSize="16sp" />
 
-      <TableRow
-        android:id="@+id/timerTwoRow"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:layout_below="@+id/timerOneRow">
         <TextView
-          android:id="@+id/timerTwoTextView"
+            android:id="@+id/timerOneTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="00:00:00"
+            android:textColor="@color/primary_text"
+            android:textSize="30sp"/>
+
+        <TableRow
+            android:id="@+id/timerOneRow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white">
+
+          <ImageView
+              android:id="@+id/playImageViewFirstTimer"
+              android:layout_width="wrap_content"
+              android:layout_height="match_parent"
+              android:layout_weight="1"
+              app:srcCompat="@mipmap/ic_play_arrow"/>
+          <ImageView
+              android:id="@+id/pauseImageViewFirstTimer"
+              android:layout_width="wrap_content"
+              android:layout_height="match_parent"
+              android:layout_weight="1"
+              app:srcCompat="@mipmap/ic_pause"/>
+          <ImageView
+              android:id="@+id/stopImageViewFirstTimer"
+              android:layout_width="wrap_content"
+              android:layout_height="match_parent"
+              android:layout_weight="1"
+              app:srcCompat="@mipmap/ic_stop"/>
+        </TableRow>
+      </LinearLayout>
+
+      <LinearLayout
+          android:id="@+id/timer_two_linear_layout"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:textColor="@color/primary_text"
-          android:layout_weight="1"
-          android:text="00:00:00"
-          android:textSize="50sp"/>
-        <ImageView
-          android:id="@+id/playImageViewSecondTimer"
-          android:layout_width="wrap_content"
-          android:layout_height="match_parent"
-          android:layout_weight="1"
-          app:srcCompat="@mipmap/ic_play_arrow"/>
-        <ImageView
-          android:id="@+id/pauseImageViewSecondTimer"
-          android:layout_width="wrap_content"
-          android:layout_height="match_parent"
-          android:layout_weight="1"
-          app:srcCompat="@mipmap/ic_pause"/>
-        <ImageView
-          android:id="@+id/stopImageViewSecondTimer"
-          android:layout_width="wrap_content"
-          android:layout_height="match_parent"
-          android:layout_weight="1"
-          app:srcCompat="@mipmap/ic_stop"/>
-      </TableRow>
+          android:layout_alignParentEnd="true"
+          android:layout_alignParentRight="true"
+          android:orientation="vertical">
 
-      <TableRow
-        android:id="@+id/timerThreeRow"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:layout_below="@+id/timerTwoRow">
+        <io.netopen.hotbitmapgg.library.view.RingProgressBar
+            android:id="@+id/progressBar2"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:max="100"
+            android:layout_gravity="center"
+            app:ringColor="@color/black"
+            app:ringProgressColor="@color/aqua"
+            app:ringWidth="3dp"
+            app:style="FILL"
+            app:textColor="@color/black"
+            app:textIsShow="true"
+            app:textSize="16sp" />
+
         <TextView
+            android:id="@+id/timerTwoTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/primary_text"
+            android:layout_weight="1"
+            android:text="00:00:00"
+            android:textSize="30sp"/>
+
+        <TableRow
+            android:id="@+id/timerTwoRow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white">
+
+          <ImageView
+              android:id="@+id/playImageViewSecondTimer"
+              android:layout_width="wrap_content"
+              android:layout_height="match_parent"
+              android:layout_weight="1"
+              app:srcCompat="@mipmap/ic_play_arrow"/>
+          <ImageView
+              android:id="@+id/pauseImageViewSecondTimer"
+              android:layout_width="wrap_content"
+              android:layout_height="match_parent"
+              android:layout_weight="1"
+              app:srcCompat="@mipmap/ic_pause"/>
+          <ImageView
+              android:id="@+id/stopImageViewSecondTimer"
+              android:layout_width="wrap_content"
+              android:layout_height="match_parent"
+              android:layout_weight="1"
+              app:srcCompat="@mipmap/ic_stop"/>
+        </TableRow>
+      </LinearLayout>
+
+      <LinearLayout
+          android:id="@+id/timer_three_linear_layout"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_centerHorizontal="true"
+          android:layout_below="@+id/timer_one_linear_layout"
+          android:orientation="vertical">
+
+        <io.netopen.hotbitmapgg.library.view.RingProgressBar
+            android:id="@+id/progressBar3"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:max="100"
+            android:layout_gravity="center"
+            app:ringColor="@color/black"
+            app:ringProgressColor="@color/aqua"
+            app:ringWidth="3dp"
+            app:style="FILL"
+            app:textColor="@color/black"
+            app:textIsShow="true"
+            app:textSize="16sp" />
+
+      <TextView
           android:id="@+id/timerThreeTextView"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:textColor="@color/primary_text"
           android:layout_weight="1"
           android:text="00:00:00"
-          android:textSize="50sp"/>
-        <ImageView
-          android:id="@+id/playImageViewThirdTimer"
-          android:layout_width="wrap_content"
-          android:layout_height="match_parent"
-          android:layout_weight="1"
-          app:srcCompat="@mipmap/ic_play_arrow"/>
-        <ImageView
-          android:id="@+id/pauseImageViewThirdTimer"
-          android:layout_width="wrap_content"
-          android:layout_height="match_parent"
-          android:layout_weight="1"
-          app:srcCompat="@mipmap/ic_pause"/>
-        <ImageView
-          android:id="@+id/stopImageViewThirdTimer"
-          android:layout_width="wrap_content"
-          android:layout_height="match_parent"
-          android:layout_weight="1"
-          app:srcCompat="@mipmap/ic_stop"/>
-      </TableRow>
+          android:textSize="30sp"/>
+
+        <TableRow
+            android:id="@+id/timerThreeRow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white">
+
+          <ImageView
+              android:id="@+id/playImageViewThirdTimer"
+              android:layout_width="wrap_content"
+              android:layout_height="match_parent"
+              android:layout_weight="1"
+              app:srcCompat="@mipmap/ic_play_arrow"/>
+          <ImageView
+              android:id="@+id/pauseImageViewThirdTimer"
+              android:layout_width="wrap_content"
+              android:layout_height="match_parent"
+              android:layout_weight="1"
+              app:srcCompat="@mipmap/ic_pause"/>
+          <ImageView
+              android:id="@+id/stopImageViewThirdTimer"
+              android:layout_width="wrap_content"
+              android:layout_height="match_parent"
+              android:layout_weight="1"
+              app:srcCompat="@mipmap/ic_stop"/>
+        </TableRow>
+      </LinearLayout>
+
 
       <View
         android:id="@+id/deviderOne"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_below="@+id/timerThreeRow"/>
+        android:layout_below="@+id/timer_three_linear_layout"/>
 
       <LinearLayout
         android:id="@+id/time_set_dialog_layout"
@@ -188,6 +259,8 @@
           android:layout_height="wrap_content">
         </NumberPicker>
       </LinearLayout>
+
+
     </RelativeLayout>
   </ScrollView>
 </RelativeLayout>
