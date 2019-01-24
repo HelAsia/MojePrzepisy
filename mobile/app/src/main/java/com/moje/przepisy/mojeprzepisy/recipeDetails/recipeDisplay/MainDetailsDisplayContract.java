@@ -13,6 +13,7 @@ public interface MainDetailsDisplayContract {
     void setTabLayout();
     void setRecipeId();
     void setIsLogged();
+    void setPosition();
   }
 
   interface Presenter{

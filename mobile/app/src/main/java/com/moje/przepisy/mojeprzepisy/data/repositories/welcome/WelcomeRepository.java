@@ -49,6 +49,7 @@ public class WelcomeRepository implements WelcomeRepositoryInterface {
 
         @Override
         public void onError(Throwable e) {
+            Log.i("checkUser", e.getMessage());
           loggedListener.onError();
         }
       });

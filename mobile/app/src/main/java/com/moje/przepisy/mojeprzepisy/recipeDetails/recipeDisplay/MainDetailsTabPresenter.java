@@ -14,5 +14,6 @@ public class MainDetailsTabPresenter implements MainDetailsDisplayContract.Prese
     mainDetailsTabView.setToolbar();
     mainDetailsTabView.setViewPager();
     mainDetailsTabView.setTabLayout();
+    mainDetailsTabView.setPosition();
   }
 }

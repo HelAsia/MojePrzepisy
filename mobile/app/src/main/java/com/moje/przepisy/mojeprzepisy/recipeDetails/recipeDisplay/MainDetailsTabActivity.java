@@ -47,6 +47,14 @@ public class MainDetailsTabActivity extends AppCompatActivity implements MainDet
     }
   }
 
+  public void setPosition() {
+    if(getIntent().getExtras() != null){
+      if(getIntent().getExtras().getInt("position") == 3) {
+        viewPager.setCurrentItem(3);
+      }
+    }
+  }
+
   @Override
   public Context getContext() {
     return this;

@@ -45,8 +45,7 @@ public class TimerActivity extends AppCompatActivity implements TimerContract.Vi
   private Timer firstTimer;
   private Timer secondTimer;
   private Timer thirdTimer;
-  private NotificationManager notificationManager = (NotificationManager) this
-          .getSystemService(Context.NOTIFICATION_SERVICE);
+  private NotificationManager notificationManager;
   private NotificationCompat.Builder notificationBuilder;
 
 
@@ -60,6 +59,8 @@ public class TimerActivity extends AppCompatActivity implements TimerContract.Vi
     presenter.setFirstScreen();
 
     createTimerObjects();
+    notificationManager = (NotificationManager) this
+            .getSystemService(Context.NOTIFICATION_SERVICE);
 
   }
 

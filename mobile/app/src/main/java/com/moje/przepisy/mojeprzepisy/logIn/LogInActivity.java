@@ -29,7 +29,7 @@ public class LogInActivity extends AppCompatActivity implements LogInContract.Vi
 
     loginButton.setOnClickListener(view -> presenter.validateCredentials());
 
-    presenter = new LogInPresenter(this, new UserRepository(getApplicationContext()));
+    presenter = new LogInPresenter(this, new UserRepository(this));
   }
 
   @Override

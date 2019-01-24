@@ -76,6 +76,7 @@ public class CommentEditActivity extends AppCompatActivity
         Bundle data = new Bundle();
         data.putBoolean("isLogged", true);
         data.putInt("id", recipeId);
+        data.putInt("position", 3);
         intent.putExtras(data);
         startActivity(intent);
         CommentEditActivity.this.finish();
